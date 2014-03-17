@@ -12,24 +12,16 @@
 #ifndef scene_h
 #define scene_h
 
-#include "Arduino.h"
 #include "Geo.h"
+#include "Tiles.h"
 
-const int SCENE_WIDTH = 25;
-const int SCENE_HEIGHT = 25;
-const int TILE_SIZE = 48; //One tile unit to world units conv.
-
-enum Tiles{
-  Rock,
-  Spikes,
-  Wall
-};
+#define TILE_SIZE 48 //One tile unit to world units conv.
+#define SCENE_WIDTH 25
+#define SCENE_HEIGHT 25
 
 class Scene
 {
-  private:
-    Tiles _map[SCENE_WIDTH][SCENE_HEIGHT];
-
+  Tiles _tiles[10][10];
   public:
     Scene();
     int getWidth();

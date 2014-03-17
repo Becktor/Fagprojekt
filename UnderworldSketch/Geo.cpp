@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "Geo.h"
 
 Point::Point() {
@@ -17,22 +16,27 @@ int Point::getY() {
   return _y;
 }
 
+void Point::translate(int x, int y) {
+  _x += x;
+  _y += y;
+}
+
 void Point::setPoint(int x, int y) {
   setX(x);
   setY(y);
-};
+}
 
 void Point::setX(int x) {
   _x = x;
-};
+}
 
 void Point::setY(int y) {
   _y = y;
-};
+}
 
 Rect::Rect() {
   setRect(Point(), 0, 0);
-};
+}
 
 Rect::Rect(Point pos, int width, int height) {
   setRect(pos, width, height);
@@ -63,6 +67,10 @@ int Rect::getWidth() {
 
 int Rect::getHeight() {
   return _height;
+}
+
+void Rect::translate(int x, int y) {
+  _pos.translate(x, y);
 }
 
 void Rect::setRect(Point pos, int width, int height) {

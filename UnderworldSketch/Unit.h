@@ -7,17 +7,24 @@
 #ifndef unit_h
 #define unit_h
 
-#include "Arduino.h"
 #include "Geo.h"
+#include "Director.h"
 
+class Logic;
 class Unit
 {
   private:
+    boolean _dir; //false = left, true = right. Use enum?
+    int _speed;
     Rect _hitbox;
   
   public:
-    Unit(Rect hitbox);
+    Unit(int speed, Rect hitbox);
+    boolean getDir();
+    int getSpeed();
     Rect getHitbox();
+    void translate(int x, int y);
+    void update(Logic direct);
 };
 
 #endif

@@ -4,18 +4,21 @@
  *  use this.
  */
 
-#include "Arduino.h"
-#include "Scene.h"
+#include <EEPROM.h>
+#include <SPI.h>
+#include <GD2.h>
 
-Scene _scene;
+#include "Director.h"
 
 void setup() {
-  shellScene();
+  GD.begin();
 }
 
 void loop() {
 }
 
+//Should be in a separate scene generation library.
+/*
 void shellScene() {
   for(int i = 0; i < SCENE_WIDTH; i++) {
     _scene.setTile(i, 0, Rock);
@@ -26,3 +29,4 @@ void shellScene() {
     _scene.setTile(SCENE_WIDTH - 1, i, Rock);
   }
 }
+*/
