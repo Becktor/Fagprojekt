@@ -8,7 +8,7 @@
 #define unit_h
 
 #include "Geo.h"
-#include "Director.h"
+#include "Logic.h"
 
 class Logic;
 class Unit
@@ -17,7 +17,7 @@ class Unit
     boolean _dir; //false = left, true = right. Use enum?
     int _speed;
     Rect _hitbox;
-  
+
   public:
     Unit(int speed, Rect hitbox);
     boolean getDir();

@@ -1,5 +1,5 @@
 #include "Geo.h"
-#include "Director.h"
+#include "Logic.h"
 #include "Unit.h"
 
 Unit::Unit(int speed, Rect hitbox) {

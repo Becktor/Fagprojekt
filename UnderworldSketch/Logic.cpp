@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "Unit.h"
-#include "Director.h"
+#include "Logic.h"
 
 /*
 Logic::Logic() {}
