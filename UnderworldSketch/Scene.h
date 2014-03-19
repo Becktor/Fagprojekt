@@ -12,6 +12,7 @@
 #ifndef scene_h
 #define scene_h
 
+#include <Arduino.h>
 #include "Geo.h"
 #include "Tiles.h"
 

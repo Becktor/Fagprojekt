@@ -8,25 +8,31 @@
 #include <SPI.h>
 #include <GD2.h>
 
+#include "Scene.h"
 #include "Logic.h"
+
+Scene _scene = Scene();
+Logic _logic = Logic(_scene);
 
 void setup() {
   GD.begin();
 }
 
 void loop() {
+  _scene.getHeight();
 }
 
 //Should be in a separate scene generation library.
 /*
 void shellScene() {
-  for(int i = 0; i < SCENE_WIDTH; i++) {
-    _scene.setTile(i, 0, Rock);
-    _scene.setTile(i, SCENE_HEIGHT - 1, Rock);
-  }
-  for(int i = 1; i < SCENE_HEIGHT - 1; i++) {
-    _scene.setTile(0, i, Rock);
-    _scene.setTile(SCENE_WIDTH - 1, i, Rock);
-  }
-}
-*/
+ for(int i = 0; i < SCENE_WIDTH; i++) {
+ _scene.setTile(i, 0, Rock);
+ _scene.setTile(i, SCENE_HEIGHT - 1, Rock);
+ }
+ for(int i = 1; i < SCENE_HEIGHT - 1; i++) {
+ _scene.setTile(0, i, Rock);
+ _scene.setTile(SCENE_WIDTH - 1, i, Rock);
+ }
+ }
+ */
+

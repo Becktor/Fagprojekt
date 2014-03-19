@@ -2,9 +2,9 @@
 #define tiles_h
 
 enum Tiles{
-  Rock,
-  Spikes,
-  Wall
+  Rock = 0,
+  Spikes = 1,
+  Wall = 2
 };
 
 #endif

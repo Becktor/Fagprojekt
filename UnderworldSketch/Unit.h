@@ -7,6 +7,7 @@
 #ifndef unit_h
 #define unit_h
 
+#include "Direction.h"
 #include "Geo.h"
 #include "Logic.h"
 
@@ -14,17 +15,18 @@ class Logic;
 class Unit
 {
   private:
-    boolean _dir; //false = left, true = right. Use enum?
     int _speed;
+    Direction _dir;
     Rect _hitbox;
 
   public:
     Unit(int speed, Rect hitbox);
-    boolean getDir();
+    Direction getDir();
     int getSpeed();
     Rect getHitbox();
+    void toggleDir();
     void translate(int x, int y);
-    void update(Logic direct);
+    void update(Logic logic);
 };
 
 #endif
