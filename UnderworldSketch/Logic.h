@@ -1,19 +1,19 @@
 #ifndef logic_h
 #define logic_h
 
-#include "Scene.h"
+#include "Tiles.h"
 #include "Unit.h"
+#include "Scene.h"
 
 class Unit;
 class Logic
 {
   private:
-    Scene _scene;
+    Scene *_scene;
   public:
-    Logic();
-    Logic(Scene scene);
+    Logic(Scene *scene);
     void moveUnit(Unit unit);
-    void setScene(Scene scene);
+    void setMap(Scene *scene);
 };
 
 #endif

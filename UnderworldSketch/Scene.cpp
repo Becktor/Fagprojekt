@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "Scene.h"
 #include "Tiles.h"
+#include "Scene.h"
 
 Scene::Scene() { }
 
@@ -12,15 +12,10 @@ int Scene::getHeight() {
   return SCENE_HEIGHT;
 }
 
-boolean Scene::isSolid(Point p) {
-//  return _tiles[p.getX()][p.getY()];
-  return false;
+boolean Scene::tileIsSolid(int x, int y) {
+  getSolid(_tiles[x][y]);
 }
 
 void Scene::setTile(int x, int y, Tiles tile) {
-  //_tiles[x][y] = tile;
-}
-
-void Scene::setTile(Point p, Tiles tile) {
-  //setTile(p.getX(), p.getY(), tile);
+  _tiles[x][y] = tile;
 }

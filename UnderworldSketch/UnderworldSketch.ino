@@ -8,18 +8,35 @@
 #include <SPI.h>
 #include <GD2.h>
 
+#include "Geo.h"
 #include "Scene.h"
+#include "Unit.h"
 #include "Logic.h"
 
-Scene _scene = Scene();
-Logic _logic = Logic(_scene);
+#define SECOND 1000 //Milis. in a second
+#define INIT_FPS 60 //Initial assumed framerate.
+
+static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
+static Scene _scene = Scene();
+static Logic _logic = Logic(&_scene);
+static Unit _unit(1, Rect( Point(2, 2), 1, 1));
+
+void shellScene();
+void setup();
+void loop();
 
 void setup() {
   GD.begin();
 }
 
 void loop() {
-  _scene.getHeight();
+  unsigned long startMilis = millis();
+  unsigned int fps = 0;
+  while(millis() - startMilis < SECOND) { //Loop for a second
+    //Game update
+    fps++;
+  }
+  _dTime = SECOND / fps;
 }
 
 //Should be in a separate scene generation library.

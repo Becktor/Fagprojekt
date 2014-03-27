@@ -13,7 +13,6 @@
 #define scene_h
 
 #include <Arduino.h>
-#include "Geo.h"
 #include "Tiles.h"
 
 #define TILE_SIZE 48 //One tile unit to world units conv.
@@ -22,14 +21,13 @@
 
 class Scene
 {
-  Tiles _tiles[10][10];
+  Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
   public:
     Scene();
     int getWidth();
     int getHeight();
-    boolean isSolid(Point p);
+    boolean tileIsSolid(int x, int y);
     void setTile(int x, int y, Tiles tile);
-    void setTile(Point p, Tiles tile);
 };
 
 #endif
