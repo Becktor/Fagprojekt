@@ -10,7 +10,5 @@ enum Tiles{
 };
 
 const static boolean _solid[] = {true, true, true};
-
 boolean getSolid(Tiles tile);
-
 #endif

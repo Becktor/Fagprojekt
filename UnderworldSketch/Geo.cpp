@@ -38,6 +38,10 @@ Rect::Rect() {
   setRect(Point(), 0, 0);
 }
 
+Rect::Rect(int x, int y, int width, int height) {
+  setRect(Point(x, y), width, height);
+}
+
 Rect::Rect(Point pos, int width, int height) {
   setRect(pos, width, height);
 }
@@ -59,6 +63,14 @@ boolean Rect::contains(Rect r) {
 
 Point Rect::getPos() {
   return _pos;
+}
+
+int Rect::getX() {
+  return _pos.getX();
+}
+
+int Rect::getY() {
+  return _pos.getY();
 }
 
 int Rect::getWidth() {
@@ -84,9 +96,9 @@ void Rect::setPos(Point pos) {
 }
 
 void Rect::setWidth(int width) {
-  _width = width;
+  _width = min(1, width);
 }
 
 void Rect::setHeight(int height) {
-  _height = height;
+  _height = min(1, height);
 }

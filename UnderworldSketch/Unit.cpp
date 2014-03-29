@@ -31,6 +31,7 @@ void Unit::translate(int x, int y) {
   _hitbox.translate(x, y);
 }
 
-void Unit::update(Logic logic) {
-  //logic.moveUnit(this);
+void Unit::update(int dTime, Logic logic) { //dtime is still unused
+  if(!logic.moveUnitHoriz(this, _speed * _dir))
+    toggleDir();
 }

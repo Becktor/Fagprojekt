@@ -26,7 +26,6 @@ class Unit
     Rect getHitbox();
     void toggleDir();
     void translate(int x, int y);
-    void update(Logic logic);
+    void update(int dTime, Logic logic);
 };
-
 #endif

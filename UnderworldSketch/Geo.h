@@ -34,10 +34,13 @@ class Rect
 
   public:
     Rect();
+    Rect(int x, int y, int width, int height);
     Rect(Point pos, int width, int height);
     boolean contains(Point p);
     boolean contains(Rect r);
     Point getPos();
+    int getX();
+    int getY();
     int getWidth();
     int getHeight();
     void translate(int x, int y);

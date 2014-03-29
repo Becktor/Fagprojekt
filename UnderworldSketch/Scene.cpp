@@ -13,7 +13,10 @@ int Scene::getHeight() {
 }
 
 boolean Scene::tileIsSolid(int x, int y) {
-  getSolid(_tiles[x][y]);
+  if(x >= 0 && x < SCENE_WIDTH && y >= 0 && y < SCENE_HEIGHT)
+    getSolid(_tiles[x][y]);
+  else
+    return true; //By default, the edges of the map is solid.
 }
 
 void Scene::setTile(int x, int y, Tiles tile) {
