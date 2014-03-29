@@ -26,7 +26,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
       tileY = tileYStart;
   for(;tileX <= tileXEnd; tileX++) {
     for(;tileY <= tileYEnd; tileY++) {
-      if((*_scene).tileIsSolid(tileX, tileY)) {
+      if(!(*_scene).tileIsSolid(tileX, tileY)) {
         //partial move code!
         (*unit).toggleDir();
         return false;
