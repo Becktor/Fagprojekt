@@ -14,7 +14,8 @@ Logic::Logic(Scene *scene) {
 boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
   Rect hitbox = (*unit).getHitbox();
   int x, y = hitbox.getY();
-  if((*unit).getDir() == Left)
+  Direction dir = (*unit).getDir();
+  if(dir == Left)
     x = hitbox.getX();
   else
     x = hitbox.getX() + hitbox.getWidth() - 1;
@@ -24,7 +25,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
       tileYEnd = (y + hitbox.getHeight() - 1) / TILE_SIZE,
       tileX = tileXStart,
       tileY = tileYStart;
-  for(;tileX <= tileXEnd; tileX++) {
+  for(;dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(;tileY <= tileYEnd; tileY++) {
       if(!(*_scene).tileIsSolid(tileX, tileY)) {
         //partial move code!
