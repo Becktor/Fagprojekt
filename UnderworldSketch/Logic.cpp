@@ -29,7 +29,10 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
     for(;tileY <= tileYEnd; tileY++) {
       if(!(*_scene).tileIsSolid(tileX, tileY)) {
         //partial move code!
-        (*unit).toggleDir();
+        if(dir == Left)
+          (*unit).translate((tileX + 1) * TILE_SIZE - x, 0);
+        else
+          (*unit).translate(tileX * TILE_SIZE - hitbox.getWidth() - x, 0);
         return false;
       }
     }
