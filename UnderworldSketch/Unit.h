@@ -23,6 +23,7 @@ class Unit
     Unit(int speed, Rect hitbox);
     Direction getDir();
     int getSpeed();
+    void setSpeed(int speedValue);
     Rect getHitbox();
     void toggleDir();
     void translate(int x, int y);

@@ -12,11 +12,13 @@
 #include "Logic.h"
 
 class Logic;
-class Hero : Unit
-{
-
-  public:
-    void update(int dTime, Logic logic);
+class Hero : 
+Unit
+{  
+public:
+  void update(int dTime, Logic logic);
+  void setSpeed(int speedValue);
 };
 #endif
+
 

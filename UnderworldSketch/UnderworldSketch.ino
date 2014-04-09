@@ -28,7 +28,6 @@ static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
 static Unit _unit(1, Rect( Point(2, 2), 1, 1));
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 
 
@@ -39,7 +38,7 @@ void loop();
 
 void setup() {
   GD.begin();
-  nunchuk.init();
+
 }
 
 void loop() {
@@ -51,18 +50,6 @@ void loop() {
     fps++;
   }
   _dTime = SECOND / fps;
-}
-
-
-//A code to get input from controller in x direction (didn't knew where to place it)
-int heroSpeed(){
-  nunchuk.update(); //Update nunchuck data
-  if (nunchuk.analogX < 30) { 
-    //Left speed value
-  }
-  else if(nunchuk.analogX > 200 ){
-    //right speed value
-  }
 }
 
 

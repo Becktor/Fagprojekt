@@ -19,6 +19,10 @@ Rect Unit::getHitbox() {
 int Unit::getSpeed() {
   return _speed;
 }
+void Unit::setSpeed(int speedValue) {
+    _speed = speedValue;
+}
+
 
 void Unit::toggleDir() {
   if(_dir = Left)
@@ -35,3 +39,4 @@ void Unit::update(int dTime, Logic logic) { //dtime is still unused
   if(!logic.moveUnitHoriz(this, _speed * _dir))
     toggleDir();
 }
+
