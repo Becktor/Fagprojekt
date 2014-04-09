@@ -40,13 +40,11 @@ void Hero::update(int dTime, Logic logic) { //dtime is still unused
 
   //----------------Hero duck----------------------
   if (nunchuk.zButton == 1) {
-    _hitbox.setHeight(HERO_STAND_HEIGHT);
-  }
-  else {
     _hitbox.setHeight(HERO_DUCK_HEIGHT);
   }
-
-
+  else {
+    _hitbox.setHeight(HERO_STAND_HEIGHT);
+  }
 
   logic.moveUnitHoriz(this, dX);
 }
