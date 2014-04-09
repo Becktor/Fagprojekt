@@ -50,15 +50,16 @@ void loop() {
   while(millis() - startMilis < SECOND) { //Loop for a second
     GD.Clear();
     GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
-    GD.swap();
     _unit.update(_dTime, _logic);
     fps++;
-    GD.ClearColorRGB(0x103000);
-    GD.Clear();
-    GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
     GD.swap();
-  }
+//    GD.ClearColorRGB(0x103000);
+//    GD.Clear();
+//    GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
+//    GD.swap();
 
+  }
+ 
   _dTime = SECOND / fps;
 }
 
