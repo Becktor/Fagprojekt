@@ -6,18 +6,18 @@
  */
 
 //Extern libraries
+#include <ArduinoNunchuk.h>
 #include <EEPROM.h>
 #include <SPI.h>
 #include <GD2.h>
+#include <Wire.h>
+#include <LinkedList.h>
 
 //Intern libraries
 #include "Geo.h"
 #include "Scene.h"
 #include "Unit.h"
 #include "Logic.h"
-#include <Wire.h>
-#include <ArduinoNunchuk.h>
-#include <LinkedList.h>
 
 //Constants
 #define SECOND 1000 //Milis. in a second
@@ -30,6 +30,8 @@ static Logic _logic = Logic(&_scene);
 static Unit _unit(1, Rect( Point(2, 2), 1, 1));
 LinkedList<Unit*> units;
 
+
+
 //Function declarations
 void shellScene();
 void setup();
@@ -41,7 +43,6 @@ void setup() {
 }
 
 void loop() {
-
   unsigned long startMilis = millis();
   unsigned int fps = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
@@ -50,11 +51,12 @@ void loop() {
     GD.swap();
     _unit.update(_dTime, _logic);
     fps++;
+    GD.ClearColorRGB(0x103000);
+    GD.Clear();
+    GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
+    GD.swap();
   }
+
   _dTime = SECOND / fps;
 }
 
-//Should be in a separate scene generation library.
-/*
-
- */

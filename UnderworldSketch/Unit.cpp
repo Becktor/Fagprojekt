@@ -23,7 +23,12 @@ int Unit::getSpeed() {
 void Unit::setSpeed(int speedValue) {
     _speed = speedValue;
 }
-
+int Unit::getYacc(){
+  return _Yacc; 
+}
+void Unit::setAcc(int accValue){
+   _Yacc = accValue; 
+}
 
 void Unit::toggleDir() {
   if(_dir = Left)
