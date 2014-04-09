@@ -1,3 +1,5 @@
+#include <LinkedList.h>
+
 
 /*
  *  The main sketch file, the root of all evil.
@@ -27,7 +29,10 @@
 static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
-static Unit _unit(1, Rect( Point(2, 2), 1, 1));
+static Unit _unit1(1, Rect( Point(2, 2), 1, 1));
+static Unit _unit2(1, Rect( Point(3, 3), 1, 1));
+static Unit _unit3(1, Rect( Point(6, 5), 1, 1));
+
 LinkedList<Unit*> units;
 
 
@@ -39,7 +44,9 @@ void loop();
 
 void setup() {
   GD.begin();
-
+  units.add(&_unit1);
+  units.add(&_unit2);
+  units.add(&_unit3);
 }
 
 void loop() {
@@ -49,11 +56,18 @@ void loop() {
     GD.Clear();
     GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
     GD.swap();
+<<<<<<< HEAD
    _unit.update(_dTime, _logic);
     fps++;
   
+=======
+    for(int i=0;i<units.size();i++){
+      Unit *derp = units.get(i);
+      derp->update(_dTime, _logic);
+    }
+    fps++;
+>>>>>>> 396ee2b30cb1b9fb9079eab1b29dac6312a4d189
   }
-
   _dTime = SECOND / fps;
 }
 
