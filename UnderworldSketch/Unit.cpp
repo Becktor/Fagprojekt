@@ -6,6 +6,7 @@
 Unit::Unit(int speed, Rect hitbox) {
   _speed = speed;
   _hitbox = hitbox;
+  _dir=Left;
 }
 
 Direction Unit::getDir() {
@@ -36,7 +37,9 @@ void Unit::translate(int x, int y) {
 }
 
 void Unit::update(int dTime, Logic logic) { //dtime is still unused
-  if(!logic.moveUnitHoriz(this, _speed * _dir))
+  if(!logic.moveUnitHoriz(this, _speed * _dir)){
     toggleDir();
+  }
+    
 }
 
