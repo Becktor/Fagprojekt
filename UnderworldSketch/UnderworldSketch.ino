@@ -1,4 +1,3 @@
-
 /*
  *  The main sketch file, the root of all evil.
  *  Instead of using a separate file for the main game logic, updates and lists,
@@ -30,16 +29,12 @@ static Logic _logic = Logic(&_scene);
 static Unit _unit(1, Rect( Point(2, 2), 1, 1));
 LinkedList<Unit*> units;
 
-
-
 //Function declarations
-void shellScene();
 void setup();
 void loop();
 
 void setup() {
   GD.begin();
-
 }
 
 void loop() {
@@ -51,8 +46,10 @@ void loop() {
     GD.swap();
     _unit.update(_dTime, _logic);
     fps++;
+    GD.ClearColorRGB(0x103000);
+    GD.Clear();
+    GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
+    GD.swap();
   }
-
   _dTime = SECOND / fps;
 }
-
