@@ -1,3 +1,5 @@
+#include <LinkedList.h>
+
 
 /*
  *  The main sketch file, the root of all evil.
@@ -51,6 +53,10 @@ void loop() {
     GD.swap();
     _unit.update(_dTime, _logic);
     fps++;
+    GD.ClearColorRGB(0x103000);
+    GD.Clear();
+    GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
+    GD.swap();
   }
 
   _dTime = SECOND / fps;
