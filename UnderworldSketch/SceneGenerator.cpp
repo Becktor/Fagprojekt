@@ -1,8 +1,14 @@
 #include <Arduino.h>
 #include "Tiles.h"
 #include "Scene.h"
+#include "SceneGenerator.h"
 
-Scene generate() { }
+//Ensure that the object is not deconstructed for leaving the scope.
+Scene generate() {
+  Scene scene = Scene();
+  shell(&scene);
+  return scene;
+}
 
 void shell(Scene *scene) {
   for(int i = 0; i < SCENE_WIDTH; i++) {
