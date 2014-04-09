@@ -12,9 +12,9 @@ Logic::Logic(Scene *scene) {
 
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
-  Rect hitbox = (*unit).getHitbox();
+  Rect hitbox = unit->getHitbox();
   int x, y = hitbox.getY();
-  Direction dir = (*unit).getDir();
+  Direction dir = unit->getDir();
   if(dir == Left)
     x = hitbox.getX();
   else
@@ -27,17 +27,17 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
       tileY = tileYStart;
   for(;dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(;tileY <= tileYEnd; tileY++) {
-      if(!(*_scene).tileIsSolid(tileX, tileY)) {
+      if(!_scene->tileIsSolid(tileX, tileY)) {
         //partial move code!
         if(dir == Left)
-          (*unit).translate((tileX + 1) * TILE_SIZE - x, 0);
+          unit->translate((tileX + 1) * TILE_SIZE - x, 0);
         else
-          (*unit).translate(tileX * TILE_SIZE - hitbox.getWidth() - x, 0);
+          unit->translate(tileX * TILE_SIZE - hitbox.getWidth() - x, 0);
         return false;
       }
     }
   }
-  (*unit).translate(dX, 0);
+  unit->translate(dX, 0);
   return true;
 }
 

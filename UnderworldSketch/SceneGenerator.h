@@ -6,5 +6,6 @@
 #include "Tiles.h"
 
 Scene generate();
+void shell(Scene *scene);
 
 #endif
