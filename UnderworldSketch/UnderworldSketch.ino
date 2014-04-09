@@ -1,6 +1,3 @@
-#include <LinkedList.h>
-
-
 /*
  *  The main sketch file, the root of all evil.
  *  Instead of using a separate file for the main game logic, updates and lists,
@@ -56,17 +53,16 @@ void loop() {
     GD.Clear();
     GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
     GD.swap();
-<<<<<<< HEAD
-   _unit.update(_dTime, _logic);
+//   _unit.update(_dTime, _logic);
     fps++;
   
-=======
+
     for(int i=0;i<units.size();i++){
       Unit *derp = units.get(i);
       derp->update(_dTime, _logic);
     }
     fps++;
->>>>>>> 396ee2b30cb1b9fb9079eab1b29dac6312a4d189
+
   }
   _dTime = SECOND / fps;
 }
