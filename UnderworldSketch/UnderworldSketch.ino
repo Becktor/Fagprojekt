@@ -17,8 +17,6 @@
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
-
-
 //Constants
 #define SECOND 1000 //Milis. in a second
 #define INIT_FPS 60 //Initial assumed framerate.
