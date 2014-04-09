@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Tiles.h"
 #include "Scene.h"
+#include "SceneGenerator.h"
 
 //Ensure that the object is not deconstructed for leaving the scope.
 Scene generate() {
