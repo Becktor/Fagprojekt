@@ -17,6 +17,8 @@
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
+
+
 //Constants
 #define SECOND 1000 //Milis. in a second
 #define INIT_FPS 60 //Initial assumed framerate.
@@ -26,6 +28,8 @@ static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
 static Unit _unit(1, Rect( Point(2, 2), 1, 1));
+
+
 
 //Function declarations
 void shellScene();
@@ -48,7 +52,20 @@ void loop() {
   _dTime = SECOND / fps;
 }
 
+
+
+
 //Should be in a separate scene generation library.
 /*
-
+void shellScene() {
+  for(int i = 0; i < SCENE_WIDTH; i++) {
+    _scene.setTile(i, 0, Rock);
+    _scene.setTile(i, SCENE_HEIGHT - 1, Rock);
+  }
+  for(int i = 1; i < SCENE_HEIGHT - 1; i++) {
+    _scene.setTile(0, i, Rock);
+    _scene.setTile(SCENE_WIDTH - 1, i, Rock);
+  }
+}
  */
+
