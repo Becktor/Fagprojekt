@@ -16,6 +16,7 @@ class Unit
 {
   private:
     int _speed;
+    int _Yacc;
     Direction _dir;
     Rect _hitbox;
 
@@ -23,7 +24,9 @@ class Unit
     Unit(int speed, Rect hitbox);
     Direction getDir();
     int getSpeed();
+    int getYacc();
     void setSpeed(int speedValue);
+    void setAcc(int accValue);
     Rect getHitbox();
     void toggleDir();
     void translate(int x, int y);

@@ -7,9 +7,14 @@
 #include <ArduinoNunchuk.h>
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
+
+
+
 void Hero::update(int dTime, Logic logic) { //dtime is still unused
   int dX;
-  //Hero movement 
+  int dY;
+
+  //----------------Hero x-movement-----------------------
   if ( (130  <  nunchuk.analogX)  && (nunchuk.analogX < 160) ){
     dX =  1;
   }
@@ -22,8 +27,32 @@ void Hero::update(int dTime, Logic logic) { //dtime is still unused
   else if (  80 > nunchuk.analogX){
     dX =  3;
   }
+
+
+  //-----------------Hero jump---------------------
+  if ( nunchuk.cButton == 1 ) {
+    
+      
+
+
+
+  }
+
+
+
+
+  //Hero duck
+  if (nunchuk.zButton == 1) {
+  }
+
+
+
   logic.moveUnitHoriz(this, dX);
 }
+
+
+
+
 
 
 
