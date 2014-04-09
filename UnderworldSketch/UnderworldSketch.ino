@@ -5,17 +5,17 @@
  */
 
 //Extern libraries
+#include <ArduinoNunchuk.h>
 #include <EEPROM.h>
 #include <SPI.h>
 #include <GD2.h>
+#include <Wire.h>
 
 //Intern libraries
 #include "Geo.h"
 #include "Scene.h"
 #include "Unit.h"
 #include "Logic.h"
-#include <Wire.h>
-#include <ArduinoNunchuk.h>
 
 
 
@@ -42,30 +42,16 @@ void setup() {
 }
 
 void loop() {
-
   unsigned long startMilis = millis();
   unsigned int fps = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     _unit.update(_dTime, _logic);
     fps++;
+    GD.ClearColorRGB(0x103000);
+    GD.Clear();
+    GD.cmd_text(240, 136, 31, OPT_CENTER, "Hello world");
+    GD.swap();
   }
   _dTime = SECOND / fps;
 }
-
-
-
-
-//Should be in a separate scene generation library.
-/*
-void shellScene() {
-  for(int i = 0; i < SCENE_WIDTH; i++) {
-    _scene.setTile(i, 0, Rock);
-    _scene.setTile(i, SCENE_HEIGHT - 1, Rock);
-  }
-  for(int i = 1; i < SCENE_HEIGHT - 1; i++) {
-    _scene.setTile(0, i, Rock);
-    _scene.setTile(SCENE_WIDTH - 1, i, Rock);
-  }
-}
- */
 
