@@ -13,9 +13,6 @@
 
 class Logic;
 class Hero : Unit {
-  private:
-    Rect _hitbox;
-
   public:
     void update(int dTime, Logic logic);
 };

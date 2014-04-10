@@ -27,7 +27,7 @@ class Unit
     Unit(int speed, Rect hitbox);
     void accelerateY(int dY);
     Direction getDir();
-    Rect getHitbox();
+    Rect* getHitbox();
     int getMoveSpeed();
     int getYVel();
     boolean isFalling();

@@ -10,7 +10,7 @@ Unit::Unit(int moveSpeed, Rect hitbox) {
   _falling = false;
 }
 
-void accelerateY(int dY) {
+void Unit::accelerateY(int dY) {
   setYVel(_yVel + dY);
 }
 
@@ -18,8 +18,8 @@ Direction Unit::getDir() {
   return _dir;
 }
 
-Rect Unit::getHitbox() {
-  return _hitbox;
+Rect* Unit::getHitbox() {
+  return &_hitbox;
 }
 
 int Unit::getMoveSpeed() {
@@ -30,7 +30,7 @@ int Unit::getYVel(){
   return _yVel; 
 }
 
-boolean isFalling() {
+boolean Unit::isFalling() {
   return _falling;
 }
 
