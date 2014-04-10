@@ -12,13 +12,11 @@
 #include "Logic.h"
 
 class Logic;
-class Hero : 
-Unit
-{  
-private:
-   Rect _hitbox;
+class Hero : Unit {
+  private:
+    Rect _hitbox;
 
-public:
-  void update(int dTime, Logic logic);
+  public:
+    void update(int dTime, Logic logic);
 };
 #endif

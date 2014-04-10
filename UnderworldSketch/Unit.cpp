@@ -6,7 +6,12 @@
 Unit::Unit(int moveSpeed, Rect hitbox) {
   _moveSpeed = moveSpeed;
   _hitbox = hitbox;
-  _dir=Left;
+  _dir = Left;
+  _falling = false;
+}
+
+void accelerateY(int dY) {
+  setYVel(_yVel + dY);
 }
 
 Direction Unit::getDir() {
@@ -21,12 +26,16 @@ int Unit::getMoveSpeed() {
   return _moveSpeed;
 }
 
-int Unit::getYAcc(){
-  return _YAcc; 
+int Unit::getYVel(){
+  return _yVel; 
 }
 
-void Unit::setYAcc(int YAcc){
-   _YAcc = YAcc; 
+boolean isFalling() {
+  return _falling;
+}
+
+void Unit::setYVel(int yVel){
+   _yVel = max(min(yVel, -TERMINAL_VEL), TERMINAL_VEL); 
 }
 
 void Unit::toggleDir() {
@@ -34,6 +43,10 @@ void Unit::toggleDir() {
     _dir = Right;
   else
     _dir = Left;
+}
+
+void Unit::setFalling(boolean falling) {
+  _falling = falling;
 }
 
 void Unit::translate(int x, int y) {

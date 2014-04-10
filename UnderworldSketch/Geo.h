@@ -28,9 +28,10 @@ class Point
 
 class Rect
 {
-  int _width;
-  int _height;
-  Point _pos;
+  private:
+    int _width;
+    int _height;
+    Point _pos;
 
   public:
     Rect();
@@ -49,5 +50,4 @@ class Rect
     void setWidth(int width);
     void setHeight(int height);
 };
-
 #endif
