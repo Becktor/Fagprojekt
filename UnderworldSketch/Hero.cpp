@@ -34,9 +34,9 @@ void Hero::update(int dTime, Logic logic) { //dtime is still unused
 
   //-----------------Hero jump---------------------
   if ( nunchuk.cButton == 1 ) {
-    Hero::setAcc(2);
+    Hero::setYAcc(2);
   } else {
-    Hero::setAcc(1);
+    Hero::setYAcc(1);
   }
 
   //----------------Hero duck----------------------

@@ -16,7 +16,7 @@ class Unit
 {
   private:
     int _moveSpeed; //Should be constant. When unit becomes an abstract class, move this value to individual creature constants.
-    int _Yacc;
+    int _YAcc;
     Direction _dir;
     Rect _hitbox;
 
@@ -24,7 +24,7 @@ class Unit
     Unit(int speed, Rect hitbox);
     Direction getDir();
     int getMoveSpeed();
-    int getYacc();
+    int getYAcc();
     Rect getHitbox();
     void setYAcc(int yAcc);
     void toggleDir();

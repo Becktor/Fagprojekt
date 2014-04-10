@@ -41,6 +41,6 @@ void Unit::translate(int x, int y) {
 }
 
 void Unit::update(int dTime, Logic logic) { //dtime is still unused
-  if(!logic.moveUnitHoriz(this, _speed * _dir))
+  if(!logic.moveUnitHoriz(this, _moveSpeed * _dir))
     toggleDir();   
 }
