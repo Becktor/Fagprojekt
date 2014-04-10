@@ -47,7 +47,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::moveUnitVerti(Unit *unit, int dY) {
   Rect *hitbox = unit->getHitbox();
-  int x = hitbox.>getX(), y;
+  int x = hitbox->getX(), y;
   Direction dir;
   if(dY < 0) {
     y = hitbox->getY();
