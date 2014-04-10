@@ -9,6 +9,6 @@ enum Tiles{
   Wall = 2
 };
 
-static const PROGMEM boolean _solid[3] = {true, true, true};
+static const PROGMEM boolean SOLID[3] = {true, true, true};
 boolean getSolid(Tiles tile);
 #endif

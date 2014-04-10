@@ -20,10 +20,5 @@ private:
 
 public:
   void update(int dTime, Logic logic);
-  void setSpeed(int speedValue);
-  void setAcc(int AccValue);
 };
 #endif
-
-
-

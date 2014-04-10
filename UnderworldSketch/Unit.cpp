@@ -3,8 +3,8 @@
 #include "Logic.h"
 #include "Unit.h"
 
-Unit::Unit(int speed, Rect hitbox) {
-  _speed = speed;
+Unit::Unit(int moveSpeed, Rect hitbox) {
+  _moveSpeed = moveSpeed;
   _hitbox = hitbox;
   _dir=Left;
 }
@@ -17,17 +17,16 @@ Rect Unit::getHitbox() {
   return _hitbox;
 }
 
-int Unit::getSpeed() {
-  return _speed;
+int Unit::getMoveSpeed() {
+  return _moveSpeed;
 }
-void Unit::setSpeed(int speedValue) {
-    _speed = speedValue;
+
+int Unit::getYAcc(){
+  return _YAcc; 
 }
-int Unit::getYacc(){
-  return _Yacc; 
-}
-void Unit::setAcc(int accValue){
-   _Yacc = accValue; 
+
+void Unit::setYAcc(int YAcc){
+   _YAcc = YAcc; 
 }
 
 void Unit::toggleDir() {
@@ -42,9 +41,6 @@ void Unit::translate(int x, int y) {
 }
 
 void Unit::update(int dTime, Logic logic) { //dtime is still unused
-  if(!logic.moveUnitHoriz(this, _speed * _dir)){
-    toggleDir();
-  }
-    
+  if(!logic.moveUnitHoriz(this, _speed * _dir))
+    toggleDir();   
 }
-

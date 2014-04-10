@@ -15,7 +15,7 @@ class Logic;
 class Unit
 {
   private:
-    int _speed;
+    int _moveSpeed; //Should be constant. When unit becomes an abstract class, move this value to individual creature constants.
     int _Yacc;
     Direction _dir;
     Rect _hitbox;
@@ -23,11 +23,10 @@ class Unit
   public:
     Unit(int speed, Rect hitbox);
     Direction getDir();
-    int getSpeed();
+    int getMoveSpeed();
     int getYacc();
-    void setSpeed(int speedValue);
-    void setAcc(int accValue);
     Rect getHitbox();
+    void setYAcc(int yAcc);
     void toggleDir();
     void translate(int x, int y);
     void update(int dTime, Logic logic);

@@ -17,7 +17,6 @@ ArduinoNunchuk nunchuk = ArduinoNunchuk();
 void Hero::update(int dTime, Logic logic) { //dtime is still unused
   int dX;
   int dY;
-  
 
   //----------------Hero x-movement-----------------------
   if ( (130  <  nunchuk.analogX)  && (nunchuk.analogX < 160) ){
@@ -33,7 +32,6 @@ void Hero::update(int dTime, Logic logic) { //dtime is still unused
     dX =  HERO_RUNNING;
   }
 
-
   //-----------------Hero jump---------------------
   if ( nunchuk.cButton == 1 ) {
     Hero::setAcc(2);
@@ -48,16 +46,5 @@ void Hero::update(int dTime, Logic logic) { //dtime is still unused
   else {
     _hitbox.setHeight(HERO_STAND_HEIGHT);
   }
-
   logic.moveUnitHoriz(this, dX);
 }
-
-
-
-
-
-
-
-
-
-

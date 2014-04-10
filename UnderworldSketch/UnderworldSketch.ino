@@ -26,16 +26,14 @@
 static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
+
+static LinkedList<Unit*> units;
+//Temporary units
 static Unit _unit1(1, Rect( Point(2, 2), 1, 1));
 static Unit _unit2(1, Rect( Point(3, 3), 1, 1));
 static Unit _unit3(1, Rect( Point(6, 5), 1, 1));
 
-LinkedList<Unit*> units;
-
-
-
 //Function declarations
-void shellScene();
 void setup();
 void loop();
 
@@ -50,20 +48,19 @@ void loop() {
   unsigned long startMilis = millis();
   unsigned int fps = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
+    //Game logic
+    for(int i=0; i < units.size(); i++){
+      Unit *unit = units.get(i);
+      unit->update(_dTime, _logic);
+    }
+
+    //Draw Logic
     GD.Clear();
     GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
     GD.swap();
-//   _unit.update(_dTime, _logic);
-    fps++;
-  
 
-    for(int i=0;i<units.size();i++){
-      Unit *derp = units.get(i);
-      derp->update(_dTime, _logic);
-    }
+    //Frame counter
     fps++;
-
   }
   _dTime = SECOND / fps;
 }
-
