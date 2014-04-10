@@ -17,6 +17,7 @@
 #include "Scene.h"
 #include "Unit.h"
 #include "Logic.h"
+#include "Minotaur.h"
 
 //Constants
 #define SECOND 1000 //Milis. in a second
@@ -28,10 +29,11 @@ static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
 
 static LinkedList<Unit*> units;
+
 //Temporary units
-static Unit _unit1(1, Rect( Point(2, 2), 1, 1));
-static Unit _unit2(1, Rect( Point(3, 3), 1, 1));
-static Unit _unit3(1, Rect( Point(6, 5), 1, 1));
+static Minotaur _mino1(2, 2);
+static Minotaur _mino2(3, 3);
+static Minotaur _mino3(6, 5);
 
 //Function declarations
 void setup();
@@ -39,9 +41,9 @@ void loop();
 
 void setup() {
   GD.begin();
-  units.add(&_unit1);
-  units.add(&_unit2);
-  units.add(&_unit3);
+  units.add(&_mino1);
+  units.add(&_mino2);
+  units.add(&_mino3);
 }
 
 void loop() {
@@ -49,9 +51,10 @@ void loop() {
   unsigned int fps = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     //Game logic
-    for(int i=0; i < units.size(); i++){
+    for(int i = 0; i < units.size(); i++){
       Unit *unit = units.get(i);
-      unit->update(_dTime, _logic);
+      unit->updateAI(_dTime, &_logic);
+      unit->updatePhysics(_dTime, &_logic);
     }
 
     //Draw Logic

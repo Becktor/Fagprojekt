@@ -3,57 +3,44 @@
 #include "Logic.h"
 #include "Unit.h"
 
-Unit::Unit(int moveSpeed, Rect hitbox) {
-  _moveSpeed = moveSpeed;
+Unit::Unit(Rect hitbox) {
   _hitbox = hitbox;
-  _dir = Left;
-  _falling = false;
-}
-
-void Unit::accelerateY(int dY) {
-  setYVel(_yVel + dY);
-}
-
-Direction Unit::getDir() {
-  return _dir;
+  _xVel = 0;
+  _yVel = 0;
 }
 
 Rect* Unit::getHitbox() {
   return &_hitbox;
 }
 
-int Unit::getMoveSpeed() {
-  return _moveSpeed;
+int Unit::getXVel() {
+  return _xVel;  
 }
 
-int Unit::getYVel(){
-  return _yVel; 
+int Unit::getYVel() {
+  return _yVel;
 }
 
-boolean Unit::isFalling() {
-  return _falling;
+void Unit::setXVel(int xVel) {
+   _xVel = xVel;  
 }
 
-void Unit::setYVel(int yVel){
-   _yVel = max(min(yVel, -TERMINAL_VEL), TERMINAL_VEL); 
-}
-
-void Unit::toggleDir() {
-  if(_dir = Left)
-    _dir = Right;
-  else
-    _dir = Left;
-}
-
-void Unit::setFalling(boolean falling) {
-  _falling = falling;
+void Unit::setYVel(int yVel) {
+   _yVel = yVel;
 }
 
 void Unit::translate(int x, int y) {
   _hitbox.translate(x, y);
 }
 
-void Unit::update(int dTime, Logic logic) { //dtime is still unused
-  if(!logic.moveUnitHoriz(this, _moveSpeed * _dir))
-    toggleDir();   
+void Unit::updateAI(int dTime, Logic *logic) { }
+
+//Should be moved to the future prop class when made.
+//Moves the unit according to his velocity
+void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
+  //logic->gravitate(this, dTime);
+  if(!logic->moveUnitHoriz(this, getXVel()))
+    setXVel(0);
+  if(!logic->moveUnitVerti(this, getYVel()))
+    setYVel(0);
 }

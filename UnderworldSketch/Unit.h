@@ -11,30 +11,23 @@
 #include "Geo.h"
 #include "Logic.h"
 
-#define TERMINAL_VEL 10
-
 class Logic;
 class Unit
 {
   private:
-    boolean _falling;
-    int _moveSpeed; //Should be constant. When unit becomes an abstract class, move this value to individual creature constants.
-    int _yVel; //Should be 2dimensional in the future.
-    Direction _dir;
+    int _xVel;
+    int _yVel;
     Rect _hitbox;
 
   public:
-    Unit(int speed, Rect hitbox);
-    void accelerateY(int dY);
-    Direction getDir();
+    Unit(Rect hitbox);
     Rect* getHitbox();
-    int getMoveSpeed();
+    int getXVel();
     int getYVel();
-    boolean isFalling();
-    void setFalling(boolean falling);
+    void setXVel(int yVel);
     void setYVel(int yVel);
-    void toggleDir();
     void translate(int x, int y);
-    void update(int dTime, Logic logic);
+    virtual void updateAI(int dTime, Logic *logic);
+    void updatePhysics(int dTime, Logic *logic);
 };
 #endif

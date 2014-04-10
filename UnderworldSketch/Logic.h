@@ -6,6 +6,8 @@
 #include "Unit.h"
 #include "Scene.h"
 
+#define GRAVITY 2
+
 class Unit;
 class Logic
 {
@@ -13,6 +15,7 @@ class Logic
     Scene *_scene;
   public:
     Logic(Scene *scene);
+    void gravitate(Unit *unit, int dTime);
     boolean moveUnitHoriz(Unit *unit, int dX);
     boolean moveUnitVerti(Unit *unit, int dY);
     void setMap(Scene *scene);

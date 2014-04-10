@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "Direction.h"
 #include "Tiles.h"
+#include "Direction.h"
 #include "Geo.h"
 #include "Unit.h"
 #include "Scene.h"
@@ -8,6 +8,10 @@
 
 Logic::Logic(Scene *scene) {
   setMap(scene);
+}
+
+void gravitate(Unit *unit, int dTime) { //Unused dTime
+  unit->setYVel(GRAVITY + unit->getYVel());
 }
 
 //Returns whether the movement was complete (true) or partial (false)
