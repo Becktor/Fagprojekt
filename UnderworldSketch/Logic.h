@@ -13,7 +13,8 @@ class Logic
     Scene *_scene;
   public:
     Logic(Scene *scene);
-    boolean moveUnitHoriz(Unit *unit, int x);
+    boolean moveUnitHoriz(Unit *unit, int dX);
+    boolean moveUnitVerti(Unit *unit, int dY);
     void setMap(Scene *scene);
 };
 #endif

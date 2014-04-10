@@ -44,6 +44,41 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
   return true;
 }
 
+//Returns whether the movement was complete (true) or partial (false)
+boolean Logic::moveUnitVerti(Unit *unit, int dY) {
+  Rect *hitbox = unit->getHitbox();
+  int x = hitbox.>getX(), y;
+  Direction dir;
+  if(dY < 0) {
+    y = hitbox->getY();
+    dir = Up;
+  } else if(dY > 0) {
+    y = hitbox->getY() + hitbox->getHeight() - 1;
+    dir = Down;
+  } else
+    return true;
+  int tileXStart = x / TILE_SIZE,
+      tileXEnd = (x + hitbox->getWidth() - 1) / TILE_SIZE,
+      tileYStart = y / TILE_SIZE,
+      tileYEnd = (y + dY) / TILE_SIZE,
+      tileX = tileXStart,
+      tileY = tileYStart;
+
+  for(;tileX <= tileXEnd; tileX++) {
+    for(;dir * tileY <= dir * tileYEnd; tileY += dir) {
+      if(!_scene->tileIsSolid(tileX, tileY)) {
+        if(dir == Up)
+          unit->translate(0, (tileY + 1) * TILE_SIZE - y);
+        else
+          unit->translate(0, tileY * TILE_SIZE - hitbox->getHeight() - y);
+        return false;
+      }
+    }
+  }
+  unit->translate(0, dY);
+  return true;
+}
+
 void Logic::setMap(Scene *scene) {
   _scene = scene;
 }
