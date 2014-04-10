@@ -14,11 +14,15 @@ Logic::Logic(Scene *scene) {
 boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
   Rect *hitbox = unit->getHitbox();
   int x, y = hitbox->getY();
-  Direction dir = unit->getDir();
-  if(dir == Left)
+  Direction dir;
+  if(dX < 0) {
     x = hitbox->getX();
-  else
+    dir = Left;
+  } else if(dX > 0) {
     x = hitbox->getX() + hitbox->getWidth() - 1;
+    dir = Right;
+  } else
+    return true;
   int tileXStart = x / TILE_SIZE,
       tileXEnd = (x + dX) / TILE_SIZE,
       tileYStart = y / TILE_SIZE,
