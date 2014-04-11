@@ -39,7 +39,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
         if(dir == Left)
           unit->translate((tileX + 1) * TILE_SIZE - x, 0);
         else
-          unit->translate(tileX * TILE_SIZE - hitbox->getWidth() - x, 0);
+          unit->translate(tileX * TILE_SIZE - x - 1, 0);
         return false;
       }
     }
@@ -74,7 +74,7 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
         if(dir == Up)
           unit->translate(0, (tileY + 1) * TILE_SIZE - y);
         else
-          unit->translate(0, tileY * TILE_SIZE - hitbox->getHeight() - y);
+          unit->translate(0, tileY * TILE_SIZE - y - 1);
         return false;
       }
     }

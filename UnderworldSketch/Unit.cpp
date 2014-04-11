@@ -40,7 +40,7 @@ void Unit::updateAI(int dTime, Logic *logic) { }
 void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
   logic->gravitate(this, dTime);
   if(!logic->moveUnitHoriz(this, getXVel()))
-    setXVel(0);
+    setXVel(-getXVel());
   if(!logic->moveUnitVerti(this, getYVel()))
     setYVel(0);
 }

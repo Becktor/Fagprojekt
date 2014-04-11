@@ -65,13 +65,14 @@ void loop() {
 
     //Draw Logic
     GD.Clear();
-    GD.ColorRGB(255, 0, 0);
-    for(int i = 0; i < units.size(); i++)
-      drawUnit(units.get(i));
     GD.ColorRGB(140, 140, 140);
     for(int i = 0; i < _scene.getWidth(); i++)
       for(int j = 0; j < _scene.getHeight(); j++)
         drawTile(i, j, _scene.getTile(i, j));
+    GD.ColorRGB(255, 0, 0);
+    for(int i = 0; i < units.size(); i++)
+      drawUnit(units.get(i));
+    GD.cmd_number(240,136, 31, OPT_CENTER, fps); 
     GD.swap();
 
     //Frame counter
@@ -83,7 +84,7 @@ void loop() {
 void drawRect(int x, int y, int width, int height) {
   GD.Begin(RECTS);
   GD.Vertex2ii(x, y);
-  GD.Vertex2ii(x + width, y + height);
+  GD.Vertex2ii(x + width - 2, y + height - 2);
 }
 
 void drawTile(int x, int y, Tiles tile) {

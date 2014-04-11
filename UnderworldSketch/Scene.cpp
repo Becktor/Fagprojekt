@@ -25,7 +25,7 @@ Tiles Scene::getTile(int x, int y) {
 
 boolean Scene::tileIsSolid(int x, int y) {
   if(contains(x, y))
-    getSolid(_tiles[x][y]);
+    return getSolid(_tiles[x][y]);
   else
     return true; //By default, the edges of the map is solid.
 }

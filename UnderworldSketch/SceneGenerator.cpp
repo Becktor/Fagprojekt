@@ -12,11 +12,11 @@ Scene generate() {
 
 void shell(Scene *scene) {
   for(int i = 0; i < SCENE_WIDTH; i++) {
-    scene->setTile(i, 0, Rock);
-    scene->setTile(i, SCENE_HEIGHT - 1, Rock);
+    scene->setTile(i, 0, Wall);
+    scene->setTile(i, SCENE_HEIGHT - 1, Wall);
   }
   for(int i = 0; i < SCENE_HEIGHT; i++) {
-    scene->setTile(0, i, Rock);
-    scene->setTile(SCENE_WIDTH - 1, i, Rock);
+    scene->setTile(0, i, Wall);
+    scene->setTile(SCENE_WIDTH - 1, i, Wall);
   }
 }
