@@ -24,10 +24,12 @@ class Scene
   Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
   public:
     Scene();
+    boolean contains(int x, int y);
     int getWidth();
     int getHeight();
-    boolean tileIsSolid(int x, int y);
+    Tiles getTile(int x, int y);
     void setTile(int x, int y, Tiles tile);
+    boolean tileIsSolid(int x, int y);
 };
 
 #endif

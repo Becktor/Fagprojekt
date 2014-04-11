@@ -10,7 +10,7 @@ Logic::Logic(Scene *scene) {
   setMap(scene);
 }
 
-void gravitate(Unit *unit, int dTime) { //Unused dTime
+void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
   unit->setYVel(GRAVITY + unit->getYVel());
 }
 
@@ -35,7 +35,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
       tileY = tileYStart;
   for(;dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(;tileY <= tileYEnd; tileY++) {
-      if(!_scene->tileIsSolid(tileX, tileY)) {
+      if(_scene->tileIsSolid(tileX, tileY)) {
         if(dir == Left)
           unit->translate((tileX + 1) * TILE_SIZE - x, 0);
         else
@@ -70,7 +70,7 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
 
   for(;tileX <= tileXEnd; tileX++) {
     for(;dir * tileY <= dir * tileYEnd; tileY += dir) {
-      if(!_scene->tileIsSolid(tileX, tileY)) {
+      if(_scene->tileIsSolid(tileX, tileY)) {
         if(dir == Up)
           unit->translate(0, (tileY + 1) * TILE_SIZE - y);
         else

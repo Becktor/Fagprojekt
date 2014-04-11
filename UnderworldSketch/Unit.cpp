@@ -38,7 +38,7 @@ void Unit::updateAI(int dTime, Logic *logic) { }
 //Should be moved to the future prop class when made.
 //Moves the unit according to his velocity
 void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
-  //logic->gravitate(this, dTime);
+  logic->gravitate(this, dTime);
   if(!logic->moveUnitHoriz(this, getXVel()))
     setXVel(0);
   if(!logic->moveUnitVerti(this, getYVel()))

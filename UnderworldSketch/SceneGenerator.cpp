@@ -15,7 +15,7 @@ void shell(Scene *scene) {
     scene->setTile(i, 0, Rock);
     scene->setTile(i, SCENE_HEIGHT - 1, Rock);
   }
-  for(int i = 1; i < SCENE_HEIGHT - 1; i++) {
+  for(int i = 0; i < SCENE_HEIGHT; i++) {
     scene->setTile(0, i, Rock);
     scene->setTile(SCENE_WIDTH - 1, i, Rock);
   }

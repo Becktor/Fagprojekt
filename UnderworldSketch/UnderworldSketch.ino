@@ -14,10 +14,12 @@
 
 //Intern libraries
 #include "Geo.h"
+#include "Tiles.h"
 #include "Scene.h"
-#include "Unit.h"
 #include "Logic.h"
+#include "Unit.h"
 #include "Minotaur.h"
+#include "SceneGenerator.h"
 
 //Constants
 #define SECOND 1000 //Milis. in a second
@@ -31,64 +33,65 @@ static Logic _logic = Logic(&_scene);
 static LinkedList<Unit*> units;
 
 //Temporary units
-static Minotaur _mino1(2, 2);
+static Minotaur _mino1(100, 100);
 //static Minotaur _mino2(3, 3);
 //static Minotaur _mino3(6, 5);
 
 //Function declarations
 void setup();
 void loop();
+void drawRect(Rect *rect);
+void drawTile(Tiles tile);
+void drawUnit(Unit *unit);
 
 void setup() {
   GD.begin();
   units.add(&_mino1);
-//  units.add(&_mino2);
-//  units.add(&_mino3);
+  //units.add(&_mino2);
+  //units.add(&_mino3);
+  shell(&_scene);
 }
 
 void loop() {
-//  unsigned long startMilis = millis();
-//  unsigned int fps = 0;
-//  while(millis() - startMilis < SECOND) { //Loop for a second
-//    //Game logic
-//    for(int i = 0; i < units.size(); i++){
-//      Unit *unit = units.get(i);
-//      unit->updateAI(_dTime, &_logic);
-//      unit->updatePhysics(_dTime, &_logic);
-//    }
-//
-//    //Draw Logic
-//    GD.Clear();
-//    GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
-//    GD.swap();
-//
-//    //Frame counter
-//    fps++;
-//  }
-//  _dTime = SECOND / fps;
+  unsigned long startMilis = millis();
+  unsigned int fps = 0;
+  while(millis() - startMilis < SECOND) { //Loop for a second
+    //Game logic
+    for(int i = 0; i < units.size(); i++) {
+      Unit *unit = units.get(i);
+      unit->updateAI(_dTime, &_logic);
+      unit->updatePhysics(_dTime, &_logic);
+    }
 
+    //Draw Logic
+    GD.Clear();
+    GD.ColorRGB(255, 0, 0);
+    for(int i = 0; i < units.size(); i++)
+      drawUnit(units.get(i));
+    GD.ColorRGB(140, 140, 140);
+    for(int i = 0; i < _scene.getWidth(); i++)
+      for(int j = 0; j < _scene.getHeight(); j++)
+        drawTile(i, j, _scene.getTile(i, j));
+    GD.swap();
 
-
-  GD.Clear();
-  
-  drawUnit(units.get(0));
-  
-  
-  GD.cmd_number(240, 136, 31, OPT_CENTER, 23);
-  GD.swap();
+    //Frame counter
+    fps++;
+  }
+  _dTime = SECOND / fps;
 }
 
-void drawUnit(Unit* unit)
-{
-  drawRect(unit->getHitbox());
-}
-
-void drawRect(Rect* rect)
-{
+void drawRect(int x, int y, int width, int height) {
   GD.Begin(RECTS);
-  GD.ColorRGB(255, 0, 0);
-  GD.Vertex2ii(rect->getX(), rect->getY());
-  GD.Vertex2ii(rect->getX() + rect->getWidth(), rect->getY() + rect->getHeight());
+  GD.Vertex2ii(x, y);
+  GD.Vertex2ii(x + width, y + height);
 }
 
+void drawTile(int x, int y, Tiles tile) {
+  if(tile != Void)
+    drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+}
 
+void drawUnit(Unit* unit) {
+  Rect *hitbox = unit->getHitbox();
+  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
+}
