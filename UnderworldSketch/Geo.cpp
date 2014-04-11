@@ -96,9 +96,9 @@ void Rect::setPos(Point pos) {
 }
 
 void Rect::setWidth(int width) {
-  _width = min(1, width);
+  _width = max(1, width);
 }
 
 void Rect::setHeight(int height) {
-  _height = min(1, height);
+  _height = max(1, height);
 }

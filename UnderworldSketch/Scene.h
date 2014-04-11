@@ -16,8 +16,8 @@
 #include "Tiles.h"
 
 #define TILE_SIZE 48 //One tile unit to world units conv.
-#define SCENE_WIDTH 25
-#define SCENE_HEIGHT 25
+#define SCENE_WIDTH 5
+#define SCENE_HEIGHT 5
 
 class Scene
 {

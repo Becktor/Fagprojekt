@@ -5,8 +5,8 @@
 #include "Logic.h"
 
 #define SPEED 1
-#define HEIGHT 20
-#define WIDTH 10
+#define HEIGHT 200
+#define WIDTH 100
 
 class Minotaur : public Unit {
   private:

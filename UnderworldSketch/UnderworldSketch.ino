@@ -32,8 +32,8 @@ static LinkedList<Unit*> units;
 
 //Temporary units
 static Minotaur _mino1(2, 2);
-static Minotaur _mino2(3, 3);
-static Minotaur _mino3(6, 5);
+//static Minotaur _mino2(3, 3);
+//static Minotaur _mino3(6, 5);
 
 //Function declarations
 void setup();
@@ -42,28 +42,53 @@ void loop();
 void setup() {
   GD.begin();
   units.add(&_mino1);
-  units.add(&_mino2);
-  units.add(&_mino3);
+//  units.add(&_mino2);
+//  units.add(&_mino3);
 }
 
 void loop() {
-  unsigned long startMilis = millis();
-  unsigned int fps = 0;
-  while(millis() - startMilis < SECOND) { //Loop for a second
-    //Game logic
-    for(int i = 0; i < units.size(); i++){
-      Unit *unit = units.get(i);
-      unit->updateAI(_dTime, &_logic);
-      unit->updatePhysics(_dTime, &_logic);
-    }
+//  unsigned long startMilis = millis();
+//  unsigned int fps = 0;
+//  while(millis() - startMilis < SECOND) { //Loop for a second
+//    //Game logic
+//    for(int i = 0; i < units.size(); i++){
+//      Unit *unit = units.get(i);
+//      unit->updateAI(_dTime, &_logic);
+//      unit->updatePhysics(_dTime, &_logic);
+//    }
+//
+//    //Draw Logic
+//    GD.Clear();
+//    GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
+//    GD.swap();
+//
+//    //Frame counter
+//    fps++;
+//  }
+//  _dTime = SECOND / fps;
 
-    //Draw Logic
-    GD.Clear();
-    GD.cmd_number(240, 136, 31, OPT_CENTER, fps);
-    GD.swap();
 
-    //Frame counter
-    fps++;
-  }
-  _dTime = SECOND / fps;
+
+  GD.Clear();
+  
+  drawUnit(units.get(0));
+  
+  
+  GD.cmd_number(240, 136, 31, OPT_CENTER, 23);
+  GD.swap();
 }
+
+void drawUnit(Unit* unit)
+{
+  drawRect(unit->getHitbox());
+}
+
+void drawRect(Rect* rect)
+{
+  GD.Begin(RECTS);
+  GD.ColorRGB(255, 0, 0);
+  GD.Vertex2ii(rect->getX(), rect->getY());
+  GD.Vertex2ii(rect->getX() + rect->getWidth(), rect->getY() + rect->getHeight());
+}
+
+
