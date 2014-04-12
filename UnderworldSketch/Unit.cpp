@@ -42,5 +42,5 @@ void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
   if(!logic->moveUnitHoriz(this, getXVel()))
     setXVel(0);
   if(!logic->moveUnitVerti(this, getYVel()))
-    setYVel(0);
+    setYVel(-getYVel());
 }

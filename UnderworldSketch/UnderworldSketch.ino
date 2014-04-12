@@ -33,7 +33,7 @@ static Logic _logic = Logic(&_scene);
 static LinkedList<Unit*> units;
 
 //Temporary units
-static Minotaur _mino1(100, 100);
+static Minotaur _mino1(48, 70);
 //static Minotaur _mino2(3, 3);
 //static Minotaur _mino3(6, 5);
 

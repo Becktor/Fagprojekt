@@ -6,7 +6,7 @@
 #include "Unit.h"
 #include "Scene.h"
 
-#define GRAVITY -2
+#define GRAVITY 1
 
 class Unit;
 class Logic
