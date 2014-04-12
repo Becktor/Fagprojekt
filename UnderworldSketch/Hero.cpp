@@ -5,29 +5,27 @@
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
-
-Hero::Hero(int x, int y) : Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) { }
+Hero::Hero(int x, int y) : Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
+  nunchuk = ArduinoNunchuk();
+}
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-  int xVel;
-  int yVel;
-
   //----------------Hero x-movement-----------------------
   if((130 < nunchuk.analogX) && (nunchuk.analogX < 160))
-    xVel = SPEED_WALK;
+    setXVel(SPEED_WALK);
   else if(nunchuk.analogX > 160)
-    xVel = SPEED_RUNNING;
+    setXVel(SPEED_RUN);
   else if((80 < nunchuk.analogX) && (nunchuk.analogX < 110))
-    xVel = SPEED_WALK; 
+    setXVel(-SPEED_WALK);
   else if(80 > nunchuk.analogX)
-    xVel = SPEED_RUNNING;
+    setXVel(-SPEED_RUN);
   else
-    xVel = 0;
+    setXVel(0);
+
 
   //-----------------Hero jump---------------------
   if (nunchuk.cButton == 1)
-    Hero::setYVel(SPEED_JUMP);
+    setYVel(SPEED_JUMP);
 
   //----------------Hero duck----------------------
   Rect *hitbox = getHitbox();
@@ -36,5 +34,4 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     hitbox->translate(0, HEIGHT_STAND - HEIGHT_DUCK);
   } else
     hitbox->setHeight(HEIGHT_STAND);
-  setXVel(xVel);
 }

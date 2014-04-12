@@ -45,6 +45,7 @@ void drawTile(Tiles tile);
 void drawUnit(Unit *unit);
 
 void setup() {
+  randomSeed(analogRead(0)); //Initializes a random seed to the random generator (if pin 0 is unconnected)
   GD.begin();
   units.add(&_mino1);
   //units.add(&_mino2);
