@@ -22,7 +22,6 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   else
     setXVel(0);
 
-
   //-----------------Hero jump---------------------
   if (nunchuk.cButton == 1)
     setYVel(SPEED_JUMP);

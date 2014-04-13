@@ -40,7 +40,7 @@ static Minotaur _mino1(48, 70);
 //Function declarations
 void setup();
 void loop();
-void drawRect(Rect *rect);
+void drawRect(int x, int y, int width, int height);
 void drawTile(Tiles tile);
 void drawUnit(Unit *unit);
 
