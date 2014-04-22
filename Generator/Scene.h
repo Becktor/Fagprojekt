@@ -17,8 +17,8 @@
 #include "Module.h"
 
 #define TILE_SIZE 16 //One tile unit to world units conv.
-#define XMODULES 3
-#define YMODULES 3
+#define XMODULES 4
+#define YMODULES 4
 #define SCENE_WIDTH XMODULES * (MODULE_WIDTH - 1) + 1
 #define SCENE_HEIGHT YMODULES * (MODULE_HEIGHT - 1) + 1
 

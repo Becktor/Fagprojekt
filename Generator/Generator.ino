@@ -19,7 +19,7 @@
 #define INIT_FPS 60 //Initial assumed framerate.
 
 //Global variables
-static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
+static unsigned int _dTime = SECOND / INIT_FPS, r; //Approx. time between frames
 static Scene _scene = Scene();
 
 //Function declarations
@@ -29,14 +29,14 @@ void drawRect(int x, int y, int width, int height);
 void drawTile(Tiles tile);
 
 void setup() {
-  randomSeed(analogRead(0)); //Initializes a random seed to the random generator (if pin 0 is unconnected)
+  randomSeed(13); //Initializes a random seed to the random generator (if pin 0 is unconnected)
   GD.begin();
   newScene(&_scene);
 }
 
 void loop() {
   unsigned long startMilis = millis();
-  unsigned int fps = 0;
+  unsigned int fps = INIT_FPS, counter = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     //Game logic
 
@@ -51,8 +51,9 @@ void loop() {
     GD.swap();
 
     //Frame counter
-    fps++;
+    counter++;
   }
+  fps = counter;
   _dTime = SECOND / fps;
 }
 

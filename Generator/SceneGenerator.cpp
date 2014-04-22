@@ -58,9 +58,39 @@ void fillModule(Scene *scene, Modules module, int dX, int dY) {
 }
 
 void modulate(Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
-  int x = random(0, XMODULES); int y = YMODULES - 1;
+  short x = random(XMODULES), y = YMODULES - 1;
   modules[x][y] = TYPE1;
   entrance->setPoint(x, y);
+  while(true) {
+    short r;
+    if(x == 0)
+      r = random(0, 4);
+    else if(x == XMODULES - 1)
+      r = random(-3, 1);
+    else
+      r = random(-3, 4);
+    if(r < 0) {
+      x--;
+      if(modules[x][y] != TYPE3)
+        modules[x][y] = TYPE1;
+    } else if(r > 0) {
+      x++;
+      if(modules[x][y] != TYPE3)
+        modules[x][y] = TYPE1;   
+    } else {
+      if(y == 0) {
+        exit->setPoint(x, y);
+        return;
+      }
+      if(modules[x][y] == TYPE1)
+        modules[x][y] = TYPE2;
+      else
+        modules[x][y] = TYPE4;
+      y--;
+      modules[x][y] = TYPE3;
+    }
+  }
+  /*
   while(true) {
     int r = random(0, 7) - 3;
     if((r < 0 && x == 0) || ( r > 0 && x == XMODULES - 1) || r == 0) {
@@ -87,6 +117,7 @@ void modulate(Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit)
         modules[x][y] = TYPE1;      
     }
   }
+  */
 }
 
 void shell(Scene *scene) {
