@@ -20,14 +20,12 @@ Tiles Scene::getTile(int x, int y) {
   if(contains(x, y))
     return _tiles[x][y];
   else
-    return Void;
+    return Rock;
 }
 
 boolean Scene::tileIsSolid(int x, int y) {
   if(contains(x, y))
-    return getSolid(_tiles[x][y]);
-  else
-    return true; //By default, the edges of the map is solid.
+    return getSolid(getTile(x, y));
 }
 
 void Scene::setTile(int x, int y, Tiles tile) {

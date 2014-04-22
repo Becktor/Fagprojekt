@@ -19,7 +19,6 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Minotaur.h"
-#include "SceneGenerator.h"
 
 //Constants
 #define SECOND 1000 //Milis. in a second
@@ -45,17 +44,21 @@ void drawTile(Tiles tile);
 void drawUnit(Unit *unit);
 
 void setup() {
-  randomSeed(analogRead(0)); //Initializes a random seed to the random generator (if pin 0 is unconnected)
+  randomSeed(13); //Initializes a random seed to the random generator (if pin 0 is unconnected)
   GD.begin();
   units.add(&_mino1);
   //units.add(&_mino2);
   //units.add(&_mino3);
-  shell(&_scene);
+  for(int i = 0; i < SCENE_WIDTH; i++) {
+    _scene.setTile(i, 0, Rock);
+    _scene.setTile(i, SCENE_HEIGHT - 1, Rock);
+  }
+  _scene.setTile(1, 3, Rock);
 }
 
 void loop() {
   unsigned long startMilis = millis();
-  unsigned int fps = 0;
+  short fps = INIT_FPS, counter = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     //Game logic
     for(int i = 0; i < units.size(); i++) {
@@ -63,7 +66,6 @@ void loop() {
       unit->updateAI(_dTime, &_logic);
       unit->updatePhysics(_dTime, &_logic);
     }
-
     //Draw Logic
     GD.Clear();
     GD.ColorRGB(140, 140, 140);
@@ -77,8 +79,9 @@ void loop() {
     GD.swap();
 
     //Frame counter
-    fps++;
+    counter++;
   }
+  fps = counter;
   _dTime = SECOND / fps;
 }
 

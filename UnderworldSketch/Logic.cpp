@@ -31,6 +31,14 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
       tileXEnd = (x + dX) / TILE_SIZE,
       tileYStart = y / TILE_SIZE,
       tileYEnd = (y + hitbox->getHeight() - 1) / TILE_SIZE;
+  if(x < 0)
+    tileXStart--;
+  if(x + dX < 0)
+    tileXEnd--;
+  if(y < 0)
+    tileYStart--;
+  if(y + hitbox->getHeight() - 1 < 0)
+    tileYEnd--;
 
   for(int tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
@@ -64,6 +72,14 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
       tileXEnd = (x + hitbox->getWidth() - 1) / TILE_SIZE,
       tileYStart = y / TILE_SIZE,
       tileYEnd = (y + dY) / TILE_SIZE;
+  if(x < 0)
+    tileXStart--;
+  if(x + hitbox->getWidth() - 1 < 0)
+    tileXEnd--;
+  if(y < 0)
+    tileYStart--;
+  if(y + dY < 0)
+    tileYEnd--;
 
   for(int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
     for(int tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
