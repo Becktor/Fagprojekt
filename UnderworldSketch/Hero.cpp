@@ -7,11 +7,11 @@
 
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
  _nunchuk = nunchuk;
+ duck=false;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-  boolean duck;
-  boolean jump;
+  Rect* hitbox = getHitbox();
   //  _nunchuk->update();
   //----------------Hero x-movement-----------------------
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160))
@@ -26,18 +26,23 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     setXVel(0);
 
   //-----------------Hero jump---------------------//if higher than 140
-  if (_nunchuk-> cButton == 1 & !jump) {
-    setYVel(SPEED_JUMP);
-    jump = true; 
+  Serial.begin(19200);
+  
+    if (_nunchuk->cButton && logic->isSolid(hitbox->getX(),hitbox->getY()+(hitbox->getHeight()+1))) {
+      setYVel(-SPEED_JUMP);
+      Serial.println("carstendinlort");
+     
   }
 
   //----------------Hero duck----------------------//If lower than 90
-  Rect *hitbox = getHitbox();
   if (  90 > _nunchuk -> analogY  ) {
     hitbox->setHeight(HEIGHT_DUCK);
-    hitbox->translate(0, HEIGHT_STAND - HEIGHT_DUCK);
-  } else
-    hitbox->setHeight(HEIGHT_STAND);
-    jump = false;
+    if(!duck)
+      hitbox->translate(0, HEIGHT_STAND - HEIGHT_DUCK);
+    duck = true;
+  } else{
+      hitbox->setHeight(HEIGHT_STAND);
+      duck=false;
+  }
 }  
 

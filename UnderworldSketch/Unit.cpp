@@ -26,6 +26,7 @@ int Unit::getYVel() {
   return _yVel;
 }
 
+
 void Unit::setDir(Direction dir) {
   _dir = dir;
 }
@@ -44,6 +45,7 @@ void Unit::toggleDir() {
   else
     _dir = Left;
 }
+
 
 void Unit::translate(int x, int y) {
   _hitbox.translate(x, y);

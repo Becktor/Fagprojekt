@@ -18,6 +18,8 @@ class Unit
     Direction _dir;
     int _xVel;
     int _yVel;
+    int _x;
+    int _y;
     Rect _hitbox;
 
   public:

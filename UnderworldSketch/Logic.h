@@ -18,6 +18,7 @@ class Logic
     void gravitate(Unit *unit, int dTime);
     boolean moveUnitHoriz(Unit *unit, int dX);
     boolean moveUnitVerti(Unit *unit, int dY);
+    boolean isSolid(int x, int y);
     void setMap(Scene *scene);
 };
 #endif

@@ -13,6 +13,9 @@ Logic::Logic(Scene *scene) {
 void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
   unit->setYVel(GRAVITY + unit->getYVel());
 }
+boolean Logic::isSolid(int x, int y){
+  return _scene->tileIsSolid(x/TILE_SIZE,y/TILE_SIZE);
+}
 
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
