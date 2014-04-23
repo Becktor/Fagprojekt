@@ -19,6 +19,7 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Minotaur.h"
+#include "Hero.h"
 
 //Constants
 #define SECOND 1000 //Milis. in a second
@@ -28,13 +29,16 @@
 static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
-
 static LinkedList<Unit*> units;
+static ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 //Temporary units
 static Minotaur _mino1(48, 70);
 //static Minotaur _mino2(3, 3);
 //static Minotaur _mino3(6, 5);
+static Hero _archon(140,70, &nunchuk);
+
+
 
 //Function declarations
 void setup();
@@ -43,10 +47,13 @@ void drawRect(int x, int y, int width, int height);
 void drawTile(Tiles tile);
 void drawUnit(Unit *unit);
 
+
 void setup() {
   randomSeed(13); //Initializes a random seed to the random generator (if pin 0 is unconnected)
+  nunchuk.init();
   GD.begin();
   units.add(&_mino1);
+  units.add(&_archon);
   //units.add(&_mino2);
   //units.add(&_mino3);
   for(int i = 0; i < SCENE_WIDTH; i++) {
@@ -57,14 +64,17 @@ void setup() {
 }
 
 void loop() {
+
   unsigned long startMilis = millis();
   short fps = INIT_FPS, counter = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     //Game logic
+    nunchuk.update();  nunchuk.update();
     for(int i = 0; i < units.size(); i++) {
       Unit *unit = units.get(i);
       unit->updateAI(_dTime, &_logic);
       unit->updatePhysics(_dTime, &_logic);
+     
     }
     //Draw Logic
     GD.Clear();
@@ -77,7 +87,6 @@ void loop() {
       drawUnit(units.get(i));
     GD.cmd_number(240,136, 31, OPT_CENTER, fps); 
     GD.swap();
-
     //Frame counter
     counter++;
   }
@@ -100,3 +109,5 @@ void drawUnit(Unit* unit) {
   Rect *hitbox = unit->getHitbox();
   drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
 }
+
+

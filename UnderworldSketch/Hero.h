@@ -6,19 +6,20 @@
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
-#define HEIGHT_STAND 20 //Height stand value
-#define HEIGHT_DUCK 10 //Duck height
-#define WIDTH 10
+#define HEIGHT_STAND 50 //Height stand value
+#define HEIGHT_DUCK 25 //Duck height
+#define WIDTH 30
 #define SPEED_JUMP 2
 #define SPEED_WALK 1
 #define SPEED_RUN 3
 
 class Hero : public Unit {
   private:
-    ArduinoNunchuk nunchuk;
+    ArduinoNunchuk *_nunchuk;
 
   public:
-    Hero(int x, int y);
+    Hero(int x, int y, ArduinoNunchuk* nunchuk);
     void updateAI(int dTime, Logic *logic);
+    int getNunchukAnalog();
 };
 #endif
