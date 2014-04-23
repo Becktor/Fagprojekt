@@ -6,12 +6,12 @@
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
-#define HEIGHT_STAND 50 //Height stand value
-#define HEIGHT_DUCK 25 //Duck height
+#define HEIGHT_STAND 40 //Height stand value
+#define HEIGHT_DUCK 20 //Duck height
 #define WIDTH 30
-#define SPEED_JUMP 20
+#define SPEED_JUMP 15
 #define SPEED_WALK 1
-#define SPEED_RUN 3
+#define SPEED_RUN 5
 
 class Hero : public Unit {
   private:
