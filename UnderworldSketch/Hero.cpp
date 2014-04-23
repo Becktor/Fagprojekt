@@ -2,8 +2,7 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Hero.h"
-#include <Wire.h>
-#include <ArduinoNunchuk.h>
+
 
 
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
@@ -11,7 +10,9 @@ Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : Unit(Rect(Point(x, y), WIDT
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-//  _nunchuk->update();
+  boolean duck;
+  boolean jump;
+  //  _nunchuk->update();
   //----------------Hero x-movement-----------------------
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160))
     setXVel(SPEED_WALK);
@@ -19,21 +20,24 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     setXVel(SPEED_RUN);
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110))
     setXVel(-SPEED_WALK);
-  else if((20 < _nunchuk->analogX) && (_nunchuk->analogX < 80))
+  else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80))
     setXVel(-SPEED_RUN);
   else 
     setXVel(0);
 
-  //-----------------Hero jump---------------------
-  if (_nunchuk->cButton == 1)
+  //-----------------Hero jump---------------------//if higher than 140
+  if (_nunchuk-> cButton == 1 & !jump) {
     setYVel(SPEED_JUMP);
+    jump = true; 
+  }
 
-  //----------------Hero duck----------------------
+  //----------------Hero duck----------------------//If lower than 90
   Rect *hitbox = getHitbox();
-  if (_nunchuk->zButton == 1) {
+  if (  90 > _nunchuk -> analogY  ) {
     hitbox->setHeight(HEIGHT_DUCK);
     hitbox->translate(0, HEIGHT_STAND - HEIGHT_DUCK);
   } else
     hitbox->setHeight(HEIGHT_STAND);
-}
+    jump = false;
+}  
 
