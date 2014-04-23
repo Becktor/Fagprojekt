@@ -14,10 +14,13 @@
 
 #include <Arduino.h>
 #include "Tiles.h"
+#include "Module.h"
 
 #define TILE_SIZE 48 //One tile unit to world units conv.
-#define SCENE_WIDTH 5
-#define SCENE_HEIGHT 5
+#define XMODULES 4
+#define YMODULES 4
+#define SCENE_WIDTH XMODULES * (MODULE_WIDTH - 1) + 1
+#define SCENE_HEIGHT YMODULES * (MODULE_HEIGHT - 1) + 1
 
 class Scene
 {
