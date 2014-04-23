@@ -7,6 +7,11 @@ Unit::Unit(Rect hitbox) {
   _hitbox = hitbox;
   _xVel = 0;
   _yVel = 0;
+  _dir = Left;
+}
+
+Direction Unit::getDir() {
+  return _dir;
 }
 
 Rect* Unit::getHitbox() {
@@ -21,12 +26,23 @@ int Unit::getYVel() {
   return _yVel;
 }
 
+void Unit::setDir(Direction dir) {
+  _dir = dir;
+}
+
 void Unit::setXVel(int xVel) {
    _xVel = xVel;  
 }
 
 void Unit::setYVel(int yVel) {
    _yVel = yVel;
+}
+
+void Unit::toggleDir() {
+  if(_dir == Left)
+    _dir = Right;
+  else
+    _dir = Left;
 }
 
 void Unit::translate(int x, int y) {

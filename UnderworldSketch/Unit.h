@@ -15,6 +15,7 @@ class Logic;
 class Unit
 {
   private:
+    Direction _dir;
     int _xVel;
     int _yVel;
     Rect _hitbox;
@@ -22,10 +23,13 @@ class Unit
   public:
     Unit(Rect hitbox);
     Rect* getHitbox();
+    Direction getDir();
     int getXVel();
     int getYVel();
+    void setDir(Direction dir);
     void setXVel(int yVel);
     void setYVel(int yVel);
+    void toggleDir();
     void translate(int x, int y);
     virtual void updateAI(int dTime, Logic *logic);
     void updatePhysics(int dTime, Logic *logic);
