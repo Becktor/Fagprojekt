@@ -20,7 +20,7 @@ Tiles Scene::getTile(int x, int y) {
   if(contains(x, y))
     return _tiles[x][y];
   else
-    return Rock;
+    return R;
 }
 
 boolean Scene::tileIsSolid(int x, int y) {

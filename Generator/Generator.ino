@@ -29,7 +29,7 @@ void drawRect(int x, int y, int width, int height);
 void drawTile(Tiles tile);
 
 void setup() {
-  randomSeed(17); //Initializes a random seed to the random generator (if pin 0 is unconnected)
+  randomSeed(21); //Initializes a random seed to the random generator (if pin 0 is unconnected)
   GD.begin();
   newScene(&_scene);
 }
