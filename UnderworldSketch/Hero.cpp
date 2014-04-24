@@ -25,7 +25,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   else 
     setXVel(0);
 
-  //-----------------Hero jump---------------------//if higher than 140
+  //-----------------Hero jump---------------------
   Serial.begin(19200);
   
     if (_nunchuk->cButton && logic->isSolid(hitbox->getX(),hitbox->getY()+(hitbox->getHeight()+1))) {
@@ -34,7 +34,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
      
   }
 
-  //----------------Hero duck----------------------//If lower than 90
+  //----------------Hero duck----------------------//If analogX is lower than 90
   if (  90 > _nunchuk -> analogY  ) {
     hitbox->setHeight(HEIGHT_DUCK);
     if(!duck)
