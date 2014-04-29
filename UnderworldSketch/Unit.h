@@ -16,19 +16,19 @@ class Unit
 {
   private:
     Direction _dir;
-    int _xVel;
-    int _yVel;
-    int _x;
-    int _y;
+    boolean _levitate;
+    int _xVel, _yVel;
     Rect _hitbox;
 
   public:
     Unit(Rect hitbox);
     Rect* getHitbox();
     Direction getDir();
+    boolean getLevitate();
     int getXVel();
     int getYVel();
     void setDir(Direction dir);
+    void setLevitate(boolean levitate);
     void setXVel(int yVel);
     void setYVel(int yVel);
     void toggleDir();

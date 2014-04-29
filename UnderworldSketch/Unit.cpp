@@ -18,6 +18,10 @@ Rect* Unit::getHitbox() {
   return &_hitbox;
 }
 
+boolean Unit::getLevitate() {
+  return _levitate;
+}
+
 int Unit::getXVel() {
   return _xVel;  
 }
@@ -26,9 +30,12 @@ int Unit::getYVel() {
   return _yVel;
 }
 
-
 void Unit::setDir(Direction dir) {
   _dir = dir;
+}
+
+void Unit::setLevitate(boolean levitate) {
+  _levitate = levitate;
 }
 
 void Unit::setXVel(int xVel) {
@@ -56,7 +63,8 @@ void Unit::updateAI(int dTime, Logic *logic) { }
 //Should be moved to the future prop class when made.
 //Moves the unit according to his velocity
 void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
-  logic->gravitate(this, dTime);
+  if(!_levitate)
+    logic->gravitate(this, dTime);
   if(!logic->moveUnitHoriz(this, getXVel()))
     setXVel(0);
   if(!logic->moveUnitVerti(this, getYVel()))
