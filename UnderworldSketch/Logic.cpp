@@ -14,7 +14,7 @@ void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
   unit->setYVel(GRAVITY + unit->getYVel());
 }
 boolean Logic::isSolid(int x, int y){
-  return _scene->tileIsSolid(x/TILE_SIZE,y/TILE_SIZE);
+  return getSolid(_scene->getTile(x / TILE_SIZE, y / TILE_SIZE));
 }
 
 //Returns whether the movement was complete (true) or partial (false)
@@ -30,7 +30,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
     dir = Right;
   } else
     return true;
-  int tileXStart = x / TILE_SIZE,
+  int tileXStart = x / TILE_SIZE + dir,
       tileXEnd = (x + dX) / TILE_SIZE,
       tileYStart = y / TILE_SIZE,
       tileYEnd = (y + hitbox->getHeight() - 1) / TILE_SIZE;
@@ -45,7 +45,8 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
 
   for(int tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
-      if(_scene->tileIsSolid(tileX, tileY)) {
+      Tiles tile = _scene->getTile(tileX, tileY);
+      if(getSolid(tile)) {
         if(dir == Left)
           unit->translate((tileX + 1) * TILE_SIZE - x, 0);
         else
@@ -73,7 +74,7 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
     return true;
   int tileXStart = x / TILE_SIZE,
       tileXEnd = (x + hitbox->getWidth() - 1) / TILE_SIZE,
-      tileYStart = y / TILE_SIZE,
+      tileYStart = y / TILE_SIZE + dir,
       tileYEnd = (y + dY) / TILE_SIZE;
   if(x < 0)
     tileXStart--;
@@ -86,7 +87,8 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
 
   for(int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
     for(int tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
-      if(_scene->tileIsSolid(tileX, tileY)) {
+      Tiles tile = _scene->getTile(tileX, tileY);
+      if(getSolid(tile) || (getPlatform(tile) && dir == Down)) {
         if(dir == Up)
           unit->translate(0, (tileY + 1) * TILE_SIZE - y);
         else

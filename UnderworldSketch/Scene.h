@@ -32,7 +32,6 @@ class Scene
     int getHeight();
     Tiles getTile(int x, int y);
     void setTile(int x, int y, Tiles tile);
-    boolean tileIsSolid(int x, int y);
 };
 
 #endif

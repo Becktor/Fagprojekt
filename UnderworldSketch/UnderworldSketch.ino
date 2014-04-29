@@ -23,7 +23,7 @@
 #include "Hero.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 #define SCREEN_WIDTH 480
@@ -43,8 +43,6 @@ static ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 //Temporary units
 static Minotaur _mino1(48, 70);
-//static Minotaur _mino2(3, 3);
-//static Minotaur _mino3(6, 5);
 static Hero _archon(140,70, &nunchuk);
 
 //Function declarations
@@ -72,7 +70,8 @@ void loop() {
   while(millis() - startMilis < SECOND) { //Loop for a second
     //Game logic
     if(NUNCHUCK) {
-      nunchuk.update();  nunchuk.update();
+      nunchuk.update();
+      nunchuk.update();
     }
     for(int i = 0; i < units.size(); i++) {
       Unit *unit = units.get(i);
@@ -82,14 +81,14 @@ void loop() {
     //Draw Logic
     GD.Clear();
     GD.Begin(RECTS);
-    Rect* hitbox = _archon.getHitbox();
+    Rect* hitbox = _mino1.getHitbox();
     cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
     cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();
     GD.ColorRGB(255, 0, 0);
     for(int i = 0; i < units.size(); i++)
       drawUnit(units.get(i));
-//    GD.cmd_number(240,136, 31, OPT_CENTER, fps); 
+    //GD.cmd_number(240,136, 31, OPT_CENTER, fps); 
     GD.swap();
     //Frame counter
     counter++;

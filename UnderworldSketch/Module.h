@@ -42,8 +42,8 @@ TYPE30TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
   {R, R, R, R, R},
   {N, N, N, N, N},
   {N, R, N, R, N},
-  {N, N, N, N, N},
-  {R, N, N, N, R}
+  {N, P, N, N, N},
+  {R, P, P, N, R}
 },
 TYPE40TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
   {R, N, N, N, R},

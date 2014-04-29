@@ -23,11 +23,6 @@ Tiles Scene::getTile(int x, int y) {
     return R;
 }
 
-boolean Scene::tileIsSolid(int x, int y) {
-  if(contains(x, y))
-    return getSolid(getTile(x, y));
-}
-
 void Scene::setTile(int x, int y, Tiles tile) {
   if(contains(x, y))
     _tiles[x][y] = tile;

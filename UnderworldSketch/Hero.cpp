@@ -3,8 +3,6 @@
 #include "Unit.h"
 #include "Hero.h"
 
-
-
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
  _nunchuk = nunchuk;
  duck=false;
@@ -39,10 +37,10 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if (_nunchuk->cButton && logic->isSolid(hitbox->getX(),hitbox->getY()+(hitbox->getHeight()+1))) {
       setYVel(-SPEED_JUMP);
   }
+
   //Hero attack
   if (_nunchuk->zButton){
-  //Attack animation trigger
+    //Attack animation trigger
   }
-
 }  
 

@@ -51,7 +51,7 @@ void fillModule(Scene *scene, Modules module, int dX, int dY) {
     for(int j = 0; j < MODULE_HEIGHT; j++) {
       Tiles tile = (*tiles)[j][i];
       int x = dX + i, y = dY + j;
-      if(tile != N || !scene->tileIsSolid(x, y)) // Ensures that filled space takes priority over empty when merging tiles.
+      if(scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
         scene->setTile(x, y, tile);
     }
   }

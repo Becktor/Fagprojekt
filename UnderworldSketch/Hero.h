@@ -21,6 +21,5 @@ class Hero : public Unit {
   public:
     Hero(int x, int y, ArduinoNunchuk* nunchuk);
     void updateAI(int dTime, Logic *logic);
-    int getNunchukAnalog();
 };
 #endif
