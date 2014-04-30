@@ -3,9 +3,10 @@
 #include "Unit.h"
 #include "Hero.h"
 
-Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
- _nunchuk = nunchuk;
- duck=false;
+Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : 
+Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
+  _nunchuk = nunchuk;
+  duck=false;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
@@ -23,19 +24,22 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   else 
     setXVel(0);
 
+
   //Hero duck - If analogX is lower than 90
-  if (  90 > _nunchuk -> analogY  ) {
-    hitbox->setHeight(HEIGHT_DUCK);
-    if(!duck)
-      hitbox->translate(0, HEIGHT_STAND - HEIGHT_DUCK);
-    duck = true;
-  } else{
-      hitbox->setHeight(HEIGHT_STAND);
-      duck=false;
+  if (90 > _nunchuk -> analogY) {
+    if(!duck) {
+      hitbox->setHeight(HEIGHT_DUCK);
+      hitbox-> translate(0, HEIGHT_STAND - HEIGHT_DUCK);
+      duck = true;
+    }
+  } else if(duck) {
+    hitbox->setHeight(HEIGHT_STAND);
+    hitbox->translate(0,   HEIGHT_DUCK - HEIGHT_STAND);
+    duck = false;
   }
   //Hero jump
-  if (_nunchuk->cButton && logic->isSolid(hitbox->getX(),hitbox->getY()+(hitbox->getHeight()+1))) {
-      setYVel(-SPEED_JUMP);
+  if (_nunchuk->cButton && logic->isGrounded(this)) {
+    setYVel(-SPEED_JUMP);
   }
 
   //Hero attack
@@ -43,4 +47,5 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     //Attack animation trigger
   }
 }  
+
 

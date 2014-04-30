@@ -13,7 +13,21 @@ Logic::Logic(Scene *scene) {
 void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
   unit->setYVel(GRAVITY + unit->getYVel());
 }
-boolean Logic::isSolid(int x, int y){
+
+boolean Logic::isGrounded(Unit *unit) {
+  Rect *hitbox = unit->getHitbox();
+  int xStart = hitbox->getX() / TILE_SIZE,
+      xEnd = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
+      y = (hitbox->getY() + hitbox->getHeight()) / TILE_SIZE;
+  for(int i = xStart; i <= xEnd; i++) {
+    Tiles tile = _scene->getTile(i, y);
+    if(getSolid(tile) || getPlatform(tile))
+      return true;
+  }
+  return false;
+}
+
+boolean Logic::isSolid(int x, int y) {
   return getSolid(_scene->getTile(x / TILE_SIZE, y / TILE_SIZE));
 }
 

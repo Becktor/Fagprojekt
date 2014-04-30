@@ -16,8 +16,10 @@ class Logic
   public:
     Logic(Scene *scene);
     void gravitate(Unit *unit, int dTime);
+
     boolean moveUnitHoriz(Unit *unit, int dX);
     boolean moveUnitVerti(Unit *unit, int dY);
+    boolean isGrounded(Unit *unit);
     boolean isSolid(int x, int y);
     void setMap(Scene *scene);
 };
