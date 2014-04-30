@@ -24,9 +24,11 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   else 
     setXVel(0);
 
+ 
+  
 
   //Hero duck - If analogX is lower than 90
-  if (90 > _nunchuk -> analogY) {
+  if (45 > _nunchuk -> analogY) {
     if(!duck) {
       hitbox->setHeight(HEIGHT_DUCK);
       hitbox-> translate(0, HEIGHT_STAND - HEIGHT_DUCK);
@@ -45,6 +47,8 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero attack
   if (_nunchuk->zButton){
     //Attack animation trigger
+    
+    
   }
 }  
 
