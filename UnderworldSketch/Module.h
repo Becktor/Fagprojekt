@@ -27,29 +27,29 @@ TYPE00TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
 TYPE10TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
   {R, R, R, R, R},
   {N, N, N, N, N},
-  {N, N, R, N, N},
+  {N, N, P, N, N},
   {N, N, N, N, N},
   {R, R, R, R, R}
 },
 TYPE20TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
   {R, N, N, N, R},
   {N, N, N, N, N},
-  {N, R, R, R, N},
+  {N, P, P, P, N},
   {N, N, N, N, N},
   {R, R, R, R, R}
 },
 TYPE30TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
   {R, R, R, R, R},
   {N, N, N, N, N},
-  {N, R, N, R, N},
-  {N, P, N, N, N},
-  {R, P, P, N, R}
+  {N, P, P, P, N},
+  {N, N, N, N, N},
+  {R, N, N, N, R}
 },
 TYPE40TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
   {R, N, N, N, R},
   {N, N, N, N, N},
+  {N, N, P, N, N},
   {N, N, N, N, N},
-  {N, N, R, N, N},
   {R, N, N, N, R}
 };
 

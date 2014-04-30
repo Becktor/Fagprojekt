@@ -23,7 +23,7 @@
 #include "Hero.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 #define SCREEN_WIDTH 480
@@ -81,7 +81,7 @@ void loop() {
     //Draw Logic
     GD.Clear();
     GD.Begin(RECTS);
-    Rect* hitbox = _mino1.getHitbox();
+    Rect* hitbox = _archon.getHitbox();
     cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
     cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();
