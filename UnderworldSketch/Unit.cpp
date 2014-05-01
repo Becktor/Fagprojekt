@@ -7,7 +7,7 @@ Unit::Unit(Rect hitbox) {
   _hitbox = hitbox;
   _xVel = 0;
   _yVel = 0;
-  _dir = Left;
+  _dir = LEFT;
 }
 
 Direction Unit::getDir() {
@@ -47,10 +47,10 @@ void Unit::setYVel(int yVel) {
 }
 
 void Unit::toggleDir() {
-  if(_dir == Left)
-    _dir = Right;
+  if(_dir == LEFT)
+    _dir = RIGHT;
   else
-    _dir = Left;
+    _dir = LEFT;
 }
 
 

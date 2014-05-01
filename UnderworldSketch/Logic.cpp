@@ -38,10 +38,10 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
   Direction dir;
   if(dX < 0) {
     x = hitbox->getX();
-    dir = Left;
+    dir = LEFT;
   } else if(dX > 0) {
     x = hitbox->getX() + hitbox->getWidth() - 1;
-    dir = Right;
+    dir = RIGHT;
   } else
     return true;
   int tileXStart = x / TILE_SIZE + dir,
@@ -61,7 +61,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
     for(int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
       Tiles tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
-        if(dir == Left)
+        if(dir == LEFT)
           unit->translate((tileX + 1) * TILE_SIZE - x, 0);
         else
           unit->translate(tileX * TILE_SIZE - x - 1, 0);
@@ -80,10 +80,10 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
   Direction dir;
   if(dY < 0) {
     y = hitbox->getY();
-    dir = Up;
+    dir = UP;
   } else if(dY > 0) {
     y = hitbox->getY() + hitbox->getHeight() - 1;
-    dir = Down;
+    dir = DOWN;
   } else
     return true;
   int tileXStart = x / TILE_SIZE,
@@ -102,8 +102,8 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
   for(int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
     for(int tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
       Tiles tile = _scene->getTile(tileX, tileY);
-      if(getSolid(tile) || (getPlatform(tile) && dir == Down)) {
-        if(dir == Up)
+      if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
+        if(dir == UP)
           unit->translate(0, (tileY + 1) * TILE_SIZE - y);
         else
           unit->translate(0, tileY * TILE_SIZE - y - 1);

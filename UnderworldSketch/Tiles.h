@@ -4,14 +4,13 @@
 #include <Arduino.h>
 
 enum Tiles{
-  N = 0, //None
-  P = 1, //Platform
-  R = 2, //Rock
-  L = 3, //Ladder
-  A = 4  //Ladder platform
+  NONE = 0,
+  PLATFORM = 1,
+  ROCK = 2,
+  LADDER = 3,
+  LADDER_TOP = 4
 };
 
-static const boolean SOLID[5] = {false, false, true, false, false};
 boolean getSolid(Tiles tile);
 boolean getPlatform(Tiles tile);
 boolean getLadder(Tiles tile);

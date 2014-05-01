@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "Tiles.h";
 
-const static int
+const static byte
     TYPE0_MODULES = 1,
     TYPE1_MODULES = 2,
     TYPE2_MODULES = 1,
@@ -21,6 +21,61 @@ enum Modules{
   TYPE4 = 4  //Exit left, right, up & down
 };
 
+static byte
+TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
+  {
+    {2, 2, 2, 2, 2},
+    {2, 0, 0, 0, 2},
+    {2, 0, 0, 0, 2},
+    {2, 0, 0, 0, 2},
+    {2, 2, 2, 2, 2}
+  }
+},
+TYPE1_TILES[TYPE1_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
+  {
+    {2, 2, 2, 2, 2},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 2, 2, 2, 2}
+  },
+  {
+    {2, 2, 2, 2, 2},
+    {0, 0, 0, 0, 0},
+    {0, 0, 1, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 2, 2, 2, 2}
+  }
+},
+TYPE2_TILES[TYPE2_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
+  {
+    {2, 0, 0, 0, 2},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 2, 2, 2, 2}
+  }
+},
+TYPE3_TILES[TYPE3_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
+  {
+    {2, 2, 2, 2, 2},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 0, 0, 0, 2}
+  }
+},
+TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
+  {
+    {2, 0, 0, 0, 2},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 0, 0, 0, 2}
+  }
+};
+
+/*
 static Tiles
 TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   {
@@ -74,81 +129,7 @@ TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
     {R, N, N, N, R}
   }
 };
-
-/*
-//5x5 tiles
-static Tiles
-TYPE00TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, R, R, R, R},
-  {R, N, N, N, R},
-  {R, N, N, N, R},
-  {R, N, N, N, R},
-  {R, R, R, R, R}
-},
-TYPE10TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, R, R, R, R},
-  {N, N, N, N, N},
-  {N, N, P, N, N},
-  {N, N, N, N, N},
-  {R, R, R, R, R}
-},
-TYPE20TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, N, N, N, R},
-  {N, N, N, N, N},
-  {N, P, P, P, N},
-  {N, N, N, N, N},
-  {R, R, R, R, R}
-},
-TYPE30TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, R, R, R, R},
-  {N, N, N, N, N},
-  {N, P, P, P, N},
-  {N, N, N, N, N},
-  {R, N, N, N, R}
-},
-TYPE40TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, N, N, N, R},
-  {N, N, N, N, N},
-  {N, N, P, N, N},
-  {N, N, N, N, N},
-  {R, N, N, N, R}
-};
-
-//4x4 tiles
-static Tiles
-TYPE00TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, R, R, R},
-  {R, N, N, R},
-  {R, N, N, R},
-  {R, R, R, R}
-},
-TYPE10TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, R, R, R},
-  {N, N, N, N},
-  {N, N, N, N},
-  {R, R, R, R}
-},
-TYPE20TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, N, N, R},
-  {N, N, N, N},
-  {N, N, N, N},
-  {R, R, R, R}
-},
-TYPE30TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, R, R, R},
-  {N, N, N, N},
-  {N, N, N, N},
-  {R, N, N, R}
-},
-TYPE40TILE[MODULE_WIDTH][MODULE_HEIGHT] = {
-  {R, N, N, R},
-  {N, N, N, N},
-  {N, N, N, N},
-  {R, N, N, R}
-};
 */
-
-void getModuleTiles(Modules module, Tiles (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]);
-
+void getModuleTiles(Modules module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]);
 
 #endif

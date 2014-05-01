@@ -4,9 +4,9 @@
 #include "Hero.h"
 
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : 
-Unit(Rect(Point(x, y), WIDTH, HEIGHT_STAND)) {
+Unit(Rect(Point(x, y), HERO_WIDTH, HERO_HEIGHT_STAND)) {
   _nunchuk = nunchuk;
-  duck=false;
+  duck = false;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
@@ -14,34 +14,31 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160))
-    setXVel(SPEED_WALK);
+    setXVel(HERO_SPEED_WALK);
   else if(_nunchuk->analogX > 160)
-    setXVel(SPEED_RUN);
+    setXVel(HERO_SPEED_RUN);
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110))
-    setXVel(-SPEED_WALK);
+    setXVel(-HERO_SPEED_WALK);
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80))
-    setXVel(-SPEED_RUN);
+    setXVel(-HERO_SPEED_RUN);
   else 
     setXVel(0);
-
- 
-  
 
   //Hero duck - If analogX is lower than 90
   if (45 > _nunchuk -> analogY) {
     if(!duck) {
-      hitbox->setHeight(HEIGHT_DUCK);
-      hitbox-> translate(0, HEIGHT_STAND - HEIGHT_DUCK);
+      hitbox->setHeight(HERO_HEIGHT_DUCK);
+      hitbox-> translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
       duck = true;
     }
   } else if(duck) {
-    hitbox->setHeight(HEIGHT_STAND);
-    hitbox->translate(0,   HEIGHT_DUCK - HEIGHT_STAND);
+    hitbox->setHeight(HERO_HEIGHT_STAND);
+    hitbox->translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
     duck = false;
   }
   //Hero jump
   if (_nunchuk->cButton && logic->isGrounded(this)) {
-    setYVel(-SPEED_JUMP);
+    setYVel(-HERO_SPEED_JUMP);
   }
 
   //Hero attack

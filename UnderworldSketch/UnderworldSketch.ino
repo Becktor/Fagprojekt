@@ -26,12 +26,13 @@
 #define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
-#define SCREEN_WIDTH 480
-#define SCREEN_HEIGHT 272
-#define SCREEN_TILES_WIDTH SCREEN_WIDTH / TILE_SIZE
-#define SCREEN_TILES_HEIGHT SCREEN_HEIGHT / TILE_SIZE
-#define SECOND 1000 //Milis. in a second
-#define INIT_FPS 60 //Initial assumed framerate.
+const static short
+    SCREEN_WIDTH = 480,
+    SCREEN_HEIGHT = 272,
+    SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
+    SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
+    SECOND = 1000, //Milis. in a second
+    INIT_FPS = 60; //Initial assumed framerate.
 
 //Global variables
 static int cameraX = 0, cameraY = 0;
@@ -127,7 +128,7 @@ void drawScene() {
 }
 
 void drawTile(int x, int y, Tiles tile) {
-  if(tile != N)
+  if(tile != NONE)
     drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 }
 

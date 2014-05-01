@@ -24,11 +24,11 @@ void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
 void fillModule(Scene *scene, Modules module, int dX, int dY) {
-  Tiles (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
+  byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
   getModuleTiles(module, &tiles);
   for(int i = 0; i < MODULE_WIDTH; i++) {
     for(int j = 0; j < MODULE_HEIGHT; j++) {
-      Tiles tile = (*tiles)[j][i];
+      Tiles tile = (Tiles) (*tiles)[j][i];
       int x = dX + i, y = dY + j;
       if(scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
         scene->setTile(x, y, tile);
@@ -69,43 +69,15 @@ void modulate(Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit)
       modules[x][y] = TYPE3;
     }
   }
-  /*
-  while(true) {
-    int r = random(0, 7) - 3;
-    if((r < 0 && x == 0) || ( r > 0 && x == XMODULES - 1) || r == 0) {
-      //Move up
-      if(y == 0) {
-        exit->setPoint(x, y);
-        return;
-      }
-      if(modules[x][y] == TYPE1)
-        modules[x][y] = TYPE2;
-      else
-        modules[x][y] = TYPE4;
-      y--;
-      modules[x][y] = TYPE3;
-    } else if(r < 0) {
-      //Move left
-      x--;
-      if(modules[x][y] != TYPE3)
-        modules[x][y] = TYPE1;
-    } else {
-      //Move right
-      x++;
-      if(modules[x][y] != TYPE3)
-        modules[x][y] = TYPE1;      
-    }
-  }
-  */
 }
 
 void shell(Scene *scene) {
   for(int i = 0; i < SCENE_WIDTH; i++) {
-    scene->setTile(i, 0, R);
-    scene->setTile(i, SCENE_HEIGHT - 1, R);
+    scene->setTile(i, 0, ROCK);
+    scene->setTile(i, SCENE_HEIGHT - 1, ROCK);
   }
   for(int i = 0; i < SCENE_HEIGHT; i++) {
-    scene->setTile(0, i, R);
-    scene->setTile(SCENE_WIDTH - 1, i, R);
+    scene->setTile(0, i, ROCK);
+    scene->setTile(SCENE_WIDTH - 1, i, ROCK);
   }
 }

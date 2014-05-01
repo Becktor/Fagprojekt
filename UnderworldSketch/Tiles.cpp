@@ -3,15 +3,15 @@
 
 //Returns whether the tile is solid.
 boolean getSolid(Tiles tile) {
-  return SOLID[tile];
+  return tile == ROCK;
 }
 
 //Returns whether the tile is solid from above.
 boolean getPlatform(Tiles tile) {
-  return tile == P;
+  return tile == PLATFORM || tile == LADDER_TOP;
 }
 
 //Returns whether the tile is a ladder.
 boolean getLadder(Tiles tile) {
-  return tile == L || tile == A;
+  return tile == LADDER || tile == LADDER_TOP;
 }

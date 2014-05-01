@@ -2,7 +2,7 @@
 #include "Tiles.h"
 #include "Module.h"
 
-void getModuleTiles(Modules module, Tiles (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]) {
+void getModuleTiles(Modules module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]) {
   switch (module) {
     case TYPE0:
       *tiles = &TYPE0_TILES[random(TYPE0_MODULES)];
