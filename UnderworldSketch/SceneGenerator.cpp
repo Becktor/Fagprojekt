@@ -22,31 +22,10 @@ void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance
   }
 }
 
-void getRandModule(Modules module, Tiles (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]) {
-  switch (module) {
-    case TYPE0:
-      *tiles = &TYPE00TILE;
-      return;
-    case TYPE1:
-      *tiles = &TYPE10TILE;
-      return;
-    case TYPE2:
-      *tiles = &TYPE20TILE;
-      return;
-    case TYPE3:
-      *tiles = &TYPE30TILE;
-      return;
-    case TYPE4:
-      *tiles = &TYPE40TILE;
-      return;
-  }
-  *tiles = &TYPE00TILE;
-}
-
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
 void fillModule(Scene *scene, Modules module, int dX, int dY) {
   Tiles (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
-  getRandModule(module, &tiles);
+  getModuleTiles(module, &tiles);
   for(int i = 0; i < MODULE_WIDTH; i++) {
     for(int j = 0; j < MODULE_HEIGHT; j++) {
       Tiles tile = (*tiles)[j][i];
