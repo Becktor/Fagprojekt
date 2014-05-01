@@ -5,31 +5,53 @@
 #include "Scene.h"
 #include "SceneGenerator.h"
 
-//Ensure that the object is not deconstructed for leaving the scope.
-void newScene(Scene *scene) {
+void newScene(Scene *scene, Point *entrance, Point *exit) {
   Modules modules[XMODULES][YMODULES];
-  Point entrance = Point(), exit = Point();
-  modulate(modules, &entrance, &exit);
-  generate(scene, modules, &entrance, &exit);
+  modulate(modules, entrance, exit);
+  generate(scene, modules, entrance, exit);
   shell(scene);
 }
 
 void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
   for(int i = 0; i < XMODULES; i++) {
     for(int j = 0; j < YMODULES; j++) {
-      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i, j * MODULE_HEIGHT - j);
+      boolean isPortalRoom, isEntrance;
+      Point *portal;
+      if(entrance->getX() == i && entrance->getY() == j) {
+        isPortalRoom = true;
+        isEntrance = true;
+        portal = entrance;
+      } else if(exit->getX() == i && exit->getY() == j) {
+        isPortalRoom = true;
+        isEntrance = false;
+        portal = exit;
+      } else
+        isPortalRoom = false;
+      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i, j * MODULE_HEIGHT - j, isPortalRoom, isEntrance, portal);
     }
   }
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
-void fillModule(Scene *scene, Modules module, int dX, int dY) {
+void fillModule(Scene *scene, Modules module, int dX, int dY, boolean portalRoom, boolean entrance, Point *portal) {
   byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
   getModuleTiles(module, &tiles);
   for(int i = 0; i < MODULE_WIDTH; i++) {
     for(int j = 0; j < MODULE_HEIGHT; j++) {
-      Tiles tile = (Tiles) (*tiles)[j][i];
+      Tiles tile;
+      byte tileData = (*tiles)[j][i];
       int x = dX + i, y = dY + j;
+      if(tileData == TILE_PORTAL) {
+        if(portalRoom) {
+          if(entrance)
+            tile = ENTRANCE;
+          else
+            tile = EXIT;
+          portal->setPoint(x, y);
+        } else
+          tile = NONE;
+      } else
+        tile = (Tiles) tileData;
       if(scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
         scene->setTile(x, y, tile);
     }

@@ -8,7 +8,9 @@ enum Tiles{
   PLATFORM = 1,
   ROCK = 2,
   LADDER = 3,
-  LADDER_TOP = 4
+  LADDER_TOP = 4,
+  ENTRANCE = 5,
+  EXIT = 6
 };
 
 boolean getSolid(Tiles tile);

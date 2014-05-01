@@ -37,9 +37,9 @@ class Rect
     Rect();
     Rect(int x, int y, int width, int height);
     Rect(Point pos, int width, int height);
-    boolean contains(Point p);
-    boolean contains(Rect r);
-    Point getPos();
+    boolean contains(Point *p);
+    boolean contains(Rect *r);
+    Point* getPos();
     int getX();
     int getY();
     int getWidth();

@@ -46,23 +46,23 @@ Rect::Rect(Point pos, int width, int height) {
   setRect(pos, width, height);
 }
 
-boolean Rect::contains(Point p) {
-  return p.getX() > _pos.getX()
-      && p.getX() < _pos.getX() + _width
-      && p.getY() > _pos.getY()
-      && p.getY() < _pos.getY() + _height;
+boolean Rect::contains(Point *p) {
+  return p->getX() > _pos.getX()
+      && p->getX() < _pos.getX() + _width
+      && p->getY() > _pos.getY()
+      && p->getY() < _pos.getY() + _height;
 }
 
-boolean Rect::contains(Rect r) {
-  Point p = r.getPos();
-  return p.getX() < _pos.getX() + _width
-      && p.getX() + r.getWidth() > _pos.getX()
-      && p.getY() < _pos.getY() + _height
-      && p.getY() + r.getHeight() > _pos.getY();
+boolean Rect::contains(Rect *r) {
+  Point *p = r->getPos();
+  return p->getX() < _pos.getX() + _width
+      && p->getX() + r->getWidth() > _pos.getX()
+      && p->getY() < _pos.getY() + _height
+      && p->getY() + r->getHeight() > _pos.getY();
 }
 
-Point Rect::getPos() {
-  return _pos;
+Point* Rect::getPos() {
+  return &_pos;
 }
 
 int Rect::getX() {

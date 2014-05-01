@@ -11,7 +11,8 @@ const static byte
     TYPE3_MODULES = 1,
     TYPE4_MODULES = 1,
     MODULE_WIDTH = 5,
-    MODULE_HEIGHT = 5;
+    MODULE_HEIGHT = 5,
+    TILE_PORTAL = 7;
 
 enum Modules{
   TYPE0 = 0, //Closed room
@@ -27,7 +28,7 @@ TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
     {2, 2, 2, 2, 2},
     {2, 0, 0, 0, 2},
     {2, 0, 0, 0, 2},
-    {2, 0, 0, 0, 2},
+    {2, 0, 7, 0, 2},
     {2, 2, 2, 2, 2}
   }
 },
@@ -36,12 +37,12 @@ TYPE1_TILES[TYPE1_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
     {2, 2, 2, 2, 2},
     {0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0},
+    {0, 0, 7, 0, 0},
     {2, 2, 2, 2, 2}
   },
   {
     {2, 2, 2, 2, 2},
-    {0, 0, 0, 0, 0},
+    {0, 0, 7, 0, 0},
     {0, 0, 1, 0, 0},
     {0, 0, 0, 0, 0},
     {2, 2, 2, 2, 2}
@@ -52,7 +53,7 @@ TYPE2_TILES[TYPE2_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
     {2, 0, 0, 0, 2},
     {0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0},
+    {0, 0, 7, 0, 0},
     {2, 2, 2, 2, 2}
   }
 },
@@ -75,61 +76,6 @@ TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   }
 };
 
-/*
-static Tiles
-TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
-  {
-    {R, R, R, R, R},
-    {R, N, N, N, R},
-    {R, N, N, N, R},
-    {R, N, N, N, R},
-    {R, R, R, R, R}
-  }
-},
-TYPE1_TILES[TYPE1_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
-  {
-    {R, R, R, R, R},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {R, R, R, R, R}
-  },
-  {
-    {R, R, R, R, R},
-    {N, N, N, N, N},
-    {N, N, P, N, N},
-    {N, N, N, N, N},
-    {R, R, R, R, R}
-  }
-},
-TYPE2_TILES[TYPE2_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
-  {
-    {R, N, N, N, R},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {R, R, R, R, R}
-  }
-},
-TYPE3_TILES[TYPE3_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
-  {
-    {R, R, R, R, R},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {R, N, N, N, R}
-  }
-},
-TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
-  {
-    {R, N, N, N, R},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {N, N, N, N, N},
-    {R, N, N, N, R}
-  }
-};
-*/
 void getModuleTiles(Modules module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]);
 
 #endif

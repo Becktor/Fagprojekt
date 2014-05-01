@@ -35,34 +35,34 @@ const static short
     INIT_FPS = 60; //Initial assumed framerate.
 
 //Global variables
-static int cameraX = 0, cameraY = 0;
+static int _cameraX = 0, _cameraY = 0;
 static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
-static LinkedList<Unit*> units;
-static ArduinoNunchuk nunchuk = ArduinoNunchuk();
+static LinkedList<Unit*> _units;
+static Point _entrance = Point(), _exit = Point();
+static ArduinoNunchuk _nunchuk = ArduinoNunchuk();
 
 //Temporary units
-static Minotaur _mino1(48, 70);
-static Hero _archon(140,70, &nunchuk);
+static Minotaur _mino(48, 70);
+static Hero _hero(140,70, &_nunchuk);
 
 //Function declarations
 void setup();
 void loop();
+void addUnit(Unit *unit, Point &point);
 void drawRect(int x, int y, int width, int height);
 void drawTile(Tiles tile);
 void drawUnit(Unit *unit);
 
 void setup() {
   randomSeed(107); //Initializes a random seed to the random generator (if pin 0 is unconnected)
-  newScene(&_scene);
   if(NUNCHUCK)
-    nunchuk.init();
+    _nunchuk.init();
   GD.begin();
-  units.add(&_mino1);
-  units.add(&_archon);
-  //units.add(&_mino2);
-  //units.add(&_mino3);
+  newScene(&_scene, &_entrance, &_exit);
+  addUnit(&_mino, new Point(1, 1));
+  addUnit(&_hero, &_entrance);
 }
 
 void loop() {
@@ -71,24 +71,24 @@ void loop() {
   while(millis() - startMilis < SECOND) { //Loop for a second
     //Game logic
     if(NUNCHUCK) {
-      nunchuk.update();
-      nunchuk.update();
+      _nunchuk.update();
+      _nunchuk.update();
     }
-    for(int i = 0; i < units.size(); i++) {
-      Unit *unit = units.get(i);
+    for(int i = 0; i < _units.size(); i++) {
+      Unit *unit = _units.get(i);
       unit->updateAI(_dTime, &_logic);
       unit->updatePhysics(_dTime, &_logic);
     }
     //Draw Logic
     GD.Clear();
     GD.Begin(RECTS);
-    Rect* hitbox = _mino1.getHitbox();
-    cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
-    cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
+    Rect* hitbox = _mino.getHitbox();
+    _cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
+    _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();
     GD.ColorRGB(255, 0, 0);
-    for(int i = 0; i < units.size(); i++)
-      drawUnit(units.get(i));
+    for(int i = 0; i < _units.size(); i++)
+      drawUnit(_units.get(i));
     //GD.cmd_number(40,136, 31, OPT_CENTER, fps); 
     GD.swap();
     //Frame counter
@@ -98,8 +98,16 @@ void loop() {
   _dTime = SECOND / fps;
 }
 
+//Adds the given unit to the units list and sets it at the given tile.
+void addUnit(Unit *unit, Point *point) {
+  Rect *hitbox = unit->getHitbox();
+  Point *pos = hitbox->getPos();
+  pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  _units.add(unit);
+}
+
 void drawRect(int x, int y, int width, int height) {
-  int rectX1 = x - cameraX, rectY1 = y - cameraY, rectX2 = x + width - 2 - cameraX, rectY2 = y + height - 2 - cameraY;
+  int rectX1 = x - _cameraX, rectY1 = y - _cameraY, rectX2 = x + width - 2 - _cameraX, rectY2 = y + height - 2 - _cameraY;
   if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
     GD.Vertex2ii(rectX1, rectY1);
     GD.Vertex2ii(rectX2, rectY2);
@@ -108,17 +116,17 @@ void drawRect(int x, int y, int width, int height) {
 
 void drawScene() {
   GD.ColorRGB(140, 140, 140);
-  int tileX = cameraX / TILE_SIZE,
-      tileY = cameraY / TILE_SIZE,
-      tileXEnd = (cameraX + SCREEN_WIDTH - 1) / TILE_SIZE,
-      tileYEnd = (cameraY + SCREEN_HEIGHT - 1) / TILE_SIZE;
-  if(cameraX < 0)
+  int tileX = _cameraX / TILE_SIZE,
+      tileY = _cameraY / TILE_SIZE,
+      tileXEnd = (_cameraX + SCREEN_WIDTH - 1) / TILE_SIZE,
+      tileYEnd = (_cameraY + SCREEN_HEIGHT - 1) / TILE_SIZE;
+  if(_cameraX < 0)
     tileX--;
-  if(cameraY < 0)
+  if(_cameraY < 0)
     tileY--;
-  if(cameraX + SCREEN_WIDTH - 1 < 0)
+  if(_cameraX + SCREEN_WIDTH - 1 < 0)
     tileXEnd--;
-  if(cameraY + SCREEN_HEIGHT - 1 < 0)
+  if(_cameraY + SCREEN_HEIGHT - 1 < 0)
     tileYEnd--;
   for(int i = tileX; i < tileXEnd; i++) {
     for(int j = tileY; j < tileYEnd; j++) {
