@@ -10,7 +10,6 @@ void newScene(Scene *scene, Point *entrance, Point *exit) {
   Modules modules[XMODULES][YMODULES];
   modulate(modules, entrance, exit);
   generate(scene, modules, entrance, exit);
-  shell(scene);
 }
 
 void clearScene(Scene *scene) {
@@ -60,7 +59,7 @@ void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance
         portal = exit;
       } else
         isPortalRoom = false;
-      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i, j * MODULE_HEIGHT - j, isPortalRoom, isEntrance, portal);
+      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i - 1, j * MODULE_HEIGHT - j - 1, isPortalRoom, isEntrance, portal);
     }
   }
 }
@@ -97,16 +96,5 @@ void modulate(Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit)
       y--;
       modules[x][y] = TYPE3;
     }
-  }
-}
-
-void shell(Scene *scene) {
-  for(int i = 0; i < SCENE_WIDTH; i++) {
-    scene->setTile(i, 0, ROCK);
-    scene->setTile(i, SCENE_HEIGHT - 1, ROCK);
-  }
-  for(int i = 0; i < SCENE_HEIGHT; i++) {
-    scene->setTile(0, i, ROCK);
-    scene->setTile(SCENE_WIDTH - 1, i, ROCK);
   }
 }

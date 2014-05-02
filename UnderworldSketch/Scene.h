@@ -20,8 +20,8 @@ const static short
     TILE_SIZE = 48, //One tile unit to world units conv.
     XMODULES = 4,
     YMODULES = 4,
-    SCENE_WIDTH = XMODULES * (MODULE_WIDTH - 1) + 1,
-    SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) + 1;
+    SCENE_WIDTH = XMODULES * (MODULE_WIDTH - 1) - 1,
+    SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1;
 
 class Scene
 {
