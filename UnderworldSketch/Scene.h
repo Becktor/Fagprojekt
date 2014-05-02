@@ -25,7 +25,8 @@ const static short
 
 class Scene
 {
-  Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
+  private:
+    Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
   public:
     Scene();
     boolean contains(int x, int y);

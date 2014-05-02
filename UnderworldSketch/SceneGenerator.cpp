@@ -6,30 +6,17 @@
 #include "SceneGenerator.h"
 
 void newScene(Scene *scene, Point *entrance, Point *exit) {
+  clearScene(scene);
   Modules modules[XMODULES][YMODULES];
   modulate(modules, entrance, exit);
   generate(scene, modules, entrance, exit);
   shell(scene);
 }
 
-void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
-  for(int i = 0; i < XMODULES; i++) {
-    for(int j = 0; j < YMODULES; j++) {
-      boolean isPortalRoom, isEntrance;
-      Point *portal;
-      if(entrance->getX() == i && entrance->getY() == j) {
-        isPortalRoom = true;
-        isEntrance = true;
-        portal = entrance;
-      } else if(exit->getX() == i && exit->getY() == j) {
-        isPortalRoom = true;
-        isEntrance = false;
-        portal = exit;
-      } else
-        isPortalRoom = false;
-      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i, j * MODULE_HEIGHT - j, isPortalRoom, isEntrance, portal);
-    }
-  }
+void clearScene(Scene *scene) {
+  for(int i = 0; i < SCENE_WIDTH; i++)
+    for(int j = 0; j < SCENE_HEIGHT; j++)
+      scene->setTile(i, j, NONE);
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
@@ -52,8 +39,28 @@ void fillModule(Scene *scene, Modules module, int dX, int dY, boolean portalRoom
           tile = NONE;
       } else
         tile = (Tiles) tileData;
-      if(scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
+      if(scene->getTile(x, y) == NULL || scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
         scene->setTile(x, y, tile);
+    }
+  }
+}
+
+void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
+  for(int i = 0; i < XMODULES; i++) {
+    for(int j = 0; j < YMODULES; j++) {
+      boolean isPortalRoom, isEntrance;
+      Point *portal;
+      if(entrance->getX() == i && entrance->getY() == j) {
+        isPortalRoom = true;
+        isEntrance = true;
+        portal = entrance;
+      } else if(exit->getX() == i && exit->getY() == j) {
+        isPortalRoom = true;
+        isEntrance = false;
+        portal = exit;
+      } else
+        isPortalRoom = false;
+      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i, j * MODULE_HEIGHT - j, isPortalRoom, isEntrance, portal);
     }
   }
 }

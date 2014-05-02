@@ -12,15 +12,18 @@ class Unit;
 class Logic
 {
   private:
+    boolean _gameOver, _heroWin;
     Scene *_scene;
   public:
     Logic(Scene *scene);
     void gravitate(Unit *unit, int dTime);
-
+    boolean isGameOver();
+    boolean isHeroWin();
     boolean moveUnitHoriz(Unit *unit, int dX);
     boolean moveUnitVerti(Unit *unit, int dY);
     boolean isGrounded(Unit *unit);
     boolean isSolid(int x, int y);
-    void setMap(Scene *scene);
+    void restartGame();
+    void setGameOver(boolean gameOver);
 };
 #endif

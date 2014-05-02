@@ -7,7 +7,21 @@
 #include "Logic.h"
 
 Logic::Logic(Scene *scene) {
-  setMap(scene);
+  _scene = scene;
+  restartGame();
+}
+
+void Logic::restartGame() {
+  _gameOver = false;
+  _heroWin = false;
+}
+
+boolean Logic::isGameOver() {
+  return _gameOver;
+}
+
+boolean Logic::isHeroWin() {
+  return _heroWin;
 }
 
 void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
@@ -115,6 +129,6 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
   return true;
 }
 
-void Logic::setMap(Scene *scene) {
-  _scene = scene;
+void Logic::setGameOver(boolean gameOver) {
+  _gameOver = gameOver;
 }

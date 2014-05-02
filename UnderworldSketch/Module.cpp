@@ -20,4 +20,5 @@ void getModuleTiles(Modules module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT])
       *tiles = &TYPE4_TILES[random(TYPE4_MODULES)];
       return;
   }
+  *tiles = &TYPE0_TILES[random(TYPE0_MODULES)];
 }

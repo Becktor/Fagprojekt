@@ -79,6 +79,19 @@ void loop() {
       unit->updateAI(_dTime, &_logic);
       unit->updatePhysics(_dTime, &_logic);
     }
+    //Game end
+    if(_logic.isGameOver()) {
+      if(_logic.isHeroWin()) {
+        //Game continue
+      } else {
+        //Game restart
+      }
+      newScene(&_scene, &_entrance, &_exit);
+      _units.clear();
+      _logic.restartGame();
+      addUnit(&_mino, new Point(1, 1));
+      addUnit(&_hero, &_entrance);
+    }
     //Draw Logic
     GD.Clear();
     GD.Begin(RECTS);
