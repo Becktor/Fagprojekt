@@ -141,7 +141,3 @@ void Logic::setGameOver(boolean gameOver) {
 void Logic::setHero(Unit *hero) {
   _hero = hero;
 }
-
-void Logic::setUnits(LinkedList<Unit*> *units) {
-  _units = units;
-}

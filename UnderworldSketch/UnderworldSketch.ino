@@ -39,7 +39,6 @@ static int _cameraX = 0, _cameraY = 0;
 static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
-static LinkedList<Unit*> _units;
 static Point _entrance = Point(), _exit = Point();
 static ArduinoNunchuk _nunchuk = ArduinoNunchuk();
 
@@ -50,7 +49,6 @@ static Hero _hero(140,70, &_nunchuk);
 //Function declarations
 void setup();
 void loop();
-void addUnit(Unit *unit, Point &point);
 void drawRect(int x, int y, int width, int height);
 void drawTile(Tiles tile);
 void drawUnit(Unit *unit);
@@ -62,22 +60,22 @@ void setup() {
   GD.begin();
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
-  _logic.setUnits(&_units);
-  addUnit(&_mino, new Point(1, 1));
-  addUnit(&_hero, &_entrance);
+  _scene.addUnit(&_mino, new Point(1, 1));
+  _scene.addUnit(&_hero, &_entrance);
 }
 
 void loop() {
   unsigned long startMilis = millis();
   short fps = INIT_FPS, counter = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
+    LinkedList<Unit*>* units = _scene.getUnits();
     //Game logic
     if(NUNCHUCK) {
       _nunchuk.update();
       _nunchuk.update();
     }
-    for(int i = 0; i < _units.size(); i++) {
-      Unit *unit = _units.get(i);
+    for(int i = 0; i < units->size(); i++) {
+      Unit *unit = units->get(i);
       unit->updateAI(_dTime, &_logic);
       unit->updatePhysics(_dTime, &_logic);
     }
@@ -89,10 +87,10 @@ void loop() {
         //Game restart
       }
       newScene(&_scene, &_entrance, &_exit);
-      _units.clear();
+      _scene.clearUnits();
       _logic.restartGame();
-      addUnit(&_mino, new Point(1, 1));
-      addUnit(&_hero, &_entrance);
+      _scene.addUnit(&_mino, new Point(1, 1));
+      _scene.addUnit(&_hero, &_entrance);
     }
     //Draw Logic
     GD.Clear();
@@ -102,8 +100,8 @@ void loop() {
     _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();
     GD.ColorRGB(255, 0, 0);
-    for(int i = 0; i < _units.size(); i++)
-      drawUnit(_units.get(i));
+    for(int i = 0; i < units->size(); i++)
+      drawUnit(units->get(i));
     //GD.cmd_number(40,136, 31, OPT_CENTER, fps); 
     GD.swap();
     //Frame counter
@@ -111,14 +109,6 @@ void loop() {
   }
   fps = counter;
   _dTime = SECOND / fps;
-}
-
-//Adds the given unit to the units list and sets it at the given tile.
-void addUnit(Unit *unit, Point *point) {
-  Rect *hitbox = unit->getHitbox();
-  Point *pos = hitbox->getPos();
-  pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
-  _units.add(unit);
 }
 
 void drawRect(int x, int y, int width, int height) {

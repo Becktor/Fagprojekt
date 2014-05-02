@@ -1,8 +1,23 @@
 #include <Arduino.h>
 #include "Tiles.h"
 #include "Scene.h"
+#include "Unit.h"
 
-Scene::Scene() { }
+Scene::Scene() {
+  _units = LinkedList<Unit*>();
+}
+
+//Adds the given unit to the units list and sets it at the given tile.
+void Scene::addUnit(Unit *unit, Point *point) {
+  Rect *hitbox = unit->getHitbox();
+  Point *pos = hitbox->getPos();
+  pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  _units.add(unit);
+}
+
+void Scene::clearUnits() {
+  _units.clear();
+}
 
 boolean Scene::contains(int x, int y) {
   return x >= 0 && x < SCENE_WIDTH && y >= 0 && y < SCENE_HEIGHT;
@@ -21,6 +36,10 @@ Tiles Scene::getTile(int x, int y) {
     return _tiles[x][y];
   else
     return ROCK;
+}
+
+LinkedList<Unit*>* Scene::getUnits() {
+  return &_units;
 }
 
 void Scene::setTile(int x, int y, Tiles tile) {

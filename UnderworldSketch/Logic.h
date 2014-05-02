@@ -9,6 +9,7 @@
 
 const static short GRAVITY = 1;
 
+class Scene;
 class Unit;
 class Logic
 {
@@ -30,6 +31,5 @@ class Logic
     void restartGame();
     void setGameOver(boolean gameOver);
     void setHero(Unit *hero);
-    void setUnits(LinkedList<Unit*> *units);
 };
 #endif
