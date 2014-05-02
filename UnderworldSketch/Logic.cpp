@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <LinkedList.h>
 #include "Tiles.h"
 #include "Direction.h"
 #include "Geo.h"
@@ -11,17 +12,16 @@ Logic::Logic(Scene *scene) {
   restartGame();
 }
 
-void Logic::restartGame() {
-  _gameOver = false;
-  _heroWin = false;
-}
-
 boolean Logic::isGameOver() {
   return _gameOver;
 }
 
 boolean Logic::isHeroWin() {
   return _heroWin;
+}
+
+Unit* Logic::getHero() {
+  return _hero;
 }
 
 void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
@@ -129,6 +129,19 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
   return true;
 }
 
+void Logic::restartGame() {
+  _gameOver = false;
+  _heroWin = false;
+}
+
 void Logic::setGameOver(boolean gameOver) {
   _gameOver = gameOver;
+}
+
+void Logic::setHero(Unit *hero) {
+  _hero = hero;
+}
+
+void Logic::setUnits(LinkedList<Unit*> *units) {
+  _units = units;
 }

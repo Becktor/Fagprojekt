@@ -61,6 +61,8 @@ void setup() {
     _nunchuk.init();
   GD.begin();
   newScene(&_scene, &_entrance, &_exit);
+  _logic.setHero(&_hero);
+  _logic.setUnits(&_units);
   addUnit(&_mino, new Point(1, 1));
   addUnit(&_hero, &_entrance);
 }
