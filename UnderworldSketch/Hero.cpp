@@ -13,14 +13,22 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   Rect* hitbox = getHitbox();
 
   //Hero x-movement
-  if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160))
+  if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     setXVel(HERO_SPEED_WALK);
-  else if(_nunchuk->analogX > 160)
+    setDir(RIGHT);  
+  }
+  else if(_nunchuk->analogX > 160){
     setXVel(HERO_SPEED_RUN);
-  else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110))
+    setDir(RIGHT); 
+  }
+  else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
     setXVel(-HERO_SPEED_WALK);
-  else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80))
+    setDir(LEFT);
+  }
+  else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
     setXVel(-HERO_SPEED_RUN);
+    setDir(LEFT);
+  }
   else 
     setXVel(0);
 
