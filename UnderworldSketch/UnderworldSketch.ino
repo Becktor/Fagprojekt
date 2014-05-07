@@ -147,5 +147,7 @@ void drawTile(int x, int y, Tiles tile) {
 
 void drawUnit(Unit* unit) {
   Rect *hitbox = unit->getHitbox();
-  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
+//  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
+GD.Begin(BITMAPS);
+GD.Vertex2ii(hitbox->getX(), hitbox->getY(), SPRITE0_HANDLE, (hitbox->getX() >> 2) & 5);
 }
