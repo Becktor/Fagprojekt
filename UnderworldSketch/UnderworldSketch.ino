@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static short
@@ -37,7 +37,7 @@ const static short
 
 //Global variables
 static int _cameraX = 0, _cameraY = 0;
-static unsigned int _dTime = SECOND / INIT_FPS; //Approx. time between frames
+static unsigned int _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
 static Point _entrance = Point(), _exit = Point();
@@ -71,7 +71,7 @@ void setup() {
 
 void loop() {
   unsigned long startMilis = millis();
-  short fps = INIT_FPS, counter = 0;
+  short counter = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     LinkedList<Unit*>* units = _scene.getUnits();
     //Game logic
@@ -102,22 +102,22 @@ void loop() {
 //    GD.Begin(RECTS);
     GD.Begin(BITMAPS);
 
-    Rect* hitbox = _mino.getHitbox();
+    Rect* hitbox = _hero.getHitbox();
     _cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
     _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();
     GD.ColorRGB(255, 0, 0);
     for(int i = 0; i < units->size(); i++)
       drawUnit(units->get(i));
-    //GD.cmd_number(40,136, 31, OPT_CENTER, fps); 
-//  GD.Begin(BITMAPS);
-//  GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
+    GD.cmd_number(40,136, 31, OPT_CENTER, _fps); 
+    //GD.Begin(BITMAPS);
+    //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
     GD.swap();
     //Frame counter
     counter++;
   }
-  fps = counter;
-  _dTime = SECOND / fps;
+  _fps = counter;
+  _dTime = SECOND / _fps;
 }
 
 void drawRect(int x, int y, int width, int height) {

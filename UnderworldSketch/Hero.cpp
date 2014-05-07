@@ -58,6 +58,4 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack animation trigger
     }
   }
-}  
-
-
+}
