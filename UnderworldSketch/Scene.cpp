@@ -5,6 +5,7 @@
 
 Scene::Scene() {
   _units = LinkedList<Unit*>();
+  _props = LinkedList<Prop*>();
 }
 
 //Adds the given unit to the units list and sets it at the given tile.
@@ -13,6 +14,12 @@ void Scene::addUnit(Unit *unit, Point *point) {
   Point *pos = hitbox->getPos();
   pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
   _units.add(unit);
+}
+void Scene::addProp(Prop *prop, Point *point) {
+  Rect *hitbox = prop->getHitbox();
+  Point *pos = hitbox->getPos();
+  pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  _props.add(prop);
 }
 
 void Scene::clearUnits() {
@@ -41,7 +48,9 @@ Tiles Scene::getTile(int x, int y) {
 LinkedList<Unit*>* Scene::getUnits() {
   return &_units;
 }
-
+LinkedList<Prop*>* Scene::getProps() {
+  return &_props;
+}
 void Scene::setTile(int x, int y, Tiles tile) {
   if(contains(x, y))
     _tiles[x][y] = tile;

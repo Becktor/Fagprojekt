@@ -15,7 +15,8 @@
 #include <Arduino.h>
 #include "Tiles.h"
 #include "Module.h"
-#include "Unit.h";
+#include "Unit.h"
+#include "Prop.h"
 
 const static short
     TILE_SIZE = 48, //One tile unit to world units conv.
@@ -30,15 +31,18 @@ class Scene
   private:
     Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
     LinkedList<Unit*> _units;
+    LinkedList<Prop*> _props;
   public:
     Scene();
     void addUnit(Unit *unit, Point *point);
+    void addProp(Prop *prop, Point *point);
     void clearUnits();
     boolean contains(int x, int y);
     int getWidth();
     int getHeight();
     Tiles getTile(int x, int y);
     LinkedList<Unit*>* getUnits();
+    LinkedList<Prop*>* getProps();
     void setTile(int x, int y, Tiles tile);
 };
 

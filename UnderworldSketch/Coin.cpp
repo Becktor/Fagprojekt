@@ -1,8 +1,7 @@
-#include "Direction.h"
-#include "Logic.h"
 #include "Coin.h"
+#include "Prop.h"
 
-Coin::Coin(int x, int y) : Unit(Rect(Point(x, y), COIN_WIDTH, COIN_HEIGHT)) {
+Coin::Coin(int x, int y) : Prop(Rect(Point(x, y), COIN_WIDTH, COIN_HEIGHT)) {
 
 }
 

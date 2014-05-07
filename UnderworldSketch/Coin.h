@@ -1,13 +1,13 @@
-#ifndef minotaur_h
-#define minotaur_h
+#ifndef coin_h
+#define coin_h
 
-#include "Logic.h"
+#include "Prop.h"
 
 const static short
-    COIN_HEIGHT = 20,
-    COIN_WIDTH = 20;
+    COIN_HEIGHT = 10,
+    COIN_WIDTH = 10;
 
-class Coin : public Unit {
+class Coin : public Prop {
   public:
     Coin(int x, int y);
 };

@@ -2,9 +2,10 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Hero.h"
+#include "Prop.h"
 
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : 
-Unit(Rect(Point(x, y), HERO_WIDTH, HERO_HEIGHT_STAND)) {
+Prop(Rect(Point(x, y), HERO_WIDTH, HERO_HEIGHT_STAND)) {
   _nunchuk = nunchuk;
   duck = false;
 }
