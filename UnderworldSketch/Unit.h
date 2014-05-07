@@ -10,18 +10,18 @@
 #include "Direction.h"
 #include "Geo.h"
 #include "Logic.h"
-#include "Prop.h"
 
 class Logic;
-class Unit : public Prop
+class Unit
 {
   private:
     Direction _dir;
     boolean _levitate;
     int _xVel, _yVel;
-
+    Rect _hitbox;
   public:
     Unit(Rect hitbox);
+    Rect* getHitbox();
     Direction getDir();
     boolean getLevitate();
     int getXVel();
@@ -31,9 +31,9 @@ class Unit : public Prop
     void setXVel(int yVel);
     void setYVel(int yVel);
     void toggleDir();
+    void translate(int x, int y);
     virtual void updateAI(int dTime, Logic *logic);
     void updatePhysics(int dTime, Logic *logic);
 };
-
 #endif
 
