@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static short
@@ -98,7 +98,7 @@ void loop() {
     //Draw Logic
     GD.Clear();
     GD.Begin(RECTS);
-    Rect* hitbox = _mino.getHitbox();
+    Rect* hitbox = _hero.getHitbox();
     _cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
     _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();

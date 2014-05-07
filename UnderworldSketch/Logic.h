@@ -20,6 +20,7 @@ class Logic
     Unit *_hero;
   public:
     Logic(Scene *scene);
+    boolean atExit(Unit *unit);
     Unit* getHero();
     void gravitate(Unit *unit, int dTime);
     boolean isGameOver();
@@ -29,7 +30,7 @@ class Logic
     boolean moveUnitHoriz(Unit *unit, int dX);
     boolean moveUnitVerti(Unit *unit, int dY);
     void restartGame();
-    void setGameOver(boolean gameOver);
+    void setGameOver(boolean gameOver, boolean heroWon);
     void setHero(Unit *hero);
 };
 #endif
