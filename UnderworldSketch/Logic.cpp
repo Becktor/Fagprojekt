@@ -12,6 +12,21 @@ Logic::Logic(Scene *scene) {
   restartGame();
 }
 
+boolean Logic::atExit(Unit *unit) {
+  Rect *hitbox = unit->getHitbox();
+  int tileXStart = hitbox->getX() / TILE_SIZE,
+      tileYStart = hitbox->getY() / TILE_SIZE,
+      tileXEnd = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
+      tileYEnd = (hitbox->getY() + hitbox->getHeight() - 1) / TILE_SIZE;
+  for(int i = tileXStart; i <= tileXEnd; i++) {
+    for(int j = tileYStart; j <= tileYEnd; j++) {
+      if(EXIT == _scene->getTile(i, j))
+        return true;
+    }
+  }
+  return false;
+}
+
 boolean Logic::isGameOver() {
   return _gameOver;
 }
@@ -134,8 +149,9 @@ void Logic::restartGame() {
   _heroWin = false;
 }
 
-void Logic::setGameOver(boolean gameOver) {
+void Logic::setGameOver(boolean gameOver, boolean heroWin) {
   _gameOver = gameOver;
+  _heroWin = heroWin;
 }
 
 void Logic::setHero(Unit *hero) {
