@@ -45,18 +45,21 @@ void fillModule(Scene *scene, Modules module, int dX, int dY, boolean portalRoom
 }
 
 void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
+  boolean hasEntrance = false, hasExit = false;
   for(int i = 0; i < XMODULES; i++) {
     for(int j = 0; j < YMODULES; j++) {
-      boolean isPortalRoom, isEntrance;
+      boolean isPortalRoom = false, isEntrance = false;
       Point *portal;
-      if(entrance->getX() == i && entrance->getY() == j) {
+      if(!hasEntrance && entrance->getX() == i && entrance->getY() == j) {
         isPortalRoom = true;
         isEntrance = true;
         portal = entrance;
-      } else if(exit->getX() == i && exit->getY() == j) {
+        hasEntrance = true;
+      } else if(!hasExit && exit->getX() == i && exit->getY() == j) {
         isPortalRoom = true;
         isEntrance = false;
         portal = exit;
+        hasExit = true;
       } else
         isPortalRoom = false;
       fillModule(scene, modules[i][j], i * MODULE_WIDTH - i - 1, j * MODULE_HEIGHT - j - 1, isPortalRoom, isEntrance, portal);
@@ -88,13 +91,14 @@ void modulate(Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit)
       if(y == 0) {
         exit->setPoint(x, y);
         return;
+      } else {
+        if(modules[x][y] != TYPE3)
+          modules[x][y] = TYPE2;
+        else
+          modules[x][y] = TYPE4;
+        y--;
+        modules[x][y] = TYPE3;
       }
-      if(modules[x][y] == TYPE1)
-        modules[x][y] = TYPE2;
-      else
-        modules[x][y] = TYPE4;
-      y--;
-      modules[x][y] = TYPE3;
     }
   }
 }
