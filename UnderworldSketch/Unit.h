@@ -3,13 +3,6 @@
  *  to 'Entities' since entities uses points for positions while units use
  *  hitboxes. Could be superclass to future prop though.
  */
-#define LOAD_ASSETS()  GD.safeload("Hero3.GD2");
-#define SPRITE0_HANDLE 0
-#define SPRITE0_WIDTH 30
-#define SPRITE0_HEIGHT 40
-#define SPRITE0_CELLS 1
-#define ASSETS_END 14400UL
-static const shape_t SPRITE0_SHAPE = {0, 45, 42, 0};
 
 #ifndef unit_h
 #define unit_h
@@ -26,7 +19,6 @@ class Unit
     boolean _levitate;
     int _xVel, _yVel;
     Rect _hitbox;
-
   public:
     Unit(Rect hitbox);
     Rect* getHitbox();
@@ -44,3 +36,4 @@ class Unit
     void updatePhysics(int dTime, Logic *logic);
 };
 #endif
+

@@ -21,6 +21,7 @@
 #include "Unit.h"
 #include "Minotaur.h"
 #include "Hero.h"
+#include "Sprites.h"
 
 //Checks
 #define NUNCHUCK 0 //Whether or not a nunchuck is connected
@@ -58,10 +59,12 @@ void setup() {
   if(NUNCHUCK)
     _nunchuk.init();
   GD.begin();
+  LOAD_ASSETS();
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_mino, new Point(1, 1));
   _scene.addUnit(&_hero, &_entrance);
+
 }
 
 void loop() {
@@ -113,10 +116,12 @@ void loop() {
 
 void drawRect(int x, int y, int width, int height) {
   int rectX1 = x - _cameraX, rectY1 = y - _cameraY, rectX2 = x + width - 2 - _cameraX, rectY2 = y + height - 2 - _cameraY;
-  if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
-    GD.Vertex2ii(rectX1, rectY1);
+//  if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
+//    GD.Vertex2f(rectX1*16, rectY1*16);
+//    GD.Vertex2f(rectX2*16, rectY2*16);
+//  }
+    GD.Vertex2f(rectX1*16, rectY1*16);
     GD.Vertex2ii(rectX2, rectY2);
-  }
 }
 
 void drawScene() {
@@ -149,5 +154,20 @@ void drawUnit(Unit* unit) {
   Rect *hitbox = unit->getHitbox();
 //  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
 GD.Begin(BITMAPS);
-GD.Vertex2ii(hitbox->getX(), hitbox->getY(), SPRITE0_HANDLE, (hitbox->getX() >> 2) & 5);
+GD.ColorRGB(255, 255, 255);
+if(unit->getDir() == -1)
+{
+  GD.cmd_translate(F16(21), F16(0));
+  GD.cmd_scale(F16(-1), F16(1));
+  GD.cmd_translate(F16(-21), F16(0));
+  GD.cmd_setmatrix();
+}
+GD.Vertex2ii(hitbox->getX() - _cameraX, hitbox->getY() - _cameraY, Sonic0_HANDLE, (hitbox->getX() >> 2) & 7);
+if(unit->getDir() == -1)
+{
+  GD.cmd_translate(F16(21), F16(0));
+  GD.cmd_scale(F16(-1), F16(1));
+  GD.cmd_translate(F16(-21), F16(0));
+  GD.cmd_setmatrix();
+}
 }

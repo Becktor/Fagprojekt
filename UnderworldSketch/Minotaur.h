@@ -4,9 +4,9 @@
 #include "Logic.h"
 
 const static short
-    MINO_SPEED = 1,
-    MINO_HEIGHT = 40,
-    MINO_WIDTH = 30;
+    MINO_SPEED = 3,
+    MINO_HEIGHT = 42,
+    MINO_WIDTH = 42;
 
 class Minotaur : public Unit {
   public:
