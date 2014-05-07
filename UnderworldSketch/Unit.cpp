@@ -2,9 +2,9 @@
 #include "Geo.h"
 #include "Logic.h"
 #include "Unit.h"
+#include "Prop.h"
 
-Unit::Unit(Rect hitbox) {
-  _hitbox = hitbox;
+Unit::Unit(Rect hitbox) : Prop(hitbox) {
   _xVel = 0;
   _yVel = 0;
   _dir = LEFT;
@@ -12,10 +12,6 @@ Unit::Unit(Rect hitbox) {
 
 Direction Unit::getDir() {
   return _dir;
-}
-
-Rect* Unit::getHitbox() {
-  return &_hitbox;
 }
 
 boolean Unit::getLevitate() {
@@ -51,11 +47,6 @@ void Unit::toggleDir() {
     _dir = RIGHT;
   else
     _dir = LEFT;
-}
-
-
-void Unit::translate(int x, int y) {
-  _hitbox.translate(x, y);
 }
 
 void Unit::updateAI(int dTime, Logic *logic) { }
