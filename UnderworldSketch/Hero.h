@@ -17,7 +17,7 @@ const static short
 class Hero : public Unit {
   private:
     ArduinoNunchuk *_nunchuk;
-    boolean _duck;
+    boolean _duck, _jump;
 
   public:
     Hero(int x, int y, ArduinoNunchuk* nunchuk);
