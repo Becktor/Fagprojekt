@@ -45,12 +45,12 @@ void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
 
 boolean Logic::isGrounded(Unit *unit) {
   Rect *hitbox = unit->getHitbox();
-  int xStart = hitbox->getX() / TILE_SIZE,
-      xEnd = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
-      y = (hitbox->getY() + hitbox->getHeight()) / TILE_SIZE;
-  for(int i = xStart; i <= xEnd; i++) {
-    Tiles tile = _scene->getTile(i, y);
-    if(getSolid(tile) || getPlatform(tile))
+  int xStartTile = hitbox->getX() / TILE_SIZE,
+      xEndTile = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
+      y = hitbox->getY() + hitbox->getHeight();
+  for(int i = xStartTile; i <= xEndTile; i++) {
+    Tiles lowerTile = _scene->getTile(i, y / TILE_SIZE), upperTile = _scene->getTile(i, (y - 1) / TILE_SIZE);
+    if((getSolid(lowerTile) || getPlatform(lowerTile)) && (!getSolid(upperTile) && !getPlatform(upperTile)))
       return true;
   }
   return false;
