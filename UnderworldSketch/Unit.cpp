@@ -4,10 +4,15 @@
 #include "Unit.h"
 #include "Prop.h"
 
-Unit::Unit(Rect hitbox) : Prop(hitbox) {
+Unit::Unit(Rect hitbox, int health) : Prop(hitbox) {
+  _health = health;
   _xVel = 0;
   _yVel = 0;
   _dir = LEFT;
+}
+
+void Unit::damage(int damage) {
+  _health -= damage;
 }
 
 Direction Unit::getDir() {
@@ -24,6 +29,10 @@ int Unit::getXVel() {
 
 int Unit::getYVel() {
   return _yVel;
+}
+
+boolean Unit::isDead() {
+  return _health <= 0;
 }
 
 void Unit::setDir(Direction dir) {

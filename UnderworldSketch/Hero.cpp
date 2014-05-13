@@ -4,9 +4,10 @@
 #include "Hero.h"
 #include "Prop.h"
 
-Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk ) : 
-Unit(Rect(Point(x, y), HERO_WIDTH, HERO_HEIGHT_STAND)) {
+Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : 
+Unit(Rect(x, y, HERO_WIDTH, HERO_HEIGHT_STAND), HERO_HEALTH) {
   _nunchuk = nunchuk;
+  _attack = false;
   _duck = false;
   _jump = false;
 }
@@ -58,12 +59,21 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _jump = false;
   }
 
-  //Hero attack
+  //Hero action
   if(_nunchuk->zButton) {
     if(_duck && logic->atExit(this)) {
+      //Map exit
       logic->setGameOver(true, true);
-    } else {
-      //Attack animation trigger
+    } else if(!_attack) {
+      //Attack
+      _attack = true;
+      int attackX = hitbox->getX();
+      if(getDir() == LEFT)
+        attackX -= HERO_RANGE;
+      else
+        attackX += hitbox->getWidth();
+      logic->addAttack(HERO_DAMAGE, this, Rect(attackX, hitbox->getY(), HERO_RANGE, hitbox->getHeight()));
     }
-  }
+  } else
+    _attack = false;
 }

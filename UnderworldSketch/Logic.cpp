@@ -3,6 +3,7 @@
 #include "Tiles.h"
 #include "Direction.h"
 #include "Geo.h"
+#include "Attack.h"
 #include "Unit.h"
 #include "Scene.h"
 #include "Logic.h"
@@ -10,6 +11,11 @@
 Logic::Logic(Scene *scene) {
   _scene = scene;
   restartGame();
+}
+
+void Logic::addAttack(int damage, Unit* owner, Rect area) {
+  Attack attack = Attack(damage, owner, area);
+  _attacks.add(&attack);
 }
 
 boolean Logic::atExit(Unit *unit) {
@@ -25,6 +31,23 @@ boolean Logic::atExit(Unit *unit) {
     }
   }
   return false;
+}
+
+void Logic::executeAttacks() {
+  LinkedList<Unit*> *units = _scene->getUnits();
+  for(int i = 0; i < _attacks.size(); i++) {
+    Attack *attack = _attacks.get(i);
+    Rect *area = attack->getArea();
+    for(int j = 0; j < units->size(); j++) {
+      Unit *unit = units->get(j);
+      Rect *hitbox = unit->getHitbox();
+      if(unit != attack->getOwner() && hitbox->contains(area)) {
+        unit->damage(attack->getDamage());
+        unit->setYVel(-10);
+      }
+    }
+  }
+  _attacks.clear();
 }
 
 boolean Logic::isGameOver() {

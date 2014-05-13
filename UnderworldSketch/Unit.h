@@ -18,14 +18,17 @@ class Unit : public Prop
   private:
     Direction _dir;
     boolean _levitate;
-    int _xVel, _yVel;
+    int _xVel, _yVel, _health;
     Rect _hitbox;
+
   public:
-    Unit(Rect hitbox);
+    Unit(Rect hitbox, int health);
+    void damage(int damage);
     Direction getDir();
     boolean getLevitate();
     int getXVel();
     int getYVel();
+    boolean isDead();
     void setDir(Direction dir);
     void setLevitate(boolean levitate);
     void setXVel(int yVel);

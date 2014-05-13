@@ -54,11 +54,10 @@ boolean Rect::contains(Point *p) {
 }
 
 boolean Rect::contains(Rect *r) {
-  Point *p = r->getPos();
-  return p->getX() < _pos.getX() + _width
-      && p->getX() + r->getWidth() > _pos.getX()
-      && p->getY() < _pos.getY() + _height
-      && p->getY() + r->getHeight() > _pos.getY();
+  return r->getX() < _pos.getX() + _width
+      && r->getX() + r->getWidth() > _pos.getX()
+      && r->getY() < _pos.getY() + _height
+      && r->getY() + r->getHeight() > _pos.getY();
 }
 
 Point* Rect::getPos() {

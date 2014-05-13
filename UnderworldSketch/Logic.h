@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <LinkedList.h>
 #include "Tiles.h"
+#include "Attack.h"
 #include "Unit.h"
 #include "Scene.h"
 
@@ -16,11 +17,13 @@ class Logic
   private:
     boolean _gameOver, _heroWin;
     Scene *_scene;
-    LinkedList<Unit*> *_units;
+    LinkedList<Attack*> _attacks;
     Unit *_hero;
   public:
     Logic(Scene *scene);
+    void addAttack(int damage, Unit *owner, Rect area);
     boolean atExit(Unit *unit);
+    void executeAttacks();
     Unit* getHero();
     void gravitate(Unit *unit, int dTime);
     boolean isGameOver();

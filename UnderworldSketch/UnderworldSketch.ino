@@ -79,12 +79,26 @@ void loop() {
       _nunchuk.update();
       _nunchuk.update();
     }
+    //AI
     for(int i = 0; i < units->size(); i++) {
       Unit *unit = units->get(i);
-      unit->updateAI(_dTime, &_logic);
+      if(unit->isDead()) {
+        units->remove(i);
+        i--;
+      } else {
+        unit->updateAI(_dTime, &_logic);
+      }
+    }
+    //Attacks
+    _logic.executeAttacks();
+    //Physics
+    for(int i = 0; i < units->size(); i++) {
+      Unit *unit = units->get(i);
       unit->updatePhysics(_dTime, &_logic);
     }
     //Game end
+    if(_hero.isDead())
+      _logic.setGameOver(true, false);
     if(_logic.isGameOver()) {
       if(_logic.isHeroWin()) {
         //Game continue

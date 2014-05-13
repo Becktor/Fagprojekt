@@ -2,7 +2,7 @@
 #include "Logic.h"
 #include "Minotaur.h"
 
-Minotaur::Minotaur(int x, int y) : Unit(Rect(Point(x, y), MINO_WIDTH, MINO_HEIGHT)) {
+Minotaur::Minotaur(int x, int y) : Unit(Rect(x, y, MINO_WIDTH, MINO_HEIGHT), MINO_HEALTH) {
   if(random(2) == 0)
     setDir(LEFT);
   else

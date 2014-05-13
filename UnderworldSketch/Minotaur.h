@@ -4,6 +4,7 @@
 #include "Logic.h"
 
 const static short
+    MINO_HEALTH = 3,
     MINO_SPEED = 3,
     MINO_HEIGHT = 42,
     MINO_WIDTH = 42;

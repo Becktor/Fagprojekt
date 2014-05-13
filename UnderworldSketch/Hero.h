@@ -7,6 +7,9 @@
 #include <ArduinoNunchuk.h>
 
 const static short
+    HERO_HEALTH = 3,
+    HERO_DAMAGE = 1,
+    HERO_RANGE = 50,
     HERO_HEIGHT_STAND = 45, //Height stand value
     HERO_HEIGHT_DUCK = 20, //Duck height
     HERO_WIDTH = 42,
@@ -17,7 +20,7 @@ const static short
 class Hero : public Unit {
   private:
     ArduinoNunchuk *_nunchuk;
-    boolean _duck, _jump;
+    boolean _attack, _duck, _jump;
 
   public:
     Hero(int x, int y, ArduinoNunchuk* nunchuk);
