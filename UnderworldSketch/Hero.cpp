@@ -67,6 +67,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       logic->setGameOver(true, true);
     } else if(!_attack) {
       //Attack
+      _attackSound = true;
       _attack = true;
       int attackX = hitbox->getX();
       if(getDir() == LEFT)
@@ -74,7 +75,12 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       else
         attackX += hitbox->getWidth();
       logic->addAttack(attackX, hitbox->getY(), HERO_RANGE, hitbox->getHeight(), HERO_DAMAGE, this);
-    }
+    } else 
+      _attackSound = false;
   } else
     _attack = false;
+}
+
+boolean Hero::getAttackSound(){
+  return _attackSound;
 }

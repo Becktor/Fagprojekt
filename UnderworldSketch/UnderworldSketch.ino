@@ -82,10 +82,6 @@ void loop() {
 
     }
 
-
-    
-  
-
     //AI
     for(int i = 0; i < units->size(); i++) {
       Unit *unit = units->get(i);
@@ -95,16 +91,12 @@ void loop() {
       } else {
         unit->updateAI(_dTime, &_logic);
       }
-    }
+    } 
     //Attacks
     _logic.executeAttacks();
-    
-    if (_logic.getAttackState()){
+    if (_hero.getAttackSound()){
        GD.sample(SWORD_ATTACK,SWORD_ATTACK_LENGTH, 44100, ADPCM_SAMPLES);
-    }
-    
-    
-    
+    } 
     //Physics
     for(int i = 0; i < units->size(); i++) {
       Unit *unit = units->get(i);

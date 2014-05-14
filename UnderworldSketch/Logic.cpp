@@ -35,7 +35,6 @@ boolean Logic::atExit(Unit *unit) {
 }
 
 void Logic::executeAttacks() {
-  _hasAttack = false;
   LinkedList<Unit*> *units = _scene->getUnits();
   for(int i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
@@ -46,7 +45,6 @@ void Logic::executeAttacks() {
       if(unit != attack->getOwner() && hitbox->contains(area)) {
         unit->damage(attack->getDamage());
         unit->setYVel(-10);
-          _hasAttack = true;
       }
     }
   }
@@ -65,9 +63,6 @@ Unit* Logic::getHero() {
   return _hero;
 }
 
-boolean Logic::getAttackState(){
- return _hasAttack; 
-}
 
 void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
   unit->setYVel(GRAVITY + unit->getYVel());
