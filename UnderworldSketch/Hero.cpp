@@ -4,13 +4,8 @@
 #include "Hero.h"
 #include "Prop.h"
 
-Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : 
-//Unit(&Rect(x, y, HERO_WIDTH, HERO_HEIGHT_STAND), HERO_HEALTH) {
-  Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH) {
+Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH) {
   _nunchuk = nunchuk;
-  _attack = false;
-  _duck = false;
-  _jump = false;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused

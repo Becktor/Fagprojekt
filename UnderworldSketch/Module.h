@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "Tiles.h";
 
-const static byte
+const static byte  
     TYPE0_MODULES = 1,
     TYPE1_MODULES = 2,
     TYPE2_MODULES = 1,
@@ -76,6 +76,6 @@ TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   }
 };
 
-void getModuleTiles(Modules module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]);
+void getModuleTiles(byte module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]);
 
 #endif

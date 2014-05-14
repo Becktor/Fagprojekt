@@ -23,7 +23,6 @@
 #include "Hero.h"
 #include "Sprites.h"
 
-
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
