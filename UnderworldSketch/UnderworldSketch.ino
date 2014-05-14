@@ -22,7 +22,6 @@
 #include "Minotaur.h"
 #include "Hero.h"
 #include "Sprites.h"
-//#include "sound_assets.h"
 
 
 //Checks
@@ -83,11 +82,9 @@ void loop() {
 
     }
 
-    //    if(_nunchuk.zButton){
-    //      GD.sample(SWORD_ATTACK,SWORD_ATTACK_LENGTH, 44100, ADPCM_SAMPLES);
-    //      delay(1000);
-    //    }
-    //    
+
+    
+  
 
     //AI
     for(int i = 0; i < units->size(); i++) {
@@ -101,6 +98,13 @@ void loop() {
     }
     //Attacks
     _logic.executeAttacks();
+    
+    if (_logic.getAttackState()){
+       GD.sample(SWORD_ATTACK,SWORD_ATTACK_LENGTH, 44100, ADPCM_SAMPLES);
+    }
+    
+    
+    
     //Physics
     for(int i = 0; i < units->size(); i++) {
       Unit *unit = units->get(i);
@@ -194,7 +198,7 @@ void drawUnit(Unit* unit) {
     GD.cmd_translate(F16(-21), F16(0));
     GD.cmd_setmatrix();
   }
-  GD.BitmapHandle(SonicW_HANDLE);
+  GD.BitmapHandle(SONICW_HANDLE);
   GD.Cell((hitbox->getX() >> 2) & 7);
   GD.Vertex2f((hitbox->getX() - _cameraX) * 16, (hitbox->getY() - _cameraY) * 16);
   if(unit->getDir() == -1) {

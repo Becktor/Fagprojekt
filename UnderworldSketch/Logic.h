@@ -15,7 +15,7 @@ class Unit;
 class Logic
 {
   private:
-    boolean _gameOver, _heroWin;
+    boolean _gameOver, _heroWin, _hasAttack;
     Scene *_scene;
     LinkedList<Attack*> _attacks;
     Unit *_hero;
@@ -32,6 +32,7 @@ class Logic
     boolean isSolid(int x, int y);
     boolean moveUnitHoriz(Unit *unit, int dX);
     boolean moveUnitVerti(Unit *unit, int dY);
+    boolean getAttackState();
     void restartGame();
     void setGameOver(boolean gameOver, boolean heroWon);
     void setHero(Unit *hero);
