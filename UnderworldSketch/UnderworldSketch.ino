@@ -22,6 +22,8 @@
 #include "Minotaur.h"
 #include "Hero.h"
 #include "Sprites.h"
+//#include "sound_assets.h"
+
 
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
@@ -79,7 +81,15 @@ void loop() {
     if(NUNCHUCK) {
       _nunchuk.update();
       _nunchuk.update();
+
     }
+
+    //    if(_nunchuk.zButton){
+    //      GD.sample(SWORD_ATTACK,SWORD_ATTACK_LENGTH, 44100, ADPCM_SAMPLES);
+    //      delay(1000);
+    //    }
+    //    
+
     //AI
     for(int i = 0; i < units->size(); i++) {
       Unit *unit = units->get(i);
@@ -198,4 +208,5 @@ void drawUnit(Unit* unit) {
     GD.cmd_setmatrix();
   }
 }
+
 
