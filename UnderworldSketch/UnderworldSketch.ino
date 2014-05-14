@@ -172,7 +172,7 @@ void drawScene() {
   }
 }
 
-void drawTile(int x, int y, Tiles tile) {
+void drawTile(int x, int y, byte tile) {
   if(tile != NONE){
     //drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     GD.BitmapHandle(TILE_HANDLE);

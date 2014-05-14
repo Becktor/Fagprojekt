@@ -57,13 +57,13 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 
   //Hero action
   if(_nunchuk->zButton) {
+    _attack = true;
     if(_duck && logic->atExit(this)) {
       //Map exit
       logic->setGameOver(true, true);
     } else if(!_attack) {
       //Attack
       _attackSound = true;
-      _attack = true;
       int attackX = hitbox->getX();
       if(getDir() == LEFT)
         attackX -= HERO_RANGE;
