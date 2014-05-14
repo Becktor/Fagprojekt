@@ -18,7 +18,7 @@
 #include "Unit.h"
 #include "Prop.h"
 
-const static short
+const static byte
     TILE_SIZE = 48, //One tile unit to world units conv.
     XMODULES = 4,
     YMODULES = 4,
@@ -30,20 +30,21 @@ class Scene
 {
   private:
     Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
-    LinkedList<Unit*> _units;
     LinkedList<Prop*> _props;
+    LinkedList<Unit*> _units;
+
   public:
     Scene();
     void addUnit(Unit *unit, Point *point);
     void addProp(Prop *prop, Point *point);
     void clearUnits();
-    boolean contains(int x, int y);
-    int getWidth();
-    int getHeight();
-    Tiles getTile(int x, int y);
-    LinkedList<Unit*>* getUnits();
-    LinkedList<Prop*>* getProps();
-    void setTile(int x, int y, Tiles tile);
+    boolean contains(byte x, byte y);
+    byte getWidth();
+    byte getHeight();
+    Tiles getTile(byte x, byte y);
+    LinkedList<Unit*> *getUnits();
+    LinkedList<Prop*> *getProps();
+    void setTile(byte x, byte y, Tiles tile);
 };
 
 #endif

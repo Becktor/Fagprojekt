@@ -4,23 +4,12 @@
 #include "Unit.h"
 #include "Prop.h"
 
-Unit::Unit(int x, int y, int width, int height, int health) : Prop(x, y, width, height) {
+Unit::Unit(int x, int y, byte width, byte height, char health) : Prop(x, y, width, height) {
   _health = health;
-  _xVel = 0;
-  _yVel = 0;
   _dir = LEFT;
 }
 
-/*
-Unit::Unit(Rect *hitbox, int health) : Prop(hitbox) {
-  _health = health;
-  _xVel = 0;
-  _yVel = 0;
-  _dir = LEFT;
-}
-*/
-
-void Unit::damage(int damage) {
+void Unit::damage(byte damage) {
   _health -= damage;
 }
 
@@ -32,11 +21,11 @@ boolean Unit::getLevitate() {
   return _levitate;
 }
 
-int Unit::getXVel() {
+char Unit::getXVel() {
   return _xVel;  
 }
 
-int Unit::getYVel() {
+char Unit::getYVel() {
   return _yVel;
 }
 
@@ -52,11 +41,11 @@ void Unit::setLevitate(boolean levitate) {
   _levitate = levitate;
 }
 
-void Unit::setXVel(int xVel) {
+void Unit::setXVel(char xVel) {
    _xVel = xVel;  
 }
 
-void Unit::setYVel(int yVel) {
+void Unit::setYVel(char yVel) {
    _yVel = yVel;
 }
 

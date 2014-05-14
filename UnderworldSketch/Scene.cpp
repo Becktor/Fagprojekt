@@ -4,41 +4,40 @@
 #include "Unit.h"
 
 Scene::Scene() {
-  _units = LinkedList<Unit*>();
   _props = LinkedList<Prop*>();
+  _units = LinkedList<Unit*>();
+}
+
+void Scene::addProp(Prop *prop, Point *point) {
+  Rect *hitbox = prop->getHitbox();
+  hitbox->setPos(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  _props.add(prop);
 }
 
 //Adds the given unit to the units list and sets it at the given tile.
 void Scene::addUnit(Unit *unit, Point *point) {
   Rect *hitbox = unit->getHitbox();
-  Point *pos = hitbox->getPos();
-  pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  hitbox->setPos(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
   _units.add(unit);
-}
-void Scene::addProp(Prop *prop, Point *point) {
-  Rect *hitbox = prop->getHitbox();
-  Point *pos = hitbox->getPos();
-  pos->setPoint(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
-  _props.add(prop);
 }
 
 void Scene::clearUnits() {
   _units.clear();
 }
 
-boolean Scene::contains(int x, int y) {
+boolean Scene::contains(byte x, byte y) {
   return x >= 0 && x < SCENE_WIDTH && y >= 0 && y < SCENE_HEIGHT;
 }
 
-int Scene::getWidth() {
+byte Scene::getWidth() {
   return SCENE_WIDTH;
 }
 
-int Scene::getHeight() {
+byte Scene::getHeight() {
   return SCENE_HEIGHT;
 }
 
-Tiles Scene::getTile(int x, int y) {
+Tiles Scene::getTile(byte x, byte y) {
   if(contains(x, y))
     return _tiles[x][y];
   else
@@ -51,7 +50,7 @@ LinkedList<Unit*>* Scene::getUnits() {
 LinkedList<Prop*>* Scene::getProps() {
   return &_props;
 }
-void Scene::setTile(int x, int y, Tiles tile) {
+void Scene::setTile(byte x, byte y, Tiles tile) {
   if(contains(x, y))
     _tiles[x][y] = tile;
 }

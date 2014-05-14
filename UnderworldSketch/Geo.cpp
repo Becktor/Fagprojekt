@@ -22,30 +22,9 @@ void Point::setPoint(int x, int y) {
   _y = y;
 }
 
-/*
-Rect::Rect() : _pos(0, 0) {
-  setRect(Point(0, 0), 0, 0);
-}
-*/
-
-Rect::Rect(int x, int y, int width, int height) : _pos(x, y) {
-  setRect(Point(x, y), width, height);
-  //_width = width;
-  //_height = height;
-}
-
-/*
-Rect::Rect(Rect *rect) : _pos(rect->getX(), rect->getY()){
-  _width = rect->getWidth();
-  _height = rect->getHeight();
-}
-*/
-
-boolean Rect::contains(Point *p) {
-  return p->getX() > _pos.getX()
-      && p->getX() < _pos.getX() + _width
-      && p->getY() > _pos.getY()
-      && p->getY() < _pos.getY() + _height;
+Rect::Rect(int x, int y, byte width, byte height) : _pos(x, y) {
+  setWidth(width);
+  setHeight(height);
 }
 
 boolean Rect::contains(Rect *r) {
@@ -53,10 +32,6 @@ boolean Rect::contains(Rect *r) {
       && r->getX() + r->getWidth() > _pos.getX()
       && r->getY() < _pos.getY() + _height
       && r->getY() + r->getHeight() > _pos.getY();
-}
-
-Point* Rect::getPos() {
-  return &_pos;
 }
 
 int Rect::getX() {
@@ -79,20 +54,14 @@ void Rect::translate(int x, int y) {
   _pos.translate(x, y);
 }
 
-void Rect::setRect(Point pos, int width, int height) {
-  setPos(pos);
-  setWidth(width);
-  setHeight(height);
+void Rect::setPos(int x, int y) {
+  _pos.setPoint(x, y);
 }
 
-void Rect::setPos(Point pos) {
-  _pos = pos;
+void Rect::setWidth(byte width) {
+  _width = width;
 }
 
-void Rect::setWidth(int width) {
-  _width = max(1, width);
-}
-
-void Rect::setHeight(int height) {
-  _height = max(1, height);
+void Rect::setHeight(byte height) {
+  _height = height;
 }

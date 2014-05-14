@@ -9,8 +9,7 @@
 
 #include <Arduino.h>
 
-class Point
-{
+class Point {
   private:
     int _x;
     int _y;
@@ -23,28 +22,23 @@ class Point
     void setPoint(int x, int y);
 };
 
-class Rect
-{
+class Rect {
   private:
-    int _width;
-    int _height;
+    byte _width;
+    byte _height;
     Point _pos;
 
   public:
-    //Rect();
-    Rect(int x, int y, int width, int height);
-    //Rect(Rect *rect);
-    boolean contains(Point *p);
+    Rect(int x, int y, byte width, byte height);
     boolean contains(Rect *r);
-    Point* getPos();
     int getX();
     int getY();
     int getWidth();
     int getHeight();
     void translate(int x, int y);
-    void setRect(Point pos, int width, int height);
-    void setPos(Point pos);
-    void setWidth(int width);
-    void setHeight(int height);
+    void setPos(int x, int y);
+    void setWidth(byte width);
+    void setHeight(byte height);
 };
+
 #endif
