@@ -25,8 +25,7 @@
 
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
-static Streamer stream;
-//# define MUSICFILE "attack.ima"
+
 
 //Constants
 const static short
