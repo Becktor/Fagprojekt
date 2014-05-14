@@ -1,14 +1,7 @@
-#include "Direction.h"
 #include "Geo.h"
 #include "Prop.h"
 
-Prop::Prop(int x, int y, int width, int height) : _hitbox(x, y, width, height) { }
-
-/*
-Prop::Prop(Rect *hitbox) : _hitbox(hitbox) {
-  //_hitbox = hitbox;
-}
-*/
+Prop::Prop(int x, int y, byte width, byte height) : _hitbox(x, y, width, height) { }
 
 Rect* Prop::getHitbox() {
   return &_hitbox;

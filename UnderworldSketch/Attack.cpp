@@ -2,13 +2,13 @@
 #include "Unit.h"
 #include "Attack.h"
 
-Attack::Attack(int x, int y, int width, int height, int damage, Unit *owner) : _area(x, y, width, height) {
+Attack::Attack(int x, int y, byte width, byte height, byte damage, Unit *owner) : _area(x, y, width, height) {
   //_area = area;
   _damage = damage;
   _owner = owner;
 }
 
-int Attack::getDamage() {
+byte Attack::getDamage() {
   return _damage;
 }
 

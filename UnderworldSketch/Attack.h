@@ -8,13 +8,13 @@ class Unit;
 class Attack
 {
   private:
-    int _damage;
+    byte _damage;
     Unit *_owner;
     Rect _area;
   
   public:
-    Attack(int x, int y, int width, int height, int damage, Unit *owner);
-    int getDamage();
+    Attack(int x, int y, byte width, byte height, byte damage, Unit *owner);
+    byte getDamage();
     Unit* getOwner();
     Rect* getArea();
 };
