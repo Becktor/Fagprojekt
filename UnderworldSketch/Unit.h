@@ -19,10 +19,10 @@ class Unit : public Prop
     Direction _dir;
     boolean _levitate;
     int _xVel, _yVel, _health;
-    Rect _hitbox;
 
   public:
-    Unit(Rect hitbox, int health);
+    Unit(int x, int y, int width, int height, int health);
+    //Unit(Rect *hitbox, int health);
     void damage(int damage);
     Direction getDir();
     boolean getLevitate();

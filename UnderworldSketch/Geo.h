@@ -16,14 +16,11 @@ class Point
     int _y;
   
   public:
-    Point();
     Point(int x, int y);
     int getX();
     int getY();
     void translate(int x, int y);
     void setPoint(int x, int y);
-    void setX(int x);
-    void setY(int y);
 };
 
 class Rect
@@ -34,9 +31,9 @@ class Rect
     Point _pos;
 
   public:
-    Rect();
+    //Rect();
     Rect(int x, int y, int width, int height);
-    Rect(Point pos, int width, int height);
+    //Rect(Rect *rect);
     boolean contains(Point *p);
     boolean contains(Rect *r);
     Point* getPos();

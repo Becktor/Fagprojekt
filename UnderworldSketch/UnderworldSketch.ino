@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static short
@@ -40,7 +40,7 @@ static int _cameraX = 0, _cameraY = 0;
 static unsigned int _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
-static Point _entrance = Point(), _exit = Point();
+static Point _entrance = Point(0, 0), _exit = Point(0, 0);
 static ArduinoNunchuk _nunchuk = ArduinoNunchuk();
 
 //Temporary units
@@ -116,7 +116,7 @@ void loop() {
 //    GD.Begin(RECTS);
     GD.Begin(BITMAPS);
 
-    Rect* hitbox = _mino.getHitbox();
+    Rect* hitbox = _hero.getHitbox();
     _cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
     _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();

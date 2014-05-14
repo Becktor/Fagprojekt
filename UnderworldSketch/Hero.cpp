@@ -5,7 +5,8 @@
 #include "Prop.h"
 
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : 
-Unit(Rect(x, y, HERO_WIDTH, HERO_HEIGHT_STAND), HERO_HEALTH) {
+//Unit(&Rect(x, y, HERO_WIDTH, HERO_HEIGHT_STAND), HERO_HEALTH) {
+  Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH) {
   _nunchuk = nunchuk;
   _attack = false;
   _duck = false;
@@ -72,7 +73,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
         attackX -= HERO_RANGE;
       else
         attackX += hitbox->getWidth();
-      logic->addAttack(HERO_DAMAGE, this, Rect(attackX, hitbox->getY(), HERO_RANGE, hitbox->getHeight()));
+      logic->addAttack(attackX, hitbox->getY(), HERO_RANGE, hitbox->getHeight(), HERO_DAMAGE, this);
     }
   } else
     _attack = false;

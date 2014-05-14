@@ -4,12 +4,21 @@
 #include "Unit.h"
 #include "Prop.h"
 
-Unit::Unit(Rect hitbox, int health) : Prop(hitbox) {
+Unit::Unit(int x, int y, int width, int height, int health) : Prop(x, y, width, height) {
   _health = health;
   _xVel = 0;
   _yVel = 0;
   _dir = LEFT;
 }
+
+/*
+Unit::Unit(Rect *hitbox, int health) : Prop(hitbox) {
+  _health = health;
+  _xVel = 0;
+  _yVel = 0;
+  _dir = LEFT;
+}
+*/
 
 void Unit::damage(int damage) {
   _health -= damage;

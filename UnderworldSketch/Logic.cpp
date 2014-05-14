@@ -13,8 +13,8 @@ Logic::Logic(Scene *scene) {
   restartGame();
 }
 
-void Logic::addAttack(int damage, Unit* owner, Rect area) {
-  Attack attack = Attack(damage, owner, area);
+void Logic::addAttack(int x, int y, int width, int height, int damage, Unit *owner) {
+  Attack attack = Attack(x, y, width, height, damage, owner);
   _attacks.add(&attack);
 }
 

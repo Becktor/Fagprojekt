@@ -1,9 +1,5 @@
 #include "Geo.h"
 
-Point::Point() {
-  setPoint(0, 0);
-}
-
 Point::Point(int x, int y) {
   setPoint(x, y);
 }
@@ -22,29 +18,28 @@ void Point::translate(int x, int y) {
 }
 
 void Point::setPoint(int x, int y) {
-  setX(x);
-  setY(y);
-}
-
-void Point::setX(int x) {
   _x = x;
-}
-
-void Point::setY(int y) {
   _y = y;
 }
 
-Rect::Rect() {
-  setRect(Point(), 0, 0);
+/*
+Rect::Rect() : _pos(0, 0) {
+  setRect(Point(0, 0), 0, 0);
 }
+*/
 
-Rect::Rect(int x, int y, int width, int height) {
+Rect::Rect(int x, int y, int width, int height) : _pos(x, y) {
   setRect(Point(x, y), width, height);
+  //_width = width;
+  //_height = height;
 }
 
-Rect::Rect(Point pos, int width, int height) {
-  setRect(pos, width, height);
+/*
+Rect::Rect(Rect *rect) : _pos(rect->getX(), rect->getY()){
+  _width = rect->getWidth();
+  _height = rect->getHeight();
 }
+*/
 
 boolean Rect::contains(Point *p) {
   return p->getX() > _pos.getX()

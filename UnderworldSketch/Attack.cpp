@@ -2,10 +2,10 @@
 #include "Unit.h"
 #include "Attack.h"
 
-Attack::Attack(int damage, Unit *owner, Rect area) {
+Attack::Attack(int x, int y, int width, int height, int damage, Unit *owner) : _area(x, y, width, height) {
+  //_area = area;
   _damage = damage;
   _owner = owner;
-  _area = area;
 }
 
 int Attack::getDamage() {

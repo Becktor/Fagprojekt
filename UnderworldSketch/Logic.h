@@ -21,7 +21,7 @@ class Logic
     Unit *_hero;
   public:
     Logic(Scene *scene);
-    void addAttack(int damage, Unit *owner, Rect area);
+    void addAttack(int x, int y, int width, int height, int damage, Unit *owner);
     boolean atExit(Unit *unit);
     void executeAttacks();
     Unit* getHero();

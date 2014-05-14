@@ -13,7 +13,7 @@ class Attack
     Rect _area;
   
   public:
-    Attack(int damage, Unit *owner, Rect area);
+    Attack(int x, int y, int width, int height, int damage, Unit *owner);
     int getDamage();
     Unit* getOwner();
     Rect* getArea();

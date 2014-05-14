@@ -10,7 +10,8 @@ class Prop
     Rect _hitbox;
 
   public:
-    Prop(Rect hitbox);
+    Prop(int x, int y, int width, int height);
+    //Prop(Rect *hitbox);
     Rect* getHitbox();
     void translate(int x,int y);
 };
