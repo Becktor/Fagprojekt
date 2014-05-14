@@ -1,0 +1,8 @@
+#define LOAD_ASSETS()  GD.safeload("sound.GD2");
+#define COIN 0UL
+#define COIN_LENGTH 8152
+#define COIN_FREQ 44100
+#define SWORD_ATTACK 8152UL
+#define SWORD_ATTACK_LENGTH 8816
+#define SWORD_ATTACK_FREQ 44100
+#define ASSETS_END 16968UL

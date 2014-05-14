@@ -6,6 +6,14 @@ Attack::Attack(int damage, Unit *owner, Rect area) {
   _damage = damage;
   _owner = owner;
   _area = area;
+  
+  
+  
+  
+  
+  
+  
+  
 }
 
 int Attack::getDamage() {

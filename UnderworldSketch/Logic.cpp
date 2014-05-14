@@ -16,6 +16,14 @@ Logic::Logic(Scene *scene) {
 void Logic::addAttack(int damage, Unit* owner, Rect area) {
   Attack attack = Attack(damage, owner, area);
   _attacks.add(&attack);
+  
+  
+  
+  
+  
+  
+  
+  
 }
 
 boolean Logic::atExit(Unit *unit) {

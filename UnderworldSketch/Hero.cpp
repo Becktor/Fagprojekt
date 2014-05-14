@@ -73,6 +73,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       else
         attackX += hitbox->getWidth();
       logic->addAttack(HERO_DAMAGE, this, Rect(attackX, hitbox->getY(), HERO_RANGE, hitbox->getHeight()));
+
     }
   } else
     _attack = false;
