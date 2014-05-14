@@ -37,7 +37,7 @@ byte Scene::getHeight() {
   return SCENE_HEIGHT;
 }
 
-Tiles Scene::getTile(byte x, byte y) {
+byte Scene::getTile(byte x, byte y) {
   if(contains(x, y))
     return _tiles[x][y];
   else
@@ -50,7 +50,8 @@ LinkedList<Unit*>* Scene::getUnits() {
 LinkedList<Prop*>* Scene::getProps() {
   return &_props;
 }
-void Scene::setTile(byte x, byte y, Tiles tile) {
+void Scene::setTile(byte x, byte y, byte tile) {
   if(contains(x, y))
     _tiles[x][y] = tile;
 }
+

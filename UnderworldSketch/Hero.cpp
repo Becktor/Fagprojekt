@@ -79,3 +79,4 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 boolean Hero::getAttackSound(){
   return _attackSound;
 }
+

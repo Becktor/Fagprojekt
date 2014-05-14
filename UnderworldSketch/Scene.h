@@ -29,7 +29,7 @@ class Unit;
 class Scene
 {
   private:
-    Tiles _tiles[SCENE_WIDTH][SCENE_HEIGHT];
+    byte _tiles[SCENE_WIDTH][SCENE_HEIGHT];
     LinkedList<Prop*> _props;
     LinkedList<Unit*> _units;
 
@@ -41,10 +41,11 @@ class Scene
     boolean contains(byte x, byte y);
     byte getWidth();
     byte getHeight();
-    Tiles getTile(byte x, byte y);
+    byte getTile(byte x, byte y);
     LinkedList<Unit*> *getUnits();
     LinkedList<Prop*> *getProps();
-    void setTile(byte x, byte y, Tiles tile);
+    void setTile(byte x, byte y, byte tile);
 };
 
 #endif
+

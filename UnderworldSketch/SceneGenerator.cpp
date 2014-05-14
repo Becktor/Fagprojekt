@@ -19,14 +19,14 @@ void clearScene(Scene *scene) {
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
-void fillModule(Scene *scene, byte module, int dX, int dY, boolean portalRoom, boolean entrance, Point *portal) {
+void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom, boolean entrance, Point *portal) {
   byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
   getModuleTiles(module, &tiles);
   for(int i = 0; i < MODULE_WIDTH; i++) {
     for(int j = 0; j < MODULE_HEIGHT; j++) {
       Tiles tile;
       byte tileData = (*tiles)[j][i];
-      int x = dX + i, y = dY + j;
+      byte x = dX + i, y = dY + j;
       if(tileData == TILE_PORTAL) {
         if(portalRoom) {
           if(entrance)

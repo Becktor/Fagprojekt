@@ -74,7 +74,7 @@ boolean Logic::isGrounded(Unit *unit) {
       xEndTile = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
       y = hitbox->getY() + hitbox->getHeight();
   for(int i = xStartTile; i <= xEndTile; i++) {
-    Tiles lowerTile = _scene->getTile(i, y / TILE_SIZE), upperTile = _scene->getTile(i, (y - 1) / TILE_SIZE);
+    byte lowerTile = _scene->getTile(i, y / TILE_SIZE), upperTile = _scene->getTile(i, (y - 1) / TILE_SIZE);
     if((getSolid(lowerTile) || getPlatform(lowerTile)) && (!getSolid(upperTile) && !getPlatform(upperTile)))
       return true;
   }
@@ -113,7 +113,7 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
 
   for(int tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
-      Tiles tile = _scene->getTile(tileX, tileY);
+      byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
         if(dir == LEFT)
           unit->translate((tileX + 1) * TILE_SIZE - x, 0);
@@ -155,7 +155,7 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
 
   for(int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
     for(int tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
-      Tiles tile = _scene->getTile(tileX, tileY);
+      byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
         if(dir == UP)
           unit->translate(0, (tileY + 1) * TILE_SIZE - y);
@@ -182,5 +182,6 @@ void Logic::setGameOver(boolean gameOver, boolean heroWin) {
 void Logic::setHero(Unit *hero) {
   _hero = hero;
 }
+
 
 

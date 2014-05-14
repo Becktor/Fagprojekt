@@ -27,17 +27,17 @@
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
-const static short
-SCREEN_WIDTH = 480,
-SCREEN_HEIGHT = 272,
-SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
-SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
-SECOND = 1000, //Milis. in a second
-INIT_FPS = 60; //Initial assumed framerate.
+const static int
+    SCREEN_WIDTH = 480,
+    SCREEN_HEIGHT = 272,
+    SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
+    SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
+    SECOND = 1000, //Milis. in a second
+    INIT_FPS = 60; //Initial assumed framerate.
 
 //Global variables
 static int _cameraX = 0, _cameraY = 0;
-static unsigned int _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
+static word _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
 static Point _entrance = Point(0, 0), _exit = Point(0, 0);
@@ -50,8 +50,8 @@ static Hero _hero(140,70, &_nunchuk);
 //Function declarations
 void setup();
 void loop();
-void drawRect(int x, int y, int width, int height);
-void drawTile(Tiles tile);
+void drawRect(int x, int y, byte width, byte height);
+void drawTile(byte tile);
 void drawUnit(Unit *unit);
 
 void setup() {
@@ -140,7 +140,7 @@ void loop() {
   _dTime = SECOND / _fps;
 }
 
-void drawRect(int x, int y, int width, int height) {
+void drawRect(int x, int y, byte width, byte height) {
   int rectX1 = x - _cameraX, rectY1 = y - _cameraY, rectX2 = x + width - 2 - _cameraX, rectY2 = y + height - 2 - _cameraY;
     //if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
       //GD.Vertex2f(rectX1*16, rectY1*16);
@@ -171,11 +171,11 @@ void drawScene() {
   }
 }
 
-void drawTile(int x, int y, Tiles tile) {
+void drawTile(int x, int y, byte tile) {
   if(tile != NONE){
     //drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     GD.BitmapHandle(TILE_HANDLE);
-    GD.Vertex2f(((x * TILE_SIZE) - _cameraX)*16, ((y * TILE_SIZE) - _cameraY)*16);
+    GD.Vertex2f(((x * TILE_SIZE) - _cameraX) * 16, ((y * TILE_SIZE) - _cameraY) * 16);
   }
 }
 
@@ -183,7 +183,7 @@ void drawUnit(Unit* unit) {
   Rect *hitbox = unit->getHitbox();
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
-  if(unit->getDir() == -1) {
+  if(unit->getDir() == LEFT) {
     GD.cmd_translate(F16(21), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-21), F16(0));
@@ -192,7 +192,7 @@ void drawUnit(Unit* unit) {
   GD.BitmapHandle(SONICW_HANDLE);
   GD.Cell((hitbox->getX() >> 2) & 7);
   GD.Vertex2f((hitbox->getX() - _cameraX) * 16, (hitbox->getY() - _cameraY) * 16);
-  if(unit->getDir() == -1) {
+  if(unit->getDir() == LEFT) {
     GD.cmd_translate(F16(21), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-21), F16(0));

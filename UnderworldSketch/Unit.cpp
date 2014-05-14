@@ -1,5 +1,4 @@
 #include "Direction.h"
-#include "Geo.h"
 #include "Logic.h"
 #include "Unit.h"
 #include "Prop.h"
@@ -68,3 +67,4 @@ void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
   if(!logic->moveUnitVerti(this, getYVel()))
     setYVel(0);
 }
+

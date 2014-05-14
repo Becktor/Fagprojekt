@@ -2,16 +2,16 @@
 #include "Tiles.h"
 
 //Returns whether the tile is solid.
-boolean getSolid(Tiles tile) {
+boolean getSolid(byte tile) {
   return tile == ROCK;
 }
 
 //Returns whether the tile is solid from above.
-boolean getPlatform(Tiles tile) {
+boolean getPlatform(byte tile) {
   return tile == PLATFORM || tile == LADDER_TOP;
 }
 
 //Returns whether the tile is a ladder.
-boolean getLadder(Tiles tile) {
+boolean getLadder(byte tile) {
   return tile == LADDER || tile == LADDER_TOP;
 }

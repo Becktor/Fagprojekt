@@ -13,8 +13,8 @@ enum Tiles{
   EXIT = 6
 };
 
-boolean getSolid(Tiles tile);
-boolean getPlatform(Tiles tile);
-boolean getLadder(Tiles tile);
+boolean getSolid(byte tile);
+boolean getPlatform(byte tile);
+boolean getLadder(byte tile);
 
 #endif

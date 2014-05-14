@@ -37,3 +37,4 @@ class Logic
     void setHero(Unit *hero);
 };
 #endif
+

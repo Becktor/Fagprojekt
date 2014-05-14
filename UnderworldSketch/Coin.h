@@ -13,3 +13,4 @@ class Coin : public Prop {
 };
 
 #endif
+

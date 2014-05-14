@@ -8,7 +8,6 @@
 #define unit_h
 
 #include "Direction.h"
-#include "Geo.h"
 #include "Logic.h"
 #include "Prop.h"
 
@@ -37,3 +36,4 @@ class Unit : public Prop {
 };
 
 #endif
+

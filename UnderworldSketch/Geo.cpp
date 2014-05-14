@@ -65,3 +65,4 @@ void Rect::setWidth(byte width) {
 void Rect::setHeight(byte height) {
   _height = height;
 }
+

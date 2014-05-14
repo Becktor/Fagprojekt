@@ -8,3 +8,4 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     toggleDir();
   setXVel(MINO_SPEED * getDir());
 }
+
