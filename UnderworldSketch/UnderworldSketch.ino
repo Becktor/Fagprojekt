@@ -71,14 +71,13 @@ void setup() {
 
 void loop() {
   unsigned long startMilis = millis();
-  short counter = 0;
+  byte counter = 0;
   while(millis() - startMilis < SECOND) { //Loop for a second
     LinkedList<Unit*>* units = _scene.getUnits();
     //Game logic
     if(NUNCHUCK) {
       _nunchuk.update();
       _nunchuk.update();
-
     }
 
     //AI
@@ -122,14 +121,14 @@ void loop() {
     //GD.Begin(RECTS);
     GD.Begin(BITMAPS);
 
-    Rect* hitbox = _hero.getHitbox();
+    Rect *hitbox = _hero.getHitbox();
     _cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
     _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
     drawScene();
     GD.ColorRGB(255, 0, 0);
     for(int i = 0; i < units->size(); i++)
       drawUnit(units->get(i));
-    GD.cmd_number(40,136, 31, OPT_CENTER, _fps); 
+    GD.cmd_number(40, 136, 31, OPT_CENTER, _fps); 
     //GD.Begin(BITMAPS);
     //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
     GD.swap();
