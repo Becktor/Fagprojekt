@@ -24,8 +24,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
   getModuleTiles(module, &tiles);
   for(int i = 0; i < MODULE_WIDTH; i++) {
     for(int j = 0; j < MODULE_HEIGHT; j++) {
-      Tiles tile;
-      byte tileData = (*tiles)[j][i];
+      byte tile, tileData = (*tiles)[j][i];
       byte x = dX + i, y = dY + j;
       if(tileData == TILE_PORTAL) {
         if(portalRoom) {
@@ -37,7 +36,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
         } else
           tile = NONE;
       } else
-        tile = (Tiles) tileData;
+        tile = tileData;
       if(scene->getTile(x, y) == NULL || scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
         scene->setTile(x, y, tile);
     }
