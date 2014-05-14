@@ -1,0 +1,185 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.14)  14 MAY 2014 22:10
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**report.tex
+(./report.tex
+LaTeX2e <2011/06/27>
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/a4wide/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+)) (./report.aux
+(./Introduction.aux) (./ProblemAnalysis.aux) (./Preliminaries_theory.aux)
+(./Requirements.aux) (./Overall_Design.aux) (./Testing_Performance.aux)
+(./Discussion.aux) (./Conclusion.aux))
+\openout1 = `report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 18.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 18.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 18.
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+) [1
+
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [1] (./report.toc)
+\tf@toc=\write3
+\openout3 = `report.toc'.
+
+
+[1
+
+]
+\openout2 = `Introduction.aux'.
+
+ (./Introduction.tex
+Chapter 1.
+) [2
+
+
+]
+\openout2 = `ProblemAnalysis.aux'.
+
+ (./ProblemAnalysis.tex
+Chapter 2.
+) [3
+
+
+
+]
+\openout2 = `Preliminaries_theory.aux'.
+
+
+No file Preliminaries_theory.tex.
+\openout2 = `Requirements.aux'.
+
+(./Requirements.tex
+Chapter 3.
+) [4
+
+
+
+
+
+]
+\openout2 = `Overall_Design.aux'.
+
+ (./Overall_Design.tex
+Chapter 4.
+
+! LaTeX Error: \include cannot be nested.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.6 \include{Implementation}
+                            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+) [5
+
+
+
+]
+\openout2 = `Testing_Performance.aux'.
+
+ (./Testing_Performance.tex
+Chapter 5.
+) [6
+
+
+
+]
+\openout2 = `Discussion.aux'.
+
+ (./Discussion.tex
+Chapter 6.
+) [7
+
+
+
+]
+\openout2 = `Conclusion.aux'.
+
+ (./Conclusion.tex
+Chapter 7.
+) [8
+
+
+
+] [9
+
+]
+Chapter 8.
+[10
+
+] (./report.aux (./Introduction.aux) (./ProblemAnalysis.aux)
+(./Preliminaries_theory.aux) (./Requirements.aux) (./Overall_Design.aux)
+(./Testing_Performance.aux) (./Discussion.aux) (./Conclusion.aux)) ) 
+Here is how much of TeX's memory you used:
+ 343 strings out of 493308
+ 4745 string characters out of 6137816
+ 53872 words of memory out of 5000000
+ 3811 multiletter control sequences out of 15000+600000
+ 6381 words of font info for 25 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 22i,6n,19p,253b,191s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local
+/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/
+texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
+xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on report.pdf (12 pages, 52175 bytes).
+PDF statistics:
+ 55 PDF objects out of 1000 (max. 8388607)
+ 37 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
