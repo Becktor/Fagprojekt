@@ -22,18 +22,24 @@
 #include "Minotaur.h"
 #include "Hero.h"
 #include "Sprites.h"
+//#include "sound_assets.h"
+
 
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
+<<<<<<< HEAD
+=======
+
+>>>>>>> 081c754f36192ccc91e9b207de9247e6ce748e8f
 
 //Constants
 const static short
-    SCREEN_WIDTH = 480,
-    SCREEN_HEIGHT = 272,
-    SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
-    SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
-    SECOND = 1000, //Milis. in a second
-    INIT_FPS = 60; //Initial assumed framerate.
+SCREEN_WIDTH = 480,
+SCREEN_HEIGHT = 272,
+SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
+SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
+SECOND = 1000, //Milis. in a second
+INIT_FPS = 60; //Initial assumed framerate.
 
 //Global variables
 static int _cameraX = 0, _cameraY = 0;
@@ -60,9 +66,9 @@ void setup() {
     _nunchuk.init();
   GD.begin();
   LOAD_ASSETS();
-//  GD.BitmapHandle(0);
-//  GD.cmd_loadimage(0, 0);
-//  GD.load("healsky.jpg");
+  //  GD.BitmapHandle(0);
+  //  GD.cmd_loadimage(0, 0);
+  //  GD.load("healsky.jpg");
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_mino, new Point(1, 1));
@@ -78,14 +84,23 @@ void loop() {
     if(NUNCHUCK) {
       _nunchuk.update();
       _nunchuk.update();
+
     }
+
+    //    if(_nunchuk.zButton){
+    //      GD.sample(SWORD_ATTACK,SWORD_ATTACK_LENGTH, 44100, ADPCM_SAMPLES);
+    //      delay(1000);
+    //    }
+    //    
+
     //AI
     for(int i = 0; i < units->size(); i++) {
       Unit *unit = units->get(i);
       if(unit->isDead()) {
         units->remove(i);
         i--;
-      } else {
+      } 
+      else {
         unit->updateAI(_dTime, &_logic);
       }
     }
@@ -102,7 +117,8 @@ void loop() {
     if(_logic.isGameOver()) {
       if(_logic.isHeroWin()) {
         //Game continue
-      } else {
+      } 
+      else {
         //Game restart
       }
       newScene(&_scene, &_entrance, &_exit);
@@ -113,7 +129,7 @@ void loop() {
     }
     //Draw Logic
     GD.Clear();
-//    GD.Begin(RECTS);
+    //    GD.Begin(RECTS);
     GD.Begin(BITMAPS);
 
     Rect* hitbox = _hero.getHitbox();
@@ -136,20 +152,20 @@ void loop() {
 
 void drawRect(int x, int y, int width, int height) {
   int rectX1 = x - _cameraX, rectY1 = y - _cameraY, rectX2 = x + width - 2 - _cameraX, rectY2 = y + height - 2 - _cameraY;
-//  if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
-//    GD.Vertex2f(rectX1*16, rectY1*16);
-//    GD.Vertex2f(rectX2*16, rectY2*16);
-//  }
-    GD.Vertex2f(rectX1*16, rectY1*16);
-    GD.Vertex2f(rectX2*16, rectY2*16);
+  //  if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
+  //    GD.Vertex2f(rectX1*16, rectY1*16);
+  //    GD.Vertex2f(rectX2*16, rectY2*16);
+  //  }
+  GD.Vertex2f(rectX1*16, rectY1*16);
+  GD.Vertex2f(rectX2*16, rectY2*16);
 }
 
 void drawScene() {
   GD.ColorRGB(255, 255, 255);
   int tileX = _cameraX / TILE_SIZE,
-      tileY = _cameraY / TILE_SIZE,
-      tileXEnd = (_cameraX + SCREEN_WIDTH - 1) / TILE_SIZE,
-      tileYEnd = (_cameraY + SCREEN_HEIGHT - 1) / TILE_SIZE;
+  tileY = _cameraY / TILE_SIZE,
+  tileXEnd = (_cameraX + SCREEN_WIDTH - 1) / TILE_SIZE,
+  tileYEnd = (_cameraY + SCREEN_HEIGHT - 1) / TILE_SIZE;
   if(_cameraX < 0)
     tileX--;
   if(_cameraY < 0)
@@ -167,31 +183,33 @@ void drawScene() {
 
 void drawTile(int x, int y, Tiles tile) {
   if(tile != NONE){
-//    drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-  GD.BitmapHandle(TILE_HANDLE);
-  GD.Vertex2f(((x * TILE_SIZE) - _cameraX)*16, ((y * TILE_SIZE) - _cameraY)*16);
+    //    drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    GD.BitmapHandle(TILE_HANDLE);
+    GD.Vertex2f(((x * TILE_SIZE) - _cameraX)*16, ((y * TILE_SIZE) - _cameraY)*16);
   }
 }
 
 void drawUnit(Unit* unit) {
   Rect *hitbox = unit->getHitbox();
-//  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
-GD.ColorRGB(255, 255, 255);
-if(unit->getDir() == -1)
-{
-  GD.cmd_translate(F16(21), F16(0));
-  GD.cmd_scale(F16(-1), F16(1));
-  GD.cmd_translate(F16(-21), F16(0));
-  GD.cmd_setmatrix();
-}
+  //  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
+  GD.ColorRGB(255, 255, 255);
+  if(unit->getDir() == -1)
+  {
+    GD.cmd_translate(F16(21), F16(0));
+    GD.cmd_scale(F16(-1), F16(1));
+    GD.cmd_translate(F16(-21), F16(0));
+    GD.cmd_setmatrix();
+  }
   GD.BitmapHandle(SonicW_HANDLE);
   GD.Cell((hitbox->getX() >> 2) & 7);
   GD.Vertex2f((hitbox->getX() - _cameraX) * 16, (hitbox->getY() - _cameraY) * 16);
-if(unit->getDir() == -1)
-{
-  GD.cmd_translate(F16(21), F16(0));
-  GD.cmd_scale(F16(-1), F16(1));
-  GD.cmd_translate(F16(-21), F16(0));
-  GD.cmd_setmatrix();
+  if(unit->getDir() == -1)
+  {
+    GD.cmd_translate(F16(21), F16(0));
+    GD.cmd_scale(F16(-1), F16(1));
+    GD.cmd_translate(F16(-21), F16(0));
+    GD.cmd_setmatrix();
+  }
 }
-}
+
+
