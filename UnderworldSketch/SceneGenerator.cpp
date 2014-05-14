@@ -7,7 +7,7 @@
 
 void newScene(Scene *scene, Point *entrance, Point *exit) {
   clearScene(scene);
-  Modules modules[XMODULES][YMODULES];
+  byte modules[XMODULES][YMODULES];
   modulate(modules, entrance, exit);
   generate(scene, modules, entrance, exit);
 }
@@ -19,7 +19,7 @@ void clearScene(Scene *scene) {
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
-void fillModule(Scene *scene, Modules module, int dX, int dY, boolean portalRoom, boolean entrance, Point *portal) {
+void fillModule(Scene *scene, byte module, int dX, int dY, boolean portalRoom, boolean entrance, Point *portal) {
   byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
   getModuleTiles(module, &tiles);
   for(int i = 0; i < MODULE_WIDTH; i++) {
@@ -44,7 +44,7 @@ void fillModule(Scene *scene, Modules module, int dX, int dY, boolean portalRoom
   }
 }
 
-void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
+void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
   boolean hasEntrance = false, hasExit = false;
   for(int i = 0; i < XMODULES; i++) {
     for(int j = 0; j < YMODULES; j++) {
@@ -67,7 +67,7 @@ void generate(Scene *scene, Modules modules[XMODULES][YMODULES], Point *entrance
   }
 }
 
-void modulate(Modules modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
+void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
   short x = random(XMODULES), y = YMODULES - 1;
   modules[x][y] = TYPE1;
   entrance->setPoint(x, y);

@@ -3,7 +3,7 @@
 
 #include "Logic.h"
 
-const static short
+const static byte
     MINO_HEALTH = 3,
     MINO_SPEED = 3,
     MINO_HEIGHT = 42,
@@ -14,4 +14,5 @@ class Minotaur : public Unit {
     Minotaur(int x, int y);
     void updateAI(int dTime, Logic *logic);
 };
+
 #endif
