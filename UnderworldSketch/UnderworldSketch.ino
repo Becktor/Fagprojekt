@@ -3,7 +3,6 @@
  *  Instead of using a separate file for the main game logic, updates and lists,
  *  use this.
  */
-
 //Extern libraries
 #include <ArduinoNunchuk.h>
 #include <EEPROM.h>
@@ -23,40 +22,41 @@
 #include "Hero.h"
 #include "Sprites.h"
 
-
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
-const static short
-SCREEN_WIDTH = 480,
-SCREEN_HEIGHT = 272,
-SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
-SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
-SECOND = 1000, //Milis. in a second
-INIT_FPS = 60; //Initial assumed framerate.
+const static int
+    SCREEN_WIDTH = 480,
+    SCREEN_HEIGHT = 272,
+    SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
+    SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
+    SECOND = 1000, //Milis. in a second
+    INIT_FPS = 40; //Initial assumed framerate.
 
 //Global variables
 static int _cameraX = 0, _cameraY = 0;
 static unsigned int _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
 static Scene _scene = Scene();
 static Logic _logic = Logic(&_scene);
-static Point _entrance = Point(0, 0), _exit = Point(0, 0);
+static Point _entrance = Point(0, 0), _exit = Point(0, 0); //Make local?
 static ArduinoNunchuk _nunchuk = ArduinoNunchuk();
 
-//Temporary units
+
+//Temporary units, make local
 static Minotaur _mino(48, 70);
 static Hero _hero(140,70, &_nunchuk);
 
 //Function declarations
 void setup();
 void loop();
-void drawRect(int x, int y, int width, int height);
-void drawTile(Tiles tile);
+void drawRect(int x, int y, byte width, byte height);
+void drawScene();
+void drawTile(byte tile);
 void drawUnit(Unit *unit);
 
 void setup() {
-  randomSeed(107); //Initializes a random seed to the random generator (if pin 0 is unconnected)
+  randomSeed(107); //Initializes a random seed to the random generator
   if(NUNCHUCK)
     _nunchuk.init();
   GD.begin();
@@ -66,7 +66,7 @@ void setup() {
   //  GD.load("healsky.jpg");
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
-  _scene.addUnit(&_mino, new Point(1, 1));
+  _scene.addUnit(&_mino, &Point(1, 1));
   _scene.addUnit(&_hero, &_entrance);
 }
 
@@ -144,11 +144,11 @@ void loop() {
 void drawRect(int x, int y, int width, int height) {
   int rectX1 = x - _cameraX, rectY1 = y - _cameraY, rectX2 = x + width - 2 - _cameraX, rectY2 = y + height - 2 - _cameraY;
     //if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
-      //GD.Vertex2f(rectX1*16, rectY1*16);
-      //GD.Vertex2f(rectX2*16, rectY2*16);
+      //GD.Vertex2f(rectX1 * 16, rectY1 * 16);
+      //GD.Vertex2f(rectX2 * 16, rectY2 * 16);
     //}
-  GD.Vertex2f(rectX1*16, rectY1*16);
-  GD.Vertex2f(rectX2*16, rectY2*16);
+  GD.Vertex2f(rectX1 * 16, rectY1 * 16);
+  GD.Vertex2f(rectX2 * 16, rectY2 * 16);
 }
 
 void drawScene() {
