@@ -6,6 +6,7 @@
 Unit::Unit(int x, int y, byte width, byte height, char health) : Prop(x, y, width, height) {
   _health = health;
   _dir = LEFT;
+  _levitate = false;
 }
 
 void Unit::damage(byte damage) {

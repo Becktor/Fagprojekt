@@ -34,28 +34,23 @@ const static int
     SECOND = 1000, //Milis. in a second
     INIT_FPS = 40; //Initial assumed framerate.
 
-//Global variables
-static int _cameraX = 0, _cameraY = 0;
-static unsigned int _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
-static Scene _scene = Scene();
-static Logic _logic = Logic(&_scene);
-static Point _entrance = Point(0, 0), _exit = Point(0, 0); //Make local?
-static ArduinoNunchuk _nunchuk = ArduinoNunchuk();
-
-
-//Temporary units, make local
-static Minotaur _mino(48, 70);
-static Hero _hero(140,70, &_nunchuk);
-
 //Function declarations
 void setup();
 void loop();
-void drawRect(int x, int y, byte width, byte height);
-void drawScene();
-void drawTile(byte tile);
-void drawUnit(Unit *unit);
+void drawScene(Scene *scene, int offsetX, int offsetY);
+void drawTile(int x, int y, byte tile, int offsetX, int offsetY);
+void drawUnit(Unit *unit, int offsetX, int offsetY);
 
 void setup() {
+  //INIT
+  word _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
+  Scene _scene = Scene();
+  Logic _logic = Logic(&_scene);
+  ArduinoNunchuk _nunchuk = ArduinoNunchuk();
+  Minotaur _mino(48, 70);
+  Hero _hero(140,70, &_nunchuk);
+
+  //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
   if(NUNCHUCK)
     _nunchuk.init();
@@ -64,127 +59,119 @@ void setup() {
   //  GD.BitmapHandle(0);
   //  GD.cmd_loadimage(0, 0);
   //  GD.load("healsky.jpg");
+  Point _entrance = Point(0, 0), _exit = Point(0, 0);
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_mino, &Point(1, 1));
   _scene.addUnit(&_hero, &_entrance);
-}
 
-void loop() {
-  unsigned long startMilis = millis();
-  byte counter = 0;
-  while(millis() - startMilis < SECOND) { //Loop for a second
-    LinkedList<Unit*>* units = _scene.getUnits();
-    //Game logic
-    if(NUNCHUCK) {
-      _nunchuk.update();
-      _nunchuk.update();
-    }
-
-    //AI
-    for(int i = 0; i < units->size(); i++) {
-      Unit *unit = units->get(i);
-      if(unit->isDead()) {
-        units->remove(i);
-        i--;
-      } else {
-        unit->updateAI(_dTime, &_logic);
+  //LOOP
+  for(;;) {
+    //FPS CALCULATIONS
+    unsigned long startMilis = millis();
+    byte counter = 0;
+    while(millis() - startMilis < SECOND) { //Loop for a second
+      LinkedList<Unit*>* units = _scene.getUnits();
+      //GAME LOGIC
+      if(NUNCHUCK) {
+        _nunchuk.update();
+        _nunchuk.update();
       }
-    } 
-    //Attacks
-    _logic.executeAttacks();
-    if (_hero.getAttackSound()){
-       GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
-    } 
-    //Physics
-    for(int i = 0; i < units->size(); i++) {
-      Unit *unit = units->get(i);
-      unit->updatePhysics(_dTime, &_logic);
-    }
-    //Game end
-    if(_hero.isDead())
-      _logic.setGameOver(true, false);
-    if(_logic.isGameOver()) {
-      if(_logic.isHeroWin()) {
-        //Game continue
-        GD.sample(EXIT,EXIT_LENGTH, 8000, ADPCM_SAMPLES);
+      //UPDATE AI
+      for(int i = 0; i < units->size(); i++) {
+        Unit *unit = units->get(i);
+        if(unit->isDead()) {
+          units->remove(i);
+          i--;
+        } else {
+          unit->updateAI(_dTime, &_logic);
+        }
       } 
-      else {
-        //Game restart
+      //UPDATE ATTACKS
+      _logic.executeAttacks();
+      if (_hero.getAttackSound()){
+         GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
+      } 
+      //UPDATE PHYSICS
+      for(int i = 0; i < units->size(); i++) {
+        Unit *unit = units->get(i);
+        unit->updatePhysics(_dTime, &_logic);
       }
-      newScene(&_scene, &_entrance, &_exit);
-      _scene.clearUnits();
-      _logic.restartGame();
-      _scene.addUnit(&_mino, new Point(1, 1));
-      _scene.addUnit(&_hero, &_entrance);
+      //Game end
+      if(_hero.isDead())
+        _logic.setGameOver(true, false);
+      if(_logic.isGameOver()) {
+        if(_logic.isHeroWin()) {
+          //GAME CONTINUE
+          GD.sample(EXIT,EXIT_LENGTH, 8000, ADPCM_SAMPLES);
+        } 
+        else {
+          //GAME RESTART
+        }
+        newScene(&_scene, &_entrance, &_exit);
+        _scene.clearUnits();
+        _logic.restartGame();
+        _scene.addUnit(&_mino, new Point(1, 1));
+        _scene.addUnit(&_hero, &_entrance);
+      }
+      //DRAW LOGIC
+      GD.Clear();
+      //GD.Begin(RECTS);
+      GD.Begin(BITMAPS);
+
+      Rect *hitbox = _hero.getHitbox();
+      int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
+          cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
+      drawScene(&_scene, cameraX, cameraY);
+      GD.ColorRGB(255, 0, 0);
+      for(int i = 0; i < units->size(); i++)
+        drawUnit(units->get(i), cameraX, cameraY);
+      GD.cmd_number(40, 136, 31, OPT_CENTER, _fps); 
+      //GD.Begin(BITMAPS);
+      //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
+      GD.swap();
+      counter++; //Frame counter
     }
-    //Draw Logic
-    GD.Clear();
-    //GD.Begin(RECTS);
-    GD.Begin(BITMAPS);
-
-    Rect *hitbox = _hero.getHitbox();
-    _cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2;
-    _cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
-    drawScene();
-    GD.ColorRGB(255, 0, 0);
-    for(int i = 0; i < units->size(); i++)
-      drawUnit(units->get(i));
-    GD.cmd_number(40, 136, 31, OPT_CENTER, _fps); 
-    //GD.Begin(BITMAPS);
-    //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
-    GD.swap();
-    //Frame counter
-    counter++;
+    //FPS CALCULATION
+    _fps = counter;
+    _dTime = SECOND / _fps;
   }
-  _fps = counter;
-  _dTime = SECOND / _fps;
 }
 
-void drawRect(int x, int y, int width, int height) {
-  int rectX1 = x - _cameraX, rectY1 = y - _cameraY, rectX2 = x + width - 2 - _cameraX, rectY2 = y + height - 2 - _cameraY;
-    //if(rectX1 >= 0 && rectX2 < SCREEN_WIDTH && rectY1 >= 0 && rectY2 < SCREEN_HEIGHT) {
-      //GD.Vertex2f(rectX1 * 16, rectY1 * 16);
-      //GD.Vertex2f(rectX2 * 16, rectY2 * 16);
-    //}
-  GD.Vertex2f(rectX1 * 16, rectY1 * 16);
-  GD.Vertex2f(rectX2 * 16, rectY2 * 16);
-}
+void loop() { }
 
-void drawScene() {
+void drawScene(Scene *scene, int offsetX, int offsetY) {
   GD.ColorRGB(255, 255, 255);
-  int tileX = _cameraX / TILE_SIZE,
-      tileY = _cameraY / TILE_SIZE,
-      tileXEnd = (_cameraX + SCREEN_WIDTH - 1) / TILE_SIZE,
-      tileYEnd = (_cameraY + SCREEN_HEIGHT - 1) / TILE_SIZE;
-  if(_cameraX < 0)
+  int tileX = offsetX / TILE_SIZE,
+      tileY = offsetY / TILE_SIZE,
+      tileXEnd = (offsetX + SCREEN_WIDTH - 1) / TILE_SIZE,
+      tileYEnd = (offsetY + SCREEN_HEIGHT - 1) / TILE_SIZE;
+  if(offsetX < 0)
     tileX--;
-  if(_cameraY < 0)
+  if(offsetY < 0)
     tileY--;
-  if(_cameraX + SCREEN_WIDTH - 1  < 0)
+  if(offsetX + SCREEN_WIDTH - 1  < 0)
     tileXEnd--;
-  if(_cameraY + SCREEN_HEIGHT - 1  < 0)
+  if(offsetY + SCREEN_HEIGHT - 1  < 0)
     tileYEnd--;
   for(int i = tileX; i <= tileXEnd; i++) {
     for(int j = tileY; j <= tileYEnd; j++) {
-      drawTile(i, j, _scene.getTile(i, j));
+      drawTile(i, j, scene->getTile(i, j), offsetX, offsetY);
     }
   }
 }
 
-void drawTile(int x, int y, byte tile) {
+void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
   if(tile != NONE){
-    //drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     GD.BitmapHandle(TILE_HANDLE);
-    GD.Vertex2f(((x * TILE_SIZE) - _cameraX)*16, ((y * TILE_SIZE) - _cameraY)*16);
+    GD.Vertex2f(((x * TILE_SIZE) - offsetX) * 16, ((y * TILE_SIZE) - offsetY) * 16);
   }
 }
 
-void drawUnit(Unit* unit) {
+void drawUnit(Unit* unit, int offsetX, int offsetY) {
   Rect *hitbox = unit->getHitbox();
-  //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
-  if(unit->getDir() == -1) {
+  if(unit->getDir() == LEFT) {
     GD.cmd_translate(F16(21), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-21), F16(0));
@@ -192,8 +179,8 @@ void drawUnit(Unit* unit) {
   }
   GD.BitmapHandle(SONICW_HANDLE);
   GD.Cell((hitbox->getX() >> 2) & 7);
-  GD.Vertex2f((hitbox->getX() - _cameraX) * 16, (hitbox->getY() - _cameraY) * 16);
-  if(unit->getDir() == -1) {
+  GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
+  if(unit->getDir() == LEFT) {
     GD.cmd_translate(F16(21), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-21), F16(0));
