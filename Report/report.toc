@@ -1,8 +1,13 @@
 \contentsline {chapter}{\numberline {1}Introduction}{2}
 \contentsline {chapter}{\numberline {2}Problem Analysis}{3}
 \contentsline {chapter}{\numberline {3}Requirements specification}{4}
+\contentsline {subsection}{\numberline {3.0.1}Timeplan}{4}
 \contentsline {chapter}{\numberline {4}Overall design}{5}
-\contentsline {chapter}{\numberline {5}Testing and performance analysis}{6}
-\contentsline {chapter}{\numberline {6}Discussion}{7}
-\contentsline {chapter}{\numberline {7}Conclusion}{8}
-\contentsline {chapter}{\numberline {8}Appendices}{10}
+\contentsline {chapter}{\numberline {5}Implementation and detailed design}{6}
+\contentsline {subsection}{\numberline {5.0.2}Game loop}{6}
+\contentsline {subsection}{\numberline {5.0.3}Movement}{6}
+\contentsline {subsubsection}{Input}{7}
+\contentsline {chapter}{\numberline {6}Testing and performance analysis}{8}
+\contentsline {chapter}{\numberline {7}Discussion}{9}
+\contentsline {chapter}{\numberline {8}Conclusion}{10}
+\contentsline {chapter}{\numberline {9}Appendices}{12}
