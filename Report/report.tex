@@ -4,7 +4,28 @@
 \setlength{\parindent}{0in}
 \setlength{\parskip}{2mm}
 \usepackage{latexsym,a4wide}
-\usepackage{graphicx}
+\usepackage{ifpdf}
+\ifpdf
+    \usepackage[pdftex]{graphicx}   % to include graphics
+    \pdfcompresslevel=9
+    \usepackage[pdftex,     % sets up hyperref to use pdftex driver
+            plainpages=false,   % allows page i and 1 to exist in the same document
+            breaklinks=true,    %i link texts can be broken at the end of line
+            colorlinks=true,
+            colorlinks=false,
+            pdftitle=Katabasis
+            pdfauthor=Gruppe 6.1
+           ]{hyperref}
+    \usepackage{thumbpdf}
+\else
+    \usepackage{graphicx}       % to include graphics
+    \usepackage{hyperref}       % to simplify the use of \href
+\fi
+
+
+
+
+
 
 %02122 Fagprojekt
 \title{02122 Project course, Spring 2014 \\
@@ -43,6 +64,8 @@ limited hardware is quite a challenge and fun.
 \include{Overall_Design}
 
 \include{Implementation}
+
+\include{Hardware}
 
 \include{Testing_Performance}
 
