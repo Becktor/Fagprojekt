@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Tiles.h"
 #include "Scene.h"
+#include "Prop.h"
 #include "Unit.h"
 
 Scene::Scene() {
@@ -8,17 +9,24 @@ Scene::Scene() {
   _units = LinkedList<Unit*>();
 }
 
-void Scene::addProp(Prop *prop, Point *point) {
+void Scene::addProp(Prop *prop, byte x, byte y) {
   Rect *hitbox = prop->getHitbox();
-  hitbox->setPos(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  hitbox->setPos(x * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, y * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
   _props.add(prop);
 }
 
 //Adds the given unit to the units list and sets it at the given tile.
-void Scene::addUnit(Unit *unit, Point *point) {
+void Scene::addUnit(Unit *unit, byte x, byte y) {
   Rect *hitbox = unit->getHitbox();
-  hitbox->setPos(point->getX() * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, point->getY() * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  hitbox->setPos(x * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, y * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
   _units.add(unit);
+}
+
+//Adds the given unit to the units list and sets it at the given tile.
+void Scene::addUnit(Unit unit, byte x, byte y) {
+  Rect *hitbox = unit.getHitbox();
+  hitbox->setPos(x * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, y * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
+  _units.add(&unit);
 }
 
 void Scene::clearUnits() {

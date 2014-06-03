@@ -3,6 +3,7 @@
 #include "Geo.h"
 #include "Module.h"
 #include "Scene.h"
+#include "Minotaur.h"
 #include "SceneGenerator.h"
 
 void newScene(Scene *scene, Point *entrance, Point *exit) {
@@ -16,6 +17,7 @@ void clearScene(Scene *scene) {
   for(int i = 0; i < SCENE_WIDTH; i++)
     for(int j = 0; j < SCENE_HEIGHT; j++)
       scene->setTile(i, j, NONE);
+  scene->clearUnits();
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
@@ -26,15 +28,17 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
     for(int j = 0; j < MODULE_HEIGHT; j++) {
       byte tile, tileData = (*tiles)[j][i];
       byte x = dX + i, y = dY + j;
-      if(tileData == TILE_PORTAL) {
+      if(tileData == TILE_OBJECT) {
         if(portalRoom) {
           if(entrance)
             tile = ENTRANCE;
           else
             tile = EXIT;
           portal->setPoint(x, y);
-        } else
+        } else {
+          scene->addUnit(new Minotaur(), x, y);
           tile = NONE;
+        }
       } else
         tile = tileData;
       if(scene->getTile(x, y) == NULL || scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).

@@ -15,8 +15,8 @@
 #include <Arduino.h>
 #include "Tiles.h"
 #include "Module.h"
-#include "Unit.h"
 #include "Prop.h"
+#include "Unit.h"
 
 const static byte
     TILE_SIZE = 48, //One tile unit to world units conv.
@@ -35,8 +35,9 @@ class Scene
 
   public:
     Scene();
-    void addUnit(Unit *unit, Point *point);
-    void addProp(Prop *prop, Point *point);
+    void addUnit(Unit *unit, byte x, byte y);
+    void addUnit(Unit unit, byte x, byte y);
+    void addProp(Prop *prop, byte x, byte y);
     void clearUnits();
     boolean contains(byte x, byte y);
     byte getWidth();

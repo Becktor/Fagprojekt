@@ -23,7 +23,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -47,7 +47,6 @@ void setup() {
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
-  Minotaur _mino(48, 70);
   Hero _hero(140,70, &_nunchuk);
 
   //SETUP
@@ -62,8 +61,7 @@ void setup() {
   Point _entrance = Point(0, 0), _exit = Point(0, 0);
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
-  _scene.addUnit(&_mino, &Point(1, 1));
-  _scene.addUnit(&_hero, &_entrance);
+  _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
 
   //LOOP
   for(;;) {
@@ -109,17 +107,15 @@ void setup() {
           //GAME RESTART
         }
         newScene(&_scene, &_entrance, &_exit);
-        _scene.clearUnits();
         _logic.restartGame();
-        _scene.addUnit(&_mino, new Point(1, 1));
-        _scene.addUnit(&_hero, &_entrance);
+        _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
       }
       //DRAW LOGIC
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
 
-      Rect *hitbox = _mino.getHitbox();
+      Rect *hitbox = _hero.getHitbox();
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
