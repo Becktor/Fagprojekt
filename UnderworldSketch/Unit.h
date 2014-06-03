@@ -16,7 +16,7 @@ class Unit : public Prop {
   private:
     Direction _dir;
     boolean _levitate;
-    char _health, _xVel, _yVel;
+    char _health, _xVel, _yVel, _handle, _cells;
 
   public:
     Unit(int x, int y, byte width, byte height, char health);
@@ -25,11 +25,15 @@ class Unit : public Prop {
     boolean getLevitate();
     char getXVel();
     char getYVel();
+    int getHandle();
+    int getCells();
     boolean isDead();
     void setDir(Direction dir);
     void setLevitate(boolean levitate);
     void setXVel(char yVel);
     void setYVel(char yVel);
+    void setHandle(int handle);
+    void setCells(int cells);
     void toggleDir();
     virtual void updateAI(int dTime, Logic *logic);
     void updatePhysics(int dTime, Logic *logic);

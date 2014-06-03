@@ -7,6 +7,8 @@ Unit::Unit(int x, int y, byte width, byte height, char health) : Prop(x, y, widt
   _health = health;
   _dir = LEFT;
   _levitate = false;
+  _handle = 0;
+  _cells = 0;
 }
 
 void Unit::damage(byte damage) {
@@ -29,6 +31,14 @@ char Unit::getYVel() {
   return _yVel;
 }
 
+int Unit::getHandle() {
+  return _handle;
+}
+
+int Unit::getCells() {
+  return _cells;
+}
+
 boolean Unit::isDead() {
   return _health <= 0;
 }
@@ -47,6 +57,14 @@ void Unit::setXVel(char xVel) {
 
 void Unit::setYVel(char yVel) {
    _yVel = yVel;
+}
+
+void Unit::setHandle(int handle) {
+   _handle = handle;
+}
+
+void Unit::setCells(int cells) {
+   _cells = cells;
 }
 
 void Unit::toggleDir() {

@@ -6,6 +6,18 @@ Minotaur::Minotaur(int x, int y) : Unit(x, y, MINO_WIDTH, MINO_HEIGHT, MINO_HEAL
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(getXVel() == 0)
     toggleDir();
-  setXVel(MINO_SPEED * getDir());
-}
+    
+  if(getDir()==-1)
+   {
+    setXVel(MINO_RSPEED * getDir());
+    setHandle(MINO_RUNNING);
+    setCells(MINO_RUNNING_CELLS);
+   }
+   else
+   {
+    setXVel(MINO_WSPEED * getDir());
+    setHandle(MINO_WALKING);
+    setCells(MINO_WALKING_CELLS);
+   }
+ }
 
