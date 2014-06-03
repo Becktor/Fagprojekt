@@ -23,7 +23,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -119,7 +119,7 @@ void setup() {
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
 
-      Rect *hitbox = _hero.getHitbox();
+      Rect *hitbox = _mino.getHitbox();
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
@@ -168,22 +168,52 @@ void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
   }
 }
 
-void drawUnit(Unit* unit, int offsetX, int offsetY) {
+//void drawUnit(Unit* unit, int offsetX, int offsetY) {
+//  Rect *hitbox = unit->getHitbox();
+//  GD.ColorRGB(255, 255, 255);
+//  if(unit->getDir() == LEFT) {
+//    GD.cmd_translate(F16(21), F16(0));
+//    GD.cmd_scale(F16(-1), F16(1));
+//    GD.cmd_translate(F16(-21), F16(0));
+//    GD.cmd_setmatrix();
+//  }
+//  GD.BitmapHandle(SONICW_HANDLE);
+//  GD.Cell((hitbox->getX() >> 4) & 7);
+//  GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
+//  if(unit->getDir() == LEFT) {
+//    GD.cmd_translate(F16(21), F16(0));
+//    GD.cmd_scale(F16(-1), F16(1));
+//    GD.cmd_translate(F16(-21), F16(0));
+//    GD.cmd_setmatrix();
+//  }
+  
+//}
+void drawUnit(Unit* unit,  int offsetX, int offsetY) {
   Rect *hitbox = unit->getHitbox();
-  GD.ColorRGB(255, 255, 255);
-  if(unit->getDir() == LEFT) {
-    GD.cmd_translate(F16(21), F16(0));
-    GD.cmd_scale(F16(-1), F16(1));
-    GD.cmd_translate(F16(-21), F16(0));
-    GD.cmd_setmatrix();
-  }
-  GD.BitmapHandle(SONICW_HANDLE);
-  GD.Cell((hitbox->getX() >> 2) & 7);
+//  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
+GD.ColorRGB(255, 255, 255);
+int half_Width = (hitbox->getWidth())/2;
+
+  GD.BitmapHandle(unit->getHandle());
+
+if(unit->getDir() == -1)
+{
+  GD.cmd_translate(F16(half_Width), F16(0));
+  GD.cmd_scale(F16(-1), F16(1));
+  GD.cmd_translate(F16(-half_Width), F16(0));
+  GD.cmd_setmatrix();
+  GD.Cell((-(hitbox->getX()) >> 4) & unit->getCells());
+}
+else
+{
+  GD.Cell((hitbox->getX() >> 4) & unit->getCells()); 
+}
   GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
-  if(unit->getDir() == LEFT) {
-    GD.cmd_translate(F16(21), F16(0));
-    GD.cmd_scale(F16(-1), F16(1));
-    GD.cmd_translate(F16(-21), F16(0));
-    GD.cmd_setmatrix();
-  }
+if(unit->getDir() == -1)
+{
+  GD.cmd_translate(F16(half_Width), F16(0));
+  GD.cmd_scale(F16(-1), F16(1));
+  GD.cmd_translate(F16(-half_Width), F16(0));
+  GD.cmd_setmatrix();
+}
 }
