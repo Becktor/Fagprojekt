@@ -36,6 +36,7 @@ const static int
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000, //Milis. in a second
     INIT_FPS = 40; //Initial assumed framerate.
+int SCORE = 0;
 static Coin _coin(140,70);
 //Function declarations
 void setup();
@@ -87,6 +88,9 @@ void setup() {
         if(unit->isDead()) {
           units->remove(i);
           i--;
+          SCORE=SCORE+100;
+          draw_score(0,0,SCORE);
+          
         } else {
           unit->updateAI(_dTime, &_logic);
         }
@@ -229,4 +233,8 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
   GD.Vertex2ii(hitbox->getX() - offsetX, hitbox->getY()-offsetY);
+}
+static void draw_score(byte x, byte y, int n)
+{
+ GD.cmd_number(x, y, 31, OPT_CENTER, n); 
 }

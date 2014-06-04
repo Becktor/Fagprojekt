@@ -51,6 +51,18 @@ void Logic::executeAttacks() {
   _attacks.clear();
 }
 
+void Logic::coinCol() {
+  LinkedList<Prop*> *props = _scene->getProps();
+    for(int j = 0; j < props->size(); j++) {
+      Prop *prop = props->get(j);
+      Rect *hitboxC = prop->getHitbox();
+      Rect *hitboxH = getHero()->getHitbox();
+      if(hitboxH->contains(hitboxC)) {
+        //add bonus 
+    }
+  }
+}
+
 boolean Logic::isGameOver() {
   return _gameOver;
 }

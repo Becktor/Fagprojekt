@@ -24,6 +24,7 @@ class Logic
     void addAttack(int x, int y, int width, int height, int damage, Unit *owner);
     boolean atExit(Unit *unit);
     void executeAttacks();
+    void coinCol();
     Unit* getHero();
     void gravitate(Unit *unit, int dTime);
     boolean isGameOver();
