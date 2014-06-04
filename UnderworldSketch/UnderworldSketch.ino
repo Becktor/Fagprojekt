@@ -43,7 +43,7 @@ void loop();
 void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawTile(int x, int y, byte tile, int offsetX, int offsetY);
 void drawUnit(Unit *unit, int offsetX, int offsetY);
-void drawProp(Prop *prop);
+void drawProp(Prop *prop, int offsetX, int offsetY);
 
 void setup() {
   //INIT
@@ -52,7 +52,7 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(0, 0, &_nunchuk);
-  //_scene.addProp(&_coin, new Point(0,0));
+  _scene.addProp(&_coin, 0,0);
   LinkedList<Prop*>* props = _scene.getProps();
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
@@ -67,7 +67,7 @@ void setup() {
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
-  //_scene.addProp(&_coin, &_entrance);
+  _scene.addProp(&_coin, _exit.getX(),_exit.getY());
 
   //LOOP
   for(;;) {
@@ -121,7 +121,6 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      drawProp(props->get(0));
       Rect *hitbox = _hero.getHitbox();
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
@@ -129,6 +128,7 @@ void setup() {
       GD.ColorRGB(255, 0, 0);
       for(int i = 0; i < units->size(); i++)
         drawUnit(units->get(i), cameraX, cameraY, currentMillis);
+      drawProp(props->get(0), cameraX, cameraY);
       GD.cmd_number(40, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
@@ -221,12 +221,12 @@ if(unit->getDir() == -1)
   GD.cmd_setmatrix();
 }
 }
-void drawProp(Prop* prop){
+void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = prop->getHitbox();
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
   GD.PointSize(16*hitbox->getWidth());
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  //GD.Vertex2ii(hitbox->getX() - _cameraX, hitbox->getY()-_cameraY);
+  GD.Vertex2ii(hitbox->getX() - offsetX, hitbox->getY()-offsetY);
 }
