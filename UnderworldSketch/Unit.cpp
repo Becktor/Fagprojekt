@@ -43,8 +43,14 @@ boolean Unit::isDead() {
   return _health <= 0;
 }
 
+void Unit::fillHealth() {}
+
 void Unit::setDir(Direction dir) {
   _dir = dir;
+}
+
+void Unit::setHealth(char health) {
+  _health = health;
 }
 
 void Unit::setLevitate(boolean levitate) {

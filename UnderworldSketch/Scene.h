@@ -23,21 +23,24 @@ const static byte
     XMODULES = 4,
     YMODULES = 4,
     SCENE_WIDTH = XMODULES * (MODULE_WIDTH - 1) - 1,
-    SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1;
+    SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1,
+    MINOTAURS = 10;
 
 class Unit;
+class Minotaur;
 class Scene
 {
   private:
-    byte _tiles[SCENE_WIDTH][SCENE_HEIGHT];
+    byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex;
+    Minotaur* _minotaurs[10];
     LinkedList<Prop*> _props;
     LinkedList<Unit*> _units;
 
   public:
     Scene();
-    void addUnit(Unit *unit, byte x, byte y);
-    void addUnit(Unit unit, byte x, byte y);
+    void addMinotaur(byte x, byte y);
     void addProp(Prop *prop, byte x, byte y);
+    void addUnit(Unit *unit, byte x, byte y);
     void clearUnits();
     boolean contains(byte x, byte y);
     byte getWidth();

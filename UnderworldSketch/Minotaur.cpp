@@ -5,6 +5,10 @@ Minotaur::Minotaur(int x, int y) : Unit(x, y, MINO_WIDTH, MINO_HEIGHT, MINO_HEAL
 
 Minotaur::Minotaur() : Unit(0, 0, MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH) { }
 
+void Minotaur::fillHealth() {
+  setHealth(MINO_HEALTH);
+}
+
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(getXVel() == 0)
     toggleDir();

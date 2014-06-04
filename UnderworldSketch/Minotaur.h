@@ -2,7 +2,6 @@
 #define minotaur_h
 
 #include "Logic.h"
-#include "Unit.h"
 
 const static byte
     MINO_HEALTH = 3,
@@ -19,6 +18,7 @@ class Minotaur : public Unit {
   public:
     Minotaur(int x, int y);
     Minotaur();
+    void fillHealth();
     void updateAI(int dTime, Logic *logic);
 };
 
