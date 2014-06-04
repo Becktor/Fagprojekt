@@ -23,7 +23,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -111,6 +111,7 @@ void setup() {
         _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
       }
       //DRAW LOGIC
+      GD.ClearColorRGB(255,255,255);
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
@@ -121,8 +122,8 @@ void setup() {
       drawScene(&_scene, cameraX, cameraY);
       GD.ColorRGB(255, 0, 0);
       for(int i = 0; i < units->size(); i++)
-        drawUnit(units->get(i), cameraX, cameraY);
-      GD.cmd_number(40, 136, 31, OPT_CENTER, _fps); 
+        drawUnit(units->get(i), cameraX, cameraY, currentMillis);
+      GD.cmd_number(40, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
       GD.swap();
@@ -185,10 +186,11 @@ void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
 //  }
   
 //}
-void drawUnit(Unit* unit,  int offsetX, int offsetY) {
+void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   Rect *hitbox = unit->getHitbox();
 //  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
 GD.ColorRGB(255, 255, 255);
+int half_Width = (hitbox->getWidth())/2;
 int half_Width = (hitbox->getWidth())/2;
 
   GD.BitmapHandle(unit->getHandle());
@@ -199,11 +201,11 @@ if(unit->getDir() == -1)
   GD.cmd_scale(F16(-1), F16(1));
   GD.cmd_translate(F16(-half_Width), F16(0));
   GD.cmd_setmatrix();
-  GD.Cell((-(hitbox->getX()) >> 4) & unit->getCells());
+  GD.Cell((currentMillis >> 2) & unit->getCells());
 }
 else
 {
-  GD.Cell((hitbox->getX() >> 4) & unit->getCells()); 
+  GD.Cell((currentMillis >> 2) & unit->getCells()); 
 }
   GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
 if(unit->getDir() == -1)
