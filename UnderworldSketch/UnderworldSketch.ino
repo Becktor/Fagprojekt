@@ -47,7 +47,7 @@ void setup() {
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
-  Hero _hero(140,70, &_nunchuk);
+  Hero _hero(0, 0, &_nunchuk);
 
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
@@ -66,9 +66,9 @@ void setup() {
   //LOOP
   for(;;) {
     //FPS CALCULATIONS
-    unsigned long startMilis = millis();
+    unsigned long startMillis = millis(), currentMillis = startMillis;
     byte counter = 0;
-    while(millis() - startMilis < SECOND) { //Loop for a second
+    while(currentMillis - startMillis < SECOND) { //Loop for a second
       LinkedList<Unit*>* units = _scene.getUnits();
       //GAME LOGIC
       if(NUNCHUCK) {
@@ -127,6 +127,7 @@ void setup() {
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
       GD.swap();
       counter++; //Frame counter
+      currentMillis = millis();
     }
     //FPS CALCULATION
     _fps = counter;
