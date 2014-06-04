@@ -39,6 +39,7 @@ void Scene::clearUnits() {
   _minoIndex = 0;
 }
 
+
 boolean Scene::contains(byte x, byte y) {
   return x >= 0 && x < SCENE_WIDTH && y >= 0 && y < SCENE_HEIGHT;
 }
@@ -68,4 +69,3 @@ void Scene::setTile(byte x, byte y, byte tile) {
   if(contains(x, y))
     _tiles[x][y] = tile;
 }
-

@@ -21,6 +21,9 @@
 #include "Minotaur.h"
 #include "Hero.h"
 #include "Sprites.h"
+#include "Prop.h"
+#include "Coin.h"
+
 
 //Checks
 #define NUNCHUCK 0 //Whether or not a nunchuck is connected
@@ -33,13 +36,14 @@ const static int
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000, //Milis. in a second
     INIT_FPS = 40; //Initial assumed framerate.
-
+static Coin _coin(140,70);
 //Function declarations
 void setup();
 void loop();
 void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawTile(int x, int y, byte tile, int offsetX, int offsetY);
 void drawUnit(Unit *unit, int offsetX, int offsetY);
+void drawProp(Prop *prop);
 
 void setup() {
   //INIT
@@ -48,7 +52,8 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(0, 0, &_nunchuk);
-
+  _scene.addProp(&_coin, new Point(0,0));
+  LinkedList<Prop*>* props = _scene.getProps();
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
   if(NUNCHUCK)
@@ -62,6 +67,7 @@ void setup() {
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
+  _scene.addProp(&_coin, &_entrance);
 
   //LOOP
   for(;;) {
@@ -115,7 +121,7 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-
+      drawProp(props->get(0));
       Rect *hitbox = _hero.getHitbox();
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
@@ -191,7 +197,6 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
 //  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
 GD.ColorRGB(255, 255, 255);
 int half_Width = (hitbox->getWidth())/2;
-int half_Width = (hitbox->getWidth())/2;
 
   GD.BitmapHandle(unit->getHandle());
 
@@ -215,4 +220,13 @@ if(unit->getDir() == -1)
   GD.cmd_translate(F16(-half_Width), F16(0));
   GD.cmd_setmatrix();
 }
+}
+void drawProp(Prop* prop){
+  Rect *hitbox = prop->getHitbox();
+  GD.Begin(BITMAPS);
+  GD.ColorRGB(255, 255, 255);
+  GD.PointSize(16*hitbox->getWidth());
+  GD.Begin(POINTS);
+  GD.ColorRGB(0xff8000); // orange
+  GD.Vertex2ii(hitbox->getX() - _cameraX, hitbox->getY()-_cameraY);
 }
