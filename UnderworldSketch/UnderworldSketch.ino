@@ -52,7 +52,7 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(0, 0, &_nunchuk);
-  _scene.addProp(&_coin, new Point(0,0));
+  //_scene.addProp(&_coin, new Point(0,0));
   LinkedList<Prop*>* props = _scene.getProps();
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
@@ -67,7 +67,7 @@ void setup() {
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
-  _scene.addProp(&_coin, &_entrance);
+  //_scene.addProp(&_coin, &_entrance);
 
   //LOOP
   for(;;) {
@@ -194,7 +194,7 @@ void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
 //}
 void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   Rect *hitbox = unit->getHitbox();
-//  drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
+  //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
 GD.ColorRGB(255, 255, 255);
 int half_Width = (hitbox->getWidth())/2;
 
@@ -228,5 +228,5 @@ void drawProp(Prop* prop){
   GD.PointSize(16*hitbox->getWidth());
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->getX() - _cameraX, hitbox->getY()-_cameraY);
+  //GD.Vertex2ii(hitbox->getX() - _cameraX, hitbox->getY()-_cameraY);
 }
