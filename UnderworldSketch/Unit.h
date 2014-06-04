@@ -28,7 +28,9 @@ class Unit : public Prop {
     int getHandle();
     int getCells();
     boolean isDead();
+    virtual void fillHealth();
     void setDir(Direction dir);
+    void setHealth(char health);
     void setLevitate(boolean levitate);
     void setXVel(char yVel);
     void setYVel(char yVel);

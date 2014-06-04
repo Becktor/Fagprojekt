@@ -36,7 +36,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
             tile = EXIT;
           portal->setPoint(x, y);
         } else {
-          scene->addUnit(new Minotaur(), x, y);
+          scene->addMinotaur(x, y);
           tile = NONE;
         }
       } else
