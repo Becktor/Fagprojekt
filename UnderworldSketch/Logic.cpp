@@ -69,15 +69,18 @@ boolean Logic::isGameOver() {
   return _gameOver;
 }
 
-boolean Logic::isGrounded(Unit *unit) {
-  Rect *hitbox = unit->getHitbox();
-  int xStartTile = hitbox->getX() / TILE_SIZE,
-      xEndTile = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
-      y = hitbox->getY() + hitbox->getHeight();
-  for(int i = xStartTile; i <= xEndTile; i++) {
-    byte lowerTile = _scene->getTile(i, y / TILE_SIZE), upperTile = _scene->getTile(i, (y - 1) / TILE_SIZE);
-    if((getSolid(lowerTile) || getPlatform(lowerTile)) && (!getSolid(upperTile) && !getPlatform(upperTile)))
-      return true;
+boolean Logic::isGrounded(Prop *prop) {
+  Rect *hitbox = prop->getHitbox();
+  int y = hitbox->getY() + hitbox->getHeight();
+  byte yTile = worldToGrid(y);
+  if(yTile != worldToGrid(y - 1)) {
+    byte xStartTile = worldToGrid(hitbox->getX()),
+         xEndTile = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1);
+    for(i = xStartTile; i <= xEndTile; i++) {
+      byte tile = _scene->getTile(i, yTile);
+      if(getSolid(tile) || getPlatform(tile))
+        return true;
+    }
   }
   return false;
 }
@@ -112,15 +115,16 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
       tileXEnd = (x + dX) / TILE_SIZE,
       tileYStart = y / TILE_SIZE,
       tileYEnd = (y + hitbox->getHeight() - 1) / TILE_SIZE;
-  if(x < 0)
+  if(x < 0) {
     tileXStart--;
-  if(x + dX < 0)
-    tileXEnd--;
-  if(y < 0)
+    if(x + dX < 0)
+      tileXEnd--;
+  }
+  if(y < 0) {
     tileYStart--;
-  if(y + hitbox->getHeight() - 1 < 0)
-    tileYEnd--;
-
+    if(y + hitbox->getHeight() - 1 < 0)
+      tileYEnd--;
+  }
   for(int tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
       byte tile = _scene->getTile(tileX, tileY);
@@ -154,15 +158,16 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
       tileXEnd = (x + hitbox->getWidth() - 1) / TILE_SIZE,
       tileYStart = y / TILE_SIZE + dir,
       tileYEnd = (y + dY) / TILE_SIZE;
-  if(x < 0)
+  if(x < 0) {
     tileXStart--;
-  if(x + hitbox->getWidth() - 1 < 0)
-    tileXEnd--;
-  if(y < 0)
+    if(x + hitbox->getWidth() - 1 < 0)
+      tileXEnd--;
+  }
+  if(y < 0) {
     tileYStart--;
-  if(y + dY < 0)
-    tileYEnd--;
-
+    if(y + dY < 0)
+      tileYEnd--;
+  }
   for(int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
     for(int tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
       byte tile = _scene->getTile(tileX, tileY);

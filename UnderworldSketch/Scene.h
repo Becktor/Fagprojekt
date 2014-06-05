@@ -27,6 +27,8 @@ const static byte
     SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1,
     MINOTAURS = 10;
 
+byte worldToGrid(int x);
+
 class Unit;
 class Minotaur;
 class Scene {

@@ -28,7 +28,7 @@ class Logic {
     Unit* getHero();
     void gravitate(Unit *unit, int dTime);
     boolean isGameOver();
-    boolean isGrounded(Unit *unit);
+    boolean isGrounded(Prop *prop);
     boolean isHeroWin();
     boolean isSolid(int x, int y);
     boolean movePropHoriz(Prop *prop, int dX);

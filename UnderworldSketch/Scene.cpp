@@ -5,6 +5,13 @@
 #include "Unit.h"
 #include "Minotaur.h"
 
+byte worldToGrid(int x) {
+  if(x < 0)
+    return (x + 1) / TILE_SIZE - 1;
+  else
+    return x / TILE_SIZE;
+}
+
 Scene::Scene() {
   _props = LinkedList<Prop*>();
   _units = LinkedList<Unit*>();
@@ -38,7 +45,7 @@ void Scene::clearUnits() {
 }
 
 boolean Scene::contains(byte x, byte y) {
-  return x >= 0 && x < SCENE_WIDTH && y >= 0 && y < SCENE_HEIGHT;
+  return x < SCENE_WIDTH && y < SCENE_HEIGHT;
 }
 
 byte Scene::getWidth() {
@@ -49,6 +56,7 @@ byte Scene::getHeight() {
   return SCENE_HEIGHT;
 }
 
+//Returns the tile at the grid coordinates
 byte Scene::getTile(byte x, byte y) {
   if(contains(x, y))
     return _tiles[x][y];
