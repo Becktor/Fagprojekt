@@ -21,7 +21,7 @@ class Logic {
     Prop *_hero;
   public:
     Logic(Scene *scene);
-    void addAttack(int x, int y, int width, int height, int damage, Prop *owner);
+    void addAttack(Attack* attack);
     boolean atExit(Prop *prop);
     void coinCol();
     void executeAttacks();

@@ -12,9 +12,8 @@ Logic::Logic(Scene *scene) {
   restartGame();
 }
 
-void Logic::addAttack(int x, int y, int width, int height, int damage, Prop *owner) {
-  Attack attack = Attack(x, y, width, height, damage, owner);
-  _attacks.add(&attack);
+void Logic::addAttack(Attack* attack) {
+  _attacks.add(attack);
 }
 
 boolean Logic::atExit(Prop *prop) {
@@ -46,13 +45,13 @@ void Logic::executeAttacks() {
   LinkedList<Unit*> *units = _scene->getUnits();
   for(int i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
-    Rect *area = &(attack->_area);
+    Rect *area = attack->_area;
     for(int j = 0; j < units->size(); j++) {
       Unit *unit = units->get(j);
       Rect *hitbox = unit->getHitbox();
       if(unit != attack->_owner && hitbox->contains(area)) {
         unit->damage(attack->_damage);
-        unit->setYVel(-10);
+        unit->setXVel(attack->_force);
       }
     }
   }

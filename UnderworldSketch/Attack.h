@@ -6,9 +6,10 @@
 
 class Attack {
   public:
-    byte _damage;
+    Rect *_area;
+    byte _damage,
+         _force;
     Prop *_owner;
-    Rect _area;
-    Attack(int x, int y, byte width, byte height, byte damage, Prop *owner);
+    Attack(Rect* area, byte damage, byte force, Prop *owner);
 };
 #endif

@@ -1,15 +1,18 @@
 #ifndef hero_h
 #define hero_h
 
+#include "Geo.h"
 #include "Direction.h"
 #include "Logic.h"
+#include "Attack.h"
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
 
 const static byte
+    HERO_ATT_DAMAGE = 1,
+    HERO_ATT_FORCE = 7,
+    HERO_ATT_RANGE = 50,
     HERO_HEALTH = 3,
-    HERO_DAMAGE = 1,
-    HERO_RANGE = 50,
     HERO_HEIGHT_STAND = 45, //Height stand value
     HERO_HEIGHT_DUCK = 20, //Duck height
     HERO_WIDTH = 42,
@@ -19,8 +22,10 @@ const static byte
 
 class Hero : public Unit {
   private:
+    Rect _attackArea;
+    Attack _attack;
     ArduinoNunchuk *_nunchuk;
-    boolean _attack, _duck, _jump, _attackSound;
+    boolean _isAttacking, _isDucking, _isJumping, _attackSound;
   public:
     Hero(int x, int y, ArduinoNunchuk* nunchuk);
     void updateAI(int dTime, Logic *logic);

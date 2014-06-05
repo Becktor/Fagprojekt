@@ -5,7 +5,9 @@
 #include "Hero.h"
 
 
-Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH) {
+Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH),
+                                                    _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),
+                                                   _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;
 }
 
@@ -34,51 +36,53 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 
   //Hero duck - If analogX is lower than 90
   if(45 > _nunchuk -> analogY) {
-    if(!_duck) {
+    if(!_isDucking) {
       hitbox->setHeight(HERO_HEIGHT_DUCK);
       hitbox-> translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
-      _duck = true;
+      _isDucking = true;
     }
-  } else if(_duck) {
+  } else if(_isDucking) {
     hitbox->setHeight(HERO_HEIGHT_STAND);
     hitbox->translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
-    _duck = false;
+    _isDucking = false;
   }
 
   //Hero jump
   if(logic->isGrounded(this)) {
     if(_nunchuk->cButton) {
-      if(!_jump) {
+      if(!_isJumping) {
         setYVel(-HERO_SPEED_JUMP);
-        _jump = true;
+        _isJumping = true;
       }
     } else
-      _jump = false;
+      _isJumping = false;
   }
 
   //Hero action
   if(_nunchuk->zButton) {
-    if(_duck && logic->atExit(this)) {
+    if(_isDucking && logic->atExit(this)) {
       //Map exit
-      _attack = true;
+      _isAttacking = true;
       logic->setGameOver(true, true);
-    } else if(!_attack) {
+    } else if(!_isAttacking) {
       //Attack
-      _attack = true;
+      _isAttacking = true;
       _attackSound = true;
       int attackX = hitbox->getX();
       if(getDir() == LEFT)
-        attackX -= HERO_RANGE;
+        attackX -= HERO_ATT_RANGE;
       else
         attackX += hitbox->getWidth();
-      logic->addAttack(attackX, hitbox->getY(), HERO_RANGE, hitbox->getHeight(), HERO_DAMAGE, this);
+      _attackArea.setPos(attackX, hitbox->getY());
+      _attackArea.setHeight(hitbox->getHeight());
+      _attack._force = HERO_ATT_FORCE * getDir();
+      logic->addAttack(&_attack);
     } else 
       _attackSound = false;
   } else
-    _attack = false;
+    _isAttacking = false;
 }
 
 boolean Hero::getAttackSound(){
   return _attackSound;
 }
-
