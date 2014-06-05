@@ -18,15 +18,13 @@
 #include "SceneGenerator.h"
 #include "Logic.h"
 #include "Unit.h"
-#include "Minotaur.h"
 #include "Hero.h"
 #include "Sprites.h"
 #include "Prop.h"
 #include "Coin.h"
 
-
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -41,10 +39,11 @@ static Coin _coin(140,70);
 //Function declarations
 void setup();
 void loop();
+void drawProp(Prop *prop, int offsetX, int offsetY);
 void drawScene(Scene *scene, int offsetX, int offsetY);
+void drawScore(byte x, byte y, int n);
 void drawTile(int x, int y, byte tile, int offsetX, int offsetY);
 void drawUnit(Unit *unit, int offsetX, int offsetY);
-void drawProp(Prop *prop, int offsetX, int offsetY);
 
 void setup() {
   //INIT
@@ -112,8 +111,7 @@ void setup() {
         if(_logic.isHeroWin()) {
           //GAME CONTINUE
           GD.sample(EXIT,EXIT_LENGTH, 8000, ADPCM_SAMPLES);
-        } 
-        else {
+        } else {
           //GAME RESTART
         }
         newScene(&_scene, &_entrance, &_exit);
@@ -170,7 +168,7 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
 }
 
 void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
-  if(tile != NONE){
+  if(tile != NONE) {
     GD.BitmapHandle(TILE_HANDLE);
     GD.Vertex2f(((x * TILE_SIZE) - offsetX) * 16, ((y * TILE_SIZE) - offsetY) * 16);
   }
@@ -196,35 +194,30 @@ void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
 //  }
   
 //}
+
 void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   Rect *hitbox = unit->getHitbox();
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
-GD.ColorRGB(255, 255, 255);
-int half_Width = (hitbox->getWidth())/2;
-
+  GD.ColorRGB(255, 255, 255);
+  int half_Width = hitbox->getWidth() / 2;
   GD.BitmapHandle(unit->getHandle());
-
-if(unit->getDir() == -1)
-{
-  GD.cmd_translate(F16(half_Width), F16(0));
-  GD.cmd_scale(F16(-1), F16(1));
-  GD.cmd_translate(F16(-half_Width), F16(0));
-  GD.cmd_setmatrix();
-  GD.Cell((currentMillis >> 2) & unit->getCells());
-}
-else
-{
-  GD.Cell((currentMillis >> 2) & unit->getCells()); 
-}
+  if(unit->getDir() == -1) {
+    GD.cmd_translate(F16(half_Width), F16(0));
+    GD.cmd_scale(F16(-1), F16(1));
+    GD.cmd_translate(F16(-half_Width), F16(0));
+    GD.cmd_setmatrix();
+    GD.Cell((currentMillis >> 2) & unit->getCells());
+  } else
+    GD.Cell((currentMillis >> 2) & unit->getCells());
   GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
-if(unit->getDir() == -1)
-{
-  GD.cmd_translate(F16(half_Width), F16(0));
-  GD.cmd_scale(F16(-1), F16(1));
-  GD.cmd_translate(F16(-half_Width), F16(0));
-  GD.cmd_setmatrix();
+  if(unit->getDir() == -1) {
+    GD.cmd_translate(F16(half_Width), F16(0));
+    GD.cmd_scale(F16(-1), F16(1));
+    GD.cmd_translate(F16(-half_Width), F16(0));
+    GD.cmd_setmatrix();
+  }
 }
-}
+
 void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = prop->getHitbox();
   GD.Begin(BITMAPS);
@@ -234,7 +227,7 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   GD.ColorRGB(0xff8000); // orange
   GD.Vertex2ii(hitbox->getX() - offsetX, hitbox->getY()-offsetY);
 }
-static void draw_score(byte x, byte y, int n)
-{
+
+void drawScore(byte x, byte y, int n) {
  GD.cmd_number(x, y, 31, OPT_CENTER, n); 
 }
