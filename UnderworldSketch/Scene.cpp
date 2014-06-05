@@ -12,6 +12,10 @@ char worldToGrid(int x) {
     return x / TILE_SIZE;
 }
 
+int gridToWorld(char x) {
+  return x * TILE_SIZE;
+}
+
 Scene::Scene() {
   _props = LinkedList<Prop*>();
   _units = LinkedList<Unit*>();

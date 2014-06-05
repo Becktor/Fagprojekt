@@ -28,6 +28,7 @@ const static byte
     MINOTAURS = 10;
 
 char worldToGrid(int x);
+int gridToWorld(char x);
 
 class Unit;
 class Minotaur;

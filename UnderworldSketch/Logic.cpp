@@ -19,13 +19,11 @@ void Logic::addAttack(int x, int y, int width, int height, int damage, Prop *own
 
 boolean Logic::atExit(Prop *prop) {
   Rect *hitbox = prop->getHitbox();
-  int tileXStart = hitbox->getX() / TILE_SIZE,
-      tileYStart = hitbox->getY() / TILE_SIZE,
-      tileXEnd = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
-      tileYEnd = (hitbox->getY() + hitbox->getHeight() - 1) / TILE_SIZE;
-  for(int i = tileXStart; i <= tileXEnd; i++) {
-    for(int j = tileYStart; j <= tileYEnd; j++) {
-      if(EXIT == _scene->getTile(i, j))
+  char tileXEnd = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1),
+       tileYEnd = worldToGrid(hitbox->getY() + hitbox->getHeight() - 1);
+  for(char tileX = worldToGrid(hitbox->getX()); tileX <= tileXEnd; tileX++) {
+    for(char tileY = worldToGrid(hitbox->getY()); tileY <= tileYEnd; tileY++) {
+      if(EXIT == _scene->getTile(tileX, tileY))
         return true;
     }
   }
@@ -110,18 +108,16 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
     dir = RIGHT;
   } else
     return true;
-  char tileXStart = worldToGrid(x) + dir,
-       tileXEnd = worldToGrid(x + dX),
-       tileYStart = worldToGrid(y),
+  char tileXEnd = worldToGrid(x + dX),
        tileYEnd = worldToGrid(y + hitbox->getHeight() - 1);
-  for(char tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
-    for(char tileY = tileYStart; tileY <= tileYEnd; tileY++) {
+  for(char tileX = worldToGrid(x) + dir; dir * tileX <= dir * tileXEnd; tileX += dir) {
+    for(char tileY = worldToGrid(y); tileY <= tileYEnd; tileY++) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
         if(dir == LEFT)
-          prop->translate((tileX + 1) * TILE_SIZE - x, 0);
+          prop->translate(gridToWorld(tileX + 1) - x, 0);
         else
-          prop->translate(tileX * TILE_SIZE - x - 1, 0);
+          prop->translate(gridToWorld(tileX) - x - 1, 0);
         return false;
       }
     }
@@ -143,18 +139,16 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
     dir = DOWN;
   } else
     return true;
-  char tileXStart = worldToGrid(x),
-       tileXEnd = worldToGrid(x + hitbox->getWidth() - 1),
-       tileYStart = worldToGrid(y) + dir,
+  char tileXEnd = worldToGrid(x + hitbox->getWidth() - 1),
        tileYEnd = worldToGrid(y + dY);
-  for(char tileX = tileXStart; tileX <= tileXEnd; tileX++) {
-    for(char tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
+  for(char tileX = worldToGrid(x); tileX <= tileXEnd; tileX++) {
+    for(char tileY = worldToGrid(y) + dir; dir * tileY <= dir * tileYEnd; tileY += dir) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
         if(dir == UP)
-          prop->translate(0, (tileY + 1) * TILE_SIZE - y);
+          prop->translate(0, gridToWorld(tileY + 1) - y);
         else
-          prop->translate(0, tileY * TILE_SIZE - y - 1);
+          prop->translate(0, gridToWorld(tileY) - y - 1);
         return false;
       }
     }
