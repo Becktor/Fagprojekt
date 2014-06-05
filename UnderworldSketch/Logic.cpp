@@ -48,12 +48,12 @@ void Logic::executeAttacks() {
   LinkedList<Unit*> *units = _scene->getUnits();
   for(int i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
-    Rect *area = attack->getArea();
+    Rect *area = &(attack->_area);
     for(int j = 0; j < units->size(); j++) {
       Unit *unit = units->get(j);
       Rect *hitbox = unit->getHitbox();
-      if(unit != attack->getOwner() && hitbox->contains(area)) {
-        unit->damage(attack->getDamage());
+      if(unit != attack->_owner && hitbox->contains(area)) {
+        unit->damage(attack->_damage);
         unit->setYVel(-10);
       }
     }
