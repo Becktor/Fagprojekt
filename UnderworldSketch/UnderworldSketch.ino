@@ -122,7 +122,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      Rect *hitbox = _hero.getHitbox();
+      //Rect *hitbox = _hero.getHitbox();
+      Rect *hitbox = units->get(0)->getHitbox();
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);

@@ -72,11 +72,11 @@ boolean Logic::isGameOver() {
 boolean Logic::isGrounded(Prop *prop) {
   Rect *hitbox = prop->getHitbox();
   int y = hitbox->getY() + hitbox->getHeight();
-  byte yTile = worldToGrid(y);
+  char yTile = worldToGrid(y);
   if(yTile != worldToGrid(y - 1)) {
-    byte xStartTile = worldToGrid(hitbox->getX()),
+    char xStartTile = worldToGrid(hitbox->getX()),
          xEndTile = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1);
-    for(byte i = xStartTile; i <= xEndTile; i++) {
+    for(char i = xStartTile; i <= xEndTile; i++) {
       byte tile = _scene->getTile(i, yTile);
       if(getSolid(tile) || getPlatform(tile))
         return true;
@@ -90,9 +90,8 @@ boolean Logic::isHeroWin() {
 }
 
 boolean Logic::isSolid(int x, int y) {
-  return getSolid(_scene->getTile(x / TILE_SIZE, y / TILE_SIZE));
+  return getSolid(_scene->getTile(worldToGrid(x), worldToGrid(y)));
 }
-
 
 void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
   unit->setYVel(GRAVITY + unit->getYVel());
@@ -111,22 +110,12 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
     dir = RIGHT;
   } else
     return true;
-  int tileXStart = x / TILE_SIZE + dir,
-      tileXEnd = (x + dX) / TILE_SIZE,
-      tileYStart = y / TILE_SIZE,
-      tileYEnd = (y + hitbox->getHeight() - 1) / TILE_SIZE;
-  if(x < 0) {
-    tileXStart--;
-    if(x + dX < 0)
-      tileXEnd--;
-  }
-  if(y < 0) {
-    tileYStart--;
-    if(y + hitbox->getHeight() - 1 < 0)
-      tileYEnd--;
-  }
-  for(int tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
-    for(int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
+  char tileXStart = worldToGrid(x) + dir,
+       tileXEnd = worldToGrid(x + dX),
+       tileYStart = worldToGrid(y),
+       tileYEnd = worldToGrid(y + hitbox->getHeight() - 1);
+  for(char tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir) {
+    for(char tileY = tileYStart; tileY <= tileYEnd; tileY++) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
         if(dir == LEFT)
@@ -154,22 +143,12 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
     dir = DOWN;
   } else
     return true;
-  int tileXStart = x / TILE_SIZE,
-      tileXEnd = (x + hitbox->getWidth() - 1) / TILE_SIZE,
-      tileYStart = y / TILE_SIZE + dir,
-      tileYEnd = (y + dY) / TILE_SIZE;
-  if(x < 0) {
-    tileXStart--;
-    if(x + hitbox->getWidth() - 1 < 0)
-      tileXEnd--;
-  }
-  if(y < 0) {
-    tileYStart--;
-    if(y + dY < 0)
-      tileYEnd--;
-  }
-  for(int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
-    for(int tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
+  char tileXStart = worldToGrid(x),
+       tileXEnd = worldToGrid(x + hitbox->getWidth() - 1),
+       tileYStart = worldToGrid(y) + dir,
+       tileYEnd = worldToGrid(y + dY);
+  for(char tileX = tileXStart; tileX <= tileXEnd; tileX++) {
+    for(char tileY = tileYStart; dir * tileY <= dir * tileYEnd; tileY += dir) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
         if(dir == UP)

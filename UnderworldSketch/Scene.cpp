@@ -5,7 +5,7 @@
 #include "Unit.h"
 #include "Minotaur.h"
 
-byte worldToGrid(int x) {
+char worldToGrid(int x) {
   if(x < 0)
     return (x + 1) / TILE_SIZE - 1;
   else
@@ -20,7 +20,7 @@ Scene::Scene() {
     _minotaurs[i] = new Minotaur();
 }
 
-void Scene::addMinotaur(byte x, byte y) {
+void Scene::addMinotaur(char x, char y) {
   if(_minoIndex != MINOTAURS) {
     addUnit(_minotaurs[_minoIndex], x, y);
     _minotaurs[_minoIndex]->fillHealth();
@@ -28,13 +28,13 @@ void Scene::addMinotaur(byte x, byte y) {
   }
 }
 
-void Scene::addProp(Prop *prop, byte x, byte y) {
+void Scene::addProp(Prop *prop, char x, char y) {
   moveProp(prop, x, y);
   _props.add(prop);
 }
 
 //Adds the given unit to the units list and sets it at the given tile.
-void Scene::addUnit(Unit *unit, byte x, byte y) {
+void Scene::addUnit(Unit *unit, char x, char y) {
   moveProp(unit, x, y);
   _units.add(unit);
 }
@@ -44,8 +44,8 @@ void Scene::clearUnits() {
   _minoIndex = 0;
 }
 
-boolean Scene::contains(byte x, byte y) {
-  return x < SCENE_WIDTH && y < SCENE_HEIGHT;
+boolean Scene::contains(char x, char y) {
+  return x >= 0 && x < SCENE_WIDTH && y >= 0 && y < SCENE_HEIGHT;
 }
 
 byte Scene::getWidth() {
@@ -57,7 +57,7 @@ byte Scene::getHeight() {
 }
 
 //Returns the tile at the grid coordinates
-byte Scene::getTile(byte x, byte y) {
+byte Scene::getTile(char x, char y) {
   if(contains(x, y))
     return _tiles[x][y];
   else
@@ -72,12 +72,12 @@ LinkedList<Prop*>* Scene::getProps() {
   return &_props;
 }
 
-void Scene::moveProp(Prop* prop, byte x, byte y) {
+void Scene::moveProp(Prop* prop, char x, char y) {
   Rect *hitbox = prop->getHitbox();
   hitbox->setPos(x * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, y * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
 }
 
-void Scene::setTile(byte x, byte y, byte tile) {
+void Scene::setTile(char x, char y, byte tile) {
   if(contains(x, y))
     _tiles[x][y] = tile;
 }

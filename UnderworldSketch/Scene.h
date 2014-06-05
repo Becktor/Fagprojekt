@@ -27,7 +27,7 @@ const static byte
     SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1,
     MINOTAURS = 10;
 
-byte worldToGrid(int x);
+char worldToGrid(int x);
 
 class Unit;
 class Minotaur;
@@ -39,17 +39,17 @@ class Scene {
     LinkedList<Unit*> _units;
   public:
     Scene();
-    void addMinotaur(byte x, byte y);
-    void addProp(Prop *prop, byte x, byte y);
-    void addUnit(Unit *unit, byte x, byte y);
+    void addMinotaur(char x, char y);
+    void addProp(Prop *prop, char x, char y);
+    void addUnit(Unit *unit, char x, char y);
     void clearUnits();
-    boolean contains(byte x, byte y);
+    boolean contains(char x, char y);
     byte getWidth();
     byte getHeight();
-    byte getTile(byte x, byte y);
+    byte getTile(char x, char y);
     LinkedList<Unit*> *getUnits();
     LinkedList<Prop*> *getProps();
-    void moveProp(Prop *prop, byte x, byte y);
-    void setTile(byte x, byte y, byte tile);
+    void moveProp(Prop *prop, char x, char y);
+    void setTile(char x, char y, byte tile);
 };
 #endif
