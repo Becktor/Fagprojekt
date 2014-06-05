@@ -12,7 +12,7 @@ Logic::Logic(Scene *scene) {
   restartGame();
 }
 
-void Logic::addAttack(int x, int y, int width, int height, int damage, Unit *owner) {
+void Logic::addAttack(int x, int y, int width, int height, int damage, Prop *owner) {
   Attack attack = Attack(x, y, width, height, damage, owner);
   _attacks.add(&attack);
 }
@@ -61,7 +61,7 @@ void Logic::executeAttacks() {
   _attacks.clear();
 }
 
-Unit* Logic::getHero() {
+Prop* Logic::getHero() {
   return _hero;
 }
 
@@ -76,7 +76,7 @@ boolean Logic::isGrounded(Prop *prop) {
   if(yTile != worldToGrid(y - 1)) {
     byte xStartTile = worldToGrid(hitbox->getX()),
          xEndTile = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1);
-    for(i = xStartTile; i <= xEndTile; i++) {
+    for(byte i = xStartTile; i <= xEndTile; i++) {
       byte tile = _scene->getTile(i, yTile);
       if(getSolid(tile) || getPlatform(tile))
         return true;
@@ -194,6 +194,6 @@ void Logic::setGameOver(boolean gameOver, boolean heroWin) {
   _heroWin = heroWin;
 }
 
-void Logic::setHero(Unit *hero) {
+void Logic::setHero(Prop *hero) {
   _hero = hero;
 }

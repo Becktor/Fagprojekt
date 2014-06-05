@@ -2,13 +2,13 @@
 #define attack_h
 
 #include "Geo.h"
+#include "Prop.h"
 
-class Unit;
 class Attack {
   public:
     byte _damage;
-    Unit *_owner;
+    Prop *_owner;
     Rect _area;
-    Attack(int x, int y, byte width, byte height, byte damage, Unit *owner);
+    Attack(int x, int y, byte width, byte height, byte damage, Prop *owner);
 };
 #endif
