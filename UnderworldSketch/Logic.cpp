@@ -18,7 +18,7 @@ void Logic::addAttack(Attack* attack) {
 }
 
 boolean Logic::atExit(Prop *prop) {
-  Rect *hitbox = prop->getHitbox();
+  Rect* hitbox = &(prop->_hitbox);
   char tileXEnd = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1),
        tileYEnd = worldToGrid(hitbox->getY() + hitbox->getHeight() - 1);
   for(char tileX = worldToGrid(hitbox->getX()); tileX <= tileXEnd; tileX++) {
@@ -38,8 +38,8 @@ void Logic::coinCol() {
   LinkedList<Prop*> *props = _scene->getProps();
     for(int j = 0; j < props->size(); j++) {
       Prop *prop = props->get(j);
-      Rect *hitboxC = prop->getHitbox();
-      Rect *hitboxH = getHero()->getHitbox();
+      Rect *hitboxC = &(prop->_hitbox);
+      Rect *hitboxH = &(getHero()->_hitbox);
       if(hitboxH->contains(hitboxC)) {
         //add bonus 
     }
@@ -47,7 +47,7 @@ void Logic::coinCol() {
 }
 
 void Logic::executeAttacks(Prop* prop) {
-  Rect *hitbox = prop->getHitbox();
+  Rect *hitbox = &(prop->_hitbox);
   for(int i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
     Rect *area = attack->_area;
@@ -61,7 +61,7 @@ Prop* Logic::getHero() {
 }
 
 void Logic::gravitate(Prop *prop, int dTime) { //Unused dTime
-  prop->setYVel(GRAVITY + prop->getYVel());
+  prop->_yVel += GRAVITY;
 }
 
 boolean Logic::isGameOver() {
@@ -69,7 +69,7 @@ boolean Logic::isGameOver() {
 }
 
 boolean Logic::isGrounded(Prop *prop) {
-  Rect *hitbox = prop->getHitbox();
+  Rect *hitbox = &(prop->_hitbox);
   int y = hitbox->getY() + hitbox->getHeight();
   char yTile = worldToGrid(y);
   if(yTile != worldToGrid(y - 1)) {
@@ -94,7 +94,7 @@ boolean Logic::isSolid(int x, int y) {
 
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropHoriz(Prop *prop, int dX) {
-  Rect *hitbox = prop->getHitbox();
+  Rect *hitbox = &(prop->_hitbox);
   int x = hitbox->getX(), y = hitbox->getY();
   Direction dir;
   if(dX < 0) {
@@ -124,7 +124,7 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
 
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropVerti(Prop *prop, int dY) {
-  Rect *hitbox = prop->getHitbox();
+  Rect *hitbox = &(prop->_hitbox);
   int x = hitbox->getX(), y = hitbox->getY();
   Direction dir;
   if(dY < 0)
@@ -167,10 +167,10 @@ void Logic::setHero(Prop *hero) {
 }
 
 void Logic::updatePhysics(Prop* prop, int dTime) {
-  if(!prop->getLevitate())
+  if(!prop->_levitate)
     gravitate(prop, dTime);
-  if(!movePropHoriz(prop, prop->getXVel()))
-    prop->setXVel(0);
-  if(!movePropVerti(prop, prop->getYVel()))
-    prop->setYVel(0);
+  if(!movePropHoriz(prop, prop->_xVel))
+    prop->_xVel = 0;
+  if(!movePropVerti(prop, prop->_yVel))
+    prop->_yVel = 0;
 }

@@ -12,38 +12,36 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_H
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-  Rect* hitbox = getHitbox();
-
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
-    setXVel(HERO_SPEED_WALK);
+    _xVel = HERO_SPEED_WALK;
     setDir(RIGHT);  
   }
   else if(_nunchuk->analogX > 160){
-    setXVel(HERO_SPEED_RUN);
+    _xVel = HERO_SPEED_RUN;
     setDir(RIGHT); 
   }
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
-    setXVel(-HERO_SPEED_WALK);
+    _xVel = -HERO_SPEED_WALK;
     setDir(LEFT);
   }
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
-    setXVel(-HERO_SPEED_RUN);
+    _xVel = -HERO_SPEED_RUN;
     setDir(LEFT);
   }
   else 
-    setXVel(0);
+    _xVel = 0;
 
   //Hero duck - If analogX is lower than 90
   if(45 > _nunchuk -> analogY) {
     if(!_isDucking) {
-      hitbox->setHeight(HERO_HEIGHT_DUCK);
-      hitbox-> translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
+      _hitbox.setHeight(HERO_HEIGHT_DUCK);
+      _hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
       _isDucking = true;
     }
   } else if(_isDucking) {
-    hitbox->setHeight(HERO_HEIGHT_STAND);
-    hitbox->translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
+    _hitbox.setHeight(HERO_HEIGHT_STAND);
+    _hitbox.translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
     _isDucking = false;
   }
 
@@ -51,7 +49,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(logic->isGrounded(this)) {
     if(_nunchuk->cButton) {
       if(!_isJumping) {
-        setYVel(-HERO_SPEED_JUMP);
+        _yVel = -HERO_SPEED_JUMP;
         _isJumping = true;
       }
     } else
@@ -68,14 +66,14 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack
       _isAttacking = true;
       _attackSound = true;
-      int attackX = hitbox->getX();
+      int attackX = _hitbox.getX();
       char dir = getDir();
       if(dir == LEFT)
         attackX -= HERO_ATT_RANGE;
       else
-        attackX += hitbox->getWidth();
-      _attackArea.setPos(attackX, hitbox->getY());
-      _attackArea.setHeight(hitbox->getHeight());
+        attackX += _hitbox.getWidth();
+      _attackArea.setPos(attackX, _hitbox.getY());
+      _attackArea.setHeight(_hitbox.getHeight());
       _attack._force = HERO_ATT_FORCE * dir;
       logic->addAttack(&_attack);
     } else 

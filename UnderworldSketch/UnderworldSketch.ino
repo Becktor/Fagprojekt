@@ -129,7 +129,7 @@ void setup() {
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
       //Rect *hitbox = _hero.getHitbox();
-      Rect *hitbox = units->get(0)->getHitbox();
+      Rect *hitbox = &(units->get(0)->_hitbox);
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
@@ -203,7 +203,7 @@ void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
 //}
 
 void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
-  Rect *hitbox = unit->getHitbox();
+  Rect *hitbox = &(unit->_hitbox);
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
   int half_Width = hitbox->getWidth() / 2;
@@ -226,7 +226,7 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
 }
 
 void drawProp(Prop* prop, int offsetX, int offsetY){
-  Rect *hitbox = prop->getHitbox();
+  Rect *hitbox = &(prop->_hitbox);
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
   GD.PointSize(16*hitbox->getWidth());

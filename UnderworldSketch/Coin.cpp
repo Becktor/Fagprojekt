@@ -4,6 +4,6 @@
 Coin::Coin() : Prop(COIN_WIDTH, COIN_HEIGHT) { }
 
 void Coin::hit(byte damage, char force) {
-  setXVel(force);
-  setYVel(-abs(force) / 2);
+  _xVel = force;
+  _yVel = -abs(force);
 }

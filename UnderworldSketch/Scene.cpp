@@ -77,7 +77,7 @@ LinkedList<Prop*>* Scene::getProps() {
 }
 
 void Scene::moveProp(Prop* prop, char x, char y) {
-  Rect *hitbox = prop->getHitbox();
+  Rect *hitbox = &(prop->_hitbox);
   hitbox->setPos(x * TILE_SIZE + (TILE_SIZE - hitbox->getWidth()) / 2, y * TILE_SIZE + TILE_SIZE - hitbox->getHeight());
 }
 
