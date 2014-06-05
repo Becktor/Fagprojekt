@@ -26,7 +26,7 @@ class Logic {
     void coinCol();
     void executeAttacks();
     Prop* getHero();
-    void gravitate(Unit *unit, int dTime);
+    void gravitate(Prop *prop, int dTime);
     boolean isGameOver();
     boolean isGrounded(Prop *prop);
     boolean isHeroWin();
@@ -36,5 +36,6 @@ class Logic {
     void restartGame();
     void setGameOver(boolean gameOver, boolean heroWon);
     void setHero(Prop *hero);
+    void updatePhysics(Prop* prop, int dTime);
 };
 #endif

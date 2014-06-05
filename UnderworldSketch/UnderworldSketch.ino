@@ -101,11 +101,12 @@ void setup() {
       _logic.executeAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
+
       //UPDATE PHYSICS
-      for(int i = 0; i < units->size(); i++) {
-        Unit *unit = units->get(i);
-        unit->updatePhysics(_dTime, &_logic);
-      }
+      for(int i = 0; i < props->size(); i++)
+        _logic.updatePhysics(props->get(i), _dTime);
+      for(int i = 0; i < units->size(); i++)
+        _logic.updatePhysics(units->get(i), _dTime);
       //Game end
       if(_hero.isDead())
         _logic.setGameOver(true, false);

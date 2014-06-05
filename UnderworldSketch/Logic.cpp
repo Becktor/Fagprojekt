@@ -62,6 +62,10 @@ Prop* Logic::getHero() {
   return _hero;
 }
 
+void Logic::gravitate(Prop *prop, int dTime) { //Unused dTime
+  prop->setYVel(GRAVITY + prop->getYVel());
+}
+
 boolean Logic::isGameOver() {
   return _gameOver;
 }
@@ -90,20 +94,15 @@ boolean Logic::isSolid(int x, int y) {
   return getSolid(_scene->getTile(worldToGrid(x), worldToGrid(y)));
 }
 
-void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
-  unit->setYVel(GRAVITY + unit->getYVel());
-}
-
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropHoriz(Prop *prop, int dX) {
   Rect *hitbox = prop->getHitbox();
-  int x, y = hitbox->getY();
+  int x = hitbox->getX(), y = hitbox->getY();
   Direction dir;
   if(dX < 0) {
-    x = hitbox->getX();
     dir = LEFT;
   } else if(dX > 0) {
-    x = hitbox->getX() + hitbox->getWidth() - 1;
+    x += hitbox->getWidth() - 1;
     dir = RIGHT;
   } else
     return true;
@@ -128,13 +127,12 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropVerti(Prop *prop, int dY) {
   Rect *hitbox = prop->getHitbox();
-  int x = hitbox->getX(), y;
+  int x = hitbox->getX(), y = hitbox->getY();
   Direction dir;
-  if(dY < 0) {
-    y = hitbox->getY();
+  if(dY < 0)
     dir = UP;
-  } else if(dY > 0) {
-    y = hitbox->getY() + hitbox->getHeight() - 1;
+  else if(dY > 0) {
+    y += hitbox->getHeight() - 1;
     dir = DOWN;
   } else
     return true;
@@ -168,4 +166,13 @@ void Logic::setGameOver(boolean gameOver, boolean heroWin) {
 
 void Logic::setHero(Prop *hero) {
   _hero = hero;
+}
+
+void Logic::updatePhysics(Prop* prop, int dTime) {
+  if(!prop->getLevitate())
+    gravitate(prop, dTime);
+  if(!movePropHoriz(prop, prop->getXVel()))
+    prop->setXVel(0);
+  if(!movePropVerti(prop, prop->getYVel()))
+    prop->setYVel(0);
 }

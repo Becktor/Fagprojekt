@@ -68,7 +68,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _isAttacking = true;
       _attackSound = true;
       int attackX = hitbox->getX();
-      Direction dir = getDir();
+      char dir = getDir();
       if(dir == LEFT)
         attackX -= HERO_ATT_RANGE;
       else

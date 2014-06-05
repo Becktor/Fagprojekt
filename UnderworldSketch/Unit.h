@@ -14,29 +14,21 @@
 class Logic;
 class Unit : public Prop {
   private:
-    Direction _dir;
-    boolean _levitate;
-    char _health, _xVel, _yVel, _handle, _cells;
+    char _dir;
+    char _health, _handle, _cells;
   public:
     Unit(byte width, byte height, char health);
     void damage(byte damage);
-    Direction getDir();
-    boolean getLevitate();
-    char getXVel();
-    char getYVel();
+    char getDir();
     int getHandle();
     int getCells();
     boolean isDead();
     virtual void fillHealth();
     void setDir(Direction dir);
     void setHealth(char health);
-    void setLevitate(boolean levitate);
-    void setXVel(char yVel);
-    void setYVel(char yVel);
     void setHandle(int handle);
     void setCells(int cells);
     void toggleDir();
     virtual void updateAI(int dTime, Logic *logic);
-    void updatePhysics(int dTime, Logic *logic);
 };
 #endif
