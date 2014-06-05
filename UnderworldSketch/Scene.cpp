@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include "Tiles.h"
-#include "Scene.h"
 #include "Prop.h"
 #include "Unit.h"
 #include "Minotaur.h"
+#include "Scene.h"
 
 char worldToGrid(int x) {
   if(x < 0)

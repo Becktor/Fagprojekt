@@ -3,6 +3,7 @@
 #include "Tiles.h"
 #include "Direction.h"
 #include "Geo.h"
+#include "Prop.h"
 #include "Attack.h"
 #include "Scene.h"
 #include "Logic.h"

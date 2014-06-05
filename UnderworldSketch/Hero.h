@@ -1,12 +1,13 @@
 #ifndef hero_h
 #define hero_h
 
-#include "Geo.h"
-#include "Direction.h"
-#include "Logic.h"
-#include "Attack.h"
 #include <Wire.h>
 #include <ArduinoNunchuk.h>
+#include "Geo.h"
+#include "Direction.h"
+#include "Attack.h"
+#include "Logic.h"
+#include "Unit.h"
 
 const static byte
     HERO_ATT_DAMAGE = 1,

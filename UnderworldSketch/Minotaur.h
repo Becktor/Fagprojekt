@@ -2,6 +2,7 @@
 #define minotaur_h
 
 #include "Logic.h"
+#include "Unit.h"
 
 const static byte
     MINO_HEALTH = 3,

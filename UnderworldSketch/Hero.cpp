@@ -1,8 +1,9 @@
+#include "Direction.h"
 #include "Geo.h"
+#include "Attack.h"
 #include "Logic.h"
 #include "Unit.h"
 #include "Hero.h"
-
 
 Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH),
                                       _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),

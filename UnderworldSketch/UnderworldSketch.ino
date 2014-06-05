@@ -15,15 +15,13 @@
 #include "Geo.h"
 #include "Tiles.h"
 #include "Prop.h"
-#include "Unit.h"
-#include "Logic.h"
-
-#include "Scene.h"
-#include "SceneGenerator.h"
-#include "Hero.h"
-
-#include "Sprites.h"
 #include "Coin.h"
+#include "Scene.h"
+#include "Logic.h"
+#include "Unit.h"
+#include "Hero.h"
+#include "SceneGenerator.h"
+#include "Sprites.h"
 
 //Checks
 #define NUNCHUCK 0 //Whether or not a nunchuck is connected

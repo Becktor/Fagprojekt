@@ -1,4 +1,5 @@
 #include "Logic.h"
+#include "Unit.h"
 #include "Minotaur.h"
 
 Minotaur::Minotaur() : Unit(MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH) { }

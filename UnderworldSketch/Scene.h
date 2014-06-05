@@ -17,7 +17,6 @@
 #include "Tiles.h"
 #include "Module.h"
 #include "Prop.h"
-#include "Unit.h"
 
 const static byte
     TILE_SIZE = 48, //One tile unit to world units conv.

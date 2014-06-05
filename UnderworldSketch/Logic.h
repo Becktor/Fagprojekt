@@ -4,15 +4,13 @@
 #include <Arduino.h>
 #include <LinkedList.h>
 #include "Tiles.h"
+#include "Geo.h"
 #include "Prop.h"
 #include "Attack.h"
 #include "Scene.h"
 
 const static byte GRAVITY = 1;
 
-class Unit;
-class Attack;
-class Scene;
 class Logic {
   private:
     boolean _gameOver, _heroWin, _hasAttack;
