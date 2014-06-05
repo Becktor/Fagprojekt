@@ -21,6 +21,5 @@ class Minotaur : public Unit {
     void fillHealth();
     void updateAI(int dTime, Logic *logic);
 };
-
 #endif
 

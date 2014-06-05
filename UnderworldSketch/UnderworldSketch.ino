@@ -14,13 +14,15 @@
 //Intern libraries
 #include "Geo.h"
 #include "Tiles.h"
+#include "Prop.h"
+#include "Unit.h"
+#include "Logic.h"
+
 #include "Scene.h"
 #include "SceneGenerator.h"
-#include "Logic.h"
-#include "Unit.h"
 #include "Hero.h"
+
 #include "Sprites.h"
-#include "Prop.h"
 #include "Coin.h"
 
 //Checks

@@ -35,4 +35,3 @@ static const shape_t HEROW_SHAPE = {0, 55, 48, 0};
 static const shape_t HEROA_SHAPE = {1, 55, 48, 0};
 static const shape_t SONICR_SHAPE = {2, 46, 36, 0};
 static const shape_t TILE_SHAPE = {3, 48, 48, 0};
-

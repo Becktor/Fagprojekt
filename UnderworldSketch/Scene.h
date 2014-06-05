@@ -13,6 +13,7 @@
 #define scene_h
 
 #include <Arduino.h>
+#include <LinkedList.h>
 #include "Tiles.h"
 #include "Module.h"
 #include "Prop.h"
@@ -28,14 +29,12 @@ const static byte
 
 class Unit;
 class Minotaur;
-class Scene
-{
+class Scene {
   private:
     byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex;
     Minotaur* _minotaurs[10];
     LinkedList<Prop*> _props;
     LinkedList<Unit*> _units;
-
   public:
     Scene();
     void addMinotaur(byte x, byte y);
@@ -48,8 +47,7 @@ class Scene
     byte getTile(byte x, byte y);
     LinkedList<Unit*> *getUnits();
     LinkedList<Prop*> *getProps();
+    void moveProp(Prop *prop, byte x, byte y);
     void setTile(byte x, byte y, byte tile);
 };
-
 #endif
-

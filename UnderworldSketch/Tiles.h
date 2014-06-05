@@ -16,5 +16,4 @@ enum Tiles{
 boolean getSolid(byte tile);
 boolean getPlatform(byte tile);
 boolean getLadder(byte tile);
-
 #endif

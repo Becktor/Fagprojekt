@@ -21,12 +21,9 @@ class Hero : public Unit {
   private:
     ArduinoNunchuk *_nunchuk;
     boolean _attack, _duck, _jump, _attackSound;
-
   public:
     Hero(int x, int y, ArduinoNunchuk* nunchuk);
     void updateAI(int dTime, Logic *logic);
     boolean getAttackSound();
 };
-
 #endif
-

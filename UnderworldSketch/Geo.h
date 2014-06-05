@@ -13,7 +13,6 @@ class Point {
   private:
     int _x;
     int _y;
-  
   public:
     Point(int x, int y);
     int getX();
@@ -27,7 +26,6 @@ class Rect {
     byte _width;
     byte _height;
     Point _pos;
-
   public:
     Rect(int x, int y, byte width, byte height);
     boolean contains(Rect *r);
@@ -40,6 +38,4 @@ class Rect {
     void setWidth(byte width);
     void setHeight(byte height);
 };
-
 #endif
-

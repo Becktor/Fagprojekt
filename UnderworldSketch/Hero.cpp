@@ -1,8 +1,9 @@
 #include "Geo.h"
 #include "Logic.h"
+//#include "Prop.h"
 #include "Unit.h"
 #include "Hero.h"
-#include "Prop.h"
+
 
 Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH) {
   _nunchuk = nunchuk;

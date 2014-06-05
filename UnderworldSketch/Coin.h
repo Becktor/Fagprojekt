@@ -11,6 +11,5 @@ class Coin : public Prop {
   public:
     Coin(int x, int y);
 };
-
 #endif
 

@@ -76,5 +76,4 @@ TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
 };
 
 void getModuleTiles(byte module, byte (**tiles)[MODULE_WIDTH][MODULE_HEIGHT]);
-
 #endif

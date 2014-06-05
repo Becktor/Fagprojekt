@@ -10,6 +10,3 @@ Rect* Prop::getHitbox() {
 void Prop::translate(int x, int y) {
   _hitbox.translate(x, y);
 }
-
-
-

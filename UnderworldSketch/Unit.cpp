@@ -1,7 +1,7 @@
 #include "Direction.h"
 #include "Logic.h"
-#include "Unit.h"
 #include "Prop.h"
+#include "Unit.h"
 
 Unit::Unit(int x, int y, byte width, byte height, char health) : Prop(x, y, width, height) {
   _health = health;
@@ -87,9 +87,8 @@ void Unit::updateAI(int dTime, Logic *logic) { }
 void Unit::updatePhysics(int dTime, Logic *logic) { //dTime isn't used
   if(!_levitate)
     logic->gravitate(this, dTime);
-  if(!logic->moveUnitHoriz(this, getXVel()))
+  if(!logic->movePropHoriz(this, getXVel()))
     setXVel(0);
-  if(!logic->moveUnitVerti(this, getYVel()))
+  if(!logic->movePropVerti(this, getYVel()))
     setYVel(0);
 }
-

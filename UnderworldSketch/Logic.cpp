@@ -4,7 +4,6 @@
 #include "Direction.h"
 #include "Geo.h"
 #include "Attack.h"
-#include "Unit.h"
 #include "Scene.h"
 #include "Logic.h"
 
@@ -18,8 +17,8 @@ void Logic::addAttack(int x, int y, int width, int height, int damage, Unit *own
   _attacks.add(&attack);
 }
 
-boolean Logic::atExit(Unit *unit) {
-  Rect *hitbox = unit->getHitbox();
+boolean Logic::atExit(Prop *prop) {
+  Rect *hitbox = prop->getHitbox();
   int tileXStart = hitbox->getX() / TILE_SIZE,
       tileYStart = hitbox->getY() / TILE_SIZE,
       tileXEnd = (hitbox->getX() + hitbox->getWidth() - 1) / TILE_SIZE,
@@ -97,8 +96,8 @@ void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
 }
 
 //Returns whether the movement was complete (true) or partial (false)
-boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
-  Rect *hitbox = unit->getHitbox();
+boolean Logic::movePropHoriz(Prop *prop, int dX) {
+  Rect *hitbox = prop->getHitbox();
   int x, y = hitbox->getY();
   Direction dir;
   if(dX < 0) {
@@ -127,20 +126,20 @@ boolean Logic::moveUnitHoriz(Unit *unit, int dX) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
         if(dir == LEFT)
-          unit->translate((tileX + 1) * TILE_SIZE - x, 0);
+          prop->translate((tileX + 1) * TILE_SIZE - x, 0);
         else
-          unit->translate(tileX * TILE_SIZE - x - 1, 0);
+          prop->translate(tileX * TILE_SIZE - x - 1, 0);
         return false;
       }
     }
   }
-  unit->translate(dX, 0);
+  prop->translate(dX, 0);
   return true;
 }
 
 //Returns whether the movement was complete (true) or partial (false)
-boolean Logic::moveUnitVerti(Unit *unit, int dY) {
-  Rect *hitbox = unit->getHitbox();
+boolean Logic::movePropVerti(Prop *prop, int dY) {
+  Rect *hitbox = prop->getHitbox();
   int x = hitbox->getX(), y;
   Direction dir;
   if(dY < 0) {
@@ -169,14 +168,14 @@ boolean Logic::moveUnitVerti(Unit *unit, int dY) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
         if(dir == UP)
-          unit->translate(0, (tileY + 1) * TILE_SIZE - y);
+          prop->translate(0, (tileY + 1) * TILE_SIZE - y);
         else
-          unit->translate(0, tileY * TILE_SIZE - y - 1);
+          prop->translate(0, tileY * TILE_SIZE - y - 1);
         return false;
       }
     }
   }
-  unit->translate(0, dY);
+  prop->translate(0, dY);
   return true;
 }
 

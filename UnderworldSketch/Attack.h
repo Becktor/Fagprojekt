@@ -1,8 +1,7 @@
-#include "Geo.h"
-#include "Unit.h"
-
 #ifndef attack_h
 #define attack_h
+
+#include "Geo.h"
 
 class Unit;
 class Attack {
@@ -10,7 +9,6 @@ class Attack {
     byte _damage;
     Unit *_owner;
     Rect _area;
-  
   public:
     Attack(int x, int y, byte width, byte height, byte damage, Unit *owner);
     byte getDamage();

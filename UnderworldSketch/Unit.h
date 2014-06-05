@@ -17,7 +17,6 @@ class Unit : public Prop {
     Direction _dir;
     boolean _levitate;
     char _health, _xVel, _yVel, _handle, _cells;
-
   public:
     Unit(int x, int y, byte width, byte height, char health);
     void damage(byte damage);
@@ -40,6 +39,4 @@ class Unit : public Prop {
     virtual void updateAI(int dTime, Logic *logic);
     void updatePhysics(int dTime, Logic *logic);
 };
-
 #endif
-

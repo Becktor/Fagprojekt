@@ -4,12 +4,13 @@
 #include <Arduino.h>
 #include <LinkedList.h>
 #include "Tiles.h"
+#include "Prop.h"
 #include "Attack.h"
-#include "Unit.h"
 #include "Scene.h"
 
-const static short GRAVITY = 1;
+const static byte GRAVITY = 1;
 
+class Attack;
 class Scene;
 class Unit;
 class Logic {
@@ -21,7 +22,7 @@ class Logic {
   public:
     Logic(Scene *scene);
     void addAttack(int x, int y, int width, int height, int damage, Unit *owner);
-    boolean atExit(Unit *unit);
+    boolean atExit(Prop *prop);
     void coinCol();
     void executeAttacks();
     Unit* getHero();
@@ -30,8 +31,8 @@ class Logic {
     boolean isGrounded(Unit *unit);
     boolean isHeroWin();
     boolean isSolid(int x, int y);
-    boolean moveUnitHoriz(Unit *unit, int dX);
-    boolean moveUnitVerti(Unit *unit, int dY);
+    boolean movePropHoriz(Prop *prop, int dX);
+    boolean movePropVerti(Prop *prop, int dY);
     void restartGame();
     void setGameOver(boolean gameOver, boolean heroWon);
     void setHero(Unit *hero);
