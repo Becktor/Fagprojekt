@@ -23,8 +23,9 @@ class Logic {
     Logic(Scene *scene);
     void addAttack(Attack* attack);
     boolean atExit(Prop *prop);
+    void clearAttacks();
     void coinCol();
-    void executeAttacks();
+    void executeAttacks(Prop* prop);
     Prop* getHero();
     void gravitate(Prop *prop, int dTime);
     boolean isGameOver();

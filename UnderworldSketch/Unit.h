@@ -14,14 +14,13 @@
 class Logic;
 class Unit : public Prop {
   private:
-    char _dir;
-    char _health, _handle, _cells;
+    char _dir, _health, _handle, _cells;
   public:
     Unit(byte width, byte height, char health);
-    void damage(byte damage);
     char getDir();
     int getHandle();
     int getCells();
+    void hit(byte damage, char force);
     boolean isDead();
     virtual void fillHealth();
     void setDir(Direction dir);

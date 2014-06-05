@@ -7,9 +7,9 @@
 class Attack {
   public:
     Rect *_area;
-    byte _damage,
-         _force;
+    byte _damage;
+    char _force;
     Prop *_owner;
-    Attack(Rect* area, byte damage, byte force, Prop *owner);
+    Attack(Rect* area, byte damage, char force, Prop *owner);
 };
 #endif

@@ -29,6 +29,10 @@ boolean Logic::atExit(Prop *prop) {
   return false;
 }
 
+void Logic::clearAttacks() {
+  _attacks.clear();
+}
+
 void Logic::coinCol() {
   LinkedList<Prop*> *props = _scene->getProps();
     for(int j = 0; j < props->size(); j++) {
@@ -41,21 +45,14 @@ void Logic::coinCol() {
   }
 }
 
-void Logic::executeAttacks() {
-  LinkedList<Unit*> *units = _scene->getUnits();
+void Logic::executeAttacks(Prop* prop) {
+  Rect *hitbox = prop->getHitbox();
   for(int i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
     Rect *area = attack->_area;
-    for(int j = 0; j < units->size(); j++) {
-      Unit *unit = units->get(j);
-      Rect *hitbox = unit->getHitbox();
-      if(unit != attack->_owner && hitbox->contains(area)) {
-        unit->damage(attack->_damage);
-        unit->setXVel(attack->_force);
-      }
-    }
+    if(prop != attack->_owner && hitbox->contains(area))
+      prop->hit(attack->_damage, attack->_force);
   }
-  _attacks.clear();
 }
 
 Prop* Logic::getHero() {

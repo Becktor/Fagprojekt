@@ -14,6 +14,7 @@ class Prop {
     boolean getLevitate();
     char getXVel();
     char getYVel();
+    virtual void hit(byte damage, char force);
     void setXVel(char yVel);
     void setYVel(char yVel);
     void translate(int x, int y);

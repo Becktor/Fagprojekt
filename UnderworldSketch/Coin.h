@@ -10,6 +10,7 @@ const static byte
 class Coin : public Prop {
   public:
     Coin();
+    void hit(byte damage, char force);
 };
 #endif
 

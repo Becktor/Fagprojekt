@@ -10,8 +10,9 @@ Unit::Unit(byte width, byte height, char health) : Prop(width, height) {
   _cells = 0;
 }
 
-void Unit::damage(byte damage) {
+void Unit::hit(byte damage, char force) {
   _health -= damage;
+  setXVel(force);
 }
 
 char Unit::getDir() {

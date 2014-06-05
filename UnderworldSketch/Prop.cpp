@@ -23,6 +23,8 @@ char Prop::getYVel() {
   return _yVel;
 }
 
+void Prop::hit(byte damage, char force) { }
+
 void Prop::setXVel(char xVel) {
   _xVel = xVel;  
 }
