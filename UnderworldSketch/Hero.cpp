@@ -1,13 +1,12 @@
 #include "Geo.h"
 #include "Logic.h"
-//#include "Prop.h"
 #include "Unit.h"
 #include "Hero.h"
 
 
-Hero::Hero(int x, int y, ArduinoNunchuk* nunchuk) : Unit(x, y, HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH),
-                                                    _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),
-                                                   _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
+Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH),
+                                      _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),
+                                      _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;
 }
 
@@ -69,13 +68,14 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _isAttacking = true;
       _attackSound = true;
       int attackX = hitbox->getX();
-      if(getDir() == LEFT)
+      Direction dir = getDir();
+      if(dir == LEFT)
         attackX -= HERO_ATT_RANGE;
       else
         attackX += hitbox->getWidth();
       _attackArea.setPos(attackX, hitbox->getY());
       _attackArea.setHeight(hitbox->getHeight());
-      _attack._force = HERO_ATT_FORCE * getDir();
+      _attack._force = HERO_ATT_FORCE * dir;
       logic->addAttack(&_attack);
     } else 
       _attackSound = false;

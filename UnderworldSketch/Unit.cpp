@@ -3,7 +3,7 @@
 #include "Prop.h"
 #include "Unit.h"
 
-Unit::Unit(int x, int y, byte width, byte height, char health) : Prop(x, y, width, height) {
+Unit::Unit(byte width, byte height, char health) : Prop(width, height) {
   _health = health;
   _dir = LEFT;
   _levitate = false;

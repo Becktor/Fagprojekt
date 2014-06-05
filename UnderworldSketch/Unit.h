@@ -18,7 +18,7 @@ class Unit : public Prop {
     boolean _levitate;
     char _health, _xVel, _yVel, _handle, _cells;
   public:
-    Unit(int x, int y, byte width, byte height, char health);
+    Unit(byte width, byte height, char health);
     void damage(byte damage);
     Direction getDir();
     boolean getLevitate();

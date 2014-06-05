@@ -1,9 +1,7 @@
 #include "Logic.h"
 #include "Minotaur.h"
 
-Minotaur::Minotaur(int x, int y) : Unit(x, y, MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH) { }
-
-Minotaur::Minotaur() : Unit(0, 0, MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH) { }
+Minotaur::Minotaur() : Unit(MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH) { }
 
 void Minotaur::fillHealth() {
   setHealth(MINO_HEALTH);

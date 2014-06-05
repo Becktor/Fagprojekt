@@ -9,7 +9,7 @@ const static byte
 
 class Coin : public Prop {
   public:
-    Coin(int x, int y);
+    Coin();
 };
 #endif
 

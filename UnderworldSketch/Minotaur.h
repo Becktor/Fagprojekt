@@ -16,7 +16,6 @@ const static byte
 
 class Minotaur : public Unit {
   public:
-    Minotaur(int x, int y);
     Minotaur();
     void fillHealth();
     void updateAI(int dTime, Logic *logic);

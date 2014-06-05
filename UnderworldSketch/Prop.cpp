@@ -1,7 +1,7 @@
 #include "Geo.h"
 #include "Prop.h"
 
-Prop::Prop(int x, int y, byte width, byte height) : _hitbox(x, y, width, height) { }
+Prop::Prop(byte width, byte height) : _hitbox(0, 0, width, height) { }
 
 Rect* Prop::getHitbox() {
   return &_hitbox;

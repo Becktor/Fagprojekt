@@ -36,8 +36,8 @@ const static int
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000, //Milis. in a second
     INIT_FPS = 40; //Initial assumed framerate.
-int SCORE = 0;
-static Coin _coin(140,70);
+int _score = 0; //Make local, put in logic?
+
 //Function declarations
 void setup();
 void loop();
@@ -53,9 +53,8 @@ void setup() {
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
-  Hero _hero(0, 0, &_nunchuk);
-  _scene.addProp(&_coin, 0, 0);
-  LinkedList<Prop*>* props = _scene.getProps();
+  Hero _hero(&_nunchuk);
+
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
   if(NUNCHUCK)
@@ -69,15 +68,19 @@ void setup() {
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
+
+  Coin _coin = Coin();
   _scene.addProp(&_coin, _exit.getX(), _exit.getY());
 
+  LinkedList<Unit*>* units = _scene.getUnits();
+  LinkedList<Prop*>* props = _scene.getProps();
   //LOOP
   for(;;) {
     //FPS CALCULATIONS
     unsigned long startMillis = millis(), currentMillis = startMillis;
     byte counter = 0;
     while(currentMillis - startMillis < SECOND) { //Loop for a second
-      LinkedList<Unit*>* units = _scene.getUnits();
+
       //GAME LOGIC
       if(NUNCHUCK) {
         _nunchuk.update();
@@ -89,8 +92,8 @@ void setup() {
         if(unit->isDead()) {
           units->remove(i);
           i--;
-          SCORE = SCORE + 100;
-          drawScore(0, 0, SCORE);
+          _score = _score + 100;
+          drawScore(0, 0, _score);
         } else
           unit->updateAI(_dTime, &_logic);
       } 
@@ -117,6 +120,7 @@ void setup() {
         _logic.restartGame();
         _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
       }
+
       //DRAW LOGIC
       GD.ClearColorRGB(255,255,255);
       GD.Clear();
@@ -130,7 +134,8 @@ void setup() {
       GD.ColorRGB(255, 0, 0);
       for(int i = 0; i < units->size(); i++)
         drawUnit(units->get(i), cameraX, cameraY, currentMillis);
-      drawProp(props->get(0), cameraX, cameraY);
+      for(int i = 0; i < props->size(); i++)
+        drawProp(props->get(i), cameraX, cameraY);
       GD.cmd_number(40, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);

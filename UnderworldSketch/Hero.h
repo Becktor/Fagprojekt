@@ -27,7 +27,7 @@ class Hero : public Unit {
     ArduinoNunchuk *_nunchuk;
     boolean _isAttacking, _isDucking, _isJumping, _attackSound;
   public:
-    Hero(int x, int y, ArduinoNunchuk* nunchuk);
+    Hero(ArduinoNunchuk* nunchuk);
     void updateAI(int dTime, Logic *logic);
     boolean getAttackSound();
 };
