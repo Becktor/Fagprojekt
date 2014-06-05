@@ -8,7 +8,6 @@
 #include "Scene.h"
 #include "Logic.h"
 
-
 Logic::Logic(Scene *scene) {
   _scene = scene;
   restartGame();
@@ -34,6 +33,18 @@ boolean Logic::atExit(Unit *unit) {
   return false;
 }
 
+void Logic::coinCol() {
+  LinkedList<Prop*> *props = _scene->getProps();
+    for(int j = 0; j < props->size(); j++) {
+      Prop *prop = props->get(j);
+      Rect *hitboxC = prop->getHitbox();
+      Rect *hitboxH = getHero()->getHitbox();
+      if(hitboxH->contains(hitboxC)) {
+        //add bonus 
+    }
+  }
+}
+
 void Logic::executeAttacks() {
   LinkedList<Unit*> *units = _scene->getUnits();
   for(int i = 0; i < _attacks.size(); i++) {
@@ -51,33 +62,12 @@ void Logic::executeAttacks() {
   _attacks.clear();
 }
 
-void Logic::coinCol() {
-  LinkedList<Prop*> *props = _scene->getProps();
-    for(int j = 0; j < props->size(); j++) {
-      Prop *prop = props->get(j);
-      Rect *hitboxC = prop->getHitbox();
-      Rect *hitboxH = getHero()->getHitbox();
-      if(hitboxH->contains(hitboxC)) {
-        //add bonus 
-    }
-  }
-}
-
-boolean Logic::isGameOver() {
-  return _gameOver;
-}
-
-boolean Logic::isHeroWin() {
-  return _heroWin;
-}
-
 Unit* Logic::getHero() {
   return _hero;
 }
 
-
-void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
-  unit->setYVel(GRAVITY + unit->getYVel());
+boolean Logic::isGameOver() {
+  return _gameOver;
 }
 
 boolean Logic::isGrounded(Unit *unit) {
@@ -93,8 +83,17 @@ boolean Logic::isGrounded(Unit *unit) {
   return false;
 }
 
+boolean Logic::isHeroWin() {
+  return _heroWin;
+}
+
 boolean Logic::isSolid(int x, int y) {
   return getSolid(_scene->getTile(x / TILE_SIZE, y / TILE_SIZE));
+}
+
+
+void Logic::gravitate(Unit *unit, int dTime) { //Unused dTime
+  unit->setYVel(GRAVITY + unit->getYVel());
 }
 
 //Returns whether the movement was complete (true) or partial (false)
@@ -194,6 +193,3 @@ void Logic::setGameOver(boolean gameOver, boolean heroWin) {
 void Logic::setHero(Unit *hero) {
   _hero = hero;
 }
-
-
-

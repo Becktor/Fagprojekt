@@ -19,4 +19,3 @@ Unit* Attack::getOwner() {
 Rect* Attack::getArea() {
   return &_area;
 }
-

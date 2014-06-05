@@ -1,12 +1,11 @@
-#include "Geo.h"
-#include "Unit.h"
-
 #ifndef attack_h
 #define attack_h
 
+#include "Geo.h"
+#include "Unit.h"
+
 class Unit;
-class Attack
-{
+class Attack {
   private:
     byte _damage;
     Unit *_owner;
@@ -18,6 +17,4 @@ class Attack
     Unit* getOwner();
     Rect* getArea();
 };
-
 #endif
-

@@ -12,8 +12,7 @@ const static short GRAVITY = 1;
 
 class Scene;
 class Unit;
-class Logic
-{
+class Logic {
   private:
     boolean _gameOver, _heroWin, _hasAttack;
     Scene *_scene;
@@ -23,8 +22,8 @@ class Logic
     Logic(Scene *scene);
     void addAttack(int x, int y, int width, int height, int damage, Unit *owner);
     boolean atExit(Unit *unit);
-    void executeAttacks();
     void coinCol();
+    void executeAttacks();
     Unit* getHero();
     void gravitate(Unit *unit, int dTime);
     boolean isGameOver();
@@ -38,4 +37,3 @@ class Logic
     void setHero(Unit *hero);
 };
 #endif
-
