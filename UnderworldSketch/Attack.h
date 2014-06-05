@@ -1,8 +1,8 @@
-#ifndef attack_h
-#define attack_h
-
 #include "Geo.h"
 #include "Unit.h"
+
+#ifndef attack_h
+#define attack_h
 
 class Unit;
 class Attack {

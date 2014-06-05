@@ -52,7 +52,7 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(0, 0, &_nunchuk);
-  _scene.addProp(&_coin, 0,0);
+  _scene.addProp(&_coin, 0, 0);
   LinkedList<Prop*>* props = _scene.getProps();
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
@@ -67,7 +67,7 @@ void setup() {
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
-  _scene.addProp(&_coin, _exit.getX(),_exit.getY());
+  _scene.addProp(&_coin, _exit.getX(), _exit.getY());
 
   //LOOP
   for(;;) {
@@ -87,18 +87,15 @@ void setup() {
         if(unit->isDead()) {
           units->remove(i);
           i--;
-          SCORE=SCORE+100;
-          draw_score(0,0,SCORE);
-          
-        } else {
+          SCORE = SCORE + 100;
+          drawScore(0, 0, SCORE);
+        } else
           unit->updateAI(_dTime, &_logic);
-        }
       } 
       //UPDATE ATTACKS
       _logic.executeAttacks();
-      if (_hero.getAttackSound()){
+      if (_hero.getAttackSound())
          GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
-      } 
       //UPDATE PHYSICS
       for(int i = 0; i < units->size(); i++) {
         Unit *unit = units->get(i);
