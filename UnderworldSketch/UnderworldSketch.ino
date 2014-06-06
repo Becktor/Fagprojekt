@@ -93,15 +93,18 @@ void setup() {
         } else
           unit->updateAI(_dTime, &_logic);
       } 
-      //UPDATE ATTACKS
-      for(int i = 0; i < props->size(); i++)
+      //UPDATE OBJECTS
+      for(int i = 0; i < props->size(); i++){
         _logic.executeAttacks(props->get(i));
+        if (_logic.coinCol(props->get(i))){
+          props->remove(i);
+      }
+      }
       for(int i = 0; i < units->size(); i++)
         _logic.executeAttacks(units->get(i));
       _logic.clearAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
-      _logic.coinCol();
       //UPDATE PHYSICS
       for(int i = 0; i < props->size(); i++)
         _logic.updatePhysics(props->get(i), _dTime);

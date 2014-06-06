@@ -23,7 +23,7 @@ class Logic {
     void addAttack(Attack* attack);
     boolean atExit(Prop *prop);
     void clearAttacks();
-    void coinCol();
+    boolean coinCol(Prop *prop);
     void executeAttacks(Prop* prop);
     Prop* getHero();
     void gravitate(Prop *prop, int dTime);

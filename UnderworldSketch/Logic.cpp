@@ -35,17 +35,15 @@ void Logic::clearAttacks() {
   _attacks.clear();
 }
 
-void Logic::coinCol() {
-  LinkedList<Prop*> *props = _scene->getProps();
-    for(int j = 0; j < props->size(); j++) {
-      Prop *prop = props->get(j);
-      Rect *hitboxC = &(prop->_hitbox);
-      Rect *hitboxH = &(getHero()->_hitbox);
-      if(hitboxH->contains(hitboxC)) {
-        //add bonus 
-        _score += 10;
+boolean Logic::coinCol(Prop* prop) {
+  Rect *hitboxC = &(prop->_hitbox);
+  Rect *hitboxH = &(getHero()->_hitbox);
+    if(hitboxH->contains(hitboxC)) {
+      //add bonus
+      _score += 10;
+      return true;
     }
-  }
+  return false;
 }
 
 void Logic::executeAttacks(Prop* prop) {
