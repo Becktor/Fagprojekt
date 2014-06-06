@@ -64,10 +64,10 @@ void setup() {
   Point _entrance = Point(0, 0), _exit = Point(0, 0);
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
-  _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
+  _scene.addUnit(&_hero, _entrance._x, _entrance._y);
 
   Coin _coin = Coin();
-  _scene.addProp(&_coin, _exit.getX(), _exit.getY());
+  _scene.addProp(&_coin, _exit._x, _exit._y);
 
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Prop*>* props = _scene.getProps();
@@ -119,7 +119,7 @@ void setup() {
         }
         newScene(&_scene, &_entrance, &_exit);
         _logic.restartGame();
-        _scene.addUnit(&_hero, _entrance.getX(), _entrance.getY());
+        _scene.addUnit(&_hero, _entrance._x, _entrance._y);
       }
 
       //DRAW LOGIC
@@ -129,8 +129,8 @@ void setup() {
       GD.Begin(BITMAPS);
       Rect *hitbox = &(_hero._hitbox);
       //Rect *hitbox = &(units->get(0)->_hitbox);
-      int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
-          cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
+      int cameraX = hitbox->getX() + (hitbox->_width - SCREEN_WIDTH) / 2,
+          cameraY = hitbox->getY() + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
       GD.ColorRGB(255, 0, 0);
       for(int i = 0; i < units->size(); i++)
@@ -206,7 +206,7 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   Rect *hitbox = &(unit->_hitbox);
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
-  int half_Width = hitbox->getWidth() / 2;
+  int half_Width = hitbox->_width / 2;
   GD.BitmapHandle(unit->getHandle());
   if(unit->getDir() == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));
@@ -229,10 +229,10 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = &(prop->_hitbox);
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
-  GD.PointSize(16*hitbox->getWidth());
+  GD.PointSize(16 * hitbox->_width);
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->getX() - offsetX, hitbox->getY()-offsetY);
+  GD.Vertex2ii(hitbox->getX() - offsetX, hitbox->getY() - offsetY);
 }
 
 void drawScore(byte x, byte y, int n) {

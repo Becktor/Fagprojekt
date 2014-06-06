@@ -53,12 +53,12 @@ void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, P
     for(int j = 0; j < YMODULES; j++) {
       boolean isPortalRoom = false, isEntrance = false;
       Point *portal;
-      if(!hasEntrance && entrance->getX() == i && entrance->getY() == j) {
+      if(!hasEntrance && entrance->_x == i && entrance->_y == j) {
         isPortalRoom = true;
         isEntrance = true;
         portal = entrance;
         hasEntrance = true;
-      } else if(!hasExit && exit->getX() == i && exit->getY() == j) {
+      } else if(!hasExit && exit->_x == i && exit->_y == j) {
         isPortalRoom = true;
         isEntrance = false;
         portal = exit;

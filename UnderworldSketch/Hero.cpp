@@ -43,12 +43,12 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero duck - If analogX is lower than 90
   if(45 > _nunchuk -> analogY) {
     if(!_isDucking) {
-      _hitbox.setHeight(HERO_HEIGHT_DUCK);
+      _hitbox._height = HERO_HEIGHT_DUCK;
       _hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
       _isDucking = true;
     }
   } else if(_isDucking) {
-    _hitbox.setHeight(HERO_HEIGHT_STAND);
+    _hitbox._height = HERO_HEIGHT_STAND;
     _hitbox.translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
     _isDucking = false;
   }
@@ -79,9 +79,9 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       if(dir == LEFT)
         attackX -= HERO_ATT_RANGE;
       else
-        attackX += _hitbox.getWidth();
+        attackX += _hitbox._width;
       _attackArea.setPos(attackX, _hitbox.getY());
-      _attackArea.setHeight(_hitbox.getHeight());
+      _attackArea._height = _hitbox._height;
       _attack._force = HERO_ATT_FORCE * dir;
       logic->addAttack(&_attack);
     } else 

@@ -20,8 +20,8 @@ void Logic::addAttack(Attack* attack) {
 
 boolean Logic::atExit(Prop *prop) {
   Rect* hitbox = &(prop->_hitbox);
-  char tileXEnd = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1),
-       tileYEnd = worldToGrid(hitbox->getY() + hitbox->getHeight() - 1);
+  char tileXEnd = worldToGrid(hitbox->getX() + hitbox->_width - 1),
+       tileYEnd = worldToGrid(hitbox->getY() + hitbox->_height - 1);
   for(char tileX = worldToGrid(hitbox->getX()); tileX <= tileXEnd; tileX++) {
     for(char tileY = worldToGrid(hitbox->getY()); tileY <= tileYEnd; tileY++) {
       if(EXIT == _scene->getTile(tileX, tileY))
@@ -72,11 +72,11 @@ boolean Logic::isGameOver() {
 
 boolean Logic::isGrounded(Prop *prop) {
   Rect *hitbox = &(prop->_hitbox);
-  int y = hitbox->getY() + hitbox->getHeight();
+  int y = hitbox->getY() + hitbox->_height;
   char yTile = worldToGrid(y);
   if(yTile != worldToGrid(y - 1)) {
     char xStartTile = worldToGrid(hitbox->getX()),
-         xEndTile = worldToGrid(hitbox->getX() + hitbox->getWidth() - 1);
+         xEndTile = worldToGrid(hitbox->getX() + hitbox->_width - 1);
     for(char i = xStartTile; i <= xEndTile; i++) {
       byte tile = _scene->getTile(i, yTile);
       if(getSolid(tile) || getPlatform(tile))
@@ -102,12 +102,12 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
   if(dX < 0) {
     dir = LEFT;
   } else if(dX > 0) {
-    x += hitbox->getWidth() - 1;
+    x += hitbox->_width - 1;
     dir = RIGHT;
   } else
     return true;
   char tileXEnd = worldToGrid(x + dX),
-       tileYEnd = worldToGrid(y + hitbox->getHeight() - 1);
+       tileYEnd = worldToGrid(y + hitbox->_height - 1);
   for(char tileX = worldToGrid(x) + dir; dir * tileX <= dir * tileXEnd; tileX += dir) {
     for(char tileY = worldToGrid(y); tileY <= tileYEnd; tileY++) {
       byte tile = _scene->getTile(tileX, tileY);
@@ -132,11 +132,11 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   if(dY < 0)
     dir = UP;
   else if(dY > 0) {
-    y += hitbox->getHeight() - 1;
+    y += hitbox->_height - 1;
     dir = DOWN;
   } else
     return true;
-  char tileXEnd = worldToGrid(x + hitbox->getWidth() - 1),
+  char tileXEnd = worldToGrid(x + hitbox->_width - 1),
        tileYEnd = worldToGrid(y + dY);
   for(char tileX = worldToGrid(x); tileX <= tileXEnd; tileX++) {
     for(char tileY = worldToGrid(y) + dir; dir * tileY <= dir * tileYEnd; tileY += dir) {

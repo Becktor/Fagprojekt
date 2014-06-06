@@ -10,32 +10,28 @@
 #include <Arduino.h>
 
 class Point {
-  private:
+  public:
     int _x;
     int _y;
-  public:
+
     Point(int x, int y);
-    int getX();
-    int getY();
     void translate(int x, int y);
     void setPoint(int x, int y);
 };
 
 class Rect {
   private:
+
+  public:
     byte _width;
     byte _height;
     Point _pos;
-  public:
+
     Rect(int x, int y, byte width, byte height);
     boolean contains(Rect *r);
     int getX();
     int getY();
-    int getWidth();
-    int getHeight();
     void translate(int x, int y);
     void setPos(int x, int y);
-    void setWidth(byte width);
-    void setHeight(byte height);
 };
 #endif
