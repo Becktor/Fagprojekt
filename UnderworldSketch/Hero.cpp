@@ -74,13 +74,13 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack
       _isAttacking = true;
       _attackSound = true;
-      int attackX = _hitbox.getX();
+      int attackX = _hitbox._x;
       char dir = getDir();
       if(dir == LEFT)
         attackX -= HERO_ATT_RANGE;
       else
         attackX += _hitbox._width;
-      _attackArea.setPos(attackX, _hitbox.getY());
+      _attackArea.setPos(attackX, _hitbox._y);
       _attackArea._height = _hitbox._height;
       _attack._force = HERO_ATT_FORCE * dir;
       logic->addAttack(&_attack);

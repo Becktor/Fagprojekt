@@ -132,8 +132,8 @@ void setup() {
       GD.Begin(BITMAPS);
       Rect *hitbox = &(_hero._hitbox);
       //Rect *hitbox = &(units->get(0)->_hitbox);
-      int cameraX = hitbox->getX() + (hitbox->_width - SCREEN_WIDTH) / 2,
-          cameraY = hitbox->getY() + (hitbox->_height - SCREEN_HEIGHT) / 2;
+      int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
+          cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
       GD.ColorRGB(255, 0, 0);
       for(int i = 0; i < units->size(); i++)
@@ -221,7 +221,7 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
     GD.cmd_setmatrix();
   }
     GD.Cell(-(currentMillis >> changeSpeed) & unit->getCells());
-  GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
+  GD.Vertex2f((hitbox->_x - offsetX) * 16, (hitbox->_y - offsetY) * 16);
   if(unit->getDir() == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
@@ -237,7 +237,7 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   GD.PointSize(16 * hitbox->_width);
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->getX() - offsetX, hitbox->getY() - offsetY);
+  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
 }
 
 void drawScore(byte x, byte y, int n) {

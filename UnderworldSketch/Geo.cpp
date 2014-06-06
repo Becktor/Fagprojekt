@@ -14,30 +14,26 @@ void Point::setPoint(int x, int y) {
   _y = y;
 }
 
-Rect::Rect(int x, int y, byte width, byte height) : _pos(x, y) {
+Rect::Rect(int x, int y, byte width, byte height) {
+  _x = x;
+  _y = y;
   _width = width;
   _height = height;
 }
 
 boolean Rect::contains(Rect *r) {
-  return r->getX() < getX() + _width
-      && r->getX() + r->_width > getX()
-      && r->getY() < getY() + _height
-      && r->getY() + r->_height > getY();
-}
-
-int Rect::getX() {
-  return _pos._x;
-}
-
-int Rect::getY() {
-  return _pos._y;
+  return r->_x < _x + _width
+      && r->_x + r->_width > _x
+      && r->_y < _y + _height
+      && r->_y + r->_height > _y;
 }
 
 void Rect::translate(int x, int y) {
-  _pos.translate(x, y);
+  _x += x;
+  _y += y;
 }
 
 void Rect::setPos(int x, int y) {
-  _pos.setPoint(x, y);
+  _x = x;
+  _y = y;
 }
