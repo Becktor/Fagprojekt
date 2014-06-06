@@ -51,6 +51,7 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
+  
 
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
@@ -97,7 +98,7 @@ void setup() {
       for(int i = 0; i < props->size(); i++)
         _logic.executeAttacks(props->get(i));
       for(int i = 0; i < units->size(); i++)
-        _logic.executeAttacks(units->get(i))
+        _logic.executeAttacks(units->get(i));
       _logic.clearAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);

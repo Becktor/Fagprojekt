@@ -41,7 +41,8 @@ void Logic::coinCol() {
       Rect *hitboxC = &(prop->_hitbox);
       Rect *hitboxH = &(getHero()->_hitbox);
       if(hitboxH->contains(hitboxC)) {
-        //add bonus 
+        //add bonus
+        //&getHero->&_score=getHero->&(_score + 100);
     }
   }
 }
