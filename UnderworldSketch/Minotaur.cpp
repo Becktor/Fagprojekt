@@ -13,9 +13,9 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     toggleDir();
     
   if(getDir() == -1) {
-    _xVel = MINO_RSPEED * getDir();
-    setHandle(MINO_RUNNING);
-    setCells(MINO_RUNNING_CELLS);
+    _xVel = MINO_CSPEED * getDir();
+    setHandle(MINO_CHARGING);
+    setCells(MINO_CHARGING_CELLS);
    } else {
     _xVel = MINO_WSPEED * getDir();
     setHandle(MINO_WALKING);
