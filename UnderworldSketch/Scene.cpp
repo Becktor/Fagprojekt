@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "Tiles.h"
+#include "Geo.h"
 #include "Prop.h"
 #include "Unit.h"
 #include "Minotaur.h"
@@ -78,7 +79,8 @@ LinkedList<Prop*>* Scene::getProps() {
 
 void Scene::moveProp(Prop* prop, char x, char y) {
   Rect *hitbox = &(prop->_hitbox);
-  hitbox->setPos(x * TILE_SIZE + (TILE_SIZE - hitbox->_width) / 2, y * TILE_SIZE + TILE_SIZE - hitbox->_height);
+  hitbox->_x = x * TILE_SIZE + (TILE_SIZE - hitbox->_width) / 2;
+  hitbox->_y = y * TILE_SIZE + TILE_SIZE - hitbox->_height;
 }
 
 void Scene::setTile(char x, char y, byte tile) {

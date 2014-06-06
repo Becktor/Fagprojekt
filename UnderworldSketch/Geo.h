@@ -28,7 +28,7 @@ class Rect {
 
     Rect(int x, int y, byte width, byte height);
     boolean contains(Rect *r);
-    void translate(int x, int y);
     void setPos(int x, int y);
+    void translate(int x, int y);
 };
 #endif

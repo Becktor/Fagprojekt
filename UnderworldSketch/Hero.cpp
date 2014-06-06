@@ -44,12 +44,14 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(45 > _nunchuk -> analogY) {
     if(!_isDucking) {
       _hitbox._height = HERO_HEIGHT_DUCK;
-      _hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
+      _hitbox._y += HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK;
+      //_hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
       _isDucking = true;
     }
   } else if(_isDucking) {
     _hitbox._height = HERO_HEIGHT_STAND;
-    _hitbox.translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
+    _hitbox._y += HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND;
+    //_hitbox.translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
     _isDucking = false;
   }
 
@@ -74,17 +76,15 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack
       _isAttacking = true;
       _attackSound = true;
-      int attackX = _hitbox._x;
       char dir = getDir();
       if(dir == LEFT)
-        attackX -= HERO_ATT_RANGE;
+        _attackArea._x = _hitbox._x - HERO_ATT_RANGE;
       else
-        attackX += _hitbox._width;
-      _attackArea.setPos(attackX, _hitbox._y);
+        _attackArea._x = _hitbox._x + _hitbox._width;
+      _attackArea._y = _hitbox._y;
       _attackArea._height = _hitbox._height;
       _attack._force = HERO_ATT_FORCE * dir;
       logic->addAttack(&_attack);
-      setHandle(HERO_ATTACKING_HANDLE);
     } else 
       _attackSound = false;
   } else

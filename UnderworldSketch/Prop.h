@@ -11,6 +11,6 @@ class Prop {
 
     Prop(byte width, byte height);
     virtual void hit(byte damage, char force);
-    void translate(int x, int y);
+    //void translate(int x, int y);
 };
 #endif

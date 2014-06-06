@@ -28,12 +28,12 @@ boolean Rect::contains(Rect *r) {
       && r->_y + r->_height > _y;
 }
 
-void Rect::translate(int x, int y) {
-  _x += x;
-  _y += y;
-}
-
 void Rect::setPos(int x, int y) {
   _x = x;
   _y = y;
+}
+
+void Rect::translate(int x, int y) {
+  _x += x;
+  _y += y;
 }
