@@ -9,10 +9,6 @@ Prop::Prop(byte width, byte height) : _hitbox(0, 0, width, height) {
 
 void Prop::hit(byte damage, char force) { }
 
-/*
-void Prop::translate(int x, int y) {
-  _hitbox._x += x;
-  _hitbox._y += y;
-  //_hitbox.translate(x, y);
-}
-*/
+void Prop::xCollide() { }
+
+void Prop::yCollide() { }

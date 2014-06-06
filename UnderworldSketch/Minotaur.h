@@ -23,6 +23,7 @@ class Minotaur : public Unit {
     Minotaur();
     void fillHealth();
     void updateAI(int dTime, Logic *logic);
+    void xCollide();
 };
 #endif
 

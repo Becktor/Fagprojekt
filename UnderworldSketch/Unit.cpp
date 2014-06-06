@@ -54,3 +54,11 @@ void Unit::toggleDir() {
 }
 
 void Unit::updateAI(int dTime, Logic *logic) { }
+
+void Unit::xCollide() {
+  _xVel = 0;
+}
+
+void Unit::yCollide() {
+  _yVel = 0;
+}

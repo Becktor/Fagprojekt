@@ -29,5 +29,7 @@ class Unit : public Prop {
     void setCells(int cells);
     void toggleDir();
     virtual void updateAI(int dTime, Logic *logic);
+    void xCollide();
+    void yCollide();
 };
 #endif

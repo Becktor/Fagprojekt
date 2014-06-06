@@ -60,10 +60,6 @@ Prop* Logic::getHero() {
   return _hero;
 }
 
-void Logic::gravitate(Prop *prop, int dTime) { //Unused dTime
-  prop->_yVel += GRAVITY;
-}
-
 boolean Logic::isGameOver() {
   return _gameOver;
 }
@@ -167,10 +163,10 @@ void Logic::setHero(Prop *hero) {
 }
 
 void Logic::updatePhysics(Prop* prop, int dTime) {
-  if(!prop->_levitate)
-    gravitate(prop, dTime);
   if(!movePropHoriz(prop, prop->_xVel))
-    prop->_xVel = 0;
-  if(!movePropVerti(prop, prop->_yVel))
-    prop->_yVel = 0;
+    prop->xCollide();
+  if(!movePropVerti(prop, prop->_yVel + GRAVITY))
+    prop->yCollide();
+  else if(!prop->_levitate)
+    prop->_yVel += GRAVITY;
 }

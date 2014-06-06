@@ -26,7 +26,6 @@ class Logic {
     boolean coinCol(Prop *prop);
     void executeAttacks(Prop* prop);
     Prop* getHero();
-    void gravitate(Prop *prop, int dTime);
     boolean isGameOver();
     boolean isGrounded(Prop *prop);
     boolean isHeroWin();

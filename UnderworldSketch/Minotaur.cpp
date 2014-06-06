@@ -9,17 +9,18 @@ void Minotaur::fillHealth() {
 }
 
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
-  if(_xVel == 0)
-    toggleDir();
-    
-  if(getDir() == -1) {
+if(getDir() == -1) {
     _xVel = MINO_CSPEED * getDir();
     setHandle(MINO_CHARGING);
     setCells(MINO_CHARGING_CELLS);
-   } else {
+  } else {
     _xVel = MINO_WSPEED * getDir();
     setHandle(MINO_WALKING);
     setCells(MINO_WALKING_CELLS);
-   }
- }
+  }
+}
 
+void Minotaur::xCollide() {
+  _xVel = 0;
+  toggleDir();
+}
