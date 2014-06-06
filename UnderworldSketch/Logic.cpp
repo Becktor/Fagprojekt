@@ -111,14 +111,14 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
         if(dir == LEFT)
-          prop->translate(gridToWorld(tileX + 1) - x, 0);
+          hitbox->_x += gridToWorld(tileX + 1) - x;
         else
-          prop->translate(gridToWorld(tileX) - x - 1, 0);
+          hitbox->_x += gridToWorld(tileX) - x - 1;
         return false;
       }
     }
   }
-  prop->translate(dX, 0);
+  hitbox->_x += dX;
   return true;
 }
 
@@ -141,14 +141,14 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
         if(dir == UP)
-          prop->translate(0, gridToWorld(tileY + 1) - y);
+          hitbox->_y += gridToWorld(tileY + 1) - y;
         else
-          prop->translate(0, gridToWorld(tileY) - y - 1);
+          hitbox->_y += gridToWorld(tileY) - y - 1;
         return false;
       }
     }
   }
-  prop->translate(0, dY);
+  hitbox->_y += dY;
   return true;
 }
 
