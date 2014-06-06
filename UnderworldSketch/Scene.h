@@ -34,7 +34,7 @@ class Minotaur;
 class Scene {
   private:
     byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex;
-    Minotaur* _minotaurs[10];
+    Minotaur* _minotaurs[MINOTAURS];
     LinkedList<Prop*> _props;
     LinkedList<Unit*> _units;
   public:

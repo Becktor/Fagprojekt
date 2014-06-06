@@ -100,6 +100,7 @@ void setup() {
         _logic.executeAttacks(props->get(i));
       for(int i = 0; i < units->size(); i++)
         _logic.executeAttacks(units->get(i));
+      _logic.clearAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
 

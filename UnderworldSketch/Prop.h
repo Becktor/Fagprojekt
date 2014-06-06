@@ -4,7 +4,6 @@
 #include "Geo.h"
 
 class Prop {
-  private:
   public:
     boolean _levitate;
     char _xVel, _yVel;
