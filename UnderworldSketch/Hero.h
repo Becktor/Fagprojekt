@@ -22,6 +22,8 @@ const static byte
     HERO_SPEED_RUN = 5;
 
 class Hero : public Unit {
+  public:
+  int _score;
   private:
     Rect _attackArea;
     Attack _attack;

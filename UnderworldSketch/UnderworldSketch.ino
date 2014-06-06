@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -34,7 +34,6 @@ const static int
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000, //Milis. in a second
     INIT_FPS = 40; //Initial assumed framerate.
-int _score = 0; //Make local, put in logic?
 
 //Function declarations
 void setup();
@@ -90,8 +89,7 @@ void setup() {
         if(unit->isDead()) {
           units->remove(i);
           i--;
-          _score = _score + 100;
-          drawScore(0, 0, _score);
+          _hero._score = _hero._score + 100;
         } else
           unit->updateAI(_dTime, &_logic);
       } 
@@ -139,6 +137,7 @@ void setup() {
         drawUnit(units->get(i), cameraX, cameraY, currentMillis);
       for(int i = 0; i < props->size(); i++)
         drawProp(props->get(i), cameraX, cameraY);
+      drawScore(10,10,_hero._score);
       GD.cmd_number(40, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);

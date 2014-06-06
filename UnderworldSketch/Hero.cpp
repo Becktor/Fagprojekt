@@ -5,6 +5,7 @@
 #include "Unit.h"
 #include "Hero.h"
 
+int _score = 0;
 Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH),
                                       _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),
                                       _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
@@ -85,3 +86,4 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 boolean Hero::getAttackSound(){
   return _attackSound;
 }
+
