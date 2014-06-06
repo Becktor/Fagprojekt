@@ -56,4 +56,3 @@ static const shape_t MINOW_SHAPE = {5, 80, 72, 0};
 static const shape_t TILE_SHAPE = {6, 48, 48, 0};
 static const shape_t DOOR_SHAPE = {7, 48, 48, 0};
 
-

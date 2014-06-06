@@ -16,18 +16,26 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     _xVel = HERO_SPEED_WALK;
+    setHandle(HERO_WALKING_HANDLE);
+    setCells(HERO_WALKING_CELLS);
     setDir(RIGHT);  
   }
   else if(_nunchuk->analogX > 160){
     _xVel = HERO_SPEED_RUN;
+    setHandle(HERO_WALKING_HANDLE);
+    setCells(HERO_WALKING_CELLS);
     setDir(RIGHT); 
   }
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
     _xVel = -HERO_SPEED_WALK;
+    setHandle(HERO_WALKING_HANDLE);
+    setCells(HERO_WALKING_CELLS);
     setDir(LEFT);
   }
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
     _xVel = -HERO_SPEED_RUN;
+    setHandle(HERO_WALKING_HANDLE);
+    setCells(HERO_WALKING_CELLS);
     setDir(LEFT);
   }
   else 

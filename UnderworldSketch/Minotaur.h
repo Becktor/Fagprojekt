@@ -7,13 +7,16 @@
 const static byte
     MINO_HEALTH = 3,
     MINO_WSPEED = 3,
-    MINO_RSPEED = 2,
-    MINO_HEIGHT = 48,
-    MINO_WIDTH = 56,
-    MINO_WALKING = 0,
-    MINO_WALKING_CELLS = 7,
-    MINO_RUNNING = 1,
-    MINO_RUNNING_CELLS = 1;
+    MINO_CSPEED = 6,
+    MINO_DSPEED = 0,
+    MINO_HEIGHT = 72,
+    MINO_WIDTH = 80,
+    MINO_WALKING = 5,
+    MINO_WALKING_CELLS = 3,
+    MINO_CHARGING = 3,
+    MINO_CHARGING_CELLS = 3,
+    MINO_DYING = 4,
+    MINO_DYING_CELLS = 3;
 
 class Minotaur : public Unit {
   public:
