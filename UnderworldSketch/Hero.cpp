@@ -84,6 +84,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _attackArea._height = _hitbox._height;
       _attack._force = HERO_ATT_FORCE * dir;
       logic->addAttack(&_attack);
+      setHandle(HERO_ATTACKING_HANDLE);
     } else 
       _attackSound = false;
   } else
