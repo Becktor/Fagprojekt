@@ -98,7 +98,6 @@ void setup() {
         _logic.executeAttacks(props->get(i));
       for(int i = 0; i < units->size(); i++)
         _logic.executeAttacks(units->get(i));
-      _logic.clearAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
 
@@ -127,8 +126,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      //Rect *hitbox = _hero.getHitbox();
-      Rect *hitbox = &(units->get(0)->_hitbox);
+      Rect *hitbox = &(_hero._hitbox);
+      //Rect *hitbox = &(units->get(0)->_hitbox);
       int cameraX = hitbox->getX() + (hitbox->getWidth() - SCREEN_WIDTH) / 2,
           cameraY = hitbox->getY() + (hitbox->getHeight() - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
@@ -137,7 +136,7 @@ void setup() {
         drawUnit(units->get(i), cameraX, cameraY, currentMillis);
       for(int i = 0; i < props->size(); i++)
         drawProp(props->get(i), cameraX, cameraY);
-      drawScore(10,10,_hero._score);
+      drawScore(40,40,_hero._score);
       GD.cmd_number(40, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
