@@ -20,10 +20,10 @@ void Logic::addAttack(Attack* attack) {
 
 boolean Logic::atExit(Prop *prop) {
   Rect* hitbox = &(prop->_hitbox);
-  char tileXEnd = worldToGrid(hitbox->getX() + hitbox->_width - 1),
-       tileYEnd = worldToGrid(hitbox->getY() + hitbox->_height - 1);
-  for(char tileX = worldToGrid(hitbox->getX()); tileX <= tileXEnd; tileX++) {
-    for(char tileY = worldToGrid(hitbox->getY()); tileY <= tileYEnd; tileY++) {
+  char tileXEnd = worldToGrid(hitbox->_x + hitbox->_width - 1),
+       tileYEnd = worldToGrid(hitbox->_y + hitbox->_height - 1);
+  for(char tileX = worldToGrid(hitbox->_x); tileX <= tileXEnd; tileX++) {
+    for(char tileY = worldToGrid(hitbox->_y); tileY <= tileYEnd; tileY++) {
       if(EXIT == _scene->getTile(tileX, tileY))
         return true;
     }
@@ -70,11 +70,11 @@ boolean Logic::isGameOver() {
 
 boolean Logic::isGrounded(Prop *prop) {
   Rect *hitbox = &(prop->_hitbox);
-  int y = hitbox->getY() + hitbox->_height;
+  int y = hitbox->_y + hitbox->_height;
   char yTile = worldToGrid(y);
   if(yTile != worldToGrid(y - 1)) {
-    char xStartTile = worldToGrid(hitbox->getX()),
-         xEndTile = worldToGrid(hitbox->getX() + hitbox->_width - 1);
+    char xStartTile = worldToGrid(hitbox->_x),
+         xEndTile = worldToGrid(hitbox->_x + hitbox->_width - 1);
     for(char i = xStartTile; i <= xEndTile; i++) {
       byte tile = _scene->getTile(i, yTile);
       if(getSolid(tile) || getPlatform(tile))
@@ -95,7 +95,7 @@ boolean Logic::isSolid(int x, int y) {
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropHoriz(Prop *prop, int dX) {
   Rect *hitbox = &(prop->_hitbox);
-  int x = hitbox->getX(), y = hitbox->getY();
+  int x = hitbox->_x, y = hitbox->_y;
   Direction dir;
   if(dX < 0) {
     dir = LEFT;
@@ -111,21 +111,21 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile)) {
         if(dir == LEFT)
-          prop->translate(gridToWorld(tileX + 1) - x, 0);
+          hitbox->_x += gridToWorld(tileX + 1) - x;
         else
-          prop->translate(gridToWorld(tileX) - x - 1, 0);
+          hitbox->_x += gridToWorld(tileX) - x - 1;
         return false;
       }
     }
   }
-  prop->translate(dX, 0);
+  hitbox->_x += dX;
   return true;
 }
 
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropVerti(Prop *prop, int dY) {
   Rect *hitbox = &(prop->_hitbox);
-  int x = hitbox->getX(), y = hitbox->getY();
+  int x = hitbox->_x, y = hitbox->_y;
   Direction dir;
   if(dY < 0)
     dir = UP;
@@ -141,14 +141,14 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
       byte tile = _scene->getTile(tileX, tileY);
       if(getSolid(tile) || (getPlatform(tile) && dir == DOWN)) {
         if(dir == UP)
-          prop->translate(0, gridToWorld(tileY + 1) - y);
+          hitbox->_y += gridToWorld(tileY + 1) - y;
         else
-          prop->translate(0, gridToWorld(tileY) - y - 1);
+          hitbox->_y += gridToWorld(tileY) - y - 1;
         return false;
       }
     }
   }
-  prop->translate(0, dY);
+  hitbox->_y += dY;
   return true;
 }
 

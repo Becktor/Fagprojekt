@@ -20,17 +20,14 @@ class Point {
 };
 
 class Rect {
-  private:
-
   public:
+    int _x;
+    int _y;
     byte _width;
     byte _height;
-    Point _pos;
 
     Rect(int x, int y, byte width, byte height);
     boolean contains(Rect *r);
-    int getX();
-    int getY();
     void translate(int x, int y);
     void setPos(int x, int y);
 };
