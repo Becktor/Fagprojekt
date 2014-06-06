@@ -207,6 +207,10 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
   int half_Width = hitbox->getWidth() / 2;
+  int changeSpeed = 2;
+  if(unit->getCells() == 1)
+    changeSpeed=2;
+
   GD.BitmapHandle(unit->getHandle());
   if(unit->getDir() == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));
@@ -222,7 +226,8 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
-  }
+    }
+    GD.Cell((currentMillis >> changeSpeed) & unit->getCells());
 }
 
 void drawProp(Prop* prop, int offsetX, int offsetY){
