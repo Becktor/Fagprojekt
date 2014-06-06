@@ -11,6 +11,7 @@
 Logic::Logic(Scene *scene) {
   _scene = scene;
   restartGame();
+  _score = 0;
 }
 
 void Logic::addAttack(Attack* attack) {
@@ -41,8 +42,8 @@ void Logic::coinCol() {
       Rect *hitboxC = &(prop->_hitbox);
       Rect *hitboxH = &(getHero()->_hitbox);
       if(hitboxH->contains(hitboxC)) {
-        //add bonus
-        //&getHero->&_score=getHero->&(_score + 100);
+        //add bonus 
+        _score += 10;
     }
   }
 }

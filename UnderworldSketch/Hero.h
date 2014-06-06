@@ -28,8 +28,6 @@ const static byte
     HERO_DUCKING_CELLS= 1;
 
 class Hero : public Unit {
-  public:
-  int _score;
   private:
     Rect _attackArea;
     Attack _attack;

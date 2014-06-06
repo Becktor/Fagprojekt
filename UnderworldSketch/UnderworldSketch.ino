@@ -51,7 +51,6 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
-  
 
   //SETUP
   randomSeed(107); //Initializes a random seed to the random generator
@@ -90,7 +89,7 @@ void setup() {
         if(unit->isDead()) {
           units->remove(i);
           i--;
-          _hero._score = _hero._score + 100;
+          _logic._score += 100;
         } else
           unit->updateAI(_dTime, &_logic);
       } 
@@ -138,7 +137,7 @@ void setup() {
         drawUnit(units->get(i), cameraX, cameraY, currentMillis);
       for(int i = 0; i < props->size(); i++)
         drawProp(props->get(i), cameraX, cameraY);
-      drawScore(40,40,_hero._score);
+      drawScore(40, 40, _logic._score);
       GD.cmd_number(40, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
@@ -208,10 +207,6 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
   int half_Width = hitbox->getWidth() / 2;
-  int changeSpeed = 2;
-  if(unit->getCells() == 1)
-    changeSpeed=2;
-
   GD.BitmapHandle(unit->getHandle());
   if(unit->getDir() == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));
@@ -227,8 +222,7 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
-    }
-    GD.Cell((currentMillis >> changeSpeed) & unit->getCells());
+  }
 }
 
 void drawProp(Prop* prop, int offsetX, int offsetY){

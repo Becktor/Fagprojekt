@@ -18,6 +18,7 @@ class Logic {
     LinkedList<Attack*> _attacks;
     Prop *_hero;
   public:
+    int _score;
     Logic(Scene *scene);
     void addAttack(Attack* attack);
     boolean atExit(Prop *prop);
