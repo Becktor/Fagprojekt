@@ -53,7 +53,7 @@ void setup() {
   Hero _hero(&_nunchuk);
 
   //SETUP
-  randomSeed(107); //Initializes a random seed to the random generator
+  randomSeed(5); //Initializes a random seed to the random generator
   if(NUNCHUCK)
     _nunchuk.init();
   GD.begin();
@@ -131,8 +131,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      Rect *hitbox = &(_hero._hitbox);
-      //Rect *hitbox = &(units->get(0)->_hitbox);
+      //Rect *hitbox = &(_hero._hitbox);
+      Rect *hitbox = &(units->get(0)->_hitbox);
       int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
           cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);

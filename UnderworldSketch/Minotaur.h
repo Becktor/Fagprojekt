@@ -6,9 +6,10 @@
 
 const static byte
     MINO_HEALTH = 3,
-    MINO_WSPEED = 3,
-    MINO_CSPEED = 6,
-    MINO_DSPEED = 0,
+    MINO_ACC_WALK = 1,
+    MINO_SPEED_WALK = 5,
+    MINO_ACC_CHARGE = 3,
+    MINO_SPEED_CHARGE = 8,
     MINO_HEIGHT = 72,
     MINO_WIDTH = 80,
     MINO_WALKING = 5,

@@ -9,15 +9,9 @@ void Minotaur::fillHealth() {
 }
 
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
-if(getDir() == -1) {
-    _xVel = MINO_CSPEED * getDir();
-    setHandle(MINO_CHARGING);
-    setCells(MINO_CHARGING_CELLS);
-  } else {
-    _xVel = MINO_WSPEED * getDir();
-    setHandle(MINO_WALKING);
-    setCells(MINO_WALKING_CELLS);
-  }
+  accelerate(MINO_ACC_WALK, getDir() * MINO_SPEED_WALK);
+  setHandle(MINO_WALKING);
+  setCells(MINO_WALKING_CELLS);
 }
 
 void Minotaur::xCollide() {
