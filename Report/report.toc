@@ -1,20 +1,37 @@
-\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}
-\contentsline {chapter}{\numberline {2}Problem Analysis}{3}{chapter.2}
-\contentsline {chapter}{\numberline {3}Requirements specification}{4}{chapter.3}
-\contentsline {subsection}{\numberline {3.0.1}The game play}{4}{subsection.3.0.1}
-\contentsline {subsection}{\numberline {3.0.2}The algorithms}{4}{subsection.3.0.2}
-\contentsline {subsection}{\numberline {3.0.3}Timeplan}{5}{subsection.3.0.3}
-\contentsline {subsubsection}{Project management}{5}{section*.2}
-\contentsline {subsubsection}{Tasks management}{5}{section*.3}
-\contentsline {chapter}{\numberline {4}Overall design}{7}{chapter.4}
-\contentsline {chapter}{\numberline {5}Implementation and detailed design}{8}{chapter.5}
-\contentsline {subsection}{\numberline {5.0.4}Game loop}{8}{subsection.5.0.4}
-\contentsline {subsection}{\numberline {5.0.5}Movement}{8}{subsection.5.0.5}
-\contentsline {subsubsection}{Input}{9}{section*.4}
-\contentsline {chapter}{\numberline {6}Hardware}{10}{chapter.6}
-\contentsline {subsection}{\numberline {6.0.6}input}{10}{subsection.6.0.6}
-\contentsline {subsection}{\numberline {6.0.7}I2C}{11}{subsection.6.0.7}
-\contentsline {chapter}{\numberline {7}Testing and performance analysis}{12}{chapter.7}
-\contentsline {chapter}{\numberline {8}Discussion}{13}{chapter.8}
-\contentsline {chapter}{\numberline {9}Conclusion}{14}{chapter.9}
-\contentsline {chapter}{\numberline {10}Appendices}{16}{chapter.10}
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Arduino}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Gameduino 2}{3}{section.1.2}
+\contentsline {chapter}{\numberline {2}Problem Analysis}{4}{chapter.2}
+\contentsline {chapter}{\numberline {3}Requirements specification}{5}{chapter.3}
+\contentsline {subsection}{\numberline {3.0.1}The game play}{5}{subsection.3.0.1}
+\contentsline {subsection}{\numberline {3.0.2}The algorithms}{5}{subsection.3.0.2}
+\contentsline {subsection}{\numberline {3.0.3}Timeplan}{6}{subsection.3.0.3}
+\contentsline {subsubsection}{Project management}{6}{section*.2}
+\contentsline {subsubsection}{Tasks management}{6}{section*.3}
+\contentsline {chapter}{\numberline {4}Overall design}{8}{chapter.4}
+\contentsline {section}{\numberline {4.1}Components}{8}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Structure}{8}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Media}{8}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Assets}{8}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Sound}{8}{subsection.4.2.2}
+\contentsline {chapter}{\numberline {5}Implementation and detailed design}{9}{chapter.5}
+\contentsline {section}{\numberline {5.1}Gameloop}{9}{section.5.1}
+\contentsline {section}{\numberline {5.2}Actors}{9}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Hero}{9}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Enemies}{9}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Logic}{9}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}Scenes}{10}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Generator}{10}{subsection.5.3.1}
+\contentsline {section}{\numberline {5.4}Optimization}{11}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Code Size bloat}{12}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Further optimization}{12}{subsection.5.4.2}
+\contentsline {section}{\numberline {5.5}Input}{12}{section.5.5}
+\contentsline {chapter}{\numberline {6}Hardware}{13}{chapter.6}
+\contentsline {subsection}{\numberline {6.0.1}input}{13}{subsection.6.0.1}
+\contentsline {subsection}{\numberline {6.0.2}I2C}{14}{subsection.6.0.2}
+\contentsline {chapter}{\numberline {7}Testing and performance analysis}{15}{chapter.7}
+\contentsline {chapter}{\numberline {8}Discussion}{16}{chapter.8}
+\contentsline {chapter}{\numberline {9}Conclusion}{17}{chapter.9}
+\contentsline {subsection}{\numberline {9.0.3}Links}{18}{subsection.9.0.3}
+\contentsline {chapter}{\numberline {10}Appendices}{19}{chapter.10}
+\contentsline {subsection}{\numberline {10.0.4}Optimization}{19}{subsection.10.0.4}

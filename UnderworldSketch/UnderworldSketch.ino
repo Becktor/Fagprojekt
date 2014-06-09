@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -53,7 +53,7 @@ void setup() {
   Hero _hero(&_nunchuk);
 
   //SETUP
-  randomSeed(107); //Initializes a random seed to the random generator
+  randomSeed(5); //Initializes a random seed to the random generator
   if(NUNCHUCK)
     _nunchuk.init();
   GD.begin();
@@ -98,6 +98,7 @@ void setup() {
         _logic.executeAttacks(props->get(i));
         if (_logic.coinCol(props->get(i))){
           props->remove(i);
+          i--;
       }
       }
       for(int i = 0; i < units->size(); i++)
@@ -130,8 +131,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      Rect *hitbox = &(_hero._hitbox);
-      //Rect *hitbox = &(units->get(0)->_hitbox);
+      //Rect *hitbox = &(_hero._hitbox);
+      Rect *hitbox = &(units->get(1)->_hitbox);
       int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
           cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
@@ -223,6 +224,7 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
   xfix = ((unit->_imageWidth) - (hitbox->_width))/4;
   if(unit->getCells() == 1)
     changeSpeed=2;
+
   GD.BitmapHandle(unit->getHandle());
   if(unit->getDir() == -1) {
     xfix = -xfix + unit->_imageWidth - hitbox->_width;
@@ -245,10 +247,10 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = &(prop->_hitbox);
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
-  GD.PointSize(16 * hitbox->_width);
+  GD.PointSize(16*hitbox->_width);
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
+  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y-offsetY);
 }
 
 void drawScore(byte x, byte y, int n) {

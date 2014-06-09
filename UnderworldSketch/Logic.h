@@ -29,7 +29,7 @@ class Logic {
     boolean isGameOver();
     boolean isGrounded(Prop *prop);
     boolean isHeroWin();
-    boolean isSolid(int x, int y);
+    boolean isWalkable(int x, int y);
     boolean movePropHoriz(Prop *prop, int dX);
     boolean movePropVerti(Prop *prop, int dY);
     void restartGame();

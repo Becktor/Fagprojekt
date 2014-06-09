@@ -84,8 +84,9 @@ boolean Logic::isHeroWin() {
   return _heroWin;
 }
 
-boolean Logic::isSolid(int x, int y) {
-  return getSolid(_scene->getTile(worldToGrid(x), worldToGrid(y)));
+boolean Logic::isWalkable(int x, int y) {
+  byte tile = _scene->getTile(worldToGrid(x), worldToGrid(y));
+  return getSolid(tile) || getPlatform(tile);
 }
 
 //Returns whether the movement was complete (true) or partial (false)

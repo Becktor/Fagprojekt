@@ -71,6 +71,30 @@ void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, P
 }
 
 void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
+  /*
+  byte x = random(XMODULES), y = YMODULES - 1;
+  char dir = random(2) * 2 - 1;
+  modules[x][y] = TYPE1;
+  entrance->setPoint(x, y);
+  for(;;) {
+    byte r = random(5), newX = x + dir;
+    if(r == 4 || newX < 0 || newX >= XMODULES) {
+      if(y == 0) {
+        exit->setPoint(x, y);        
+        return;
+      } else {
+        modules[x][y]++; //TYPE1 becomes TYPE2, TYPE3 becomes TYPE4, no other possibilities.
+        y--;
+        modules[x][y] = TYPE3;
+        if(r == 4)
+          dir = random(2) * 2 - 1;
+      }
+    } else {
+      x = newX;
+      modules[x][y] = TYPE1;
+    }
+  }
+  */
   short x = random(XMODULES), y = YMODULES - 1;
   modules[x][y] = TYPE1;
   entrance->setPoint(x, y);

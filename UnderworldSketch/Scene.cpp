@@ -4,6 +4,7 @@
 #include "Prop.h"
 #include "Unit.h"
 #include "Minotaur.h"
+#include "Coin.h"
 #include "Scene.h"
 
 char worldToGrid(int x) {
@@ -21,10 +22,19 @@ Scene::Scene() {
   _props = LinkedList<Prop*>();
   _units = LinkedList<Unit*>();
   _minoIndex = 0;
+  _coinIndex = 0;
   for(int i = 0; i < MINOTAURS; i++)
     _minotaurs[i] = new Minotaur();
+  for(int i = 0; i < COINS; i++)
+    _coins[i] = new Coin();
 }
 
+void Scene::addCoin(char x, char y) {
+  if(_coinIndex != COINS) {
+    addProp(_coins[_coinIndex], x, y);
+    _coinIndex++;
+  }
+}
 void Scene::addMinotaur(char x, char y) {
   if(_minoIndex != MINOTAURS) {
     addUnit(_minotaurs[_minoIndex], x, y);
@@ -37,6 +47,7 @@ void Scene::addProp(Prop *prop, char x, char y) {
   moveProp(prop, x, y);
   _props.add(prop);
 }
+
 
 //Adds the given unit to the units list and sets it at the given tile.
 void Scene::addUnit(Unit *unit, char x, char y) {

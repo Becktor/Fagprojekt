@@ -9,15 +9,14 @@ void Minotaur::fillHealth() {
 }
 
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
-if(getDir() == -1) {
-    _xVel = MINO_CSPEED * getDir();
-    setHandle(MINO_CHARGING);
-    setCells(MINO_CHARGING_CELLS);
-  } else {
-    _xVel = MINO_WSPEED * getDir();
+  char dir = getDir();
+  if(logic->isGrounded(this)) {
+    if(!logic->isWalkable(_hitbox._x + (1 + dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height))
+      toggleDir();
+    accelerate(MINO_ACC_WALK, dir * MINO_SPEED_WALK);
     setHandle(MINO_WALKING);
     setCells(MINO_WALKING_CELLS);
-  }
+  } //else Falling?
 }
 
 void Minotaur::xCollide() {

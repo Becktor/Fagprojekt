@@ -20,10 +20,5 @@ void Coin::yCollide() {
     _yVel = 0;
   else
     _yVel = COIN_FRICTION - _yVel;
-  if(_xVel > COIN_FRICTION)
-    _xVel -= COIN_FRICTION;
-  else if(_xVel < -COIN_FRICTION)
-    _xVel += COIN_FRICTION;
-  else
-    _xVel = 0;
+  accelerate(COIN_FRICTION, 0);
 }
