@@ -2,7 +2,7 @@
 #include "Unit.h"
 #include "Minotaur.h"
 
-Minotaur::Minotaur() : Unit(MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH, MINO_WIDTH) { }
+Minotaur::Minotaur() : Unit(MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH) { }
 
 void Minotaur::fillHealth() {
   setHealth(MINO_HEALTH);
