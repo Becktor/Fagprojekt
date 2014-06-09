@@ -23,13 +23,15 @@
 \contentsline {section}{\numberline {5.3}Scenes}{10}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}Generator}{10}{subsection.5.3.1}
 \contentsline {section}{\numberline {5.4}Optimization}{11}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Code Size bloat}{11}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}Further optimization}{11}{subsection.5.4.2}
-\contentsline {section}{\numberline {5.5}Input}{11}{section.5.5}
+\contentsline {subsection}{\numberline {5.4.1}Code Size bloat}{12}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Further optimization}{12}{subsection.5.4.2}
+\contentsline {section}{\numberline {5.5}Input}{12}{section.5.5}
 \contentsline {chapter}{\numberline {6}Hardware}{13}{chapter.6}
 \contentsline {subsection}{\numberline {6.0.1}input}{13}{subsection.6.0.1}
 \contentsline {subsection}{\numberline {6.0.2}I2C}{14}{subsection.6.0.2}
 \contentsline {chapter}{\numberline {7}Testing and performance analysis}{15}{chapter.7}
 \contentsline {chapter}{\numberline {8}Discussion}{16}{chapter.8}
 \contentsline {chapter}{\numberline {9}Conclusion}{17}{chapter.9}
+\contentsline {subsection}{\numberline {9.0.3}Links}{18}{subsection.9.0.3}
 \contentsline {chapter}{\numberline {10}Appendices}{19}{chapter.10}
+\contentsline {subsection}{\numberline {10.0.4}Optimization}{19}{subsection.10.0.4}

@@ -30,18 +30,44 @@ The algorithm first instantiates a grid of empty modules, and randomly assigns o
 Lastly the program generates the map. This step reads each module in the newly generated grid, randomly picks a module of the specified type, and fills it into the actual map. If it is currently in an entrance or exit room, it places the corresponding door. It changes the original given entrance and exit pointers to point at the now created door.\\
 Every module overlap with a single row or column with all surrounding modules. Overlapping follows a priority of tiles, where the algorithm determines which tile from the modules is used. Platforms are placed before empty tiles, and solid tiles are placed before platforms. This has several benefits. Firstly the maps are more unique since pairs of modules also differ, and makes the seams of modules harder to notice. Secondly, it ensures that upward exits are easier guaranteed since platforms can be placed closer to the upper floors. This is the reason we need to clear the map prior to generation: the old tiles would disrupt this priority, since the algorithm would not be able to discern what is old and what is new during generation.\\
 Old version (nondeterministic time)
-\section{Optimization}
-Unused functions
 
-Data Types
-Getters/Setters
-Repeated statements
+\section{Optimization}%Cebrail
+The biggest challenge has been the code size due to the low capacity of the flash memory.
+The flash memory has a capacity of 32Kb, where we are only allowed to upload 24.430Kb
+of our own code. \\
+The Arduino IDE uses the first 4.242Kb for the
+bootloader and we are limited to go no further than 28.672Kb all inclusive.
+\\
+\\
+Programming our code, we felt
+that the code was growing exponentially and we reached the limit quicker than
+we expected, the intern libraries and our code generally was not optimized enough. Please
+see Figure~\ref{fig:code_size} for a history of our code size.
+
+Our first step to solve this problem, we analyzed our code and found the main
+reasons for this occasion:
+
+\begin{enumerate}
+\item Inefficient datatypes.
+\item Unused functions
+\item Global Variable instead of local.
+\item Code verbose.
+\item Repeated statements.
+\item Getters/Setters.
+\item Dependencies.
+\item Libraries.
+\end{enumerate}
+
+
+
+
+
+
 
 \subsection{Code Size bloat}
 Bootloader
 GD2
 includes
-
 \subsection{Further optimization}
 Custom written or shortened extern libraries
 
@@ -61,3 +87,9 @@ Another option will be using an external controller. The Wii nunchuck is popular
   \caption{Button specifications}
 \label{fig:Nunchuk}
 \end{figure}
+
+
+
+
+
+
