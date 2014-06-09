@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -98,6 +98,7 @@ void setup() {
         _logic.executeAttacks(props->get(i));
         if (_logic.coinCol(props->get(i))){
           props->remove(i);
+          i--;
       }
       }
       for(int i = 0; i < units->size(); i++)
@@ -213,6 +214,7 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   int changeSpeed = 2;
   if(unit->getCells() == 1)
     changeSpeed=2;
+
   GD.BitmapHandle(unit->getHandle());
   if(unit->getDir() == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));
@@ -234,10 +236,10 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = &(prop->_hitbox);
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
-  GD.PointSize(16 * hitbox->_width);
+  GD.PointSize(16*hitbox->_width);
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
+  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y-offsetY);
 }
 
 void drawScore(byte x, byte y, int n) {

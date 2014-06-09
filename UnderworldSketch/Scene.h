@@ -24,21 +24,25 @@ const static byte
     YMODULES = 4,
     SCENE_WIDTH = XMODULES * (MODULE_WIDTH - 1) - 1,
     SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1,
-    MINOTAURS = 10;
+    MINOTAURS = 10,
+    COINS = 10;
 
 char worldToGrid(int x);
 int gridToWorld(char x);
 
 class Unit;
 class Minotaur;
+class Coin;
 class Scene {
   private:
-    byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex;
+    byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex, _coinIndex;
     Minotaur* _minotaurs[MINOTAURS];
+    Coin* _coins[COINS];
     LinkedList<Prop*> _props;
     LinkedList<Unit*> _units;
   public:
     Scene();
+    void addCoin(char x, char y);
     void addMinotaur(char x, char y);
     void addProp(Prop *prop, char x, char y);
     void addUnit(Unit *unit, char x, char y);
