@@ -24,7 +24,7 @@ boolean Logic::atExit(Prop *prop) {
        tileYEnd = worldToGrid(hitbox->_y + hitbox->_height - 1);
   for(char tileX = worldToGrid(hitbox->_x); tileX <= tileXEnd; tileX++) {
     for(char tileY = worldToGrid(hitbox->_y); tileY <= tileYEnd; tileY++) {
-      if(EXIT == _scene->getTile(tileX, tileY))
+      if(_scene->getTile(tileX, tileY) == EXIT)
         return true;
     }
   }
