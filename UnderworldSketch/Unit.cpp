@@ -3,9 +3,10 @@
 #include "Prop.h"
 #include "Unit.h"
 
-Unit::Unit(byte width, byte height, char health) : Prop(width, height) {
+Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, height) {
   _health = health;
   _dir = LEFT;
+  _imageWidth = imageWidth;
   _handle = 0;
   _cells = 0;
 }

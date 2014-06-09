@@ -5,13 +5,17 @@
 #include "Unit.h"
 #include "Hero.h"
 
-Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH),
+Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH, HERO_IMAGE_WIDTH),
                                       _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),
                                       _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
+
+    setHandle(HERO_IDLE_HANDLE);
+    setCells(HERO_IDLE_CELLS);
+
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     _xVel = HERO_SPEED_WALK;

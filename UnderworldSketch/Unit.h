@@ -16,7 +16,9 @@ class Unit : public Prop {
   private:
     char _dir, _health, _handle, _cells;
   public:
-    Unit(byte width, byte height, char health);
+    byte _imageWidth;
+    
+    Unit(byte width, byte height, char health, byte imageWidth);
     char getDir();
     int getHandle();
     int getCells();
