@@ -63,8 +63,7 @@ void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, P
         isEntrance = false;
         portal = exit;
         hasExit = true;
-      } else
-        isPortalRoom = false;
+      }
       fillModule(scene, modules[i][j], i * MODULE_WIDTH - i - 1, j * MODULE_HEIGHT - j - 1, isPortalRoom, isEntrance, portal);
     }
   }
