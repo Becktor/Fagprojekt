@@ -51,6 +51,7 @@ void setup() {
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
+  Rect *_camera = &(_hero._hitbox);
 
   //SETUP
   randomSeed(5); //Initializes a random seed to the random generator
@@ -65,10 +66,6 @@ void setup() {
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance._x, _entrance._y);
-
-  Coin _coin = Coin();
-  _scene.addProp(&_coin, _exit._x, _exit._y);
-  //_scene.setTile(1, 1, 6);
 
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Prop*>* props = _scene.getProps();
@@ -133,11 +130,8 @@ void setup() {
       GD.ClearColorRGB(255,255,255); //Background
       GD.Clear();
       GD.Begin(BITMAPS);
-      //Calculations
-      Rect *hitbox = &(_hero._hitbox);
-      //Rect *hitbox = &(units->get(1)->_hitbox);
-      int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
-          cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
+      int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
+          cameraY = _camera->_y + (_camera->_height - SCREEN_HEIGHT) / 2;
       //Draw scene
       drawScene(&_scene, cameraX, cameraY);
       GD.ColorRGB(255, 0, 0); //Obsolete
