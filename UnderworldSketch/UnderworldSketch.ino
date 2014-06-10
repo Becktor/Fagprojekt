@@ -83,32 +83,39 @@ void setup() {
       }
       //UPDATE AI
       for(int i = 0; i < units->size(); i++) {
-        Unit *unit = units->get(i);
-        if(unit->_health == 0) {
-          units->remove(i);
-          i--;
-          _logic._score += 100;
-        } else
-          unit->updateAI(_dTime, &_logic);
+        units->get(i)->updateAI(_dTime, &_logic);
       } 
-      //UPDATE OBJECTS
-      for(int i = 0; i < props->size(); i++){
-        _logic.executeAttacks(props->get(i));
-        if (_logic.coinCol(props->get(i))){
-          props->remove(i);
-          i--;
+      //UPDATE PROPS
+      {
+        byte i = 0;
+        while(i < props->size()) {
+          Prop* prop = props->get(i);
+          _logic.executeAttacks(prop);
+          if(_logic.coinCol(prop))
+            props->remove(i);
+          else {
+            _logic.updatePhysics(prop, _dTime);
+            i++;
+          }
         }
       }
-      for(int i = 0; i < units->size(); i++)
-        _logic.executeAttacks(units->get(i));
+      {
+        byte i = 0;
+        while(i < units->size()) {
+          Unit* unit = units->get(i);
+          _logic.executeAttacks(unit);
+          if(unit->_health == 0) {
+            units->remove(i);
+            _logic._score += 100;
+          } else {
+            _logic.updatePhysics(unit, _dTime);
+            i++;
+          }
+        }
+      }
       _logic.clearAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
-      //UPDATE PHYSICS
-      for(int i = 0; i < props->size(); i++)
-        _logic.updatePhysics(props->get(i), _dTime);
-      for(int i = 0; i < units->size(); i++)
-        _logic.updatePhysics(units->get(i), _dTime);
       //Game end
       if(_hero._health == 0)
         _logic._gameOver = true;

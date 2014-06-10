@@ -23,10 +23,14 @@ Scene::Scene() {
   _units = LinkedList<Unit*>();
   _minoIndex = 0;
   _coinIndex = 0;
-  for(int i = 0; i < MINOTAURS; i++)
+  for(byte i = 0; i < MINOTAURS; i++) {
     _minotaurs[i] = new Minotaur();
-  for(int i = 0; i < COINS; i++)
+    //_test[0][i] = _minotaurs[i];
+  }
+  for(byte i = 0; i < COINS; i++) {
     _coins[i] = new Coin();
+    //_test[1][i] = _minotaurs[i];
+  }
 }
 
 void Scene::addCoin(byte x, byte y) {

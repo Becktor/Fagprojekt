@@ -38,6 +38,7 @@ class Scene {
     byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex, _coinIndex;
     Minotaur* _minotaurs[MINOTAURS];
     Coin* _coins[COINS];
+    //Prop** _test[2];
     LinkedList<Prop*> _props;
     LinkedList<Unit*> _units;
   public:
