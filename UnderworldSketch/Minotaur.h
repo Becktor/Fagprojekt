@@ -4,9 +4,10 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Sprites.h"
+#include "Geo.h"
+
 
 const static byte
-    
     MINO_HEALTH = 3,
     MINO_ACC_WALK = 1,
     MINO_SPEED_WALK = 5,
@@ -29,8 +30,15 @@ const static byte
 class Minotaur : public Unit {
   public:
     Minotaur();
+    boolean detected;
     void fillHealth();
     void updateAI(int dTime, Logic *logic);
     void xCollide();
+  private:
+    word distToHeroX;
+    word distToHeroY;
+    word distance;
+    word heroXpos;
+    word heroYpos;
 };
 #endif
