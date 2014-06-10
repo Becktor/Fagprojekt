@@ -15,8 +15,8 @@ void newScene(Scene *scene, Point *entrance, Point *exit) {
 }
 
 void clearScene(Scene *scene) {
-  for(int i = 0; i < SCENE_WIDTH; i++)
-    for(int j = 0; j < SCENE_HEIGHT; j++)
+  for(byte i = 0; i < SCENE_WIDTH; i++)
+    for(byte j = 0; j < SCENE_HEIGHT; j++)
       scene->setTile(i, j, NONE);
   scene->clearUnits();
 }
@@ -25,8 +25,8 @@ void clearScene(Scene *scene) {
 void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom, boolean entrance, Point *portal) {
   byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
   getModuleTiles(module, &tiles);
-  for(int i = 0; i < MODULE_WIDTH; i++) {
-    for(int j = 0; j < MODULE_HEIGHT; j++) {
+  for(byte i = 0; i < MODULE_WIDTH; i++) {
+    for(byte j = 0; j < MODULE_HEIGHT; j++) {
       byte tile, tileData = (*tiles)[j][i];
       byte x = dX + i, y = dY + j;
       if(tileData == TILE_OBJECT) {
@@ -50,8 +50,8 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
 
 void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
   boolean hasEntrance = false, hasExit = false;
-  for(int i = 0; i < XMODULES; i++) {
-    for(int j = 0; j < YMODULES; j++) {
+  for(byte i = 0; i < XMODULES; i++) {
+    for(byte j = 0; j < YMODULES; j++) {
       boolean isPortalRoom = false, isEntrance = false;
       Point *portal;
       if(!hasEntrance && entrance->_x == i && entrance->_y == j) {
@@ -77,7 +77,7 @@ void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
   entrance->setPoint(x, y);
   for(;;) {
     byte r = random(5), newX = x + dir;
-    if(r == 4 || newX < 0 || newX >= XMODULES) {
+    if(r == 4 || newX >= XMODULES) {
       if(y == 0) {
         exit->setPoint(x, y);
         return;
@@ -95,39 +95,4 @@ void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
       modules[x][y] = TYPE1;
     }
   }
-  /*
-  short x = random(XMODULES), y = YMODULES - 1;
-  modules[x][y] = TYPE1;
-  entrance->setPoint(x, y);
-  while(true) {
-    short r;
-    if(x == 0)
-      r = random(0, 4);
-    else if(x == XMODULES - 1)
-      r = random(-3, 1);
-    else
-      r = random(-3, 4);
-    if(r < 0) {
-      x--;
-      if(modules[x][y] != TYPE3)
-        modules[x][y] = TYPE1;
-    } else if(r > 0) {
-      x++;
-      if(modules[x][y] != TYPE3)
-        modules[x][y] = TYPE1;   
-    } else {
-      if(y == 0) {
-        exit->setPoint(x, y);
-        return;
-      } else {
-        if(modules[x][y] != TYPE3)
-          modules[x][y] = TYPE2;
-        else
-          modules[x][y] = TYPE4;
-        y--;
-        modules[x][y] = TYPE3;
-      }
-    }
-  }
-  */
 }
