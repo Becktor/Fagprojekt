@@ -8,17 +8,13 @@
 #include "SceneGenerator.h"
 
 void newScene(Scene *scene, Point *entrance, Point *exit) {
-  clearScene(scene);
-  byte modules[XMODULES][YMODULES];
-  modulate(modules, entrance, exit);
-  generate(scene, modules, entrance, exit);
-}
-
-void clearScene(Scene *scene) {
   for(byte i = 0; i < SCENE_WIDTH; i++)
     for(byte j = 0; j < SCENE_HEIGHT; j++)
       scene->setTile(i, j, NONE);
   scene->clearUnits();
+  byte modules[XMODULES][YMODULES];
+  modulate(modules, entrance, exit);
+  generate(scene, modules, entrance, exit);
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
