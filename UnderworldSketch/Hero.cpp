@@ -25,7 +25,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _currentCell = 0;
     }
     setFR(HERO_WALKING_FR);
-    setDir(RIGHT);  
+    _dir = RIGHT;  
   }
   else if(_nunchuk->analogX > 160){
     _xVel = HERO_SPEED_RUN;
@@ -36,7 +36,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _currentCell = 0;
     }
     setFR(HERO_RUNNING_FR);
-    setDir(RIGHT); 
+    _dir = RIGHT;  
   }
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
     _xVel = -HERO_SPEED_WALK;
@@ -47,7 +47,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _currentCell = 0;
     }
     setFR(HERO_WALKING_FR);
-    setDir(LEFT);
+    _dir = LEFT;  
   }
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
     _xVel = -HERO_SPEED_RUN;
@@ -58,15 +58,15 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _currentCell = 0;
     }
     setFR(HERO_RUNNING_FR);
-    setDir(LEFT);
+    _dir = LEFT;
   }
   else 
   {
     if(_handle != HERO_IDLE_HANDLE)
     {
-      setHandle(HERO_IDLE_HANDLE);
-      setCells(HERO_IDLE_CELLS);
-      setCurrentCell(0);
+      _handle = HERO_IDLE_HANDLE;
+      _cells = HERO_IDLE_CELLS;
+      _currentCell = 0;
       setFR(HERO_IDLE_FR);
       _xVel = 0;
     }
@@ -77,9 +77,9 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     if(!_isDucking) {
       if(_handle != HERO_DUCKING_HANDLE)
       {
-      setHandle(HERO_DUCKING_HANDLE);
-      setCells(HERO_DUCKING_CELLS);
-      setCurrentCell(0);
+      _handle = HERO_DUCKING_HANDLE;
+      _cells = HERO_DUCKING_CELLS;
+      _currentCell = 0;
       setFR(HERO_DUCKING_FR);
       }
       _hitbox._height = HERO_HEIGHT_DUCK;
