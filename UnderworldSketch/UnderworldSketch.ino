@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -134,8 +134,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-//      Rect *hitbox = &(_hero._hitbox);
-      Rect *hitbox = &(units->get(1)->_hitbox);
+      Rect *hitbox = &(_hero._hitbox);
+//      Rect *hitbox = &(units->get(1)->_hitbox);
       int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
           cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
@@ -198,7 +198,7 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
 
 void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   Rect *hitbox = &(unit->_hitbox);
-  GD.Begin(RECTS);  
+  GD.Begin(RECTS);
   GD.ColorRGB(200, 5, 200);
 if(hitbox->_x - offsetX >0 && hitbox->_x - offsetX < 480 && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < 272){
 GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
@@ -237,7 +237,7 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
   GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
-}
+}\
 
 void drawScore(byte x, byte y, int n) {
  GD.cmd_number(x, y, 31, OPT_CENTER, n); 
