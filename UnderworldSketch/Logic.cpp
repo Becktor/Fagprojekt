@@ -20,10 +20,10 @@ void Logic::addAttack(Attack* attack) {
 
 boolean Logic::atExit(Prop *prop) {
   Rect* hitbox = &(prop->_hitbox);
-  char tileXEnd = worldToGrid(hitbox->_x + hitbox->_width - 1),
+  byte tileXEnd = worldToGrid(hitbox->_x + hitbox->_width - 1),
        tileYEnd = worldToGrid(hitbox->_y + hitbox->_height - 1);
-  for(char tileX = worldToGrid(hitbox->_x); tileX <= tileXEnd; tileX++) {
-    for(char tileY = worldToGrid(hitbox->_y); tileY <= tileYEnd; tileY++) {
+  for(byte tileX = worldToGrid(hitbox->_x); tileX <= tileXEnd; tileX++) {
+    for(byte tileY = worldToGrid(hitbox->_y); tileY <= tileYEnd; tileY++) {
       if(_scene->getTile(tileX, tileY) == EXIT)
         return true;
     }

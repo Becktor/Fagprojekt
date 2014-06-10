@@ -12,12 +12,11 @@ Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, 
 }
 
 void Unit::hit(byte damage, char force) {
-  _health -= damage;
+  if(damage >= _health)
+    _health = 0;
+  else
+    _health -= damage;
   _xVel = force;
-}
-
-boolean Unit::isDead() {
-  return _health <= 0;
 }
 
 void Unit::fillHealth() {}

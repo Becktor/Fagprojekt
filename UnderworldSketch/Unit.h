@@ -14,12 +14,11 @@
 class Logic;
 class Unit : public Prop {
   public:
-    byte _imageWidth;
-    char _dir, _health, _handle, _cells;
+    byte _imageWidth, _health;
+    char _dir, _handle, _cells;
 
     Unit(byte width, byte height, char health, byte imageWidth);
     void hit(byte damage, char force);
-    boolean isDead();
     virtual void fillHealth();
     void toggleDir();
     virtual void updateAI(int dTime, Logic *logic);

@@ -29,8 +29,7 @@ const static byte
 //    HERO_ATTACKING_CELLS = 1,
 //    HERO_DUCKING_CELLS= 1,
 //    HERO_IDLE_CELLS= 1;
-//    
-    
+
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 7,
     HERO_ATT_RANGE = 50,

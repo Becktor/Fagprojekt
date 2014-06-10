@@ -61,7 +61,7 @@ void setup() {
   //  GD.BitmapHandle(0);
   //  GD.cmd_loadimage(0, 0);
   //  GD.load("healsky.jpg");
-  Point _entrance = Point(0, 0), _exit = Point(0, 0);
+  Point _entrance = Point(), _exit = Point();
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance._x, _entrance._y);
@@ -87,7 +87,7 @@ void setup() {
       //UPDATE AI
       for(int i = 0; i < units->size(); i++) {
         Unit *unit = units->get(i);
-        if(unit->isDead()) {
+        if(unit->_health == 0) {
           units->remove(i);
           i--;
           _logic._score += 100;
@@ -100,25 +100,25 @@ void setup() {
         if (_logic.coinCol(props->get(i))){
           props->remove(i);
           i--;
-      }
+        }
       }
       for(int i = 0; i < units->size(); i++)
         _logic.executeAttacks(units->get(i));
       _logic.clearAttacks();
       if (_hero.getAttackSound())
-         GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
+         GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
       //UPDATE PHYSICS
       for(int i = 0; i < props->size(); i++)
         _logic.updatePhysics(props->get(i), _dTime);
       for(int i = 0; i < units->size(); i++)
         _logic.updatePhysics(units->get(i), _dTime);
       //Game end
-      if(_hero.isDead())
+      if(_hero._health == 0)
         _logic.setGameOver(true, false);
       if(_logic.isGameOver()) {
         if(_logic.isHeroWin()) {
           //GAME CONTINUE
-          GD.sample(EXIT,EXIT_LENGTH, 8000, ADPCM_SAMPLES);
+          GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
         } else {
           //GAME RESTART
         }
@@ -132,8 +132,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      Rect *hitbox = &(_hero._hitbox);
-//      Rect *hitbox = &(units->get(1)->_hitbox);
+//      Rect *hitbox = &(_hero._hitbox);
+      Rect *hitbox = &(units->get(1)->_hitbox);
       int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
           cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);

@@ -1,12 +1,7 @@
 #include "Geo.h"
 
-Point::Point(int x, int y) {
-  setPoint(x, y);
-}
-
-void Point::translate(int x, int y) {
-  _x += x;
-  _y += y;
+Point::Point() {
+  setPoint(0, 0);
 }
 
 void Point::setPoint(int x, int y) {
@@ -14,9 +9,9 @@ void Point::setPoint(int x, int y) {
   _y = y;
 }
 
-Rect::Rect(int x, int y, byte width, byte height) {
-  _x = x;
-  _y = y;
+Rect::Rect(byte width, byte height) {
+  _x = 0;
+  _y = 0;
   _width = width;
   _height = height;
 }

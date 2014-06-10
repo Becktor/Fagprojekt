@@ -1,7 +1,7 @@
 #include "Geo.h"
 #include "Prop.h"
 
-Prop::Prop(byte width, byte height) : _hitbox(0, 0, width, height) {
+Prop::Prop(byte width, byte height) : _hitbox(width, height) {
   _levitate = false;
   _xVel = 0;
   _yVel = 0;
