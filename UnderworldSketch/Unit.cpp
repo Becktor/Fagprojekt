@@ -5,7 +5,7 @@
 
 Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, height) {
   _health = health;
-  _dir = LEFT;
+  _dir = randDir();
   _imageWidth = imageWidth;
   _handle = 0;
   _cells = 0;
@@ -15,20 +15,11 @@ Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, 
 }
 
 void Unit::hit(byte damage, char force) {
-  _health -= damage;
+  if(damage >= _health)
+    _health = 0;
+  else
+    _health -= damage;
   _xVel = force;
-}
-
-char Unit::getDir() {
-  return _dir;
-}
-
-int Unit::getHandle() {
-  return _handle;
-}
-
-int Unit::getCells() {
-  return _cells;
 }
 
 int Unit::getCurrentCell() {
@@ -39,27 +30,7 @@ int Unit::getFR() {
   return _FR;
 }
 
-boolean Unit::isDead() {
-  return _health <= 0;
-}
-
 void Unit::fillHealth() {}
-
-void Unit::setDir(Direction dir) {
-  _dir = dir;
-}
-
-void Unit::setHealth(char health) {
-  _health = health;
-}
-
-void Unit::setHandle(int handle) {
-   _handle = handle;
-}
-
-void Unit::setCells(int cells) {
-   _cells = cells;
-}
 
 void Unit::setCurrentCell(int currentCell) {
    _currentCell = currentCell;
@@ -70,7 +41,7 @@ void Unit::setFR(long frameRate) {
 }
 
 void Unit::toggleDir() {
-  _dir = _dir * -1;
+  _dir = -1 * _dir;
 }
 
 void Unit::checkFrameChange(long milis) {

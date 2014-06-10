@@ -7,5 +7,6 @@ enum Direction{
   UP = -1,
   DOWN = 1
 };
-#endif
 
+char randDir();
+#endif

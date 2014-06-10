@@ -13,12 +13,13 @@ const static byte GRAVITY = 1;
 
 class Logic {
   private:
-    boolean _gameOver, _heroWin, _hasAttack;
     Scene *_scene;
     LinkedList<Attack*> _attacks;
     Prop *_hero;
   public:
+    boolean _gameOver, _heroWin, _hasAttack;
     int _score;
+
     Logic(Scene *scene);
     void addAttack(Attack* attack);
     boolean atExit(Prop *prop);
@@ -26,14 +27,10 @@ class Logic {
     boolean coinCol(Prop *prop);
     void executeAttacks(Prop* prop);
     Prop* getHero();
-    boolean isGameOver();
     boolean isGrounded(Prop *prop);
-    boolean isHeroWin();
     boolean isWalkable(int x, int y);
     boolean movePropHoriz(Prop *prop, int dX);
     boolean movePropVerti(Prop *prop, int dY);
-    void restartGame();
-    void setGameOver(boolean gameOver, boolean heroWon);
     void setHero(Prop *hero);
     void updatePhysics(Prop* prop, int dTime);
 };

@@ -11,7 +11,7 @@
 #include "Sprites.h"
 
 const static byte
-    
+
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 7,
     HERO_ATT_RANGE = 50,

@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
+#define NUNCHUCK 0 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -61,13 +61,14 @@ void setup() {
   //  GD.BitmapHandle(0);
   //  GD.cmd_loadimage(0, 0);
   //  GD.load("healsky.jpg");
-  Point _entrance = Point(0, 0), _exit = Point(0, 0);
+  Point _entrance = Point(), _exit = Point();
   newScene(&_scene, &_entrance, &_exit);
   _logic.setHero(&_hero);
   _scene.addUnit(&_hero, _entrance._x, _entrance._y);
 
   Coin _coin = Coin();
   _scene.addProp(&_coin, _exit._x, _exit._y);
+  //_scene.setTile(1, 1, 6);
 
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Prop*>* props = _scene.getProps();
@@ -86,7 +87,7 @@ void setup() {
       //UPDATE AI
       for(int i = 0; i < units->size(); i++) {
         Unit *unit = units->get(i);
-        if(unit->isDead()) {
+        if(unit->_health == 0) {
           units->remove(i);
           i--;
           _logic._score += 100;
@@ -99,30 +100,32 @@ void setup() {
         if (_logic.coinCol(props->get(i))){
           props->remove(i);
           i--;
-      }
+        }
       }
       for(int i = 0; i < units->size(); i++)
         _logic.executeAttacks(units->get(i));
       _logic.clearAttacks();
       if (_hero.getAttackSound())
-         GD.sample(ATTACK,ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
+         GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
       //UPDATE PHYSICS
       for(int i = 0; i < props->size(); i++)
         _logic.updatePhysics(props->get(i), _dTime);
       for(int i = 0; i < units->size(); i++)
         _logic.updatePhysics(units->get(i), _dTime);
       //Game end
-      if(_hero.isDead())
-        _logic.setGameOver(true, false);
-      if(_logic.isGameOver()) {
-        if(_logic.isHeroWin()) {
+      if(_hero._health == 0)
+        _logic._gameOver = true;
+        _logic._heroWin = false;
+      if(_logic._gameOver) {
+        if(_logic._heroWin) {
           //GAME CONTINUE
-          GD.sample(EXIT,EXIT_LENGTH, 8000, ADPCM_SAMPLES);
+          GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
         } else {
           //GAME RESTART
         }
         newScene(&_scene, &_entrance, &_exit);
-        _logic.restartGame();
+        _logic._gameOver = false;
+        _logic._heroWin = false;
         _scene.addUnit(&_hero, _entrance._x, _entrance._y);
       }
 
@@ -131,8 +134,8 @@ void setup() {
       GD.Clear();
       //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
-      Rect *hitbox = &(_hero._hitbox);
-//      Rect *hitbox = &(units->get(1)->_hitbox);
+//      Rect *hitbox = &(_hero._hitbox);
+      Rect *hitbox = &(units->get(1)->_hitbox);
       int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
           cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
       drawScene(&_scene, cameraX, cameraY);
@@ -158,24 +161,12 @@ void setup() {
 void loop() { }
 
 void drawScene(Scene *scene, int offsetX, int offsetY) {
-  GD.ColorRGB(255, 255, 255);
-  int tileX = offsetX / TILE_SIZE,
-      tileY = offsetY / TILE_SIZE,
-      tileXEnd = (offsetX + SCREEN_WIDTH - 1) / TILE_SIZE,
-      tileYEnd = (offsetY + SCREEN_HEIGHT - 1) / TILE_SIZE;
-  if(offsetX < 0)
-    tileX--;
-  if(offsetY < 0)
-    tileY--;
-  if(offsetX + SCREEN_WIDTH - 1  < 0)
-    tileXEnd--;
-  if(offsetY + SCREEN_HEIGHT - 1  < 0)
-    tileYEnd--;
-  for(int i = tileX; i <= tileXEnd; i++) {
-    for(int j = tileY; j <= tileYEnd; j++) {
-      drawTile(i, j, scene->getTile(i, j), offsetX, offsetY);
-    }
-  }
+  GD.ColorRGB(255, 255, 255); //Slated for removal
+  byte tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
+       tileYEnd = worldToGrid(offsetY + SCREEN_HEIGHT - 1);
+  for(byte tileX = worldToGrid(offsetX); tileX <= tileXEnd; tileX++)
+    for(byte tileY = worldToGrid(offsetY); tileY <= tileYEnd; tileY++)
+      drawTile(tileX, tileY, scene->getTile(tileX, tileY), offsetX, offsetY);
 }
 
 void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
@@ -219,21 +210,19 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
   int half_Width = unit->_imageWidth / 2;
-  int xfix = 0;
-  xfix = (unit->_imageWidth - hitbox->_width)/2;
+  int xfix = (unit->_imageWidth - hitbox->_width)/2;
   unit->checkFrameChange(currentMillis);
-  GD.BitmapHandle(unit->getHandle());
-  if(unit->getDir() == -1) {
+  GD.BitmapHandle(unit->_handle);
+  if(unit->_dir == LEFT) {
     xfix = -xfix + unit->_imageWidth - hitbox->_width;
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
   }
-//    GD.Cell(-(currentMillis >> changeSpeed) & unit->getCells());
   GD.Cell(unit->getCurrentCell());
   GD.Vertex2f(((hitbox->_x - offsetX)-xfix) * 16, (hitbox->_y - offsetY) * 16);
-  if(unit->getDir() == -1) {
+  if(unit->_dir == LEFT) {
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
@@ -245,10 +234,10 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = &(prop->_hitbox);
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
-  GD.PointSize(16*hitbox->_width);
+  GD.PointSize(16 * hitbox->_width);
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y-offsetY);
+  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
 }
 
 void drawScore(byte x, byte y, int n) {

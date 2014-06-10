@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-enum Tiles{
+enum Tiles {
   NONE = 0,
   PLATFORM = 1,
   ROCK = 2,

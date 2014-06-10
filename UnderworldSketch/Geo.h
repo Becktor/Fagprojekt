@@ -14,8 +14,7 @@ class Point {
     int _x;
     int _y;
 
-    Point(int x, int y);
-    void translate(int x, int y);
+    Point();
     void setPoint(int x, int y);
 };
 
@@ -26,7 +25,7 @@ class Rect {
     byte _width;
     byte _height;
 
-    Rect(int x, int y, byte width, byte height);
+    Rect(byte width, byte height);
     boolean contains(Rect *r);
     void setPos(int x, int y);
     void translate(int x, int y);

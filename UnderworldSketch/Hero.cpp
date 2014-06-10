@@ -6,23 +6,23 @@
 #include "Hero.h"
 
 Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH, HERO_IMAGE_WIDTH),
-                                      _attackArea(0, 0, HERO_ATT_RANGE, HERO_HEIGHT_STAND),
+                                      _attackArea(HERO_ATT_RANGE, HERO_HEIGHT_STAND),
                                       _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-    
+    _handle = HERO_IDLE_HANDLE;
+    _cells = HERO_IDLE_CELLS;
 
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     _xVel = HERO_SPEED_WALK;
-    
-    if(getHandle() != HERO_WALKING_HANDLE)
+    if(_handle != HERO_WALKING_HANDLE)
     {
-      setHandle(HERO_WALKING_HANDLE);
-      setCells(HERO_WALKING_CELLS);
-      setCurrentCell(0);
+      _handle = HERO_WALKING_HANDLE;
+      _cells = HERO_WALKING_CELLS;
+      _currentCell = 0;
     }
     setFR(HERO_WALKING_FR);
     setDir(RIGHT);  
@@ -31,9 +31,9 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     _xVel = HERO_SPEED_RUN;
     if(getHandle() != HERO_WALKING_HANDLE)
     {
-      setHandle(HERO_WALKING_HANDLE);
-      setCells(HERO_WALKING_CELLS);
-      setCurrentCell(0);
+      _handle = HERO_WALKING_HANDLE;
+      _cells = HERO_WALKING_CELLS;
+      _currentCell = 0;
     }
     setFR(HERO_RUNNING_FR);
     setDir(RIGHT); 
@@ -42,9 +42,9 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     _xVel = -HERO_SPEED_WALK;
     if(getHandle() != HERO_WALKING_HANDLE)
     {
-      setHandle(HERO_WALKING_HANDLE);
-      setCells(HERO_WALKING_CELLS);
-      setCurrentCell(0);
+      _handle = HERO_WALKING_HANDLE;
+      _cells = HERO_WALKING_CELLS;
+      _currentCell = 0;
     }
     setFR(HERO_WALKING_FR);
     setDir(LEFT);
@@ -53,9 +53,9 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     _xVel = -HERO_SPEED_RUN;
     if(getHandle() != HERO_WALKING_HANDLE)
     {
-      setHandle(HERO_WALKING_HANDLE);
-      setCells(HERO_WALKING_CELLS);
-      setCurrentCell(0);
+      _handle = HERO_WALKING_HANDLE;
+      _cells = HERO_WALKING_CELLS;
+      _currentCell = 0;
     }
     setFR(HERO_RUNNING_FR);
     setDir(LEFT);
@@ -110,19 +110,19 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     if(_isDucking && logic->atExit(this)) {
       //Map exit
       _isAttacking = true;
-      logic->setGameOver(true, true);
+      logic->_gameOver = true;
+      logic->_heroWin = true;
     } else if(!_isAttacking) {
       //Attack
       _isAttacking = true;
       _attackSound = true;
-      char dir = getDir();
-      if(dir == LEFT)
+      if(_dir == LEFT)
         _attackArea._x = _hitbox._x - HERO_ATT_RANGE;
       else
         _attackArea._x = _hitbox._x + _hitbox._width;
       _attackArea._y = _hitbox._y;
       _attackArea._height = _hitbox._height;
-      _attack._force = HERO_ATT_FORCE * dir;
+      _attack._force = HERO_ATT_FORCE * _dir;
       logic->addAttack(&_attack);
     } else 
       _attackSound = false;

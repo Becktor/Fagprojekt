@@ -10,7 +10,8 @@
 
 Logic::Logic(Scene *scene) {
   _scene = scene;
-  restartGame();
+  _gameOver = false;
+  _heroWin = false;
   _score = 0;
 }
 
@@ -20,10 +21,10 @@ void Logic::addAttack(Attack* attack) {
 
 boolean Logic::atExit(Prop *prop) {
   Rect* hitbox = &(prop->_hitbox);
-  char tileXEnd = worldToGrid(hitbox->_x + hitbox->_width - 1),
+  byte tileXEnd = worldToGrid(hitbox->_x + hitbox->_width - 1),
        tileYEnd = worldToGrid(hitbox->_y + hitbox->_height - 1);
-  for(char tileX = worldToGrid(hitbox->_x); tileX <= tileXEnd; tileX++) {
-    for(char tileY = worldToGrid(hitbox->_y); tileY <= tileYEnd; tileY++) {
+  for(byte tileX = worldToGrid(hitbox->_x); tileX <= tileXEnd; tileX++) {
+    for(byte tileY = worldToGrid(hitbox->_y); tileY <= tileYEnd; tileY++) {
       if(_scene->getTile(tileX, tileY) == EXIT)
         return true;
     }
@@ -60,10 +61,6 @@ Prop* Logic::getHero() {
   return _hero;
 }
 
-boolean Logic::isGameOver() {
-  return _gameOver;
-}
-
 boolean Logic::isGrounded(Prop *prop) {
   Rect *hitbox = &(prop->_hitbox);
   int y = hitbox->_y + hitbox->_height;
@@ -78,10 +75,6 @@ boolean Logic::isGrounded(Prop *prop) {
     }
   }
   return false;
-}
-
-boolean Logic::isHeroWin() {
-  return _heroWin;
 }
 
 boolean Logic::isWalkable(int x, int y) {
@@ -147,16 +140,6 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   }
   hitbox->_y += dY;
   return true;
-}
-
-void Logic::restartGame() {
-  _gameOver = false;
-  _heroWin = false;
-}
-
-void Logic::setGameOver(boolean gameOver, boolean heroWin) {
-  _gameOver = gameOver;
-  _heroWin = heroWin;
 }
 
 void Logic::setHero(Prop *hero) {
