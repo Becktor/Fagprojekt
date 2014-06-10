@@ -41,7 +41,7 @@ void loop();
 void drawProp(Prop *prop, int offsetX, int offsetY);
 void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawScore(byte x, byte y, int n);
-void drawTile(int x, int y, byte tile, int offsetX, int offsetY);
+void drawTile(byte x, byte y, byte tile, int offsetX, int offsetY);
 void drawUnit(Unit *unit, int offsetX, int offsetY);
 
 void setup() {
@@ -162,17 +162,17 @@ void loop() { }
 
 void drawScene(Scene *scene, int offsetX, int offsetY) {
   GD.ColorRGB(255, 255, 255); //Slated for removal
-  byte tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
+  char tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
        tileYEnd = worldToGrid(offsetY + SCREEN_HEIGHT - 1);
-  for(byte tileX = worldToGrid(offsetX); tileX <= tileXEnd; tileX++)
-    for(byte tileY = worldToGrid(offsetY); tileY <= tileYEnd; tileY++)
-      drawTile(tileX, tileY, scene->getTile(tileX, tileY), offsetX, offsetY);
-}
-
-void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
-  if(tile != NONE) {
-    GD.BitmapHandle(TILE_HANDLE);
-    GD.Vertex2f(((x * TILE_SIZE) - offsetX) * 16, ((y * TILE_SIZE) - offsetY) * 16);
+  for(char tileX = worldToGrid(offsetX); tileX <= tileXEnd; tileX++) {
+    for(char tileY = worldToGrid(offsetY); tileY <= tileYEnd; tileY++) {
+      byte tile = scene->getTile(tileX, tileY);
+      if(tile != NONE) {
+        int x = tileX, y = tileY;
+        GD.BitmapHandle(TILE_HANDLE);
+        GD.Vertex2f(((x * TILE_SIZE) - offsetX) * 16, ((y * TILE_SIZE) - offsetY) * 16);
+      }
+    }
   }
 }
 
@@ -194,7 +194,6 @@ void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {
 //    GD.cmd_translate(F16(-21), F16(0));
 //    GD.cmd_setmatrix();
 //  }
-  
 //}
 
 void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
