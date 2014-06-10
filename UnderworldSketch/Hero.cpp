@@ -13,33 +13,33 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_H
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 
-    setHandle(HERO_IDLE_HANDLE);
-    setCells(HERO_IDLE_CELLS);
+    _handle = HERO_IDLE_HANDLE;
+    _cells = HERO_IDLE_CELLS;
 
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     _xVel = HERO_SPEED_WALK;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
-    setDir(RIGHT);  
+    _handle = HERO_WALKING_HANDLE;
+    _cells = HERO_WALKING_CELLS;
+    _dir = RIGHT;
   }
   else if(_nunchuk->analogX > 160){
     _xVel = HERO_SPEED_RUN;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
-    setDir(RIGHT); 
+    _handle = HERO_WALKING_HANDLE;
+    _cells = HERO_WALKING_CELLS;
+    _dir = RIGHT; 
   }
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
     _xVel = -HERO_SPEED_WALK;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
-    setDir(LEFT);
+    _handle = HERO_WALKING_HANDLE;
+    _cells = HERO_WALKING_CELLS;
+    _dir = LEFT;
   }
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
     _xVel = -HERO_SPEED_RUN;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
-    setDir(LEFT);
+    _handle = HERO_WALKING_HANDLE;
+    _cells = HERO_WALKING_CELLS;
+    _dir = LEFT;
   }
   else 
     _xVel = 0;
@@ -80,14 +80,13 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack
       _isAttacking = true;
       _attackSound = true;
-      char dir = getDir();
-      if(dir == LEFT)
+      if(_dir == LEFT)
         _attackArea._x = _hitbox._x - HERO_ATT_RANGE;
       else
         _attackArea._x = _hitbox._x + _hitbox._width;
       _attackArea._y = _hitbox._y;
       _attackArea._height = _hitbox._height;
-      _attack._force = HERO_ATT_FORCE * dir;
+      _attack._force = HERO_ATT_FORCE * _dir;
       logic->addAttack(&_attack);
     } else 
       _attackSound = false;

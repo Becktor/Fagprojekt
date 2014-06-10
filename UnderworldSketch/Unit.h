@@ -13,22 +13,14 @@
 
 class Logic;
 class Unit : public Prop {
-  private:
-    char _dir, _health, _handle, _cells;
   public:
     byte _imageWidth;
-    
+    char _dir, _health, _handle, _cells;
+
     Unit(byte width, byte height, char health, byte imageWidth);
-    char getDir();
-    int getHandle();
-    int getCells();
     void hit(byte damage, char force);
     boolean isDead();
     virtual void fillHealth();
-    void setDir(Direction dir);
-    void setHealth(char health);
-    void setHandle(int handle);
-    void setCells(int cells);
     void toggleDir();
     virtual void updateAI(int dTime, Logic *logic);
     void xCollide();

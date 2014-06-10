@@ -68,6 +68,7 @@ void setup() {
 
   Coin _coin = Coin();
   _scene.addProp(&_coin, _exit._x, _exit._y);
+  //_scene.setTile(1, 1, 6);
 
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Prop*>* props = _scene.getProps();
@@ -222,20 +223,20 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
   int changeSpeed = 2;
   int xfix = 0;
   xfix = ((unit->_imageWidth) - (hitbox->_width))/4;
-  if(unit->getCells() == 1)
+  if(unit->_cells == 1)
     changeSpeed=2;
 
-  GD.BitmapHandle(unit->getHandle());
-  if(unit->getDir() == -1) {
+  GD.BitmapHandle(unit->_handle);
+  if(unit->_dir == -1) {
     xfix = -xfix + unit->_imageWidth - hitbox->_width;
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
   }
-    GD.Cell(-(currentMillis >> changeSpeed) & unit->getCells());
-  GD.Vertex2f(((hitbox->_x - offsetX)-xfix) * 16, (hitbox->_y - offsetY) * 16);
-  if(unit->getDir() == -1) {
+    GD.Cell(-(currentMillis >> changeSpeed) & unit->_cells);
+  GD.Vertex2f(((hitbox->_x - offsetX) - xfix) * 16, (hitbox->_y - offsetY) * 16);
+  if(unit->_dir == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
@@ -247,10 +248,10 @@ void drawProp(Prop* prop, int offsetX, int offsetY){
   Rect *hitbox = &(prop->_hitbox);
   GD.Begin(BITMAPS);
   GD.ColorRGB(255, 255, 255);
-  GD.PointSize(16*hitbox->_width);
+  GD.PointSize(16 * hitbox->_width);
   GD.Begin(POINTS);
   GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y-offsetY);
+  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
 }
 
 void drawScore(byte x, byte y, int n) {

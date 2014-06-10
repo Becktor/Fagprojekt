@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Direction.h"
 #include "Tiles.h"
 #include "Geo.h"
 #include "Module.h"
@@ -33,7 +34,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
           if(entrance)
             tile = ENTRANCE;
           else
-            tile = EXIT;
+            tile = 6; //For some reason, this doesn't work if its EXIT.
           portal->setPoint(x, y);
         } else {
           scene->addMinotaur(x, y);
@@ -70,30 +71,31 @@ void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, P
 }
 
 void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
-  /*
   byte x = random(XMODULES), y = YMODULES - 1;
-  char dir = random(2) * 2 - 1;
+  char dir = randDir();
   modules[x][y] = TYPE1;
   entrance->setPoint(x, y);
   for(;;) {
     byte r = random(5), newX = x + dir;
     if(r == 4 || newX < 0 || newX >= XMODULES) {
       if(y == 0) {
-        exit->setPoint(x, y);        
+        exit->setPoint(x, y);
         return;
       } else {
         modules[x][y]++; //TYPE1 becomes TYPE2, TYPE3 becomes TYPE4, no other possibilities.
         y--;
         modules[x][y] = TYPE3;
         if(r == 4)
-          dir = random(2) * 2 - 1;
+          dir = randDir();
+        else
+          dir = -1 * dir;
       }
     } else {
       x = newX;
       modules[x][y] = TYPE1;
     }
   }
-  */
+  /*
   short x = random(XMODULES), y = YMODULES - 1;
   modules[x][y] = TYPE1;
   entrance->setPoint(x, y);
@@ -127,4 +129,5 @@ void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
       }
     }
   }
+  */
 }
