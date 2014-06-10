@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 0 //Whether or not a nunchuck is connected
+#define NUNCHUCK 1 //Whether or not a nunchuck is connected
 
 //Constants
 const static int
@@ -38,11 +38,11 @@ const static int
 //Function declarations
 void setup();
 void loop();
+
 void drawProp(Prop *prop, int offsetX, int offsetY);
 void drawScene(Scene *scene, int offsetX, int offsetY);
-void drawScore(byte x, byte y, int n);
-void drawTile(byte x, byte y, byte tile, int offsetX, int offsetY);
 void drawUnit(Unit *unit, int offsetX, int offsetY);
+void drawVertex2f(int x, int y, int offsetX, int offsetY);
 
 void setup() {
   //INIT
@@ -130,25 +130,29 @@ void setup() {
       }
 
       //DRAW LOGIC
-      GD.ClearColorRGB(255,255,255);
+      GD.ClearColorRGB(255,255,255); //Background
       GD.Clear();
-      //GD.Begin(RECTS);
       GD.Begin(BITMAPS);
+      //Calculations
       Rect *hitbox = &(_hero._hitbox);
-//      Rect *hitbox = &(units->get(1)->_hitbox);
+      //Rect *hitbox = &(units->get(1)->_hitbox);
       int cameraX = hitbox->_x + (hitbox->_width - SCREEN_WIDTH) / 2,
           cameraY = hitbox->_y + (hitbox->_height - SCREEN_HEIGHT) / 2;
+      //Draw scene
       drawScene(&_scene, cameraX, cameraY);
-      GD.ColorRGB(255, 0, 0);
-      for(int i = 0; i < units->size(); i++)
+      GD.ColorRGB(255, 0, 0); //Obsolete
+      //Draw objects
+      for(byte i = 0; i < units->size(); i++)
         drawUnit(units->get(i), cameraX, cameraY, currentMillis);
-      for(int i = 0; i < props->size(); i++)
+      for(byte i = 0; i < props->size(); i++)
         drawProp(props->get(i), cameraX, cameraY);
-      drawScore(40, 40, _logic._score);
-      GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis); 
-      //GD.Begin(BITMAPS);
-      //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
+      //Draw score
+      GD.cmd_number(40, 40, 31, OPT_CENTER, _logic._score); 
+      //Draw currentmilis/fps - temporary
+      GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
+      //Complete drawing
       GD.swap();
+      //Time calculations
       counter++; //Frame counter
       currentMillis = millis();
     }
@@ -160,6 +164,16 @@ void setup() {
 
 void loop() { }
 
+void drawProp(Prop* prop, int offsetX, int offsetY){
+  Rect *hitbox = &(prop->_hitbox);
+  GD.Begin(BITMAPS);
+  //GD.ColorRGB(255, 255, 255); What is the point??
+  GD.PointSize(16 * hitbox->_width);
+  GD.Begin(POINTS);
+  GD.ColorRGB(0xff8000); // orange
+  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
+}
+
 void drawScene(Scene *scene, int offsetX, int offsetY) {
   GD.ColorRGB(255, 255, 255); //Slated for removal
   char tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
@@ -170,46 +184,26 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
       if(tile != NONE) {
         int x = tileX, y = tileY;
         GD.BitmapHandle(TILE_HANDLE);
-        GD.Vertex2f(((x * TILE_SIZE) - offsetX) * 16, ((y * TILE_SIZE) - offsetY) * 16);
+        drawVertex2f(gridToWorld(x) - offsetX, gridToWorld(y) - offsetY);
       }
     }
   }
 }
 
-//void drawUnit(Unit* unit, int offsetX, int offsetY) {
-//  Rect *hitbox = unit->getHitbox();
-//  GD.ColorRGB(255, 255, 255);
-//  if(unit->getDir() == LEFT) {
-//    GD.cmd_translate(F16(21), F16(0));
-//    GD.cmd_scale(F16(-1), F16(1));
-//    GD.cmd_translate(F16(-21), F16(0));
-//    GD.cmd_setmatrix();
-//  }
-//  GD.BitmapHandle(SONICW_HANDLE);
-//  GD.Cell((hitbox->getX() >> 4) & 7);
-//  GD.Vertex2f((hitbox->getX() - offsetX) * 16, (hitbox->getY() - offsetY) * 16);
-//  if(unit->getDir() == LEFT) {
-//    GD.cmd_translate(F16(21), F16(0));
-//    GD.cmd_scale(F16(-1), F16(1));
-//    GD.cmd_translate(F16(-21), F16(0));
-//    GD.cmd_setmatrix();
-//  }
-//}
-
 void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
   Rect *hitbox = &(unit->_hitbox);
   GD.Begin(RECTS);
   GD.ColorRGB(200, 5, 200);
-if(hitbox->_x - offsetX >0 && hitbox->_x - offsetX < 480 && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < 272){
-GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
-GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height - offsetY);
-}
+  if(hitbox->_x - offsetX > 0 && hitbox->_x - offsetX < SCREEN_WIDTH && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < SCREEN_HEIGHT){
+    GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
+    GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y + hitbox->_height - offsetY);
+  }
   GD.Begin(BITMAPS);
 
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
   int half_Width = unit->_imageWidth / 2;
-  int xfix = (unit->_imageWidth - hitbox->_width)/2;
+  int xfix = (unit->_imageWidth - hitbox->_width) / 2;
   unit->checkFrameChange(currentMillis);
   GD.BitmapHandle(unit->_handle);
   if(unit->_dir == LEFT) {
@@ -220,7 +214,7 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
     GD.cmd_setmatrix();
   }
   GD.Cell(unit->getCurrentCell());
-  GD.Vertex2f(((hitbox->_x - offsetX)-xfix) * 16, (hitbox->_y - offsetY) * 16);
+  drawVertex2f(hitbox->_x - offsetX - xfix, hitbox->_y - offsetY);
   if(unit->_dir == LEFT) {
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
@@ -229,16 +223,6 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
   }
 }
 
-void drawProp(Prop* prop, int offsetX, int offsetY){
-  Rect *hitbox = &(prop->_hitbox);
-  GD.Begin(BITMAPS);
-  GD.ColorRGB(255, 255, 255);
-  GD.PointSize(16 * hitbox->_width);
-  GD.Begin(POINTS);
-  GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
-}\
-
-void drawScore(byte x, byte y, int n) {
- GD.cmd_number(x, y, 31, OPT_CENTER, n); 
+void drawVertex2f(int x, int y) {
+  GD.Vertex2f(x* 16, y * 16);
 }
