@@ -12,41 +12,76 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_H
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-
-    setHandle(HERO_IDLE_HANDLE);
-    setCells(HERO_IDLE_CELLS);
+    
 
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     _xVel = HERO_SPEED_WALK;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
+    
+    if(getHandle() != HERO_WALKING_HANDLE)
+    {
+      setHandle(HERO_WALKING_HANDLE);
+      setCells(HERO_WALKING_CELLS);
+      setCurrentCell(0);
+    }
+    setFR(HERO_WALKING_FR);
     setDir(RIGHT);  
   }
   else if(_nunchuk->analogX > 160){
     _xVel = HERO_SPEED_RUN;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
+    if(getHandle() != HERO_WALKING_HANDLE)
+    {
+      setHandle(HERO_WALKING_HANDLE);
+      setCells(HERO_WALKING_CELLS);
+      setCurrentCell(0);
+    }
+    setFR(HERO_RUNNING_FR);
     setDir(RIGHT); 
   }
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
     _xVel = -HERO_SPEED_WALK;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
+    if(getHandle() != HERO_WALKING_HANDLE)
+    {
+      setHandle(HERO_WALKING_HANDLE);
+      setCells(HERO_WALKING_CELLS);
+      setCurrentCell(0);
+    }
+    setFR(HERO_WALKING_FR);
     setDir(LEFT);
   }
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
     _xVel = -HERO_SPEED_RUN;
-    setHandle(HERO_WALKING_HANDLE);
-    setCells(HERO_WALKING_CELLS);
+    if(getHandle() != HERO_WALKING_HANDLE)
+    {
+      setHandle(HERO_WALKING_HANDLE);
+      setCells(HERO_WALKING_CELLS);
+      setCurrentCell(0);
+    }
+    setFR(HERO_RUNNING_FR);
     setDir(LEFT);
   }
   else 
-    _xVel = 0;
+  {
+    if(getHandle() != HERO_IDLE_HANDLE)
+    {
+      setHandle(HERO_IDLE_HANDLE);
+      setCells(HERO_IDLE_CELLS);
+      setCurrentCell(0);
+      setFR(HERO_IDLE_FR);
+      _xVel = 0;
+    }
+  }
 
   //Hero duck - If analogX is lower than 90
   if(45 > _nunchuk -> analogY) {
     if(!_isDucking) {
+      if(getHandle() != HERO_IDLE_HANDLE)
+      {
+      setHandle(HERO_DUCKING_HANDLE);
+      setCells(HERO_DUCKING_CELLS);
+      setCurrentCell(0);
+      setFR(HERO_DUCKING_FR);
+      }
       _hitbox._height = HERO_HEIGHT_DUCK;
       _hitbox._y += HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK;
       //_hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);

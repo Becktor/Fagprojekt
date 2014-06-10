@@ -142,7 +142,7 @@ void setup() {
       for(int i = 0; i < props->size(); i++)
         drawProp(props->get(i), cameraX, cameraY);
       drawScore(40, 40, _logic._score);
-      GD.cmd_number(40, 136, 31, OPT_CENTER, _dTime); 
+      GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis); 
       //GD.Begin(BITMAPS);
       //GD.Vertex2ii(x * TILE_SIZE, y * TILE_SIZE, 0);
       GD.swap();
@@ -219,12 +219,9 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
   int half_Width = unit->_imageWidth / 2;
-  int changeSpeed = 2;
   int xfix = 0;
-  xfix = ((unit->_imageWidth) - (hitbox->_width))/4;
-  if(unit->getCells() == 1)
-    changeSpeed=2;
-
+  xfix = (unit->_imageWidth - hitbox->_width)/2;
+  unit->checkFrameChange(currentMillis);
   GD.BitmapHandle(unit->getHandle());
   if(unit->getDir() == -1) {
     xfix = -xfix + unit->_imageWidth - hitbox->_width;
@@ -233,7 +230,8 @@ GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y+hitbox->_height -
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
   }
-    GD.Cell(-(currentMillis >> changeSpeed) & unit->getCells());
+//    GD.Cell(-(currentMillis >> changeSpeed) & unit->getCells());
+  GD.Cell(unit->getCurrentCell());
   GD.Vertex2f(((hitbox->_x - offsetX)-xfix) * 16, (hitbox->_y - offsetY) * 16);
   if(unit->getDir() == -1) {
     GD.cmd_translate(F16(half_Width), F16(0));

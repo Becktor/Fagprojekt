@@ -14,7 +14,8 @@
 class Logic;
 class Unit : public Prop {
   private:
-    char _dir, _health, _handle, _cells;
+    char _dir, _health, _handle, _cells, _currentCell;
+    long _FR, _millis;
   public:
     byte _imageWidth;
     
@@ -22,6 +23,8 @@ class Unit : public Prop {
     char getDir();
     int getHandle();
     int getCells();
+    int getCurrentCell();
+    int getFR();
     void hit(byte damage, char force);
     boolean isDead();
     virtual void fillHealth();
@@ -29,6 +32,9 @@ class Unit : public Prop {
     void setHealth(char health);
     void setHandle(int handle);
     void setCells(int cells);
+    void setCurrentCell(int currentCell);
+    void setFR(long frameRate);
+    void checkFrameChange(long milis);
     void toggleDir();
     virtual void updateAI(int dTime, Logic *logic);
     void xCollide();

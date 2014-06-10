@@ -9,6 +9,9 @@ Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, 
   _imageWidth = imageWidth;
   _handle = 0;
   _cells = 0;
+  _currentCell = 0;
+  _FR = 0;
+  _millis = 0;
 }
 
 void Unit::hit(byte damage, char force) {
@@ -26,6 +29,14 @@ int Unit::getHandle() {
 
 int Unit::getCells() {
   return _cells;
+}
+
+int Unit::getCurrentCell() {
+  return _currentCell;
+}
+
+int Unit::getFR() {
+  return _FR;
 }
 
 boolean Unit::isDead() {
@@ -50,9 +61,29 @@ void Unit::setCells(int cells) {
    _cells = cells;
 }
 
+void Unit::setCurrentCell(int currentCell) {
+   _currentCell = currentCell;
+}
+
+void Unit::setFR(long frameRate) {
+   _FR = frameRate;
+}
+
 void Unit::toggleDir() {
   _dir = _dir * -1;
 }
+
+void Unit::checkFrameChange(long milis) {
+  if((milis - _millis) > _FR)
+  {   
+   _millis = milis;
+   if(_currentCell == _cells)
+    _currentCell = 0; 
+   else
+    _currentCell++; 
+  }
+}
+
 
 void Unit::updateAI(int dTime, Logic *logic) { }
 
