@@ -12,9 +12,6 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_H
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
-    _handle = HERO_IDLE_HANDLE;
-    _cells = HERO_IDLE_CELLS;
-
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
     _xVel = HERO_SPEED_WALK;
@@ -59,17 +56,12 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     }
     setFR(HERO_RUNNING_FR);
     _dir = LEFT;
-  }
-  else 
-  {
-    if(_handle != HERO_IDLE_HANDLE)
-    {
-      _handle = HERO_IDLE_HANDLE;
-      _cells = HERO_IDLE_CELLS;
-      _currentCell = 0;
-      setFR(HERO_IDLE_FR);
-      _xVel = 0;
-    }
+  } else if(_handle != HERO_IDLE_HANDLE) {
+    _handle = HERO_IDLE_HANDLE;
+    _cells = HERO_IDLE_CELLS;
+    _currentCell = 0;
+    setFR(HERO_IDLE_FR);
+    _xVel = 0;
   }
 
   //Hero duck - If analogX is lower than 90
