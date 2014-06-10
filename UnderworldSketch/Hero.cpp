@@ -29,7 +29,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   }
   else if(_nunchuk->analogX > 160){
     _xVel = HERO_SPEED_RUN;
-    if(getHandle() != HERO_WALKING_HANDLE)
+    if(_handle != HERO_WALKING_HANDLE)
     {
       _handle = HERO_WALKING_HANDLE;
       _cells = HERO_WALKING_CELLS;
@@ -40,7 +40,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   }
   else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
     _xVel = -HERO_SPEED_WALK;
-    if(getHandle() != HERO_WALKING_HANDLE)
+    if(_handle != HERO_WALKING_HANDLE)
     {
       _handle = HERO_WALKING_HANDLE;
       _cells = HERO_WALKING_CELLS;
@@ -51,7 +51,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   }
   else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
     _xVel = -HERO_SPEED_RUN;
-    if(getHandle() != HERO_WALKING_HANDLE)
+    if(_handle != HERO_WALKING_HANDLE)
     {
       _handle = HERO_WALKING_HANDLE;
       _cells = HERO_WALKING_CELLS;
@@ -62,7 +62,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   }
   else 
   {
-    if(getHandle() != HERO_IDLE_HANDLE)
+    if(_handle != HERO_IDLE_HANDLE)
     {
       setHandle(HERO_IDLE_HANDLE);
       setCells(HERO_IDLE_CELLS);
@@ -75,7 +75,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero duck - If analogX is lower than 90
   if(45 > _nunchuk -> analogY) {
     if(!_isDucking) {
-      if(getHandle() != HERO_IDLE_HANDLE)
+      if(_handle != HERO_DUCKING_HANDLE)
       {
       setHandle(HERO_DUCKING_HANDLE);
       setCells(HERO_DUCKING_CELLS);
