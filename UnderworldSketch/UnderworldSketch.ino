@@ -161,24 +161,12 @@ void setup() {
 void loop() { }
 
 void drawScene(Scene *scene, int offsetX, int offsetY) {
-  GD.ColorRGB(255, 255, 255);
-  int tileX = offsetX / TILE_SIZE,
-      tileY = offsetY / TILE_SIZE,
-      tileXEnd = (offsetX + SCREEN_WIDTH - 1) / TILE_SIZE,
-      tileYEnd = (offsetY + SCREEN_HEIGHT - 1) / TILE_SIZE;
-  if(offsetX < 0)
-    tileX--;
-  if(offsetY < 0)
-    tileY--;
-  if(offsetX + SCREEN_WIDTH - 1  < 0)
-    tileXEnd--;
-  if(offsetY + SCREEN_HEIGHT - 1  < 0)
-    tileYEnd--;
-  for(int i = tileX; i <= tileXEnd; i++) {
-    for(int j = tileY; j <= tileYEnd; j++) {
-      drawTile(i, j, scene->getTile(i, j), offsetX, offsetY);
-    }
-  }
+  GD.ColorRGB(255, 255, 255); //Slated for removal
+  byte tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
+       tileYEnd = worldToGrid(offsetY + SCREEN_HEIGHT - 1);
+  for(byte tileX = worldToGrid(offsetX); tileX <= tileXEnd; tileX++)
+    for(byte tileY = worldToGrid(offsetY); tileY <= tileYEnd; tileY++)
+      drawTile(tileX, tileY, scene->getTile(tileX, tileY), offsetX, offsetY);
 }
 
 void drawTile(int x, int y, byte tile, int offsetX, int offsetY) {

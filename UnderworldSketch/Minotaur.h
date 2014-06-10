@@ -42,4 +42,3 @@ class Minotaur : public Unit {
     void xCollide();
 };
 #endif
-
