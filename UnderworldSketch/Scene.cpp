@@ -35,6 +35,7 @@ void Scene::addCoin(byte x, byte y) {
     _coinIndex++;
   }
 }
+
 void Scene::addMinotaur(byte x, byte y) {
   if(_minoIndex != MINOTAURS) {
     addUnit(_minotaurs[_minoIndex], x, y);

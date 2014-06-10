@@ -17,6 +17,7 @@
 #include "Tiles.h"
 #include "Module.h"
 #include "Prop.h"
+#include "Coin.h"
 
 const static byte
     TILE_SIZE = 48, //One tile unit to world units conv.
@@ -32,7 +33,6 @@ int gridToWorld(byte x);
 
 class Unit;
 class Minotaur;
-class Coin;
 class Scene {
   private:
     byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex, _coinIndex;
