@@ -1,16 +1,19 @@
 %\section{Implementation and detailed design}
 \chapter{Implementation and detailed design}
 
-Present implementation details, program structure etc.
+%Present implementation details, program structure etc.
 
-Further, interesting algorithms and data structures should be presented here.
+%Further, interesting algorithms and data structures should be presented here.
 
 \section{Gameloop}
 dTime...
 
 \section{Actors}
+Units are a subclass of prop, reusing all physics related functions and fields. Furthermore logic only needs to calculate with props.
+
 \subsection{Hero}
 Movement
+
 \subsection{Enemies}
 AI
 Types
@@ -58,12 +61,6 @@ reasons for this occasion:
 \item Libraries.
 \end{enumerate}
 
-
-
-
-
-
-
 \subsection{Code Size bloat}
 Bootloader
 GD2
@@ -87,9 +84,3 @@ Another option will be using an external controller. The Wii nunchuck is popular
   \caption{Button specifications}
 \label{fig:Nunchuk}
 \end{figure}
-
-
-
-
-
-
