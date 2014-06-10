@@ -114,16 +114,18 @@ void setup() {
         _logic.updatePhysics(units->get(i), _dTime);
       //Game end
       if(_hero._health == 0)
-        _logic.setGameOver(true, false);
-      if(_logic.isGameOver()) {
-        if(_logic.isHeroWin()) {
+        _logic._gameOver = true;
+        _logic._heroWin = false;
+      if(_logic._gameOver) {
+        if(_logic._heroWin) {
           //GAME CONTINUE
           GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
         } else {
           //GAME RESTART
         }
         newScene(&_scene, &_entrance, &_exit);
-        _logic.restartGame();
+        _logic._gameOver = false;
+        _logic._heroWin = false;
         _scene.addUnit(&_hero, _entrance._x, _entrance._y);
       }
 

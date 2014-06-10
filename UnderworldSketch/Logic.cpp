@@ -10,7 +10,8 @@
 
 Logic::Logic(Scene *scene) {
   _scene = scene;
-  restartGame();
+  _gameOver = false;
+  _heroWin = false;
   _score = 0;
 }
 
@@ -60,10 +61,6 @@ Prop* Logic::getHero() {
   return _hero;
 }
 
-boolean Logic::isGameOver() {
-  return _gameOver;
-}
-
 boolean Logic::isGrounded(Prop *prop) {
   Rect *hitbox = &(prop->_hitbox);
   int y = hitbox->_y + hitbox->_height;
@@ -78,10 +75,6 @@ boolean Logic::isGrounded(Prop *prop) {
     }
   }
   return false;
-}
-
-boolean Logic::isHeroWin() {
-  return _heroWin;
 }
 
 boolean Logic::isWalkable(int x, int y) {
@@ -147,16 +140,6 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   }
   hitbox->_y += dY;
   return true;
-}
-
-void Logic::restartGame() {
-  _gameOver = false;
-  _heroWin = false;
-}
-
-void Logic::setGameOver(boolean gameOver, boolean heroWin) {
-  _gameOver = gameOver;
-  _heroWin = heroWin;
 }
 
 void Logic::setHero(Prop *hero) {

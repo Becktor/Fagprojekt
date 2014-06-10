@@ -75,7 +75,8 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     if(_isDucking && logic->atExit(this)) {
       //Map exit
       _isAttacking = true;
-      logic->setGameOver(true, true);
+      logic->_gameOver = true;
+      logic->_heroWin = true;
     } else if(!_isAttacking) {
       //Attack
       _isAttacking = true;
