@@ -28,7 +28,7 @@ const static byte
     COINS = 10;
 
 char worldToGrid(int x);
-int gridToWorld(char x);
+int gridToWorld(byte x);
 
 class Unit;
 class Minotaur;
@@ -42,18 +42,18 @@ class Scene {
     LinkedList<Unit*> _units;
   public:
     Scene();
-    void addCoin(char x, char y);
-    void addMinotaur(char x, char y);
-    void addProp(Prop *prop, char x, char y);
-    void addUnit(Unit *unit, char x, char y);
+    void addCoin(byte x, byte y);
+    void addMinotaur(byte x, byte y);
+    void addProp(Prop *prop, byte x, byte y);
+    void addUnit(Unit *unit, byte x, byte y);
     void clearUnits();
-    boolean contains(char x, char y);
+    boolean contains(byte x, byte y);
     byte getWidth();
     byte getHeight();
-    byte getTile(char x, char y);
+    byte getTile(byte x, byte y);
     LinkedList<Unit*> *getUnits();
     LinkedList<Prop*> *getProps();
-    void moveProp(Prop *prop, char x, char y);
-    void setTile(char x, char y, byte tile);
+    void moveProp(Prop *prop, byte x, byte y);
+    void setTile(byte x, byte y, byte tile);
 };
 #endif
