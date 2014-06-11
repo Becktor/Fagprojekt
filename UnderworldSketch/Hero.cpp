@@ -19,66 +19,44 @@ void Hero::initialize() {
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero x-movement
-  if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){
-    _xVel = HERO_SPEED_WALK;
+  char nunchukX = _nunchuk->analogX - NUNCHUK_MIDDLE,
+       nunchukDir = getDirection(nunchukX),
+       nunchukXAbs = nunchukX * nunchukDir;
+  if(nunchukXAbs >= NUNCHUK_WALK) {
     if(_handle != HERO_MOVING_HANDLE)
       updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS);
- 
-    _FR = HERO_WALKING_FR;
-    _dir = RIGHT;  
-  }
-  else if(_nunchuk->analogX > 160){
-    _xVel = HERO_SPEED_RUN;
-    if(_handle != HERO_MOVING_HANDLE)
-      updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS);
-
-    _FR = HERO_RUNNING_FR;
-    _dir = RIGHT;  
-  }
-  else if((80 < _nunchuk->analogX) && (_nunchuk->analogX < 110)){
-    _xVel = -HERO_SPEED_WALK;
-    if(_handle != HERO_MOVING_HANDLE)
-      updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS);
-
-    _FR = HERO_WALKING_FR;
-    _dir = LEFT;  
-  }
-  else if((15 < _nunchuk->analogX) && (_nunchuk->analogX < 80)){
-    _xVel = -HERO_SPEED_RUN;
-    if(_handle != HERO_MOVING_HANDLE)
-      updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS);
-      
-    _FR = HERO_RUNNING_FR;
-    _dir = LEFT;
-  } else if(_handle != HERO_IDLE_HANDLE) {
-    updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS);
+    if(nunchukXAbs >= NUNCHUK_RUN) {
+      _FR = HERO_RUNNING_FR;
+      _xVel = HERO_SPEED_RUN;
+    } else {
+      _FR = HERO_WALKING_FR;
+      _xVel = HERO_SPEED_WALK;
+    }
+    _dir = nunchukDir;
+    _xVel = _xVel * nunchukDir;
+  } else { //IDLE
     _FR = HERO_IDLE_FR;
     _xVel = 0;
+    if(_handle != HERO_IDLE_HANDLE)
+      updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS);
   }
 
   //Hero duck - If analogX is lower than 90
-  if(45 > _nunchuk -> analogY) {
-    if(_handle != HERO_IDLE_HANDLE)
-    {
+  if(NUNCHUK_DUCK > _nunchuk->analogY) {
+    if(_handle != HERO_IDLE_HANDLE) {
       updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
       _FR = HERO_DUCKING_FR;
     }
     if(!_isDucking) {
-     
-//      updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
-//      _FR = HERO_DUCKING_FR;
-      
       _hitbox._height = HERO_HEIGHT_DUCK;
       _hitbox._y += HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK;
-      //_hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
       _isDucking = true;
     }
   } else if(_isDucking) {
     _hitbox._height = HERO_HEIGHT_STAND;
     _hitbox._y += HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND;
-          updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
-      _FR = HERO_DUCKING_FR;
-    //_hitbox.translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
+    updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
+    _FR = HERO_DUCKING_FR;
     _isDucking = false;
   }
 
@@ -118,7 +96,6 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     _isAttacking = false;
 }
 
-boolean Hero::getAttackSound(){
+boolean Hero::getAttackSound() {
   return _attackSound;
 }
-

@@ -9,4 +9,5 @@ enum Direction{
 };
 
 char randDir();
+char getDirection(char x);
 #endif

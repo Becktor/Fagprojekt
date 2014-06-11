@@ -85,15 +85,12 @@ boolean Logic::isWalkable(int x, int y) {
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropHoriz(Prop *prop, int dX) {
   Rect *hitbox = &(prop->_hitbox);
-  int x = hitbox->_x, y = hitbox->_y;
-  Direction dir;
-  if(dX < 0) {
-    dir = LEFT;
-  } else if(dX > 0) {
-    x += hitbox->_width - 1;
-    dir = RIGHT;
-  } else
+  if(dX == 0)
     return true;
+  char dir = getDirection(dX);
+  int x = hitbox->_x, y = hitbox->_y;
+  if(dir == RIGHT)
+    x += hitbox->_width - 1;
   char tileXEnd = worldToGrid(x + dX),
        tileYEnd = worldToGrid(y + hitbox->_height - 1);
   for(char tileX = worldToGrid(x) + dir; dir * tileX <= dir * tileXEnd; tileX += dir) {
@@ -115,15 +112,12 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
 //Returns whether the movement was complete (true) or partial (false)
 boolean Logic::movePropVerti(Prop *prop, int dY) {
   Rect *hitbox = &(prop->_hitbox);
-  int x = hitbox->_x, y = hitbox->_y;
-  Direction dir;
-  if(dY < 0)
-    dir = UP;
-  else if(dY > 0) {
-    y += hitbox->_height - 1;
-    dir = DOWN;
-  } else
+  if(dY == 0)
     return true;
+  char dir = getDirection(dY);
+  int x = hitbox->_x, y = hitbox->_y;
+  if(dir == DOWN)
+    y += hitbox->_height - 1;
   char tileXEnd = worldToGrid(x + hitbox->_width - 1),
        tileYEnd = worldToGrid(y + dY);
   for(char tileX = worldToGrid(x); tileX <= tileXEnd; tileX++) {

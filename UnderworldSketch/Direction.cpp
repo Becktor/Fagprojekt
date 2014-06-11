@@ -2,5 +2,17 @@
 #include "Direction.h"
 
 char randDir() {
-  return random(2) * 2 - 1;
+  if(random(2) == 0)
+    return LEFT;
+  else
+    return RIGHT;
+}
+
+char getDirection(char x) {
+  if(x == 0)
+    return 0;
+  else if(x > 0)
+    return RIGHT;
+  else
+    return LEFT;
 }

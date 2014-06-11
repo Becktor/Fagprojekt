@@ -25,18 +25,23 @@ const static byte
     HERO_RUNNING_FR = 100,
     HERO_ATTACKING_FR = 5,
     HERO_DUCKING_FR= 5,
-    HERO_IDLE_FR = 200;
+    HERO_IDLE_FR = 200,
+    NUNCHUK_MIDDLE = 120,
+    NUNCHUK_WALK = 10,
+    NUNCHUK_RUN = 40,
+    NUNCHUK_DUCK = 45;
 
 class Hero : public Unit {
   private:
+    boolean _isDucking, _isJumping, _isAttacking, _attackSound;
     Rect _attackArea;
     Attack _attack;
     ArduinoNunchuk *_nunchuk;
-    boolean _isAttacking, _isDucking, _isJumping, _attackSound;
   public:
+
     Hero(ArduinoNunchuk* nunchuk);
+    boolean getAttackSound(); //Less expensive than directly retrieving the variable.
     void initialize();
     void updateAI(int dTime, Logic *logic);
-    boolean getAttackSound();
 };
 #endif
