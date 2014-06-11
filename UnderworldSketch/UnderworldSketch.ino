@@ -25,7 +25,7 @@
 
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
-
+#define RESETHSCORE 1 //Resets highscore
 //Constants
 const static int
     SCREEN_WIDTH = 480,
@@ -48,14 +48,16 @@ void setup() {
   Serial.begin(9600);
   byte _fps = INIT_FPS;
   word _dTime = SECOND / INIT_FPS; //Approx. time between frames
-
-  Scene _scene = Scene();
-  Logic _logic = Logic(&_scene);
-  unsigned int CURRENT_Hscore = EEPROMReadInt(ADDRESS_Hscore);
-  if (CURRENT_Hscore >20000){
+  unsigned int CURRENT_Hscore; 
+  if (RESETHSCORE){
      EEPROMWriteInt(ADDRESS_Hscore,0);
      CURRENT_Hscore=0;
-  }
+  }else
+    CURRENT_Hscore= EEPROMReadInt(ADDRESS_Hscore);
+  
+  Scene _scene = Scene();
+  Logic _logic = Logic(&_scene);
+
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
@@ -136,7 +138,7 @@ void setup() {
         newScene(&_scene, &_entrance, &_exit);
         if (CURRENT_Hscore < _logic._score){
          EEPROMWriteInt(ADDRESS_Hscore, _logic._score);
-         Serial.println(CURRENT_Hscore);
+         CURRENT_Hscore=_logic._score;
          }
         _logic._gameOver = false;
         _logic._heroWin = false;
