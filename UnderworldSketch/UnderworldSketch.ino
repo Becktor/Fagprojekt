@@ -52,6 +52,10 @@ void setup() {
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   unsigned int CURRENT_Hscore = EEPROMReadInt(ADDRESS_Hscore);
+  if (CURRENT_Hscore >20000){
+     EEPROMWriteInt(ADDRESS_Hscore,0);
+     CURRENT_Hscore=0;
+  }
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
@@ -132,9 +136,8 @@ void setup() {
         newScene(&_scene, &_entrance, &_exit);
         if (CURRENT_Hscore < _logic._score){
          EEPROMWriteInt(ADDRESS_Hscore, _logic._score);
-         CURRENT_Hscore = EEPROM.read(ADDRESS_Hscore);
          Serial.println(CURRENT_Hscore);
-       }
+         }
         _logic._gameOver = false;
         _logic._heroWin = false;
         _scene.addUnit(&_hero, _entrance._x, _entrance._y);
