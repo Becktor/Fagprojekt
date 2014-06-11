@@ -8,6 +8,14 @@ Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, 
   _health = health;
 }
 
+void Unit::collideX() {
+  _xVel = 0;
+}
+
+void Unit::collideY() {
+  _yVel = 0;
+}
+
 void Unit::hit(byte damage, char force) {
   Prop::hit(damage, force);
   if(damage >= _health)
@@ -21,11 +29,3 @@ void Unit::toggleDir() {
 }
 
 void Unit::updateAI(int dTime, Logic *logic) { }
-
-void Unit::xCollide() {
-  _xVel = 0;
-}
-
-void Unit::yCollide() {
-  _yVel = 0;
-}

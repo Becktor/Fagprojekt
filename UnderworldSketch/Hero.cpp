@@ -23,30 +23,25 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
        nunchukDir = getDirection(nunchukX),
        nunchukXAbs = nunchukX * nunchukDir;
   if(nunchukXAbs >= NUNCHUK_WALK) {
-    if(_handle != HERO_MOVING_HANDLE)
-      updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS);
+    byte FR;
     if(nunchukXAbs >= NUNCHUK_RUN) {
-      _FR = HERO_RUNNING_FR;
+      FR = HERO_RUNNING_FR;
       _xVel = HERO_SPEED_RUN;
     } else {
-      _FR = HERO_WALKING_FR;
+      FR = HERO_WALKING_FR;
       _xVel = HERO_SPEED_WALK;
     }
+    updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS, FR);
     _dir = nunchukDir;
     _xVel = _xVel * nunchukDir;
   } else { //IDLE
-    _FR = HERO_IDLE_FR;
     _xVel = 0;
-    if(_handle != HERO_IDLE_HANDLE)
-      updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS);
+    updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_IDLE_FR);
   }
 
   //Hero duck - If analogX is lower than 90
   if(NUNCHUK_DUCK > _nunchuk->analogY) {
-    if(_handle != HERO_IDLE_HANDLE) {
-      updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
-      _FR = HERO_DUCKING_FR;
-    }
+    updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
     if(!_isDucking) {
       _hitbox._height = HERO_HEIGHT_DUCK;
       _hitbox._y += HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK;
@@ -55,8 +50,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   } else if(_isDucking) {
     _hitbox._height = HERO_HEIGHT_STAND;
     _hitbox._y += HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND;
-    updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
-    _FR = HERO_DUCKING_FR;
+    updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
     _isDucking = false;
   }
 

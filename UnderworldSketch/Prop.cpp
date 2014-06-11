@@ -8,12 +8,6 @@ Prop::Prop(byte width, byte height, byte imageWidth) : _hitbox(width, height) {
   initialize();
 }
 
-void Prop::accelerate(byte acc, char targetSpeed) {
-  if(targetSpeed > _xVel)
-    _xVel = min(_xVel + acc, targetSpeed);
-  else if(targetSpeed < _xVel)
-    _xVel = max(_xVel - acc, targetSpeed);
-}
 void Prop::checkFrameChange(long milis) {
   if((milis - _millis) > _FR)
   {   
@@ -25,11 +19,9 @@ void Prop::checkFrameChange(long milis) {
   }
 }
 
-void Prop::updateHandle(byte handle, byte cells) {
-  _handle = handle;
-  _cells = cells;
-  _currentCell = 0;
-}
+void Prop::collideX() { }
+
+void Prop::collideY() { }
 
 void Prop::hit(byte damage, char force) {
   _xVel += force;
@@ -37,9 +29,9 @@ void Prop::hit(byte damage, char force) {
 }
 
 void Prop::initialize() {
+  _dir = randDir();
   _xVel = 0;
   _yVel = 0;
-  _dir = randDir();
   _handle = 0;
   _cells = 0;
   _currentCell = 0;
@@ -47,6 +39,20 @@ void Prop::initialize() {
   _millis = 0;
 }
 
-void Prop::xCollide() { }
+void Prop::updateHandle(byte handle, byte cells, byte FR) {
+  if(_handle != handle) {
+    _handle = handle;
+    _cells = cells;
+    _FR = FR;
+    _currentCell = 0;
+  }
+}
 
-void Prop::yCollide() { }
+//Returns either target or a value numerically closer to target
+//compared to current equal to change.
+char Prop::zoomIn(byte zoom, char current, char target) {
+  if(target > current)
+    return min(current + zoom, target);
+  else if(target < current)
+    return max(current - zoom, target);
+}

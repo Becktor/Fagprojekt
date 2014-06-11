@@ -37,8 +37,8 @@ class Hero : public Unit {
     Rect _attackArea;
     Attack _attack;
     ArduinoNunchuk *_nunchuk;
-  public:
 
+  public:
     Hero(ArduinoNunchuk* nunchuk);
     boolean getAttackSound(); //Less expensive than directly retrieving the variable.
     void initialize();

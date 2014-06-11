@@ -142,9 +142,9 @@ void Logic::setHero(Prop *hero) {
 
 void Logic::updatePhysics(Prop* prop, int dTime) {
   if(!movePropHoriz(prop, prop->_xVel))
-    prop->xCollide();
+    prop->collideX();
   if(!movePropVerti(prop, prop->_yVel + GRAVITY))
-    prop->yCollide();
+    prop->collideY();
   else if(!prop->_levitate)
     prop->_yVel += GRAVITY;
 }

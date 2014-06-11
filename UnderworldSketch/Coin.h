@@ -9,8 +9,8 @@ const static byte
 class Coin : public Prop {
   public:
     Coin();
-    void xCollide();
-    void yCollide();
+    void collideX();
+    void collideY();
 };
 #endif
 

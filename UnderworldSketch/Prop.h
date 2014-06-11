@@ -5,19 +5,20 @@
 
 class Prop {
   public:
-    byte _imageWidth, _handle, _cells, _currentCell;
-    long _FR, _millis;
     boolean _levitate;
-    char _xVel, _yVel,_dir;
+    byte _imageWidth, _handle, _cells, _currentCell;
+    char _dir, _xVel, _yVel;
+    long _FR, _millis;
     Rect _hitbox;
 
     Prop(byte width, byte height, byte imageWidth);
-    void accelerate(byte acc, char targetSpeed);
     void checkFrameChange(long milis);
-    void updateHandle(byte handle, byte cell);
     virtual void hit(byte damage, char force);
     virtual void initialize();
-    virtual void xCollide();
-    virtual void yCollide();
+    //void updateHandle(byte handle, byte cell);
+    void updateHandle(byte handle, byte cell, byte FR);
+    virtual void collideX();
+    virtual void collideY();
+    char zoomIn(byte change, char current, char target);
 };
 #endif

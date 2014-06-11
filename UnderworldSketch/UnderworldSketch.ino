@@ -46,7 +46,7 @@ void drawVertex2f(int x, int y, int offsetX, int offsetY);
 
 void setup() {
   //INIT
-  Serial.begin(9600);
+  //Serial.begin(9600);
   byte _fps = INIT_FPS;
   word _dTime = SECOND / INIT_FPS, highScore;
   if(RESET_HSCORE) {
@@ -146,7 +146,7 @@ void setup() {
       }
 
       //DRAW LOGIC
-      GD.ClearColorRGB(20,20,20); //Background
+      GD.ClearColorRGB(38, 36, 57); //Background
       GD.Clear();
       GD.Begin(BITMAPS);
       int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
