@@ -38,10 +38,10 @@
 #define TILE_WIDTH 48
 #define TILE_HEIGHT 48
 #define TILE_CELLS 2
-#define COIN_HANDLE 8
-#define COIN_WIDTH 32
-#define COIN_HEIGHT 32
-#define COIN_CELLS 4
+#define COINS_HANDLE 8
+#define COINS_WIDTH 32
+#define COINS_HEIGHT 32
+#define COINS_CELLS 4
 #define DOOR_HANDLE 9
 #define DOOR_WIDTH 48
 #define DOOR_HEIGHT 48

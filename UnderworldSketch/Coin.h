@@ -4,8 +4,7 @@
 #include "Prop.h"
 
 const static byte
-    COIN_HEIGHT = 10,
-    COIN__HITBOX_WIDTH = 10,
+    COIN_HITBOX_WIDTH = 10,
     COIN_FRICTION = 1,
     COIN_IMAGE_WIDTH = 30;
 class Coin : public Prop {
