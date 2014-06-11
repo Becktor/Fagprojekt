@@ -4,6 +4,7 @@
 #include "Direction.h"
 #include "Geo.h"
 #include "Prop.h"
+#include "Coin.h"
 #include "Attack.h"
 #include "Scene.h"
 #include "Logic.h"
@@ -12,7 +13,6 @@ Logic::Logic(Scene *scene) {
   _scene = scene;
   _gameOver = false;
   _heroWin = false;
-  _score = 0;
 }
 
 void Logic::addAttack(Attack* attack) {
@@ -36,15 +36,13 @@ void Logic::clearAttacks() {
   _attacks.clear();
 }
 
-boolean Logic::coinCol(Prop* prop) {
-  Rect *hitboxC = &(prop->_hitbox);
-  Rect *hitboxH = &(getHero()->_hitbox);
-    if(hitboxH->contains(hitboxC)) {
-      //add bonus
-      _score += 10;
-      return true;
-    }
-  return false;
+boolean Logic::coinCollision(Coin* coin) {
+  Rect *hitboxC = &(coin->_hitbox);
+  Rect *hitboxH = &(_hero->_hitbox);
+  if(hitboxH->contains(hitboxC))
+    return true;
+  else
+    return false;
 }
 
 void Logic::executeAttacks(Prop* prop) {
@@ -55,10 +53,6 @@ void Logic::executeAttacks(Prop* prop) {
     if(prop != attack->_owner && hitbox->contains(area))
       prop->hit(attack->_damage, attack->_force);
   }
-}
-
-Prop* Logic::getHero() {
-  return _hero;
 }
 
 boolean Logic::isGrounded(Prop *prop) {
@@ -134,10 +128,6 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   }
   hitbox->_y += dY;
   return true;
-}
-
-void Logic::setHero(Prop *hero) {
-  _hero = hero;
 }
 
 void Logic::updatePhysics(Prop* prop, int dTime) {

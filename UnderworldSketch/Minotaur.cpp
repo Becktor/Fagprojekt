@@ -30,7 +30,7 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     }
 
     //detection
-    Prop* hero = logic->getHero();
+    Prop* hero = logic->_hero;
     _heroXpos = hero->_hitbox._x;
     _heroYpos = hero->_hitbox._y;
     _heroHeight = hero->_hitbox._height;

@@ -39,21 +39,21 @@ class Scene {
     Minotaur* _minotaurs[MINOTAURS];
     Coin* _coins[COINS];
     //Prop** _test[2];
-    LinkedList<Prop*> _props;
-    LinkedList<Unit*> _units;
   public:
+    LinkedList<Coin*> _coinList;
+    LinkedList<Unit*> _unitList;
+
     Scene();
     void addCoin(byte x, byte y);
     void addMinotaur(byte x, byte y);
-    void addProp(Prop *prop, byte x, byte y);
     void addUnit(Unit *unit, byte x, byte y);
-    void clearUnits();
+    void clearProps();
     boolean contains(byte x, byte y);
     byte getWidth();
     byte getHeight();
+    LinkedList<Coin*>* getCoins();
+    LinkedList<Unit*>* getUnits();
     byte getTile(byte x, byte y);
-    LinkedList<Unit*> *getUnits();
-    LinkedList<Prop*> *getProps();
     void setProp(Prop *prop, byte x, byte y);
     void setTile(byte x, byte y, byte tile);
 };

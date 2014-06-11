@@ -44,24 +44,23 @@ void loop();
 void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawProp(Prop *prop, int offsetX, int offsetY, long currentMilis);
 void drawVertex2f(int x, int y, int offsetX, int offsetY);
+void EEPROMWriteInt(int p_address, int p_value);
+word EEPROMReadInt(int p_address);
 
 void setup() {
-  //INIT
+  //SETUP
   //Serial.begin(9600);
   byte _fps = INIT_FPS;
-  word _dTime = SECOND / INIT_FPS, highScore;
+  word _dTime = SECOND / INIT_FPS, _score = 0, _highScore;
   if(RESET_HSCORE)
-    highScore = 0;
+    _highScore = 0;
   else
-    highScore = EEPROMReadInt(ADDRESS_HSCORE);
-
+    _highScore = EEPROMReadInt(ADDRESS_HSCORE);
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
-
-  //SETUP
   byte seed = EEPROM.read(ADDRESS_SEED);
   randomSeed(seed);
   EEPROM.write(ADDRESS_SEED, random(255));
@@ -69,16 +68,13 @@ void setup() {
     _nunchuk.init();
   GD.begin();
   LOAD_ASSETS();
-  //  GD.BitmapHandle(0);
-  //  GD.cmd_loadimage(0, 0);
-  //  GD.load("healsky.jpg");
   Point _entrance = Point(), _exit = Point();
   newScene(&_scene, &_entrance, &_exit);
-  _logic.setHero(&_hero);
+  _logic._hero = &_hero;
   _scene.addUnit(&_hero, _entrance._x, _entrance._y);
 
   LinkedList<Unit*>* units = _scene.getUnits();
-  LinkedList<Prop*>* props = _scene.getProps();
+  LinkedList<Coin*>* coins = _scene.getCoins();
   //LOOP
   for(;;) {
     //FPS CALCULATIONS
@@ -96,13 +92,14 @@ void setup() {
       //UPDATE PROPS
       {
         byte i = 0;
-        while(i < props->size()) {
-          Prop* prop = props->get(i);
-          _logic.executeAttacks(prop);
-          if(_logic.coinCol(prop)){
-            props->remove(i);}
-          else {
-            _logic.updatePhysics(prop, _dTime);
+        while(i < coins->size()) {
+          Coin* coin = coins->get(i);
+          _logic.executeAttacks(coin);
+          if(_logic.coinCollision(coin)){ {
+            _score += COIN_SCORE;
+            coins->remove(i);}
+          } else {
+            _logic.updatePhysics(coin, _dTime);
             i++;
           }
         }
@@ -114,7 +111,7 @@ void setup() {
           _logic.executeAttacks(unit);
           if(unit->_health == 0) {
             units->remove(i);
-            _logic._score += 100;
+            _score += 100;
           } else {
             _logic.updatePhysics(unit, _dTime);
             i++;
@@ -140,10 +137,12 @@ void setup() {
           health = HERO_HEALTH;
         }
         newScene(&_scene, &_entrance, &_exit);
-        if (highScore < _logic._score) {
-          EEPROMWriteInt(ADDRESS_HSCORE, _logic._score);
-          highScore = _logic._score;
+        //MOVE TO GAME RESTART LATER
+        if (_highScore < _score) {
+          EEPROMWriteInt(ADDRESS_HSCORE, _score);
+          _highScore = _score;
         }
+        //
         _logic._gameOver = false;
         _logic._heroWin = false;
         _scene.addUnit(&_hero, _entrance._x, _entrance._y);
@@ -160,15 +159,15 @@ void setup() {
       drawScene(&_scene, cameraX, cameraY);
       GD.ColorRGB(255, 0, 0); //Obsolete
       //Draw objects
-       for(byte i = 0; i < props->size(); i++)
-        drawProp(props->get(i), cameraX, cameraY, currentMillis);
+       for(byte i = 0; i < coins->size(); i++)
+        drawProp(coins->get(i), cameraX, cameraY, currentMillis);
       for(byte i = 0; i < units->size(); i++)
         drawProp(units->get(i), cameraX, cameraY, currentMillis);
       //Draw score
       GD.ColorRGB(255,255,255);
-      GD.cmd_number(40, 40, 20, OPT_CENTER, _logic._score);
+      GD.cmd_number(40, 40, 20, OPT_CENTER, _score);
       //GD.cmd_text(40, 60, 20, OPT_CENTER,"Current Highscore");
-      GD.cmd_number(60, 60, 20, OPT_CENTER, highScore); 
+      GD.cmd_number(60, 60, 20, OPT_CENTER, _highScore); 
       //Draw currentmilis/fps - temporary
       //GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
       GD.ColorRGB(255,255,255);
@@ -254,7 +253,7 @@ void EEPROMWriteInt(int p_address, int p_value) {
   EEPROM.write(p_address + 1, highByte);
 }
 
-unsigned int EEPROMReadInt(int p_address) {
+word EEPROMReadInt(int p_address) {
   byte lowByte = EEPROM.read(p_address),
       highByte = EEPROM.read(p_address + 1);
   return ((lowByte << 0) & 0xFF) + ((highByte << 8) & 0xFF00);

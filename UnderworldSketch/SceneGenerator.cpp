@@ -11,7 +11,7 @@ void newScene(Scene *scene, Point *entrance, Point *exit) {
   for(byte i = 0; i < SCENE_WIDTH; i++)
     for(byte j = 0; j < SCENE_HEIGHT; j++)
       scene->setTile(i, j, NONE);
-  scene->clearUnits();
+  scene->clearProps();
   byte modules[XMODULES][YMODULES];
   modulate(modules, entrance, exit);
   generate(scene, modules, entrance, exit);

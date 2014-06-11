@@ -19,8 +19,8 @@ int gridToWorld(byte x) {
 }
 
 Scene::Scene() {
-  _props = LinkedList<Prop*>();
-  _units = LinkedList<Unit*>();
+  _coinList = LinkedList<Coin*>();
+  _unitList = LinkedList<Unit*>();
   _minoIndex = 0;
   _coinIndex = 0;
   for(byte i = 0; i < MINOTAURS; i++) {
@@ -35,7 +35,9 @@ Scene::Scene() {
 
 void Scene::addCoin(byte x, byte y) {
   if(_coinIndex != COINS) {
-    addProp(_coins[_coinIndex], x, y);
+    Coin *coin = _coins[_coinIndex];
+    setProp(coin, x, y);
+    _coinList.add(coin);
     _coinIndex++;
   }
 }
@@ -47,21 +49,17 @@ void Scene::addMinotaur(byte x, byte y) {
   }
 }
 
-void Scene::addProp(Prop *prop, byte x, byte y) {
-  setProp(prop, x, y);
-  _props.add(prop);
-}
-
-
 //Adds the given unit to the units list and sets it at the given tile.
 void Scene::addUnit(Unit *unit, byte x, byte y) {
   setProp(unit, x, y);
-  _units.add(unit);
+  _unitList.add(unit);
 }
 
-void Scene::clearUnits() {
-  _units.clear();
+void Scene::clearProps() {
+  _unitList.clear();
+  _coinList.clear();
   _minoIndex = 0;
+  _coinIndex = 0;
 }
 
 boolean Scene::contains(byte x, byte y) {
@@ -76,20 +74,20 @@ byte Scene::getHeight() {
   return SCENE_HEIGHT;
 }
 
+LinkedList<Coin*>* Scene::getCoins() {
+  return &_coinList;
+}
+
+LinkedList<Unit*>* Scene::getUnits() {
+  return &_unitList;
+}
+
 //Returns the tile at the grid coordinates
 byte Scene::getTile(byte x, byte y) {
   if(contains(x, y))
     return _tiles[x][y];
   else
     return ROCK;
-}
-
-LinkedList<Unit*>* Scene::getUnits() {
-  return &_units;
-}
-
-LinkedList<Prop*>* Scene::getProps() {
-  return &_props;
 }
 
 void Scene::setProp(Prop* prop, byte x, byte y) {
