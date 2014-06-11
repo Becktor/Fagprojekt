@@ -13,13 +13,12 @@ const static byte GRAVITY = 1;
 
 class Logic {
   private:
-    Scene *_scene;
     LinkedList<Attack*> _attacks;
     Prop *_hero;
   public:
+    Scene *_scene;
     boolean _gameOver, _heroWin, _hasAttack;
     int _score;
-
     Logic(Scene *scene);
     void addAttack(Attack* attack);
     boolean atExit(Prop *prop);
