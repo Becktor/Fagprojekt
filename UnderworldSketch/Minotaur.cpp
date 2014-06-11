@@ -5,6 +5,8 @@
 #include "Sprites.h"
 
 Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) { }
+  _detected  = false;
+}
 
 void Minotaur::initialize() {
   Prop::initialize();
@@ -19,35 +21,35 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
       updateHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS);
       _FR = MINO_WALKING_FR;
     }
-    accelerate(MINO_ACC_WALK, _dir * MINO_SPEED_WALK);
 
     //detection
     Prop* hero = logic->getHero();
-    heroXpos = hero->_hitbox._x;
-    heroYpos = hero->_hitbox._y;
-    distToHeroX = abs(heroXpos - _hitbox._x);
-    distToHeroY = abs(heroYpos - _hitbox._y);
-    distance = sqrt((distToHeroX * distToHeroX) + (distToHeroY * distToHeroY));
+    _heroXpos = hero->_hitbox._x;
+    _heroYpos = hero->_hitbox._y;
+    _heroHeight = hero->_hitbox._height;
+    _distDiff = _heroXpos - _hitbox._x;
+    _distToHeroX = abs(_distDiff);
+    _distToHeroY = abs(_heroYpos - _hitbox._y);
+    _distance = sqrt((_distToHeroX * _distToHeroX) + (_distToHeroY * _distToHeroY));
 
-    //if(((_hitbox._y - _hitbox._height) <= heroXpos <= (_hitbox._y +_hitbox._height))) {
-    //Serial.print(heroYpos);
-    //Serial.print("----");
-    //Serial.println(_hitbox._y);
-    if (!_detected){
-     if(((_hitbox._y - _hitbox._height) <= heroXpos <= (_hitbox._y +_hitbox._height))) {
-       if((distToHeroX <= MINO_SEE_HERO_DIST) && ((_dir == RIGHT && heroXpos > _hitbox._x) || (_dir== LEFT &&  heroXpos < _hitbox._x))){
-           Serial.println("See ya");
-           _detected = true;
-           _unfollow = false;
-        }
-       }
-    }
-    if (_detected || _unfollow && (distance > MINO_LOSE_HERO_DIST)){  //Hero ran away!
-      Serial.println("where are you?!");
+    if (_distance > MINO_LOSE_HERO_DIST){  //Hero ran away!
       _detected = false;
-      _unfollow = true;
     }
-
+    if( _heroYpos + _heroHeight <  (((_hitbox._y+_hitbox._height)/2) + _hitbox._y) &&  (((_hitbox._y+_hitbox._height)/2) + _hitbox._y) < _heroYpos) {
+      if((_distToHeroX <= MINO_SEE_HERO_DIST)){
+        if(((_dir == RIGHT && _heroXpos > _hitbox._x) || (_dir== LEFT &&  _heroXpos < _hitbox._x))){
+         _detected = true;
+        }
+      }
+    }
+    if (_detected){
+    Serial.println("Detected");
+    accelerate(MINO_ACC_CHARGE, _dir * MINO_SPEED_CHARGE);
+    }
+    else{
+    Serial.println("Un_Detected");
+    accelerate(MINO_ACC_WALK, _dir * MINO_SPEED_WALK);
+    }
   } //else Falling?
 }
 
