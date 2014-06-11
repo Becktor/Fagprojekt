@@ -22,26 +22,16 @@ void Unit::hit(byte damage, char force) {
     _health -= damage;
 }
 
-int Unit::getCurrentCell() {
-  return _currentCell;
-}
-
-int Unit::getFR() {
-  return _FR;
-}
-
 void Unit::fillHealth() {}
-
-void Unit::setCurrentCell(int currentCell) {
-   _currentCell = currentCell;
-}
-
-void Unit::setFR(long frameRate) {
-   _FR = frameRate;
-}
 
 void Unit::toggleDir() {
   _dir = -1 * _dir;
+}
+
+void Unit::updateHandle(byte handle, byte cells) {
+  _handle = handle;
+  _cells = cells;
+  _currentCell = 0;
 }
 
 void Unit::checkFrameChange(long milis) {
