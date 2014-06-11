@@ -4,7 +4,7 @@
 #include "Minotaur.h"
 #include "Sprites.h"
 
-Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) { 
+Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) {
   _detected  = false;
 }
 
@@ -15,13 +15,14 @@ void Minotaur::initialize() {
 
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(logic->isGrounded(this)) {
-    if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height))
+    if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height)){
+      if (!_charge)
       toggleDir();
+    }
     if(_handle != MINO_WALKING_HANDLE) {
       updateHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS);
       _FR = MINO_WALKING_FR;
     }
-
     //detection
     Prop* hero = logic->getHero();
     _heroXpos = hero->_hitbox._x;
@@ -35,15 +36,17 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     if (_distance > MINO_LOSE_HERO_DIST){  //Hero ran away!
       _detected = false;
     }
-    if( _heroYpos + _heroHeight <  (((_hitbox._y+_hitbox._height)/2) + _hitbox._y) &&  (((_hitbox._y+_hitbox._height)/2) + _hitbox._y) < _heroYpos) {
+    _minoMiddle = ((_hitbox._y + _hitbox._height- _hitbox._y)/2) + _hitbox._y ;
+    if((_heroYpos + _heroHeight > _minoMiddle ) && (_minoMiddle > _heroYpos)) {
       if((_distToHeroX <= MINO_SEE_HERO_DIST)){
         if(((_dir == RIGHT && _heroXpos > _hitbox._x) || (_dir== LEFT &&  _heroXpos < _hitbox._x))){
          _detected = true;
+         _charge = true;
         }
       }
     }
-    if (_detected){
-    Serial.println("Detected");
+    if (_charge){
+    Serial.println("Charge");
     accelerate(MINO_ACC_CHARGE, _dir * MINO_SPEED_CHARGE);
     }
     else{
@@ -55,5 +58,6 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
 
 void Minotaur::xCollide() {
   _xVel = 0;
+  _charge = false;
   toggleDir();
 }
