@@ -2,8 +2,8 @@
 #include "Prop.h"
 #include "Sprites.h"
 
-Coin::Coin() : Prop(COINS_WIDTH, COINS_HEIGHT, COINS_WIDTH) { 
-  updateHandle(COINS_HANDLE, COINS_CELLS);
+Coin::Coin() : Prop(COIN_WIDTH, COIN_HEIGHT, COIN_WIDTH) { 
+  updateHandle(COIN_HANDLE, COIN_CELLS);
   _FR = COIN_FR;
 }
 void Coin::xCollide() {

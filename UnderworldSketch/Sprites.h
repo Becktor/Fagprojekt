@@ -6,30 +6,30 @@
 #include <GD2.h>
 
 #define LOAD_ASSETS()  GD.safeload("Sprites.GD2");
-#define HEROW_HANDLE 0
-#define HEROW_WIDTH 74
-#define HEROW_HEIGHT 48
-#define HEROW_CELLS 8
-#define HEROA_HANDLE 1
-#define HEROA_WIDTH 74
-#define HEROA_HEIGHT 48
-#define HEROA_CELLS 2
-#define HEROD_HANDLE 2
-#define HEROD_WIDTH 74
-#define HEROD_HEIGHT 36
-#define HEROD_CELLS 2
-#define HEROB_HANDLE 3
-#define HEROB_WIDTH 74
-#define HEROB_HEIGHT 48
-#define HEROB_CELLS 2
-#define MINOC_HANDLE 4
-#define MINOC_WIDTH 80
-#define MINOC_HEIGHT 43
-#define MINOC_CELLS 4
-#define MINOD_HANDLE 5
-#define MINOD_WIDTH 80
-#define MINOD_HEIGHT 43
-#define MINOD_CELLS 4
+#define HERO_MOVING_HANDLE 0
+#define HERO_MOVING_WIDTH 74
+#define HERO_MOVING_HEIGHT 48
+#define HERO_MOVING_CELLS 8
+#define HERO_ATTACKING_HANDLE 1
+#define HERO_ATTACKING_WIDTH 74
+#define HERO_ATTACKING_HEIGHT 48
+#define HERO_ATTACKING_CELLS 2
+#define HERO_DUCKING_HANDLE 2
+#define HERO_DUCKING_WIDTH 74
+#define HERO_DUCKING_HEIGHT 36
+#define HERO_DUCKING_CELLS 2
+#define HERO_IDLE_HANDLE 3
+#define HERO_IDLE_WIDTH 74
+#define HERO_IDLE_HEIGHT 48
+#define HERO_IDLE_CELLS 2
+#define MINO_CHARGING_HANDLE 4
+#define MINO_CHARGING_WIDTH 80
+#define MINO_CHARGING_HEIGHT 43
+#define MINO_CHARGING_CELLS 4
+#define MINO_DYING_HANDLE 5
+#define MINO_DYING_WIDTH 80
+#define MINO_DYING_HEIGHT 43
+#define MINO_DYING_CELLS 4
 #define MINO_WALKING_HANDLE 6
 #define MINO_WALKING_WIDTH 80
 #define MINO_WALKING_HEIGHT 43
@@ -38,10 +38,10 @@
 #define TILE_WIDTH 48
 #define TILE_HEIGHT 48
 #define TILE_CELLS 2
-#define COINS_HANDLE 8
-#define COINS_WIDTH 32
-#define COINS_HEIGHT 32
-#define COINS_CELLS 4
+#define COIN_HANDLE 8
+#define COIN_WIDTH 32
+#define COIN_HEIGHT 32
+#define COIN_CELLS 4
 #define DOOR_HANDLE 9
 #define DOOR_WIDTH 48
 #define DOOR_HEIGHT 48
@@ -59,20 +59,16 @@
 #define COIN_LENGTH 8152
 #define COIN_FREQ 44100
 #define ASSETS_END 215512UL
-static const shape_t HEROW_SHAPE = {0, 74, 48, 0};
-static const shape_t HEROA_SHAPE = {1, 74, 48, 0};
-static const shape_t HEROD_SHAPE = {2, 74, 36, 0};
-static const shape_t HEROB_SHAPE = {3, 74, 48, 0};
-static const shape_t MINOC_SHAPE = {4, 80, 43, 0};
-static const shape_t MINOD_SHAPE = {5, 80, 43, 0};
+static const shape_t HERO_MOVING_SHAPE = {0, 74, 48, 0};
+static const shape_t HERO_ATTACKING_SHAPE = {1, 74, 48, 0};
+static const shape_t HERO_DUCKING_SHAPE = {2, 74, 36, 0};
+static const shape_t HERO_IDLE_SHAPE = {3, 74, 48, 0};
+static const shape_t MINO_CHARGING_SHAPE = {4, 80, 43, 0};
+static const shape_t MINO_DYING_SHAPE = {5, 80, 43, 0};
 static const shape_t MINO_WALKING_SHAPE = {6, 80, 43, 0};
 static const shape_t TILE_SHAPE = {7, 48, 48, 0};
 static const shape_t COIN_SHAPE = {8, 32, 32, 0};
 static const shape_t DOOR_SHAPE = {9, 48, 48, 0};
-
-
-
-
 
 
 

@@ -150,10 +150,10 @@ void setup() {
       drawScene(&_scene, cameraX, cameraY);
       GD.ColorRGB(255, 0, 0); //Obsolete
       //Draw objects
+       for(byte i = 0; i < props->size(); i++)
+        drawProp(props->get(i), cameraX, cameraY, currentMillis);
       for(byte i = 0; i < units->size(); i++)
         drawProp(units->get(i), cameraX, cameraY, currentMillis);
-      for(byte i = 0; i < props->size(); i++)
-        drawProp(props->get(i), cameraX, cameraY, currentMillis);
       //Draw score
       GD.ColorRGB(0,0,0);
       GD.cmd_number(40, 40, 20, OPT_CENTER, _logic._score);
