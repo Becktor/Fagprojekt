@@ -15,11 +15,11 @@ Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, 
 }
 
 void Unit::hit(byte damage, char force) {
+  Prop::hit(damage, force);
   if(damage >= _health)
     _health = 0;
   else
     _health -= damage;
-  _xVel = force;
 }
 
 int Unit::getCurrentCell() {

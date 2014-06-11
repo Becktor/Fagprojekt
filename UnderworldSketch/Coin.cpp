@@ -3,11 +3,6 @@
 
 Coin::Coin() : Prop(COIN_WIDTH, COIN_HEIGHT) { }
 
-void Coin::hit(byte damage, char force) {
-  _xVel += force;
-  _yVel -= abs(force);
-}
-
 void Coin::xCollide() {
   if(COIN_FRICTION > abs(_xVel))
     _xVel = 0;

@@ -14,7 +14,10 @@ void Prop::accelerate(byte acc, char targetSpeed) {
     _xVel = max(_xVel - acc, targetSpeed);
 }
 
-void Prop::hit(byte damage, char force) { }
+void Prop::hit(byte damage, char force) {
+  _xVel += force;
+  _yVel -= abs(force);
+}
 
 void Prop::xCollide() { }
 
