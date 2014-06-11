@@ -1,11 +1,12 @@
-%\section{Implementation and detailed design}
-\chapter{Implementation and detailed design}
-
 %Present implementation details, program structure etc.
-
 %Further, interesting algorithms and data structures should be presented here.
-
-\section{Gameloop}
+\chapter{Implementation and detailed design} %Carsten
+Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called until the Arduino is turned off.\footnote{At least, we haven't discovered a way to terminate a sketch.}\\
+This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.\\
+\section{Setup}
+Precalculations
+\section{Loop} %Carsten
+The loops first manages all props and then checks whether the game is over. First it updates all units AI, where they decide what to do in this frame. The hero is part of this loop and updated as if he had AI, but instead converts player input into actions. After this, all attacks generated from this AI update is executed. This involves all props, where units are checked if they die and coins are if they are collected. Finally the physics is updated, and all props move according to their internal velocities. Minotaurs may update their AI in case a collision function is called.\\
 dTime...
 
 \section{Actors}
@@ -15,16 +16,22 @@ Units are a subclass of prop, reusing all physics related functions and fields. 
 Movement
 
 \subsection{Enemies}
-AI
+Logic communication\\
+AI\\
 Types
 
-\subsection{Logic}
-Attacks
+\section{Logic}
+Collision\\
+AI\\
+Attacks\\
+Circular references\\
+Score
 
-\section{Scenes}
-Scenes keep a linked list of currently all active props and units.
-Also has an array of minotaurs to be reused.
-The map is just a two-dimensional array of Tiles. Tiles is an enum, where each tile is a byte, so it is an array of bytes.
+\section{Scenes} %Carsten
+Scenes are the objects containing the map data and all props within. The map is a simple two-dimensional array. The element at two given indexes corresponds to a tile, which has coordinates equal to the two given indexes times the size of a tile. This means world- can easily be converted to tile coordinates or vice versa.\\
+In addition to the map, the scene also contain all props, which is the hero, minotaurs and coins. It stores this in two places: in dynamic linked lists, and in arrays. The former is for dynamic removal of the props, when the coins are collected or the minotaurs are killed. These are used when updating gameplay, to make sure that unused props are not updated, increasing framerate. The latter is for storing all available props , used at map generation. The arrays have a couple of advantages. First they create all used props of each type initially, reusing the same minotaurs and coins in each map. This shortens time needed to allocate and deallocate memory. Additionally, if the amount of props is initially within Arduino's memory bounds, then the maps will never cause the Arduino to run out of memory, since it never allocates more. The obvious drawbacks is that we are limited in the amount of props we need, and that removing any props during play does not increase available memory. The second drawback isn't that much of a problem though, since very little is needed during play.\\
+Currently, because of an implementation bug, the props are dynamically allocated, even though they shouldn't need be.
+%Additional possible datastructures?
 \subsection{Generator} %Carsten
 Map generation is executed at setup and whenever the game ends (either by player death or win). The method {\tt newScene} generates a new map with matching points at the entrance and exits. Arduino's programming language does not support returning more than one value, so the method manipulates given pointers instead like in C programming. The new map data overwrites the old one to save time and space, so the given {\tt scene} argument is a pointer to the old scene. Reusing it saves us from instantiating a new one and deallocating the old one. We ar not interested in reusing the actual map data, since the player cannot revisit prior levels.\\
 The actual algorithm is in three parts: clearing, modulation and generation. First it clears the old map data, setting all tiles to {\tt NONE}, to make sure nothing is left over from the old map. This may be a bit expensive on the processing time considering it is superfluous if the generator works correctly. The reason is a design choice which will be apparent when we reach the generation.\\ %Picture of Modules?

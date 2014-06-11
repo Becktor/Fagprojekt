@@ -6,7 +6,6 @@
 #include "Sprites.h"
 #include "Geo.h"
 
-
 const static byte
     MINO_HEALTH = 3,
     MINO_ACC_WALK = 1,
@@ -27,7 +26,6 @@ const static byte
     MINO_DYING_FR = 5,
     MINO_SEE_HERO_DIST = 30,
      MINO_LOSE_HERO_DIST = 30;
-
 
 class Minotaur : public Unit {
   public:
