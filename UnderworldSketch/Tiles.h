@@ -7,8 +7,8 @@ enum Tiles {
   NONE = 0,
   PLATFORM = 1,
   ROCK = 2,
-  ENTRANCE = 5,
-  EXIT = 6
+  ENTRANCE = 3,
+  EXIT = 4
 };
 
 boolean getSolid(byte tile);
