@@ -4,8 +4,9 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Hero.h"
+#include "Sprites.h"
 
-Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH, HERO_IMAGE_WIDTH),
+Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_HITBOX_WIDTH, HERO_HEIGHT_STAND, HERO_HEALTH, HERO_IDLE_WIDTH),
                                       _attackArea(HERO_ATT_RANGE, HERO_HEIGHT_STAND),
                                       _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;

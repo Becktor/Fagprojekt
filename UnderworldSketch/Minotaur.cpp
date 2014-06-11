@@ -50,7 +50,6 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     accelerate(MINO_ACC_CHARGE, _dir * MINO_SPEED_CHARGE);
     }
     else{
-    Serial.println("Un_Detected");
     accelerate(MINO_ACC_WALK, _dir * MINO_SPEED_WALK);
     }
   } //else Falling?

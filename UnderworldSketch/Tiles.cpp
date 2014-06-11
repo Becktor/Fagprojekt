@@ -8,10 +8,5 @@ boolean getSolid(byte tile) {
 
 //Returns whether the tile is solid from above.
 boolean getPlatform(byte tile) {
-  return tile == PLATFORM || tile == LADDER_TOP;
-}
-
-//Returns whether the tile is a ladder.
-boolean getLadder(byte tile) {
-  return tile == LADDER || tile == LADDER_TOP;
+  return tile == PLATFORM;
 }

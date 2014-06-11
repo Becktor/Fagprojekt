@@ -23,22 +23,20 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
   getModuleTiles(module, &tiles);
   for(byte i = 0; i < MODULE_WIDTH; i++) {
     for(byte j = 0; j < MODULE_HEIGHT; j++) {
-      byte tile, tileData = (*tiles)[j][i];
-      byte x = dX + i, y = dY + j;
-      if(tileData == TILE_OBJECT) {
+      byte tile = (*tiles)[j][i], x = dX + i, y = dY + j;
+      if(tile == TILE_OBJECT) {
         if(portalRoom) {
           if(entrance)
             tile = ENTRANCE;
           else
-            tile = 6; //For some reason, this doesn't work if its EXIT.
+            tile = 4; //For some reason, this doesn't work if its EXIT.
           portal->setPoint(x, y);
         } else {
           scene->addMinotaur(x, y);
           scene->addCoin(x,y);
           tile = NONE;
         }
-      } else
-        tile = tileData;
+      }
       if(scene->getTile(x, y) == NULL || scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
         scene->setTile(x, y, tile);
     }
