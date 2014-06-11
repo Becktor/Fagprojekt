@@ -122,11 +122,12 @@ void setup() {
       _logic.clearAttacks();
       if (_hero.getAttackSound())
          GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
+
       //Game end
-      if(_hero._health == 0)
+      if(_hero._health == 0){
           _logic._gameOver = true;
           _logic._heroWin = false;
-
+      }
       if(_logic._gameOver) {
         if(_logic._heroWin) {
           //GAME CONTINUE
@@ -145,7 +146,7 @@ void setup() {
       }
 
       //DRAW LOGIC
-      GD.ClearColorRGB(255,255,255); //Background
+      GD.ClearColorRGB(20,20,20); //Background
       GD.Clear();
       GD.Begin(BITMAPS);
       int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
@@ -159,7 +160,7 @@ void setup() {
       for(byte i = 0; i < units->size(); i++)
         drawProp(units->get(i), cameraX, cameraY, currentMillis);
       //Draw score
-      GD.ColorRGB(0,0,0);
+      GD.ColorRGB(255,255,255);
       GD.cmd_number(40, 40, 20, OPT_CENTER, _logic._score);
       //GD.cmd_text(40, 60, 20, OPT_CENTER,"Current Highscore");
       GD.cmd_number(60, 60, 20, OPT_CENTER, highScore); 
