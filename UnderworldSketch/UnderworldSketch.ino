@@ -45,8 +45,8 @@ void drawVertex2f(int x, int y, int offsetX, int offsetY);
 
 void setup() {
   //INIT
-  byte = _fps;
-  word _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
+  byte _fps = INIT_FPS;
+  word _dTime = SECOND / INIT_FPS; //Approx. time between frames
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   int CURRENT_Hscore = EEPROM.read(ADDRESS_Hscore);
