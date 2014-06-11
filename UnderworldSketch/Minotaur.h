@@ -24,22 +24,25 @@ const static byte
     MINO_CHARGING_FR = 5,
     MINO_DYING = MINOD_HANDLE,
     MINO_DYING_CELLS = MINOD_CELLS - 1,
-    MINO_DYING_FR = 5;
+    MINO_DYING_FR = 5,
+    MINO_SEE_HERO_DIST = 30,
+     MINO_LOSE_HERO_DIST = 30;
 
 
 class Minotaur : public Unit {
   public:
-    boolean detected;
+    boolean _detected;
+    boolean _unfollow;
+    word distToHeroX;
+    word distToHeroY;
+    word distance;
+    word heroXpos;
+    word heroYpos;
 
     Minotaur();
     void initialize();
     void updateAI(int dTime, Logic *logic);
     void xCollide();
   private:
-    word distToHeroX;
-    word distToHeroY;
-    word distance;
-    word heroXpos;
-    word heroYpos;
 };
 #endif
