@@ -46,10 +46,11 @@ void drawVertex2f(int x, int y, int offsetX, int offsetY);
 
 void setup() {
   //INIT
+  Serial.begin(9600);
   word _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
-  int CURRENT_Hscore = EEPROM.read(ADDRESS_Hscore);
+  unsigned int CURRENT_Hscore = EEPROMReadInt(ADDRESS_Hscore);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
@@ -91,8 +92,8 @@ void setup() {
         while(i < props->size()) {
           Prop* prop = props->get(i);
           _logic.executeAttacks(prop);
-          if(_logic.coinCol(prop))
-            props->remove(i);
+          if(_logic.coinCol(prop)){
+            props->remove(i);}
           else {
             _logic.updatePhysics(prop, _dTime);
             i++;
@@ -127,11 +128,13 @@ void setup() {
           GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
         } else {
           //GAME RESTART
-            if (CURRENT_Hscore<_logic._score){
-             EEPROM.write(ADDRESS_Hscore, _logic._score);
-           }
         }
         newScene(&_scene, &_entrance, &_exit);
+        if (CURRENT_Hscore < _logic._score){
+         EEPROMWriteInt(ADDRESS_Hscore, _logic._score);
+         CURRENT_Hscore = EEPROM.read(ADDRESS_Hscore);
+         Serial.println(CURRENT_Hscore);
+       }
         _logic._gameOver = false;
         _logic._heroWin = false;
         _scene.addUnit(&_hero, _entrance._x, _entrance._y);
@@ -153,9 +156,9 @@ void setup() {
         drawProp(props->get(i), cameraX, cameraY, currentMillis);
       //Draw score
       GD.ColorRGB(0,0,0);
-      GD.cmd_number(40, 40, 31, OPT_CENTER, _logic._score);
-      //GD.cmd_text(40, 60, 8, OPT_CENTER,"Current Highscore");
-      GD.cmd_number(60, 60, 31, OPT_CENTER, CURRENT_Hscore); 
+      GD.cmd_number(40, 40, 20, OPT_CENTER, _logic._score);
+      //GD.cmd_text(40, 60, 20, OPT_CENTER,"Current Highscore");
+      GD.cmd_number(60, 60, 20, OPT_CENTER, CURRENT_Hscore); 
       //Draw currentmilis/fps - temporary
       //GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
       GD.ColorRGB(255,255,255);
@@ -225,3 +228,18 @@ void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMillis) {
 void drawVertex2f(int x, int y) {
   GD.Vertex2f(x* 16, y * 16);
 }
+void EEPROMWriteInt(int p_address, int p_value)
+      {
+      byte lowByte = ((p_value >> 0) & 0xFF);
+      byte highByte = ((p_value >> 8) & 0xFF);
+
+      EEPROM.write(p_address, lowByte);
+      EEPROM.write(p_address + 1, highByte);
+      }
+unsigned int EEPROMReadInt(int p_address)
+      {
+      byte lowByte = EEPROM.read(p_address);
+      byte highByte = EEPROM.read(p_address + 1);
+
+      return ((lowByte << 0) & 0xFF) + ((highByte << 8) & 0xFF00);
+      }
