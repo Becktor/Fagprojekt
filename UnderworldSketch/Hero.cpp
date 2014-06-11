@@ -11,6 +11,11 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_WIDTH, HERO_HEIGHT_STAND, HERO_H
   _nunchuk = nunchuk;
 }
 
+void Hero::initialize() {
+  Prop::initialize();
+  _health = HERO_HEALTH;
+}
+
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero x-movement
   if((130 < _nunchuk->analogX) && (_nunchuk->analogX < 160)){

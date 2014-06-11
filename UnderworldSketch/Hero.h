@@ -11,9 +11,8 @@
 #include "Sprites.h"
 
 const static byte
-
     HERO_ATT_DAMAGE = 1,
-    HERO_ATT_FORCE = 7,
+    HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 50,
     HERO_HEALTH = 3,
     HERO_HEIGHT_STAND = 45, //Height stand value
@@ -45,6 +44,7 @@ class Hero : public Unit {
     boolean _isAttacking, _isDucking, _isJumping, _attackSound;
   public:
     Hero(ArduinoNunchuk* nunchuk);
+    void initialize();
     void updateAI(int dTime, Logic *logic);
     boolean getAttackSound();
 };

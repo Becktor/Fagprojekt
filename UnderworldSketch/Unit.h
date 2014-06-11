@@ -20,7 +20,6 @@ class Unit : public Prop {
     
     Unit(byte width, byte height, char health, byte imageWidth);
     void hit(byte damage, char force);
-    virtual void fillHealth();
     void toggleDir();
     void updateHandle(byte handle, byte cell);
     virtual void updateAI(int dTime, Logic *logic);

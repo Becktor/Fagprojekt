@@ -81,9 +81,8 @@ void setup() {
         _nunchuk.update();
       }
       //UPDATE AI
-      for(int i = 0; i < units->size(); i++) {
+      for(byte i = 0; i < units->size(); i++)
         units->get(i)->updateAI(_dTime, &_logic);
-      } 
       //UPDATE PROPS
       {
         byte i = 0;

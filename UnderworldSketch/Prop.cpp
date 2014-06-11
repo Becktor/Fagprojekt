@@ -4,15 +4,8 @@
 
 Prop::Prop(byte width, byte height, byte imageWidth) : _hitbox(width, height) {
   _levitate = false;
-  _xVel = 0;
-  _yVel = 0;
-  _dir = randDir();
   _imageWidth = imageWidth;
-  _handle = 0;
-  _cells = 0;
-  _currentCell = 0;
-  _FR = 0;
-  _millis = 0;
+  initialize();
 }
 
 void Prop::accelerate(byte acc, char targetSpeed) {
@@ -35,6 +28,17 @@ void Prop::checkFrameChange(long milis) {
 void Prop::hit(byte damage, char force) {
   _xVel += force;
   _yVel -= abs(force);
+}
+
+void Prop::initialize() {
+  _xVel = 0;
+  _yVel = 0;
+  _dir = randDir();
+  _handle = 0;
+  _cells = 0;
+  _currentCell = 0;
+  _FR = 0;
+  _millis = 0;
 }
 
 void Prop::xCollide() { }
