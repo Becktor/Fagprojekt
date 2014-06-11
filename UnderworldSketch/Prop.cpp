@@ -25,6 +25,12 @@ void Prop::checkFrameChange(long milis) {
   }
 }
 
+void Prop::updateHandle(byte handle, byte cells) {
+  _handle = handle;
+  _cells = cells;
+  _currentCell = 0;
+}
+
 void Prop::hit(byte damage, char force) {
   _xVel += force;
   _yVel -= abs(force);

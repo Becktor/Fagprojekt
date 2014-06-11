@@ -14,6 +14,7 @@ class Prop {
     Prop(byte width, byte height, byte imageWidth);
     void accelerate(byte acc, char targetSpeed);
     void checkFrameChange(long milis);
+    void updateHandle(byte handle, byte cell);
     virtual void hit(byte damage, char force);
     virtual void initialize();
     virtual void xCollide();

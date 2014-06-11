@@ -30,6 +30,7 @@
 const static int
     SCREEN_WIDTH = 480,
     SCREEN_HEIGHT = 272,
+    ADDRESS_Hscore =0,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000, //Milis. in a second
@@ -118,6 +119,7 @@ void setup() {
       if(_hero._health == 0)
         _logic._gameOver = true;
         _logic._heroWin = false;
+         EEPROM.write(ADDRESS_Hscore, _logic._score);
       if(_logic._gameOver) {
         if(_logic._heroWin) {
           //GAME CONTINUE
