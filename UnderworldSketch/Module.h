@@ -26,8 +26,8 @@ TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   {
     {2, 2, 2, 2, 2},
     {2, 0, 0, 0, 2},
-    {2, 0, 0, 0, 2},
-    {2, 0, 7, 0, 2},
+    {0, 0, 0, 0, 0},
+    {0, 0, 7, 0, 2},
     {2, 2, 2, 2, 2}
   }
 },
@@ -51,14 +51,14 @@ TYPE2_TILES[TYPE2_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   {
     {2, 0, 1, 0, 2},
     {0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 0},
+    {0, 0, 0, 1, 1},
     {0, 0, 7, 0, 0},
     {2, 2, 2, 2, 2}
   }
 },
 TYPE3_TILES[TYPE3_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   {
-    {2, 2, 2, 2, 2},
+    {2, 0, 0, 2, 2},
     {0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0},
     {0, 0, 7, 0, 0},
@@ -68,8 +68,8 @@ TYPE3_TILES[TYPE3_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
 TYPE4_TILES[TYPE4_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   {
     {2, 0, 1, 0, 2},
-    {0, 0, 7, 0, 0},
-    {0, 0, 1, 0, 0},
+    {0, 7, 0, 0, 0},
+    {1, 1, 0, 0, 0},
     {0, 0, 0, 0, 0},
     {2, 0, 1, 0, 2}
   }
