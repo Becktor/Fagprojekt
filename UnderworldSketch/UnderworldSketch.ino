@@ -33,21 +33,22 @@ const static int
     ADDRESS_Hscore =200,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
-    SECOND = 1000, //Milis. in a second
+    SECOND = 1000,
     INIT_FPS = 40; //Initial assumed framerate.
-   
+
 //Function declarations
 void setup();
 void loop();
-
 void drawScene(Scene *scene, int offsetX, int offsetY);
-void drawUnit(Unit *unit, int offsetX, int offsetY);
+void drawProp(Prop *prop, int offsetX, int offsetY, long currentMilis);
 void drawVertex2f(int x, int y, int offsetX, int offsetY);
 
 void setup() {
   //INIT
   Serial.begin(9600);
-  word _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
+  byte _fps = INIT_FPS;
+  word _dTime = SECOND / INIT_FPS; //Approx. time between frames
+
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
   unsigned int CURRENT_Hscore = EEPROMReadInt(ADDRESS_Hscore);
@@ -74,10 +75,9 @@ void setup() {
   //LOOP
   for(;;) {
     //FPS CALCULATIONS
+    byte _counter = 0;
     unsigned long startMillis = millis(), currentMillis = startMillis;
-    byte counter = 0;
     while(currentMillis - startMillis < SECOND) { //Loop for a second
-
       //GAME LOGIC
       if(NUNCHUCK) {
         _nunchuk.update();
@@ -165,12 +165,11 @@ void setup() {
       //Complete drawing
       GD.swap();
       //Time calculations
-      counter++; //Frame counter
+      _counter++; //Frame counter
       currentMillis = millis();
+      _fps = _counter;
+      _dTime = SECOND / _fps;
     }
-    //FPS CALCULATION
-    _fps = counter;
-    _dTime = SECOND / _fps;
   }
 }
 
@@ -192,7 +191,7 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
   }
 }
 
-void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMillis) {
+void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
   Rect *hitbox = &(prop->_hitbox);
   GD.Begin(RECTS);
   GD.ColorRGB(200, 5, 200);
@@ -206,7 +205,7 @@ void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMillis) {
   GD.ColorRGB(255, 255, 255);
   int half_Width = prop->_imageWidth / 2;
   int xfix = (prop->_imageWidth - hitbox->_width) / 2;
-  prop->checkFrameChange(currentMillis);
+  prop->checkFrameChange(currentMilis);
   GD.BitmapHandle(prop->_handle);
   if(prop->_dir == LEFT) {
     xfix = -xfix + prop->_imageWidth - hitbox->_width;

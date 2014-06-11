@@ -10,7 +10,7 @@
 const static byte
     MINO_HEALTH = 3,
     MINO_ACC_WALK = 1,
-    MINO_SPEED_WALK = 5,
+    MINO_SPEED_WALK = 3,
     MINO_ACC_CHARGE = 3,
     MINO_SPEED_CHARGE = 8,
 //    MINO_HEIGHT = MINOW_HEIGHT,
@@ -33,9 +33,10 @@ const static byte
 class Minotaur : public Unit {
   public:
     boolean _detected;
-    boolean _unfollow;
+    boolean _charge;
     int _distToHeroX;
     int _distToHeroY;
+    int _minoMiddle;
     int _distance;
     int _heroXpos;
     int _heroYpos;

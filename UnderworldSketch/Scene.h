@@ -28,6 +28,7 @@ const static byte
     MINOTAURS = 5,
     COINS = 5;
 
+
 char worldToGrid(int x);
 int gridToWorld(byte x);
 
