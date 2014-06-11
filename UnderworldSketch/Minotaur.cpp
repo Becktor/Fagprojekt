@@ -36,7 +36,7 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     if (_distance > MINO_LOSE_HERO_DIST){  //Hero ran away!
       _detected = false;
     }
-    _minoMiddle = ((_hitbox._y + _hitbox._height- _hitbox._y)/2) + _hitbox._y ;
+    _minoMiddle = ((_hitbox._y + _hitbox._height- _hitbox._y)/10) + _hitbox._y ;
     if((_heroYpos + _heroHeight > _minoMiddle ) && (_minoMiddle > _heroYpos)) {
       if((_distToHeroX <= MINO_SEE_HERO_DIST)){
         if(((_dir == RIGHT && _heroXpos > _hitbox._x) || (_dir== LEFT &&  _heroXpos < _hitbox._x))){
