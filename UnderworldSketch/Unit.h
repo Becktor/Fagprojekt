@@ -14,21 +14,18 @@
 class Logic;
 class Unit : public Prop {
   private:
-    long _FR, _millis;
 
   public:
     byte _imageWidth, _handle, _health, _cells, _currentCell;
     char _dir;
-
+    long _FR, _millis;
+    
     Unit(byte width, byte height, char health, byte imageWidth);
-    int getCurrentCell();
-    int getFR();
     void hit(byte damage, char force);
     virtual void initialize();
-    void setCurrentCell(int currentCell);
-    void setFR(long frameRate);
     void checkFrameChange(long milis);
     void toggleDir();
+    void updateHandle(byte handle, byte cell);
     virtual void updateAI(int dTime, Logic *logic);
     void xCollide();
     void yCollide();

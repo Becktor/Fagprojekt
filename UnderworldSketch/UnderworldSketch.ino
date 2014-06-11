@@ -213,7 +213,7 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
   }
-  GD.Cell(unit->getCurrentCell());
+  GD.Cell(unit->_currentCell);
   drawVertex2f(hitbox->_x - offsetX - xfix, hitbox->_y - offsetY);
   if(unit->_dir == LEFT) {
     GD.cmd_translate(F16(half_Width), F16(0));

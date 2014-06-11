@@ -17,14 +17,6 @@ void Unit::hit(byte damage, char force) {
     _health -= damage;
 }
 
-int Unit::getCurrentCell() {
-  return _currentCell;
-}
-
-int Unit::getFR() {
-  return _FR;
-}
-
 void Unit::initialize() {
   _dir = randDir();
   _handle = 0;
@@ -34,16 +26,14 @@ void Unit::initialize() {
   _millis = 0;
 }
 
-void Unit::setCurrentCell(int currentCell) {
-   _currentCell = currentCell;
-}
-
-void Unit::setFR(long frameRate) {
-   _FR = frameRate;
-}
-
 void Unit::toggleDir() {
   _dir = -1 * _dir;
+}
+
+void Unit::updateHandle(byte handle, byte cells) {
+  _handle = handle;
+  _cells = cells;
+  _currentCell = 0;
 }
 
 void Unit::checkFrameChange(long milis) {
@@ -56,7 +46,6 @@ void Unit::checkFrameChange(long milis) {
     _currentCell++; 
   }
 }
-
 
 void Unit::updateAI(int dTime, Logic *logic) { }
 
