@@ -30,12 +30,12 @@
 const static int
     SCREEN_WIDTH = 480,
     SCREEN_HEIGHT = 272,
-    ADDRESS_Hscore =0,
+    ADDRESS_Hscore =200,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000, //Milis. in a second
     INIT_FPS = 40; //Initial assumed framerate.
-
+   
 //Function declarations
 void setup();
 void loop();
@@ -49,6 +49,7 @@ void setup() {
   word _dTime = SECOND / INIT_FPS, _fps = INIT_FPS; //Approx. time between frames
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
+  int CURRENT_Hscore = EEPROM.read(ADDRESS_Hscore);
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
@@ -117,15 +118,18 @@ void setup() {
          GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
       //Game end
       if(_hero._health == 0)
-        _logic._gameOver = true;
-        _logic._heroWin = false;
-         EEPROM.write(ADDRESS_Hscore, _logic._score);
+          _logic._gameOver = true;
+          _logic._heroWin = false;
+
       if(_logic._gameOver) {
         if(_logic._heroWin) {
           //GAME CONTINUE
           GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
         } else {
           //GAME RESTART
+            if (CURRENT_Hscore<_logic._score){
+             EEPROM.write(ADDRESS_Hscore, _logic._score);
+           }
         }
         newScene(&_scene, &_entrance, &_exit);
         _logic._gameOver = false;
@@ -148,9 +152,13 @@ void setup() {
       for(byte i = 0; i < props->size(); i++)
         drawProp(props->get(i), cameraX, cameraY, currentMillis);
       //Draw score
-      GD.cmd_number(40, 40, 31, OPT_CENTER, _logic._score); 
+      GD.ColorRGB(0,0,0);
+      GD.cmd_number(40, 40, 31, OPT_CENTER, _logic._score);
+      //GD.cmd_text(40, 60, 8, OPT_CENTER,"Current Highscore");
+      GD.cmd_number(60, 60, 31, OPT_CENTER, CURRENT_Hscore); 
       //Draw currentmilis/fps - temporary
-      GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
+      //GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
+      GD.ColorRGB(255,255,255);
       //Complete drawing
       GD.swap();
       //Time calculations
