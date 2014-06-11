@@ -27,7 +27,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
       if(tile == TILE_OBJECT) {
         if(portalRoom) {
           if(entrance)
-            tile = ENTRANCE;
+            tile = START;
           else
             tile = 4; //For some reason, this doesn't work if its EXIT.
           portal->setPoint(x, y);

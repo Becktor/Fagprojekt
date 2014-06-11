@@ -5,7 +5,7 @@
 
 const static byte
     COIN_FRICTION = 1,
-    COIN_FR = 200;
+    COIN_FR = 100;
 class Coin : public Prop {
   public:
     Coin();

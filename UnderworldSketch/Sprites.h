@@ -37,15 +37,11 @@
 #define TILE_HANDLE 7
 #define TILE_WIDTH 48
 #define TILE_HEIGHT 48
-#define TILE_CELLS 2
+#define TILE_CELLS 3
 #define COIN_HANDLE 8
 #define COIN_WIDTH 32
 #define COIN_HEIGHT 32
 #define COIN_CELLS 4
-#define DOOR_HANDLE 9
-#define DOOR_WIDTH 48
-#define DOOR_HEIGHT 48
-#define DOOR_CELLS 1
 #define ATTACK 200480UL
 #define ATTACK_LENGTH 1600
 #define ATTACK_FREQ 8000
@@ -68,7 +64,7 @@ static const shape_t MINO_DYING_SHAPE = {5, 80, 43, 0};
 static const shape_t MINO_WALKING_SHAPE = {6, 80, 43, 0};
 static const shape_t TILE_SHAPE = {7, 48, 48, 0};
 static const shape_t COIN_SHAPE = {8, 32, 32, 0};
-static const shape_t DOOR_SHAPE = {9, 48, 48, 0};
+
 
 
 

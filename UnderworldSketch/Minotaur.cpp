@@ -20,7 +20,7 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
       toggleDir();
       _charge = false;
     }
-    if(_handle != MINO_WALKING_HANDLE) {
+    if(_handle != MINO_WALKING_HANDLE & !_charge) {
       updateHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS);
       _FR = MINO_WALKING_FR;
     }
@@ -58,7 +58,12 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     }
     if (_charge){
     Serial.println("Charge");
-    accelerate(MINO_ACC_CHARGE, _dir * MINO_SPEED_CHARGE);
+      accelerate(MINO_ACC_CHARGE, _dir * MINO_SPEED_CHARGE);
+      if(_handle != MINO_CHARGING_HANDLE)
+      {
+        updateHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS);
+        _FR = MINO_CHARGING_FR;
+      }
     }
     else{
     accelerate(MINO_ACC_WALK, _dir * MINO_SPEED_WALK);

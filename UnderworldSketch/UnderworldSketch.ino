@@ -188,6 +188,16 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
       byte tile = scene->getTile(tileX, tileY);
       if(tile != NONE) {
         GD.BitmapHandle(TILE_HANDLE);
+        
+        if(tile == PLATFORM)
+          GD.Cell(1);
+        else if(tile == ROCK)
+          GD.Cell(0);
+        else if(tile == START)
+          GD.Cell(2);
+        else if(tile == END)
+          GD.Cell(2);
+          
         drawVertex2f(gridToWorld(tileX) - offsetX, gridToWorld(tileY) - offsetY);
       }
     }
