@@ -29,13 +29,14 @@
 
 //Constants
 const static int
+    ADDRESS_HSCORE = 100,
+    ADDRESS_SEED = 102,
+    INIT_FPS = 40, //Initial assumed framerate.
     SCREEN_WIDTH = 480,
     SCREEN_HEIGHT = 272,
-    ADDRESS_HSCORE = 200,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
-    SECOND = 1000,
-    INIT_FPS = 40; //Initial assumed framerate.
+    SECOND = 1000;
 
 //Function declarations
 void setup();
@@ -61,7 +62,9 @@ void setup() {
   Rect *_camera = &(_hero._hitbox);
 
   //SETUP
-  randomSeed(5); //Initializes a random seed to the random generator
+  byte seed = EEPROM.read(ADDRESS_SEED);
+  randomSeed(seed);
+  EEPROM.write(ADDRESS_SEED, random(255));
   if(NUNCHUCK)
     _nunchuk.init();
   GD.begin();
@@ -119,11 +122,10 @@ void setup() {
         }
       }
       _logic.clearAttacks();
-      if (_hero.getAttackSound())
+      if(_hero.getAttackSound())
          GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
-
       //Game end
-      if(_hero._health == 0){
+      if(_hero._health == 0) {
           _logic._gameOver = true;
           _logic._heroWin = false;
       }
@@ -244,6 +246,7 @@ void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
 void drawVertex2f(int x, int y) {
   GD.Vertex2f(x* 16, y * 16);
 }
+
 void EEPROMWriteInt(int p_address, int p_value) {
   byte lowByte = ((p_value >> 0) & 0xFF),
       highByte = ((p_value >> 8) & 0xFF);
