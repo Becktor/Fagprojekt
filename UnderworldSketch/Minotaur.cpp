@@ -17,8 +17,8 @@ void Minotaur::initialize() {
 void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(logic->isGrounded(this)) {
     if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height)){
-      if (!_charge)
       toggleDir();
+      _charge = false;
     }
     if(_handle != MINO_WALKING_HANDLE) {
       updateHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS);
