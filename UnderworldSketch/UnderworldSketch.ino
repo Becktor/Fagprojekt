@@ -25,13 +25,13 @@
 
 //Checks
 #define NUNCHUCK 1 //Whether or not a nunchuck is connected
-#define RESETHSCORE 1 //Resets highscore
+#define RESET_HSCORE 1 //Resets highscore
 
 //Constants
 const static int
     SCREEN_WIDTH = 480,
     SCREEN_HEIGHT = 272,
-    ADDRESS_Hscore =200,
+    ADDRESS_HSCORE = 200,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
     SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
     SECOND = 1000,
@@ -48,13 +48,12 @@ void setup() {
   //INIT
   Serial.begin(9600);
   byte _fps = INIT_FPS;
-  word _dTime = SECOND / INIT_FPS; //Approx. time between frames
-  unsigned int CURRENT_Hscore; 
-  if(RESETHSCORE) {
-    EEPROMWriteInt(ADDRESS_Hscore,0);
-    CURRENT_Hscore=0;
+  word _dTime = SECOND / INIT_FPS, highScore;
+  if(RESET_HSCORE) {
+    EEPROMWriteInt(ADDRESS_HSCORE, 0);
+    highScore = 0;
   } else
-    CURRENT_Hscore= EEPROMReadInt(ADDRESS_Hscore);
+    highScore = EEPROMReadInt(ADDRESS_HSCORE);
 
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
@@ -136,9 +135,9 @@ void setup() {
           //GAME RESTART
         }
         newScene(&_scene, &_entrance, &_exit);
-        if (CURRENT_Hscore < _logic._score) {
-          EEPROMWriteInt(ADDRESS_Hscore, _logic._score);
-          CURRENT_Hscore = _logic._score;
+        if (highScore < _logic._score) {
+          EEPROMWriteInt(ADDRESS_HSCORE, _logic._score);
+          highScore = _logic._score;
         }
         _logic._gameOver = false;
         _logic._heroWin = false;
@@ -163,7 +162,7 @@ void setup() {
       GD.ColorRGB(0,0,0);
       GD.cmd_number(40, 40, 20, OPT_CENTER, _logic._score);
       //GD.cmd_text(40, 60, 20, OPT_CENTER,"Current Highscore");
-      GD.cmd_number(60, 60, 20, OPT_CENTER, CURRENT_Hscore); 
+      GD.cmd_number(60, 60, 20, OPT_CENTER, highScore); 
       //Draw currentmilis/fps - temporary
       //GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
       GD.ColorRGB(255,255,255);
