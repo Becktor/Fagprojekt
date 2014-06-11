@@ -39,7 +39,6 @@ const static int
 void setup();
 void loop();
 
-void drawProp(Prop *prop, int offsetX, int offsetY);
 void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawUnit(Unit *unit, int offsetX, int offsetY);
 void drawVertex2f(int x, int y, int offsetX, int offsetY);
@@ -144,9 +143,9 @@ void setup() {
       GD.ColorRGB(255, 0, 0); //Obsolete
       //Draw objects
       for(byte i = 0; i < units->size(); i++)
-        drawUnit(units->get(i), cameraX, cameraY, currentMillis);
+        drawProp(units->get(i), cameraX, cameraY, currentMillis);
       for(byte i = 0; i < props->size(); i++)
-        drawProp(props->get(i), cameraX, cameraY);
+        drawProp(props->get(i), cameraX, cameraY, currentMillis);
       //Draw score
       GD.cmd_number(40, 40, 31, OPT_CENTER, _logic._score); 
       //Draw currentmilis/fps - temporary
@@ -165,16 +164,6 @@ void setup() {
 
 void loop() { }
 
-void drawProp(Prop* prop, int offsetX, int offsetY){
-  Rect *hitbox = &(prop->_hitbox);
-  GD.Begin(BITMAPS);
-  //GD.ColorRGB(255, 255, 255); What is the point??
-  GD.PointSize(16 * hitbox->_width);
-  GD.Begin(POINTS);
-  GD.ColorRGB(0xff8000); // orange
-  GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
-}
-
 void drawScene(Scene *scene, int offsetX, int offsetY) {
   GD.ColorRGB(255, 255, 255); //Slated for removal
   char tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
@@ -191,8 +180,8 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
   }
 }
 
-void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
-  Rect *hitbox = &(unit->_hitbox);
+void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMillis) {
+  Rect *hitbox = &(prop->_hitbox);
   GD.Begin(RECTS);
   GD.ColorRGB(200, 5, 200);
   if(hitbox->_x - offsetX > 0 && hitbox->_x - offsetX < SCREEN_WIDTH && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < SCREEN_HEIGHT){
@@ -203,20 +192,20 @@ void drawUnit(Unit* unit,  int offsetX, int offsetY, long currentMillis) {
 
   //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
-  int half_Width = unit->_imageWidth / 2;
-  int xfix = (unit->_imageWidth - hitbox->_width) / 2;
-  unit->checkFrameChange(currentMillis);
-  GD.BitmapHandle(unit->_handle);
-  if(unit->_dir == LEFT) {
-    xfix = -xfix + unit->_imageWidth - hitbox->_width;
+  int half_Width = prop->_imageWidth / 2;
+  int xfix = (prop->_imageWidth - hitbox->_width) / 2;
+  prop->checkFrameChange(currentMillis);
+  GD.BitmapHandle(prop->_handle);
+  if(prop->_dir == LEFT) {
+    xfix = -xfix + prop->_imageWidth - hitbox->_width;
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));
     GD.cmd_setmatrix();
   }
-  GD.Cell(unit->_currentCell);
+  GD.Cell(prop->_currentCell);
   drawVertex2f(hitbox->_x - offsetX - xfix, hitbox->_y - offsetY);
-  if(unit->_dir == LEFT) {
+  if(prop->_dir == LEFT) {
     GD.cmd_translate(F16(half_Width), F16(0));
     GD.cmd_scale(F16(-1), F16(1));
     GD.cmd_translate(F16(-half_Width), F16(0));

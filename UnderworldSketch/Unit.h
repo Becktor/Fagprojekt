@@ -16,14 +16,11 @@ class Unit : public Prop {
   private:
 
   public:
-    byte _imageWidth, _health, _handle, _cells, _currentCell;
-    char _dir;
-    long _FR, _millis;
+    byte _health;
     
     Unit(byte width, byte height, char health, byte imageWidth);
     void hit(byte damage, char force);
     virtual void fillHealth();
-    void checkFrameChange(long milis);
     void toggleDir();
     void updateHandle(byte handle, byte cell);
     virtual void updateAI(int dTime, Logic *logic);

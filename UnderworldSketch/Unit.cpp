@@ -3,15 +3,8 @@
 #include "Prop.h"
 #include "Unit.h"
 
-Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, height) {
+Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, height, imageWidth) {
   _health = health;
-  _dir = randDir();
-  _imageWidth = imageWidth;
-  _handle = 0;
-  _cells = 0;
-  _currentCell = 0;
-  _FR = 0;
-  _millis = 0;
 }
 
 void Unit::hit(byte damage, char force) {
@@ -32,17 +25,6 @@ void Unit::updateHandle(byte handle, byte cells) {
   _handle = handle;
   _cells = cells;
   _currentCell = 0;
-}
-
-void Unit::checkFrameChange(long milis) {
-  if((milis - _millis) > _FR)
-  {   
-   _millis = milis;
-   if(_currentCell == _cells)
-    _currentCell = 0; 
-   else
-    _currentCell++; 
-  }
 }
 
 
