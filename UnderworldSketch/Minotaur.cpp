@@ -4,7 +4,7 @@
 #include "Minotaur.h"
 #include "Sprites.h"
 
-Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) { }
+Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) { 
   _detected  = false;
 }
 
