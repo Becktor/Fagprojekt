@@ -3,6 +3,7 @@
 #include "Unit.h"
 #include "Minotaur.h"
 #include "Sprites.h"
+#include "Scene.h"
 
 Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) {
   _detected  = false;
@@ -34,16 +35,32 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     _distance = sqrt((_distToHeroX * _distToHeroX) + (_distToHeroY * _distToHeroY));
     _minoMiddle = ((_hitbox._y + _hitbox._height- _hitbox._y)/10) + _hitbox._y;  //y-line which interesects with hero
 
-    if (_distance > MINO_LOSE_HERO_DIST){  //Hero ran away!
+    if (_distance > MINO_LOSE_HERO_DIST){
       _detected = false;
     }
     if((_heroYpos + _heroHeight > _minoMiddle ) && (_minoMiddle > _heroYpos)) { //check hero in sight
       if((_distToHeroX <= MINO_SEE_HERO_DIST)){
         if(((_dir == RIGHT && _heroXpos > _hitbox._x) || (_dir== LEFT &&  _heroXpos < _hitbox._x))){ //Right direction?
-          //Check the tiles in the horizontal sight
-          //if none solid tile is found then execute code
           _detected = true;
-         _charge = true;
+          _charge = true;
+          //Check the tiles in the horizontal sight
+          char tileXend = worldToGrid(_heroXpos);
+          char tileY = worldToGrid(_hitbox._y);
+          for(char tileX = worldToGrid(_hitbox._x) + _dir; _dir * tileX < _dir * tileXend; tileX += _dir){
+            byte tile = logic->_scene->getTile(tileX, tileY);
+            if(getSolid(tile)){
+              if(_dir == LEFT){
+                //if(_dir== LEFT &&  _heroXpos < _hitbox._x)
+                  _detected = false;
+                  _charge = false;
+              }
+              else{
+                //if(_dir == RIGHT && _heroXpos > _hitbox._x)
+                  _detected = false;
+                  _charge = false;
+              }
+            }
+          }
         }
       }
     }
