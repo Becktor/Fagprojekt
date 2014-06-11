@@ -30,10 +30,10 @@
 #define MINOD_WIDTH 80
 #define MINOD_HEIGHT 43
 #define MINOD_CELLS 4
-#define MINOW_HANDLE 6
-#define MINOW_WIDTH 80
-#define MINOW_HEIGHT 43
-#define MINOW_CELLS 4
+#define MINO_WALKING_HANDLE 6
+#define MINO_WALKING_WIDTH 80
+#define MINO_WALKING_HEIGHT 43
+#define MINO_WALKING_CELLS 4
 #define TILE_HANDLE 7
 #define TILE_WIDTH 48
 #define TILE_HEIGHT 48
@@ -41,34 +41,36 @@
 #define COIN_HANDLE 8
 #define COIN_WIDTH 32
 #define COIN_HEIGHT 32
-#define COIN_CELLS 3
+#define COIN_CELLS 4
 #define DOOR_HANDLE 9
 #define DOOR_WIDTH 48
 #define DOOR_HEIGHT 48
 #define DOOR_CELLS 1
-#define ATTACK 198432UL
+#define ATTACK 200480UL
 #define ATTACK_LENGTH 1600
 #define ATTACK_FREQ 8000
-#define JUMP 200032UL
+#define JUMP 202080UL
 #define JUMP_LENGTH 1280
 #define JUMP_FREQ 44100
-#define EXIT 201312UL
+#define EXIT 203360UL
 #define EXIT_LENGTH 4000
 #define EXIT_FREQ 8000
-#define COIN 205312UL
+#define COIN 207360UL
 #define COIN_LENGTH 8152
 #define COIN_FREQ 44100
-#define ASSETS_END 213464UL
+#define ASSETS_END 215512UL
 static const shape_t HEROW_SHAPE = {0, 74, 48, 0};
 static const shape_t HEROA_SHAPE = {1, 74, 48, 0};
 static const shape_t HEROD_SHAPE = {2, 74, 36, 0};
 static const shape_t HEROB_SHAPE = {3, 74, 48, 0};
 static const shape_t MINOC_SHAPE = {4, 80, 43, 0};
 static const shape_t MINOD_SHAPE = {5, 80, 43, 0};
-static const shape_t MINOW_SHAPE = {6, 80, 43, 0};
+static const shape_t MINO_WALKING_SHAPE = {6, 80, 43, 0};
 static const shape_t TILE_SHAPE = {7, 48, 48, 0};
 static const shape_t COIN_SHAPE = {8, 32, 32, 0};
 static const shape_t DOOR_SHAPE = {9, 48, 48, 0};
+
+
 
 
 

@@ -18,7 +18,7 @@ void Prop::checkFrameChange(long milis) {
   if((milis - _millis) > _FR)
   {   
    _millis = milis;
-   if(_currentCell == _cells)
+   if(_currentCell == _cells - 1)
     _currentCell = 0; 
    else
     _currentCell++; 

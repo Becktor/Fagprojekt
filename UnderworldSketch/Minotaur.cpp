@@ -2,8 +2,9 @@
 #include "Logic.h"
 #include "Unit.h"
 #include "Minotaur.h"
+#include "Sprites.h"
 
-Minotaur::Minotaur() : Unit(MINO_WIDTH, MINO_HEIGHT, MINO_HEALTH, MINO_IMAGE_WIDTH) { }
+Minotaur::Minotaur() : Unit(MINO_HITBOX_WIDTH, MINO_WALKING_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) { }
 
 void Minotaur::initialize() {
   Prop::initialize();
