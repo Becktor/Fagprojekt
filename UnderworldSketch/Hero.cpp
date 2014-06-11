@@ -15,6 +15,10 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_HITBOX_WIDTH, HERO_HEIGHT_STAND,
 void Hero::initialize() {
   Prop::initialize();
   _health = HERO_HEALTH;
+  _attackSound = false;
+  _isAttacking = true;
+  _isDucking = true;
+  _isJumping = false;
 }
 
 void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
@@ -39,8 +43,19 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_IDLE_FR);
   }
 
-  //Hero duck - If analogX is lower than 90
-  if(NUNCHUK_DUCK > _nunchuk->analogY) {
+  //Hero jump
+  if(logic->isGrounded(this)) {
+    if(_nunchuk->cButton) {
+      if(!_isJumping) {
+        _yVel -= HERO_SPEED_JUMP;
+        _isJumping = true;
+      }
+    } else
+      _isJumping = false;
+  }
+
+  //Hero duck
+  if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
     updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
     if(!_isDucking) {
       _hitbox._height = HERO_HEIGHT_DUCK;
@@ -50,26 +65,12 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   } else if(_isDucking) {
     _hitbox._height = HERO_HEIGHT_STAND;
     _hitbox._y += HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND;
-    updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
     _isDucking = false;
-  }
-
-  //Hero jump
-  if(logic->isGrounded(this)) {
-    if(_nunchuk->cButton) {
-      if(!_isJumping) {
-        _yVel = -HERO_SPEED_JUMP;
-        _isJumping = true;
-      }
-    } else
-      _isJumping = false;
   }
 
   //Hero action
   if(_nunchuk->zButton) {
     if(_isDucking && logic->atExit(this)) {
-      //Map exit
-      _isAttacking = true;
       logic->_gameOver = true;
       logic->_heroWin = true;
     } else if(!_isAttacking) {
@@ -81,8 +82,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       else
         _attackArea._x = _hitbox._x + _hitbox._width;
       _attackArea._y = _hitbox._y;
-      _attackArea._height = _hitbox._height;
-      _attack._force = HERO_ATT_FORCE * _dir;
+      _attack._force = _dir * HERO_ATT_FORCE;
       logic->addAttack(&_attack);
     } else 
       _attackSound = false;

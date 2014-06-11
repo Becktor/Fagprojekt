@@ -43,20 +43,19 @@ void Scene::addCoin(byte x, byte y) {
 void Scene::addMinotaur(byte x, byte y) {
   if(_minoIndex != MINOTAURS) {
     addUnit(_minotaurs[_minoIndex], x, y);
-    _minotaurs[_minoIndex]->initialize();
     _minoIndex++;
   }
 }
 
 void Scene::addProp(Prop *prop, byte x, byte y) {
-  moveProp(prop, x, y);
+  setProp(prop, x, y);
   _props.add(prop);
 }
 
 
 //Adds the given unit to the units list and sets it at the given tile.
 void Scene::addUnit(Unit *unit, byte x, byte y) {
-  moveProp(unit, x, y);
+  setProp(unit, x, y);
   _units.add(unit);
 }
 
@@ -93,10 +92,11 @@ LinkedList<Prop*>* Scene::getProps() {
   return &_props;
 }
 
-void Scene::moveProp(Prop* prop, byte x, byte y) {
+void Scene::setProp(Prop* prop, byte x, byte y) {
   Rect *hitbox = &(prop->_hitbox);
   hitbox->_x = x * TILE_SIZE + (TILE_SIZE - hitbox->_width) / 2;
   hitbox->_y = y * TILE_SIZE + TILE_SIZE - hitbox->_height;
+  prop->initialize();
 }
 
 void Scene::setTile(byte x, byte y, byte tile) {

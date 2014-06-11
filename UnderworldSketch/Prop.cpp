@@ -5,17 +5,15 @@
 Prop::Prop(byte width, byte height, byte imageWidth) : _hitbox(width, height) {
   _levitate = false;
   _imageWidth = imageWidth;
-  initialize();
 }
 
 void Prop::checkFrameChange(long milis) {
-  if((milis - _millis) > _FR)
-  {   
-   _millis = milis;
-   if(_currentCell == _cells - 1)
-    _currentCell = 0; 
-   else
-    _currentCell++; 
+  if(milis - _millis > _FR) {   
+    _millis = milis;
+    if(_currentCell == _cells - 1)
+      _currentCell = 0; 
+    else
+      _currentCell++; 
   }
 }
 
@@ -53,6 +51,6 @@ void Prop::updateHandle(byte handle, byte cells, byte FR) {
 char Prop::zoomIn(byte zoom, char current, char target) {
   if(target > current)
     return min(current + zoom, target);
-  else if(target < current)
+  else
     return max(current - zoom, target);
 }

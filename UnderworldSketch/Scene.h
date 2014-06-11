@@ -28,7 +28,6 @@ const static byte
     MINOTAURS = 3,
     COINS = 5;
 
-
 char worldToGrid(int x);
 int gridToWorld(byte x);
 
@@ -55,7 +54,7 @@ class Scene {
     byte getTile(byte x, byte y);
     LinkedList<Unit*> *getUnits();
     LinkedList<Prop*> *getProps();
-    void moveProp(Prop *prop, byte x, byte y);
+    void setProp(Prop *prop, byte x, byte y);
     void setTile(byte x, byte y, byte tile);
 };
 #endif

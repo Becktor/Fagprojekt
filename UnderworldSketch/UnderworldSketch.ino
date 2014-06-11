@@ -49,10 +49,9 @@ void setup() {
   //Serial.begin(9600);
   byte _fps = INIT_FPS;
   word _dTime = SECOND / INIT_FPS, highScore;
-  if(RESET_HSCORE) {
-    EEPROMWriteInt(ADDRESS_HSCORE, 0);
+  if(RESET_HSCORE)
     highScore = 0;
-  } else
+  else
     highScore = EEPROMReadInt(ADDRESS_HSCORE);
 
   Scene _scene = Scene();
@@ -129,11 +128,14 @@ void setup() {
           _logic._heroWin = false;
       }
       if(_logic._gameOver) {
+        byte health;
         if(_logic._heroWin) {
           //GAME CONTINUE
+          health = _hero._health;
           GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
         } else {
           //GAME RESTART
+          health = HERO_HEALTH;
         }
         newScene(&_scene, &_entrance, &_exit);
         if (highScore < _logic._score) {
@@ -143,6 +145,7 @@ void setup() {
         _logic._gameOver = false;
         _logic._heroWin = false;
         _scene.addUnit(&_hero, _entrance._x, _entrance._y);
+        _hero._health = health;
       }
 
       //DRAW LOGIC
@@ -241,18 +244,15 @@ void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
 void drawVertex2f(int x, int y) {
   GD.Vertex2f(x* 16, y * 16);
 }
-void EEPROMWriteInt(int p_address, int p_value)
-      {
-      byte lowByte = ((p_value >> 0) & 0xFF);
-      byte highByte = ((p_value >> 8) & 0xFF);
+void EEPROMWriteInt(int p_address, int p_value) {
+  byte lowByte = ((p_value >> 0) & 0xFF),
+      highByte = ((p_value >> 8) & 0xFF);
+  EEPROM.write(p_address, lowByte);
+  EEPROM.write(p_address + 1, highByte);
+}
 
-      EEPROM.write(p_address, lowByte);
-      EEPROM.write(p_address + 1, highByte);
-      }
-unsigned int EEPROMReadInt(int p_address)
-      {
-      byte lowByte = EEPROM.read(p_address);
-      byte highByte = EEPROM.read(p_address + 1);
-
-      return ((lowByte << 0) & 0xFF) + ((highByte << 8) & 0xFF00);
-      }
+unsigned int EEPROMReadInt(int p_address) {
+  byte lowByte = EEPROM.read(p_address),
+      highByte = EEPROM.read(p_address + 1);
+  return ((lowByte << 0) & 0xFF) + ((highByte << 8) & 0xFF00);
+}

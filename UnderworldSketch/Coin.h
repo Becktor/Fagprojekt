@@ -11,6 +11,7 @@ class Coin : public Prop {
     Coin();
     void collideX();
     void collideY();
+    void initialize();
 };
 #endif
 

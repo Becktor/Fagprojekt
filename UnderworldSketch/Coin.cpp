@@ -2,7 +2,10 @@
 #include "Prop.h"
 #include "Sprites.h"
 
-Coin::Coin() : Prop(COIN_WIDTH, COIN_HEIGHT, COIN_WIDTH) { 
+Coin::Coin() : Prop(COIN_WIDTH, COIN_HEIGHT, COIN_WIDTH) { }
+
+void Coin::initialize() {
+  Prop::initialize();
   updateHandle(COIN_HANDLE, COIN_CELLS, _FR = COIN_FR);
 }
 
