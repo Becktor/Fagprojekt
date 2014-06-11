@@ -57,12 +57,16 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
 
   //Hero duck - If analogX is lower than 90
   if(45 > _nunchuk -> analogY) {
-    if(!_isDucking) {
-      if(_handle != HERO_DUCKING_HANDLE)
-      {
+    if(_handle != HERO_IDLE_HANDLE)
+    {
       updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
       _FR = HERO_DUCKING_FR;
-      }
+    }
+    if(!_isDucking) {
+     
+//      updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
+//      _FR = HERO_DUCKING_FR;
+      
       _hitbox._height = HERO_HEIGHT_DUCK;
       _hitbox._y += HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK;
       //_hitbox.translate(0, HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK);
@@ -71,6 +75,8 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   } else if(_isDucking) {
     _hitbox._height = HERO_HEIGHT_STAND;
     _hitbox._y += HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND;
+          updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS);
+      _FR = HERO_DUCKING_FR;
     //_hitbox.translate(0, HERO_HEIGHT_DUCK - HERO_HEIGHT_STAND);
     _isDucking = false;
   }

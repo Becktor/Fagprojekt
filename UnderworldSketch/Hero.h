@@ -16,7 +16,7 @@ const static byte
     HERO_ATT_RANGE = 50,
     HERO_HEALTH = 3,
     HERO_HEIGHT_STAND = 45, //Height stand value
-    HERO_HEIGHT_DUCK = 20, //Duck height
+    HERO_HEIGHT_DUCK = 36, //Duck height
     HERO_WIDTH = 32,
     HERO_IMAGE_WIDTH = HEROW_WIDTH,
     HERO_SPEED_JUMP = 15,
