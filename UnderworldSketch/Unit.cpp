@@ -4,14 +4,9 @@
 #include "Unit.h"
 
 Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, height) {
-  _health = health;
-  _dir = randDir();
   _imageWidth = imageWidth;
-  _handle = 0;
-  _cells = 0;
-  _currentCell = 0;
-  _FR = 0;
-  _millis = 0;
+  _health = health;
+  initialize();
 }
 
 void Unit::hit(byte damage, char force) {
@@ -30,7 +25,14 @@ int Unit::getFR() {
   return _FR;
 }
 
-void Unit::fillHealth() {}
+void Unit::initialize() {
+  _dir = randDir();
+  _handle = 0;
+  _cells = 0;
+  _currentCell = 0;
+  _FR = 0;
+  _millis = 0;
+}
 
 void Unit::setCurrentCell(int currentCell) {
    _currentCell = currentCell;

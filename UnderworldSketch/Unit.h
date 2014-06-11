@@ -17,14 +17,14 @@ class Unit : public Prop {
     long _FR, _millis;
 
   public:
-    byte _imageWidth, _health, _handle, _cells, _currentCell;
+    byte _imageWidth, _handle, _health, _cells, _currentCell;
     char _dir;
 
     Unit(byte width, byte height, char health, byte imageWidth);
     int getCurrentCell();
     int getFR();
     void hit(byte damage, char force);
-    virtual void fillHealth();
+    virtual void initialize();
     void setCurrentCell(int currentCell);
     void setFR(long frameRate);
     void checkFrameChange(long milis);

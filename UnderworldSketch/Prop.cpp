@@ -3,8 +3,7 @@
 
 Prop::Prop(byte width, byte height) : _hitbox(width, height) {
   _levitate = false;
-  _xVel = 0;
-  _yVel = 0;
+  initialize();
 }
 
 void Prop::accelerate(byte acc, char targetSpeed) {
@@ -17,6 +16,11 @@ void Prop::accelerate(byte acc, char targetSpeed) {
 void Prop::hit(byte damage, char force) {
   _xVel += force;
   _yVel -= abs(force);
+}
+
+void Prop::initialize() {
+  _xVel = 0;
+  _yVel = 0;
 }
 
 void Prop::xCollide() { }

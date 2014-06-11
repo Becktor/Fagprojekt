@@ -24,17 +24,15 @@ const static byte
     MINO_CHARGING_FR = 5,
     MINO_DYING = MINOD_HANDLE,
     MINO_DYING_CELLS = MINOD_CELLS - 1,
-    MINO_DYING_FR = 5,
-    MINO_LOSE_HERO_DIST=30,
-    MINO_SEE_HERO_DIST=30;
+    MINO_DYING_FR = 5;
 
 
 class Minotaur : public Unit {
   public:
+    boolean detected;
+
     Minotaur();
-    boolean _detected;
-    boolean _unfollow;
-    void fillHealth();
+    void initialize();
     void updateAI(int dTime, Logic *logic);
     void xCollide();
   private:
