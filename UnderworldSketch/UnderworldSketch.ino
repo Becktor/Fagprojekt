@@ -115,12 +115,10 @@ void setup() {
         Unit* unit = units->get(i);
         _logic.executeAttacks(unit);
         if(unit->_health == 0) {
-          units->remove(i);
           _score += 100;
-        } else {
+        } 
           _logic.updatePhysics(_dTime, unit);
           i++;
-        }
       }
     }
     _logic.clearAttacks();

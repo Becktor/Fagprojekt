@@ -26,6 +26,7 @@ void Prop::initialize() {
   _FR = 0;
   _aniTime = 0;
   _wait = false;
+  _isDead = false;
 }
 
 void Prop::newHandle(byte handle, byte cells, byte FR) {
@@ -45,8 +46,10 @@ void Prop::updateAnimation(byte dTime) {
     //_aniTime -= _FR;
     _aniTime = 0;
     if(_currentCell == _cells - 1) {
+      if(!_isDead){
       _wait = false;
       _currentCell = 0; 
+      }
     }
     else
       _currentCell++; 
