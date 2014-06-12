@@ -52,9 +52,9 @@
 #define EXIT_LENGTH 4000
 #define EXIT_FREQ 8000
 #define COIN 211632UL
-#define COIN_LENGTH 3064
-#define COIN_FREQ 16000
-#define ASSETS_END 214696UL
+#define COIN_LENGTH 4072
+#define COIN_FREQ 22050
+#define ASSETS_END 215704UL
 static const shape_t HERO_MOVING_SHAPE = {0, 74, 48, 0};
 static const shape_t HERO_ATTACKING_SHAPE = {1, 74, 48, 0};
 static const shape_t HERO_DUCKING_SHAPE = {2, 74, 36, 0};
@@ -64,6 +64,7 @@ static const shape_t MINO_DYING_SHAPE = {5, 80, 43, 0};
 static const shape_t MINO_WALKING_SHAPE = {6, 80, 43, 0};
 static const shape_t TILE_SHAPE = {7, 48, 48, 0};
 static const shape_t COIN_SHAPE = {8, 32, 32, 0};
+
 
 
 
