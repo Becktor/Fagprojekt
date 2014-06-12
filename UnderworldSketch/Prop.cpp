@@ -38,10 +38,10 @@ void Prop::initialize() {
 }
 
 void Prop::updateHandle(byte handle, byte cells, byte FR) {
+  _FR = FR;
   if(_handle != handle) {
     _handle = handle;
     _cells = cells;
-    _FR = FR;
     _currentCell = 0;
   }
 }
