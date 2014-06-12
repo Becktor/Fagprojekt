@@ -46,15 +46,15 @@
 #define ATTACK_LENGTH 1600
 #define ATTACK_FREQ 8000
 #define JUMP 206688UL
-#define JUMP_LENGTH 1280
-#define JUMP_FREQ 44100
-#define EXIT 207968UL
+#define JUMP_LENGTH 944
+#define JUMP_FREQ 8000
+#define EXIT 207632UL
 #define EXIT_LENGTH 4000
 #define EXIT_FREQ 8000
-#define COIN 211968UL
-#define COIN_LENGTH 8152
-#define COIN_FREQ 44100
-#define ASSETS_END 220120UL
+#define COIN 211632UL
+#define COIN_LENGTH 3064
+#define COIN_FREQ 16000
+#define ASSETS_END 214696UL
 static const shape_t HERO_MOVING_SHAPE = {0, 74, 48, 0};
 static const shape_t HERO_ATTACKING_SHAPE = {1, 74, 48, 0};
 static const shape_t HERO_DUCKING_SHAPE = {2, 74, 36, 0};
