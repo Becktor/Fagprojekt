@@ -114,8 +114,9 @@ void setup() {
       while(i < units->size()) {
         Unit* unit = units->get(i);
         _logic.executeAttacks(unit);
-        if(unit->_health == 0) {
+        if(unit->_health == 0 && !(unit->_isDead)) {
           _score += 100;
+//          unit->_health = -1;
         } 
           _logic.updatePhysics(_dTime, unit);
           i++;

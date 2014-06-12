@@ -22,13 +22,18 @@ void Minotaur::initialize() {
 }
 
 void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
-  if(_health <= 0)
+  
+  if(_isDead)
+    return;
+    
+  if(_health == 0)
   {
     newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_DYING_FR);
     _xVel = MINO_SPEED_DYING;
     _isDead = true;
     return;
   }
+
   if(logic->isGrounded(this)) {
     if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height)){
       toggleDir();
