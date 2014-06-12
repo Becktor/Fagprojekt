@@ -3,39 +3,40 @@
 \contentsline {section}{\numberline {1.2}Gameduino 2}{3}{section.1.2}
 \contentsline {chapter}{\numberline {2}Problem Analysis}{4}{chapter.2}
 \contentsline {chapter}{\numberline {3}Requirements specification}{5}{chapter.3}
-\contentsline {subsection}{\numberline {3.0.1}The game play}{5}{subsection.3.0.1}
+\contentsline {subsection}{\numberline {3.0.1}Gameplay}{5}{subsection.3.0.1}
 \contentsline {subsection}{\numberline {3.0.2}The algorithms}{5}{subsection.3.0.2}
-\contentsline {subsection}{\numberline {3.0.3}Timeplan}{5}{subsection.3.0.3}
+\contentsline {subsection}{\numberline {3.0.3}Timeplan}{6}{subsection.3.0.3}
 \contentsline {subsubsection}{Project management}{6}{section*.2}
+\contentsline {subsection}{\numberline {3.0.4}Time Boxing}{6}{subsection.3.0.4}
 \contentsline {subsubsection}{Tasks management}{6}{section*.3}
-\contentsline {chapter}{\numberline {4}Overall design}{8}{chapter.4}
-\contentsline {section}{\numberline {4.1}Components}{8}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Structure}{8}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}Media}{8}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Assets}{8}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Sound}{8}{subsection.4.2.2}
-\contentsline {chapter}{\numberline {5}Implementation and detailed design}{9}{chapter.5}
-\contentsline {section}{\numberline {5.1}Setup}{9}{section.5.1}
-\contentsline {section}{\numberline {5.2}Loop}{9}{section.5.2}
-\contentsline {section}{\numberline {5.3}Actors}{10}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Hero}{10}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Enemies}{10}{subsection.5.3.2}
-\contentsline {section}{\numberline {5.4}Logic}{10}{section.5.4}
-\contentsline {section}{\numberline {5.5}Scenes}{10}{section.5.5}
-\contentsline {subsection}{\numberline {5.5.1}Generator}{11}{subsection.5.5.1}
-\contentsline {section}{\numberline {5.6}Optimization}{12}{section.5.6}
-\contentsline {subsection}{\numberline {5.6.1}Code Size bloat}{13}{subsection.5.6.1}
-\contentsline {subsection}{\numberline {5.6.2}Further optimization}{13}{subsection.5.6.2}
-\contentsline {section}{\numberline {5.7}Input}{13}{section.5.7}
-\contentsline {chapter}{\numberline {6}Hardware}{14}{chapter.6}
-\contentsline {subsection}{\numberline {6.0.1}input}{14}{subsection.6.0.1}
-\contentsline {subsection}{\numberline {6.0.2}I2C}{15}{subsection.6.0.2}
-\contentsline {chapter}{\numberline {7}Testing and performance analysis}{16}{chapter.7}
-\contentsline {chapter}{\numberline {8}Discussion}{17}{chapter.8}
-\contentsline {section}{\numberline {8.1}Meeting Requirements}{17}{section.8.1}
-\contentsline {subsection}{\numberline {8.1.1}Cut content}{17}{subsection.8.1.1}
-\contentsline {subsection}{\numberline {8.1.2}Additional content}{17}{subsection.8.1.2}
-\contentsline {chapter}{\numberline {9}Conclusion}{18}{chapter.9}
-\contentsline {subsection}{\numberline {9.0.3}Links}{19}{subsection.9.0.3}
-\contentsline {chapter}{\numberline {10}Appendices}{20}{chapter.10}
-\contentsline {subsection}{\numberline {10.0.4}Optimization}{20}{subsection.10.0.4}
+\contentsline {chapter}{\numberline {4}Overall design}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}Components}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Structure}{9}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Media}{9}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Assets}{9}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Sound}{9}{subsection.4.2.2}
+\contentsline {chapter}{\numberline {5}Implementation and detailed design}{10}{chapter.5}
+\contentsline {section}{\numberline {5.1}Setup}{10}{section.5.1}
+\contentsline {section}{\numberline {5.2}Loop}{10}{section.5.2}
+\contentsline {section}{\numberline {5.3}Actors}{11}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Hero}{11}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Enemies}{11}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}Logic}{11}{section.5.4}
+\contentsline {section}{\numberline {5.5}Scenes}{11}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}Generator}{12}{subsection.5.5.1}
+\contentsline {section}{\numberline {5.6}Optimization}{13}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}Code Size bloat}{14}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}Further optimization}{14}{subsection.5.6.2}
+\contentsline {section}{\numberline {5.7}Input}{14}{section.5.7}
+\contentsline {chapter}{\numberline {6}Hardware}{15}{chapter.6}
+\contentsline {subsection}{\numberline {6.0.1}input}{15}{subsection.6.0.1}
+\contentsline {subsection}{\numberline {6.0.2}I2C}{16}{subsection.6.0.2}
+\contentsline {chapter}{\numberline {7}Testing and performance analysis}{17}{chapter.7}
+\contentsline {chapter}{\numberline {8}Discussion}{18}{chapter.8}
+\contentsline {section}{\numberline {8.1}Meeting Requirements}{18}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}Cut content}{18}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}Additional content}{18}{subsection.8.1.2}
+\contentsline {chapter}{\numberline {9}Conclusion}{19}{chapter.9}
+\contentsline {subsection}{\numberline {9.0.3}Links}{20}{subsection.9.0.3}
+\contentsline {chapter}{\numberline {10}Appendices}{21}{chapter.10}
+\contentsline {subsection}{\numberline {10.0.4}Optimization}{21}{subsection.10.0.4}
