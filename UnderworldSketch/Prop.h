@@ -5,7 +5,7 @@
 
 class Prop {
   public:
-    boolean _levitate;
+    boolean _levitate, _wait;
     byte _imageWidth, _handle, _cells, _currentCell;
     char _dir, _xVel, _yVel;
     long _FR, _millis;

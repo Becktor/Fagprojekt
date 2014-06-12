@@ -95,6 +95,8 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack
       _isAttacking = true;
       _attackSound = true;
+      updateHandle(HERO_ATTACKING_HANDLE, HERO_ATTACKING_CELLS, HERO_ATTACKING_FR);
+      _wait = true;
       if(_dir == LEFT)
         _attackArea._x = _hitbox._x - HERO_ATT_RANGE - 1;
       else
