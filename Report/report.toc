@@ -4,11 +4,11 @@
 \contentsline {chapter}{\numberline {2}Problem Analysis}{4}{chapter.2}
 \contentsline {chapter}{\numberline {3}Requirements specification}{5}{chapter.3}
 \contentsline {subsection}{\numberline {3.0.1}Gameplay}{5}{subsection.3.0.1}
-\contentsline {subsection}{\numberline {3.0.2}The algorithms}{5}{subsection.3.0.2}
-\contentsline {subsection}{\numberline {3.0.3}Timeplan}{6}{subsection.3.0.3}
-\contentsline {subsubsection}{Project management}{6}{section*.2}
-\contentsline {subsection}{\numberline {3.0.4}Time Boxing}{6}{subsection.3.0.4}
-\contentsline {subsubsection}{Tasks management}{6}{section*.3}
+\contentsline {subsubsection}{High Score}{5}{section*.2}
+\contentsline {subsubsection}{Coins}{5}{section*.3}
+\contentsline {subsection}{\numberline {3.0.2}Timeplan}{6}{subsection.3.0.2}
+\contentsline {subsubsection}{Waterfall}{6}{section*.4}
+\contentsline {subsection}{\numberline {3.0.3}Time Boxing}{6}{subsection.3.0.3}
 \contentsline {chapter}{\numberline {4}Overall design}{9}{chapter.4}
 \contentsline {section}{\numberline {4.1}Components}{9}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Structure}{9}{subsection.4.1.1}
