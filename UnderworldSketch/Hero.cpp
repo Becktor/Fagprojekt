@@ -14,6 +14,7 @@ Hero::Hero(ArduinoNunchuk* nunchuk) : Unit(HERO_HITBOX_WIDTH, HERO_HEIGHT_STAND,
 
 void Hero::initialize() {
   Prop::initialize();
+  newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_IDLE_FR);
   _health = HERO_HEALTH;
   _attackSound = false;
   _isAttacking = true;

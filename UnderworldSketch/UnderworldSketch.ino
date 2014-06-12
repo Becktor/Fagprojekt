@@ -51,7 +51,6 @@ void flip(byte halfWidth);
 void setup() {
   //SETUP
   //Serial.begin(9600);
-  byte _fps = INIT_FPS, _dTime = SECOND / INIT_FPS;
   word _score = 0, _highScore;
   if(RESET_HSCORE)
     _highScore = 0;
@@ -62,9 +61,6 @@ void setup() {
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
-  //byte seed = EEPROM.read(ADDRESS_SEED);
-  //randomSeed(seed);
-  //EEPROM.write(ADDRESS_SEED, random(255));
   word seed = EEPROMReadInt(ADDRESS_SEED);
   randomSeed(seed);
   EEPROMWriteInt(ADDRESS_SEED, random(65535)); //New random seed in unsigned int range.
@@ -79,110 +75,105 @@ void setup() {
 
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Coin*>* coins = _scene.getCoins();
+  long currentMillis = millis();
   //LOOP
   for(;;) {
-    //FPS CALCULATIONS
-    byte _counter = 0;
-    unsigned long startMillis = millis(), currentMillis = startMillis;
-    while(currentMillis - startMillis < SECOND) { //Loop for a second
-      //GAME LOGIC
-      if(NUNCHUCK) {
-        _nunchuk.update();
-        _nunchuk.update();
-      }
-      //UPDATE AI
-      for(byte i = 0; i < units->size(); i++) {
-        Unit *unit = units->get(i);
-        unit->checkFrameChange(currentMillis);
-        unit->updateAI(_dTime, &_logic);
-      }
-      //UPDATE PROPS
-      {
-        byte i = 0;
-        while(i < coins->size()) {
-          Coin* coin = coins->get(i);
-          coin->checkFrameChange(currentMillis);
-          _logic.executeAttacks(coin);
-          if(_logic.coinCollision(coin)){ {
-            _score += COIN_SCORE;
-            coins->remove(i);}
-          } else {
-            _logic.updatePhysics(_dTime, coin);
-            i++;
-          }
-        }
-      }
-      {
-        byte i = 0;
-        while(i < units->size()) {
-          Unit* unit = units->get(i);
-          _logic.executeAttacks(unit);
-          if(unit->_health == 0) {
-            units->remove(i);
-            _score += 100;
-          } else {
-            _logic.updatePhysics(_dTime, unit);
-            i++;
-          }
-        }
-      }
-      _logic.clearAttacks();
-      if(_hero.getAttackSound())
-         GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
-      //Game end
-      if(_hero._health == 0) {
-          _logic._gameOver = true;
-          _logic._heroWin = false;
-      }
-      if(_logic._gameOver) {
-        byte health;
-        if(_logic._heroWin) {
-          //GAME CONTINUE
-          health = _hero._health;
-          GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
-        } else {
-          //GAME RESTART
-          health = HERO_HEALTH;
-        }
-        newScene(&_scene, &_entrance, &_exit);
-        //MOVE TO GAME RESTART LATER
-        if (_highScore < _score) {
-          EEPROMWriteInt(ADDRESS_HSCORE, _score);
-          _highScore = _score;
-        }
-        //
-        _logic._gameOver = false;
-        _logic._heroWin = false;
-        _scene.addUnit(&_hero, _entrance._x, _entrance._y);
-        _hero._health = health;
-      }
-
-      //DRAW LOGIC
-      GD.ClearColorRGB(38, 36, 57); //Background
-      GD.Clear();
-      GD.Begin(BITMAPS);
-      GD.ColorRGB(255,255,255);
-      int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
-          cameraY = _camera->_y + (_camera->_height - SCREEN_HEIGHT) / 2;
-      //Draw scene
-      drawScene(&_scene, cameraX, cameraY);
-      //Draw objects
-      for(byte i = 0; i < coins->size(); i++)
-        drawProp(coins->get(i), cameraX, cameraY);
-      for(byte i = 0; i < units->size(); i++)
-        drawProp(units->get(i), cameraX, cameraY);
-      //Draw score
-      GD.ColorRGB(255,255,255); //Text color
-      GD.cmd_number(40, 40, 20, OPT_CENTER, _score);
-      GD.cmd_number(60, 60, 20, OPT_CENTER, _highScore); 
-      //Complete drawing
-      GD.swap();
-      //Time calculations
-      _counter++; //Frame counter
-      currentMillis = millis();
-      _fps = _counter;
-      _dTime = SECOND / _fps;
+    //Time calculations
+    long newMillis = millis();
+    byte _dTime = newMillis - currentMillis;
+    currentMillis = newMillis;
+    //GAME LOGIC
+    if(NUNCHUCK) {
+      _nunchuk.update();
+      _nunchuk.update();
     }
+    //UPDATE AI
+    for(byte i = 0; i < units->size(); i++) {
+      Unit *unit = units->get(i);
+      unit->updateAnimation(_dTime);
+      unit->updateAI(_dTime, &_logic);
+    }
+    //UPDATE PROPS
+    {
+      byte i = 0;
+      while(i < coins->size()) {
+        Coin* coin = coins->get(i);
+        coin->updateAnimation(_dTime);
+        _logic.executeAttacks(coin);
+        if(_logic.coinCollision(coin)){ {
+          _score += COIN_SCORE;
+          coins->remove(i);}
+        } else {
+          _logic.updatePhysics(_dTime, coin);
+          i++;
+        }
+      }
+    }
+    {
+      byte i = 0;
+      while(i < units->size()) {
+        Unit* unit = units->get(i);
+        _logic.executeAttacks(unit);
+        if(unit->_health == 0) {
+          units->remove(i);
+          _score += 100;
+        } else {
+          _logic.updatePhysics(_dTime, unit);
+          i++;
+        }
+      }
+    }
+    _logic.clearAttacks();
+    if(_hero.getAttackSound())
+       GD.sample(ATTACK, ATTACK_LENGTH, 8000, ADPCM_SAMPLES);
+    //Game end
+    if(_hero._health == 0) {
+      _logic._gameOver = true;
+      _logic._heroWin = false;
+    }
+    if(_logic._gameOver) {
+      byte health;
+      if(_logic._heroWin) {
+        //GAME CONTINUE
+        health = _hero._health;
+        GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
+      } else {
+        //GAME RESTART
+        health = HERO_HEALTH;
+      }
+      newScene(&_scene, &_entrance, &_exit);
+      //MOVE TO GAME RESTART LATER
+      if (_highScore < _score) {
+        EEPROMWriteInt(ADDRESS_HSCORE, _score);
+        _highScore = _score;
+      }
+      //
+      _logic._gameOver = false;
+      _logic._heroWin = false;
+      _scene.addUnit(&_hero, _entrance._x, _entrance._y);
+      _hero._health = health;
+    }
+
+    //DRAW LOGIC
+    GD.ClearColorRGB(38, 36, 57); //Background
+    GD.Clear();
+    GD.Begin(BITMAPS);
+    GD.ColorRGB(255,255,255);
+    int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
+        cameraY = _camera->_y + (_camera->_height - SCREEN_HEIGHT) / 2;
+    //Draw scene
+    drawScene(&_scene, cameraX, cameraY);
+    //Draw objects
+    for(byte i = 0; i < coins->size(); i++)
+      drawProp(coins->get(i), cameraX, cameraY);
+    for(byte i = 0; i < units->size(); i++)
+      drawProp(units->get(i), cameraX, cameraY);
+    //Draw score
+    GD.ColorRGB(255,255,255); //Text color
+    GD.cmd_number(40, 40, 20, OPT_CENTER, _score);
+    GD.cmd_number(60, 60, 20, OPT_CENTER, _highScore); 
+    //Complete drawing
+    GD.swap();
   }
 }
 

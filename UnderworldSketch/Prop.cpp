@@ -7,19 +7,6 @@ Prop::Prop(byte width, byte height, byte imageWidth) : _hitbox(width, height) {
   _imageWidth = imageWidth;
 }
 
-void Prop::checkFrameChange(long milis) {
-  if(milis - _millis > _FR) {   
-    _millis = milis;
-    if(_currentCell == _cells - 1)
-    {
-      _wait = false;
-      _currentCell = 0; 
-    }
-    else
-      _currentCell++; 
-  }
-}
-
 void Prop::collideX() { }
 
 void Prop::collideY() { }
@@ -37,7 +24,7 @@ void Prop::initialize() {
   _cells = 0;
   _currentCell = 0;
   _FR = 0;
-  _millis = 0;
+  _aniTime = 0;
   _wait = false;
 }
 
@@ -47,6 +34,22 @@ void Prop::newHandle(byte handle, byte cells, byte FR) {
     _cells = cells;
     _currentCell = 0;
     _FR = FR;
+    _aniTime = 0;
+  }
+}
+
+void Prop::updateAnimation(byte dTime) {
+  _aniTime += dTime;
+  //while(_aniTime >= _FR) {
+  if(_aniTime >= _FR) {
+    //_aniTime -= _FR;
+    _aniTime = 0;
+    if(_currentCell == _cells - 1) {
+      _wait = false;
+      _currentCell = 0; 
+    }
+    else
+      _currentCell++; 
   }
 }
 

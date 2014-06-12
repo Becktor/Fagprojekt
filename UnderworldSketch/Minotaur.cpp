@@ -17,6 +17,7 @@ void Minotaur::collideX() {
 
 void Minotaur::initialize() {
   Prop::initialize();
+  newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_WALKING_FR);
   _health = MINO_HEALTH;
 }
 
