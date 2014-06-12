@@ -25,21 +25,27 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   //Hero x-movement
   char nunchukX = _nunchuk->analogX - NUNCHUK_MIDDLE,
        nunchukDir = getDirection(nunchukX),
-       nunchukXAbs = nunchukX * nunchukDir;
+       nunchukXAbs = nunchukX * nunchukDir,
+       acc,
+       targetSpeed;
   if(nunchukXAbs >= NUNCHUK_WALK) {
     byte FR;
     if(nunchukXAbs >= NUNCHUK_RUN) {
+      acc = HERO_ACC_RUN;
+      targetSpeed = HERO_SPEED_RUN;
       FR = HERO_RUNNING_FR;
-      _xVel = HERO_SPEED_RUN;
     } else {
+      acc = HERO_ACC_WALK;
+      targetSpeed = HERO_SPEED_WALK;
       FR = HERO_WALKING_FR;
-      _xVel = HERO_SPEED_WALK;
     }
     updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS, FR);
     _dir = nunchukDir;
-    _xVel = _xVel * nunchukDir;
+    targetSpeed = nunchukDir * targetSpeed;
   } else { //IDLE
-    _xVel = 0;
+    acc = HERO_ACC_WALK;
+    targetSpeed = 0;
+    nunchukDir = 0;
     updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_IDLE_FR);
   }
 
@@ -52,10 +58,19 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       }
     } else
       _isJumping = false;
+  } else {
+    //updateHandle(HERO_JUMPING_HANDLE, HERO_JUMPING_CELLS, HERO_JUMPING_FR); TODO
+    targetSpeed = nunchukDir * HERO_SPEED_AIR;
+    if(HERO_SPEED_AIR > nunchukDir * _xVel)
+      acc = HERO_ACC_AIR;
+    else
+      acc = 0;
   }
 
   //Hero duck
   if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
+    acc = HERO_ACC_DUCK;
+    targetSpeed = nunchukDir * HERO_SPEED_DUCK;
     updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
     if(!_isDucking) {
       _hitbox._height = HERO_HEIGHT_DUCK;
@@ -68,7 +83,10 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
     _isDucking = false;
   }
 
+  _xVel = zoomIn(acc, _xVel, targetSpeed);
+
   //Hero action
+  _attackSound = false;
   if(_nunchuk->zButton) {
     if(_isDucking && logic->atExit(this)) {
       logic->_gameOver = true;
@@ -78,14 +96,13 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       _isAttacking = true;
       _attackSound = true;
       if(_dir == LEFT)
-        _attackArea._x = _hitbox._x - HERO_ATT_RANGE;
+        _attackArea._x = _hitbox._x - HERO_ATT_RANGE - 1;
       else
         _attackArea._x = _hitbox._x + _hitbox._width;
       _attackArea._y = _hitbox._y;
       _attack._force = _dir * HERO_ATT_FORCE;
       logic->addAttack(&_attack);
-    } else 
-      _attackSound = false;
+    }
   } else
     _isAttacking = false;
 }

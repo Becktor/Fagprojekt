@@ -11,6 +11,10 @@
 #include "Sprites.h"
 
 const static byte
+    HERO_ACC_AIR = 1,
+    HERO_ACC_DUCK = 1,
+    HERO_ACC_RUN = 2,
+    HERO_ACC_WALK = 1,
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 50,
@@ -19,8 +23,10 @@ const static byte
     HERO_HEIGHT_DUCK = 36, //Duck height
     HERO_HITBOX_WIDTH = 32,
     HERO_SPEED_JUMP = 15,
-    HERO_SPEED_WALK = 1,
-    HERO_SPEED_RUN = 5,
+    HERO_SPEED_AIR = 2,
+    HERO_SPEED_DUCK = 2,
+    HERO_SPEED_RUN = 6,
+    HERO_SPEED_WALK = 3,
     HERO_WALKING_FR = 200,
     HERO_RUNNING_FR = 100,
     HERO_ATTACKING_FR = 5,
