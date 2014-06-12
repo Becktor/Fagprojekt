@@ -219,14 +219,11 @@ void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
   */
   prop->checkFrameChange(currentMilis);
   byte halfWidth = prop->_imageWidth / 2;
-  char widthDiff = (prop->_imageWidth - hitbox->_width) / 2;
-  if(prop->_dir == LEFT) {
-    widthDiff = -widthDiff + prop->_imageWidth - hitbox->_width;
+  if(prop->_dir == LEFT)
     flip(halfWidth);
-  }
   GD.BitmapHandle(prop->_handle);
   GD.Cell(prop->_currentCell);
-  drawVertex2f(hitbox->_x - offsetX - widthDiff, hitbox->_y - offsetY);
+  drawVertex2f(hitbox->_x - offsetX - (prop->_imageWidth - hitbox->_width) / 2, hitbox->_y - offsetY);
   if(prop->_dir == LEFT)
     flip(halfWidth);
 }
