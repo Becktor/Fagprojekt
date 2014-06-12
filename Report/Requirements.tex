@@ -2,21 +2,22 @@
 %Be sure to use the vocabulary introduced in the problem analysis.
 \chapter{Requirements specification}
 
-\subsection{The game play}%Cebrail
-There are several things that a good game should include. The most important
-and essential are:
-
+\subsection{Gameplay}%Jonathan
+We originally wanted to implement a rpg style platformer with:
 \begin{enumerate}
-\item Story
-\item Great design
-\item Easy to understand
-\item Easy control
-\item Sound effects
+\item Items
+\item Hero leveling
+\item Abilities
+\item A decent story
 \end{enumerate}
+We quickly found out that the limited flash memory on the arduino would greatly limit what we could implement. We agreed on going back to the classics of arcade games. We decided to create a "rogue like" game and focus on increasing difficulty per level and having a high score as the intensive to play the game.
 
-Even though our project mainly focuses on implementing advanced algorithms, the gameplay
-can not be ignored. Without a meaningful and understandable game, the advanced features will
-be not as recognizable.
+High Score.
+So High scores is something you almost always see in arcade games or just smaller games. Its a great way to compare and compete and to show who's the best. 
+To do this we were requierd to save data on the EEPROM which is the "hard drive" of the arduino. This way the high score will never reset unless we want it to.
+
+Coins were added as an additional gameplay element to broaden the game. This way the player now has an incentive to explore the entirety of the map, since collecting coins is an easy way to get additional score.
+
 
 \subsection{The algorithms}
 In order to implement the enemy motions and map generation, we'll have to create our
@@ -24,7 +25,7 @@ own algorithms.
 
 
 
-\subsection{Timeplan} %Cebrail
+\subsection{Timeplan} %Cebrail/Jonathan
 Our timeplan follows an agile development system called waterfall.
 The waterfall system is a sequential design process.
 It is designed to get through the project phases and have a product as soon as
@@ -43,6 +44,7 @@ therefore it does not has to be illustrated, as it will create confusion.
   \caption{An overview of the waterfall time plan.}
 \label{fig:Waterfall}
 \end{figure}
+\subsection{Time Boxing} %Jonathan
 
 
 \subsubsection{Tasks management}%Cebrail
