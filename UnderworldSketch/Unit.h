@@ -23,6 +23,6 @@ class Unit : public Prop {
     void collideY();
     void hit(byte damage, char force);
     void toggleDir();
-    virtual void updateAI(int dTime, Logic *logic);
+    virtual void updateAI(byte dTime, Logic *logic);
 };
 #endif

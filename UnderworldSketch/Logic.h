@@ -30,6 +30,6 @@ class Logic {
     boolean isWalkable(int x, int y);
     boolean movePropHoriz(Prop *prop, int dX);
     boolean movePropVerti(Prop *prop, int dY);
-    void updatePhysics(Prop* prop, int dTime);
+    void updatePhysics(byte dTime, Prop* prop);
 };
 #endif

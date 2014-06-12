@@ -11,7 +11,10 @@ void Prop::checkFrameChange(long milis) {
   if(milis - _millis > _FR) {   
     _millis = milis;
     if(_currentCell == _cells - 1)
+    {
+      _wait = false;
       _currentCell = 0; 
+    }
     else
       _currentCell++; 
   }
@@ -35,14 +38,15 @@ void Prop::initialize() {
   _currentCell = 0;
   _FR = 0;
   _millis = 0;
+  _wait = false;
 }
 
-void Prop::updateHandle(byte handle, byte cells, byte FR) {
-  _FR = FR;
-  if(_handle != handle) {
+void Prop::newHandle(byte handle, byte cells, byte FR) {
+  if(!_wait && (_handle != handle || _FR != FR)) {
     _handle = handle;
     _cells = cells;
     _currentCell = 0;
+    _FR = FR;
   }
 }
 

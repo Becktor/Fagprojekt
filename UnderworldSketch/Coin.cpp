@@ -6,7 +6,7 @@ Coin::Coin() : Prop(COIN_WIDTH, COIN_HEIGHT, COIN_WIDTH) { }
 
 void Coin::initialize() {
   Prop::initialize();
-  updateHandle(COIN_HANDLE, COIN_CELLS, _FR = COIN_FR);
+  newHandle(COIN_HANDLE, COIN_CELLS, _FR = COIN_FR);
 }
 
 void Coin::collideX() {

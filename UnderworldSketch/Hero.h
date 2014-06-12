@@ -29,8 +29,8 @@ const static byte
     HERO_SPEED_WALK = 3,
     HERO_WALKING_FR = 200,
     HERO_RUNNING_FR = 100,
-    HERO_ATTACKING_FR = 5,
-    HERO_DUCKING_FR= 5,
+    HERO_ATTACKING_FR = 200,
+    HERO_DUCKING_FR = 100,
     HERO_IDLE_FR = 200,
     NUNCHUK_MIDDLE = 120,
     NUNCHUK_WALK = 10,
@@ -48,6 +48,6 @@ class Hero : public Unit {
     Hero(ArduinoNunchuk* nunchuk);
     boolean getAttackSound(); //Less expensive than directly retrieving the variable.
     void initialize();
-    void updateAI(int dTime, Logic *logic);
+    void updateAI(byte dTime, Logic *logic);
 };
 #endif

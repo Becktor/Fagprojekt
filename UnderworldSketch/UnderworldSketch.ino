@@ -42,16 +42,17 @@ const static int
 void setup();
 void loop();
 void drawScene(Scene *scene, int offsetX, int offsetY);
-void drawProp(Prop *prop, int offsetX, int offsetY, long currentMilis);
+void drawProp(Prop *prop, int offsetX, int offsetY);
 void drawVertex2f(int x, int y, int offsetX, int offsetY);
 void EEPROMWriteInt(int p_address, int p_value);
 word EEPROMReadInt(int p_address);
+void flip(byte halfWidth);
 
 void setup() {
   //SETUP
   //Serial.begin(9600);
-  byte _fps = INIT_FPS;
-  word _dTime = SECOND / INIT_FPS, _score = 0, _highScore;
+  byte _fps = INIT_FPS, _dTime = SECOND / INIT_FPS;
+  word _score = 0, _highScore;
   if(RESET_HSCORE)
     _highScore = 0;
   else
@@ -61,9 +62,12 @@ void setup() {
   ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
-  byte seed = EEPROM.read(ADDRESS_SEED);
+  //byte seed = EEPROM.read(ADDRESS_SEED);
+  //randomSeed(seed);
+  //EEPROM.write(ADDRESS_SEED, random(255));
+  word seed = EEPROMReadInt(ADDRESS_SEED);
   randomSeed(seed);
-  EEPROM.write(ADDRESS_SEED, random(255));
+  EEPROMWriteInt(ADDRESS_SEED, random(65535)); //New random seed in unsigned int range.
   if(NUNCHUCK)
     _nunchuk.init();
   GD.begin();
@@ -87,19 +91,23 @@ void setup() {
         _nunchuk.update();
       }
       //UPDATE AI
-      for(byte i = 0; i < units->size(); i++)
-        units->get(i)->updateAI(_dTime, &_logic);
+      for(byte i = 0; i < units->size(); i++) {
+        Unit *unit = units->get(i);
+        unit->checkFrameChange(currentMillis);
+        unit->updateAI(_dTime, &_logic);
+      }
       //UPDATE PROPS
       {
         byte i = 0;
         while(i < coins->size()) {
           Coin* coin = coins->get(i);
+          coin->checkFrameChange(currentMillis);
           _logic.executeAttacks(coin);
           if(_logic.coinCollision(coin)){ {
             _score += COIN_SCORE;
             coins->remove(i);}
           } else {
-            _logic.updatePhysics(coin, _dTime);
+            _logic.updatePhysics(_dTime, coin);
             i++;
           }
         }
@@ -113,7 +121,7 @@ void setup() {
             units->remove(i);
             _score += 100;
           } else {
-            _logic.updatePhysics(unit, _dTime);
+            _logic.updatePhysics(_dTime, unit);
             i++;
           }
         }
@@ -153,24 +161,20 @@ void setup() {
       GD.ClearColorRGB(38, 36, 57); //Background
       GD.Clear();
       GD.Begin(BITMAPS);
+      GD.ColorRGB(255,255,255);
       int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
           cameraY = _camera->_y + (_camera->_height - SCREEN_HEIGHT) / 2;
       //Draw scene
       drawScene(&_scene, cameraX, cameraY);
-      GD.ColorRGB(255, 0, 0); //Obsolete
       //Draw objects
-       for(byte i = 0; i < coins->size(); i++)
-        drawProp(coins->get(i), cameraX, cameraY, currentMillis);
+      for(byte i = 0; i < coins->size(); i++)
+        drawProp(coins->get(i), cameraX, cameraY);
       for(byte i = 0; i < units->size(); i++)
-        drawProp(units->get(i), cameraX, cameraY, currentMillis);
+        drawProp(units->get(i), cameraX, cameraY);
       //Draw score
-      GD.ColorRGB(255,255,255);
+      GD.ColorRGB(255,255,255); //Text color
       GD.cmd_number(40, 40, 20, OPT_CENTER, _score);
-      //GD.cmd_text(40, 60, 20, OPT_CENTER,"Current Highscore");
       GD.cmd_number(60, 60, 20, OPT_CENTER, _highScore); 
-      //Draw currentmilis/fps - temporary
-      //GD.cmd_number(80, 136, 31, OPT_CENTER, currentMillis);
-      GD.ColorRGB(255,255,255);
       //Complete drawing
       GD.swap();
       //Time calculations
@@ -185,61 +189,53 @@ void setup() {
 void loop() { }
 
 void drawScene(Scene *scene, int offsetX, int offsetY) {
-  GD.ColorRGB(255, 255, 255); //Slated for removal
   char tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
        tileYEnd = worldToGrid(offsetY + SCREEN_HEIGHT - 1);
   for(char tileX = worldToGrid(offsetX); tileX <= tileXEnd; tileX++) {
     for(char tileY = worldToGrid(offsetY); tileY <= tileYEnd; tileY++) {
       byte tile = scene->getTile(tileX, tileY);
       if(tile != NONE) {
-        GD.BitmapHandle(TILE_HANDLE);
-        
-        if(tile == PLATFORM)
-          GD.Cell(1);
-        else if(tile == ROCK)
+        GD.BitmapHandle(TILE_HANDLE);        
+        if(tile == ROCK)
           GD.Cell(0);
+        else if(tile == PLATFORM)
+          GD.Cell(1);
         else if(tile == START)
           GD.Cell(2);
         else if(tile == END)
           GD.Cell(2);
-          
         drawVertex2f(gridToWorld(tileX) - offsetX, gridToWorld(tileY) - offsetY);
       }
     }
   }
 }
 
-void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
+void drawProp(Prop* prop,  int offsetX, int offsetY) {
   Rect *hitbox = &(prop->_hitbox);
+  /* DRAW HITBOX
   GD.Begin(RECTS);
   GD.ColorRGB(200, 5, 200);
   if(hitbox->_x - offsetX > 0 && hitbox->_x - offsetX < SCREEN_WIDTH && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < SCREEN_HEIGHT){
     GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
     GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y + hitbox->_height - offsetY);
   }
-  GD.Begin(BITMAPS);
-
-  //drawRect(hitbox->getX(), hitbox->getY(), hitbox->getWidth(), hitbox->getHeight());
   GD.ColorRGB(255, 255, 255);
-  int half_Width = prop->_imageWidth / 2;
-  int xfix = (prop->_imageWidth - hitbox->_width) / 2;
-  prop->checkFrameChange(currentMilis);
+  */
+  byte halfWidth = prop->_imageWidth / 2;
+  if(prop->_dir == LEFT)
+    flip(halfWidth);
   GD.BitmapHandle(prop->_handle);
-  if(prop->_dir == LEFT) {
-    xfix = -xfix + prop->_imageWidth - hitbox->_width;
-    GD.cmd_translate(F16(half_Width), F16(0));
-    GD.cmd_scale(F16(-1), F16(1));
-    GD.cmd_translate(F16(-half_Width), F16(0));
-    GD.cmd_setmatrix();
-  }
   GD.Cell(prop->_currentCell);
-  drawVertex2f(hitbox->_x - offsetX - xfix, hitbox->_y - offsetY);
-  if(prop->_dir == LEFT) {
-    GD.cmd_translate(F16(half_Width), F16(0));
-    GD.cmd_scale(F16(-1), F16(1));
-    GD.cmd_translate(F16(-half_Width), F16(0));
-    GD.cmd_setmatrix();
-  }
+  drawVertex2f(hitbox->_x - offsetX - (prop->_imageWidth - hitbox->_width) / 2, hitbox->_y - offsetY);
+  if(prop->_dir == LEFT)
+    flip(halfWidth);
+}
+
+void flip(byte halfWidth) {
+  GD.cmd_translate(F16(halfWidth), F16(0));
+  GD.cmd_scale(F16(-1), F16(1));
+  GD.cmd_translate(F16(-halfWidth), F16(0));
+  GD.cmd_setmatrix();
 }
 
 void drawVertex2f(int x, int y) {
