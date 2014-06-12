@@ -2,40 +2,38 @@
 %Be sure to use the vocabulary introduced in the problem analysis.
 \chapter{Requirements specification}
 
-\subsection{The game play}%Cebrail
-There are several things that a good game should include. The most important
-and essential are:
-
+\subsection{Gameplay}%Jonathan
+We originally wanted to implement a rpg style platformer with:
 \begin{enumerate}
-\item Story
-\item Great design
-\item Easy to understand
-\item Easy control
-\item Sound effects
+\item Items
+\item Hero leveling
+\item Abilities
+\item A decent story
 \end{enumerate}
+We quickly found out that the limited flash memory on the arduino would greatly limit what we could implement. We agreed on going back to the classics of arcade games. We decided to create a "rogue like" game and focus on increasing difficulty per level and having a high score as the intensive to play the game.
 
-Even though our project mainly focuses on implementing advanced algorithms, the gameplay
-can not be ignored. Without a meaningful and understandable game, the advanced features will
-be not as recognizable.
+\subsubsection{High Score}
+High scores is something you almost always see in arcade games or just smaller games. Its a great way to compare and compete and to show who's the best. 
+To do this we were requierd to save data on the EEPROM which is the ´hard drive` of the arduino. This way the high score will never reset unless we want it to.
 
-\subsection{The algorithms}
-In order to implement the enemy motions and map generation, we'll have to create our
-own algorithms.
-
+\subsubsection{Coins}
+Coin were added as an additional game play element to broaden the game. The player now has an incentive to go explore the entirety of the map, since collecting coins is an easy way to get additional score.
 
 
-\subsection{Timeplan} %Cebrail
-Our timeplan follows an agile development system called waterfall.
-The waterfall system is a sequential design process.
+\subsection{Timeplan} %Cebrail/Jonathan
+When we started the `Fagprojekt' we used a time-plan that followed an non-agile development
+system called waterfall. The waterfall system is a sequential design process.
 It is designed to get through the project phases and have a product as soon as
 possible. The phases in our project can be seen in the figure below.
-
-\subsubsection{Project management}
-When the waterfall ends and we still have time
-we will go back to the start and check for new requirements
-and the whole waterfall process starts again.
 The report is both written seamlessly and separately in the end of the project,
 therefore it does not has to be illustrated, as it will create confusion.
+
+\subsubsection{Waterfall}
+When the waterfall ends and we still have time
+we will go back to the start and check for new requirements
+and the whole waterfall process starts again. You can check our waterfall
+timeplan in the appendices, please
+see Figure~\ref{fig:Waterfall_chart} for that.
 
 \begin{figure}[h]
   \centering
@@ -43,14 +41,11 @@ therefore it does not has to be illustrated, as it will create confusion.
   \caption{An overview of the waterfall time plan.}
 \label{fig:Waterfall}
 \end{figure}
-
-
-\subsubsection{Tasks management}%Cebrail
-When providing the tasks we use the timeboxing method.
-This method increases the productivity significantly.
-Timeboxing works by breaking a big task into smaller tasks with better manageable time frames.
-It kinda works like a stopwatch. The following table shows the timeboxes we have
-created during the project.
+\subsection{Time Boxing} %Jonathan
+We were conviced that using "Time Boxing" would be the way to go.
+Timeboxing divides The schedule into a number of separate time periods(timeboxes), with each part having its own deliverables, deadline and budget.
+Breaking bigger tasks into smaller tasks with better manageable time frames.
+What also is important is that by the end of each timebox we need to have a product that if all else fails we can roll back and release our game from an earlier state. The following table shows the timeboxes we have created during the project.
 
 % Please add the following required packages to your document preamble:
 % \usepackage[table,xcdraw]{xcolor}
@@ -58,8 +53,8 @@ created during the project.
 
 \begin{table}[h]
 \begin{tabular}{llll}
-\rowcolor[HTML]{BBDAFF} 
-{\color[HTML]{000000} \textbf{8-10}} & {\color[HTML]{000000} \textbf{11-13}} & {\color[HTML]{000000} \textbf{14-15}} & {\color[HTML]{000000} \textbf{16-17}} \\
+\rowcolor[HTML]{BBDAFF}
+{\color[HTML]{000000} \textbf{week 8-10}} & {\color[HTML]{000000} \textbf{week 11-13}} & {\color[HTML]{000000} \textbf{week 14-15}} & {\color[HTML]{000000} \textbf{week 16-17}} \\
 Code exercise                        & Enemies                               & Scene generation (simple)             & Graphics                              \\
 Game design                          & Collision Detection                   & Player                                & Sprites                               \\
 Class Design                         & AI                                    &                                       & Map generation                        \\
@@ -67,7 +62,7 @@ Class Design                         & AI                                    &  
 Report                               & Report                                & Report                                & Report                                \\
                                      &                                       &                                       &                                       \\
 \rowcolor[HTML]{BBDAFF} 
-\textbf{18-90}                       & \textbf{19}                           & \textbf{20}                           & \textbf{22-25}                        \\
+\textbf{week 18-90}                       & \textbf{week 19}                           & \textbf{week 20}                           & \textbf{week 22-25}                        \\
 Endgame                              & Scene generation                      & Sprites                               & Optimization                          \\
 Map generation                       & Optimization                          & Sound                                 &                                       \\
                                      & Attack                                & Optimization                          &                                       \\
