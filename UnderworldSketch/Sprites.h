@@ -66,4 +66,5 @@ static const shape_t TILE_SHAPE = {7, 48, 48, 0};
 static const shape_t COIN_SHAPE = {8, 32, 32, 0};
 
 
+
 #endif
