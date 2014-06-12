@@ -20,7 +20,7 @@ void Minotaur::initialize() {
   _health = MINO_HEALTH;
 }
 
-void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
+void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   if(logic->isGrounded(this)) {
     if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height)){
       toggleDir();
@@ -63,13 +63,13 @@ void Minotaur::updateAI(int dTime, Logic *logic) { //dtime is still unused
     if(_charge) {
       //Serial.println("Charge");
       _xVel = zoomIn(MINO_ACC_CHARGE, _xVel, _dir * MINO_SPEED_CHARGE);
-      updateHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_CHARGING_FR);
+      newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_CHARGING_FR);
       if(_hitbox._width != MINO_CHARGING_HITBOX_WIDTH){
       _hitbox._width = MINO_CHARGING_HITBOX_WIDTH;
       _hitbox._x += (MINO_WALKING_HITBOX_WIDTH - MINO_CHARGING_HITBOX_WIDTH)/2;
       }
     } else {
-      updateHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_WALKING_FR);
+      newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_WALKING_FR);
       _xVel = zoomIn(MINO_ACC_WALK, _xVel, _dir * MINO_SPEED_WALK);
       if(_hitbox._width != MINO_WALKING_HITBOX_WIDTH){
       _hitbox._width = MINO_WALKING_HITBOX_WIDTH;

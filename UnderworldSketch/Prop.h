@@ -15,7 +15,7 @@ class Prop {
     void checkFrameChange(long milis);
     virtual void hit(byte damage, char force);
     virtual void initialize();
-    void updateHandle(byte handle, byte cell, byte FR);
+    void newHandle(byte handle, byte cell, byte FR);
     virtual void collideX();
     virtual void collideY();
     char zoomIn(byte change, char current, char target);

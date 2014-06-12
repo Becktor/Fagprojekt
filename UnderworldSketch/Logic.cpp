@@ -130,7 +130,7 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   return true;
 }
 
-void Logic::updatePhysics(Prop* prop, int dTime) {
+void Logic::updatePhysics(byte dTime, Prop* prop) {
   if(!movePropHoriz(prop, prop->_xVel))
     prop->collideX();
   if(!movePropVerti(prop, prop->_yVel + GRAVITY))

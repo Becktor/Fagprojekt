@@ -21,7 +21,7 @@ void Hero::initialize() {
   _isJumping = false;
 }
 
-void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
+void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   //Hero x-movement
   char nunchukX = _nunchuk->analogX - NUNCHUK_MIDDLE,
        nunchukDir = getDirection(nunchukX),
@@ -39,14 +39,14 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       targetSpeed = HERO_SPEED_WALK;
       FR = HERO_WALKING_FR;
     }
-    updateHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS, FR);
+    newHandle(HERO_MOVING_HANDLE, HERO_MOVING_CELLS, FR);
     _dir = nunchukDir;
     targetSpeed = nunchukDir * targetSpeed;
   } else { //IDLE
     acc = HERO_ACC_WALK;
     targetSpeed = 0;
     nunchukDir = 0;
-    updateHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_IDLE_FR);
+    newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_IDLE_FR);
   }
 
   //Hero jump
@@ -71,7 +71,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
   if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
     acc = HERO_ACC_DUCK;
     targetSpeed = nunchukDir * HERO_SPEED_DUCK;
-    updateHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
+    newHandle(HERO_DUCKING_HANDLE, HERO_DUCKING_CELLS, HERO_DUCKING_FR);
     if(!_isDucking) {
       _hitbox._height = HERO_HEIGHT_DUCK;
       _hitbox._y += HERO_HEIGHT_STAND - HERO_HEIGHT_DUCK;
@@ -95,7 +95,7 @@ void Hero::updateAI(int dTime, Logic *logic) { //dtime is still unused
       //Attack
       _isAttacking = true;
       _attackSound = true;
-      updateHandle(HERO_ATTACKING_HANDLE, HERO_ATTACKING_CELLS, HERO_ATTACKING_FR);
+      newHandle(HERO_ATTACKING_HANDLE, HERO_ATTACKING_CELLS, HERO_ATTACKING_FR);
       _wait = true;
       if(_dir == LEFT)
         _attackArea._x = _hitbox._x - HERO_ATT_RANGE - 1;

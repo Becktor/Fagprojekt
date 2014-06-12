@@ -48,6 +48,6 @@ class Hero : public Unit {
     Hero(ArduinoNunchuk* nunchuk);
     boolean getAttackSound(); //Less expensive than directly retrieving the variable.
     void initialize();
-    void updateAI(int dTime, Logic *logic);
+    void updateAI(byte dTime, Logic *logic);
 };
 #endif

@@ -51,8 +51,8 @@ void flip(byte halfWidth);
 void setup() {
   //SETUP
   //Serial.begin(9600);
-  byte _fps = INIT_FPS;
-  word _dTime = SECOND / INIT_FPS, _score = 0, _highScore;
+  byte _fps = INIT_FPS, _dTime = SECOND / INIT_FPS;
+  word _score = 0, _highScore;
   if(RESET_HSCORE)
     _highScore = 0;
   else
@@ -107,7 +107,7 @@ void setup() {
             _score += COIN_SCORE;
             coins->remove(i);}
           } else {
-            _logic.updatePhysics(coin, _dTime);
+            _logic.updatePhysics(_dTime, coin);
             i++;
           }
         }
@@ -121,7 +121,7 @@ void setup() {
             units->remove(i);
             _score += 100;
           } else {
-            _logic.updatePhysics(unit, _dTime);
+            _logic.updatePhysics(_dTime, unit);
             i++;
           }
         }

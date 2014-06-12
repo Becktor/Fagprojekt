@@ -27,4 +27,4 @@ void Unit::toggleDir() {
   _dir = -1 * _dir;
 }
 
-void Unit::updateAI(int dTime, Logic *logic) { }
+void Unit::updateAI(byte dTime, Logic *logic) { }

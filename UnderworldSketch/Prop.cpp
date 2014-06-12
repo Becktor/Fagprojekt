@@ -41,7 +41,7 @@ void Prop::initialize() {
   _wait = false;
 }
 
-void Prop::updateHandle(byte handle, byte cells, byte FR) {
+void Prop::newHandle(byte handle, byte cells, byte FR) {
   if(!_wait && (_handle != handle || _FR != FR)) {
     _handle = handle;
     _cells = cells;

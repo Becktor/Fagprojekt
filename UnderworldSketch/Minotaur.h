@@ -32,7 +32,7 @@ class Minotaur : public Unit {
     Minotaur();
     void collideX();
     void initialize();
-    void updateAI(int dTime, Logic *logic);
+    void updateAI(byte dTime, Logic *logic);
 };
 #endif
 
