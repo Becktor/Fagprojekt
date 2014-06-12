@@ -42,7 +42,7 @@ const static int
 void setup();
 void loop();
 void drawScene(Scene *scene, int offsetX, int offsetY);
-void drawProp(Prop *prop, int offsetX, int offsetY, long currentMilis);
+void drawProp(Prop *prop, int offsetX, int offsetY);
 void drawVertex2f(int x, int y, int offsetX, int offsetY);
 void EEPROMWriteInt(int p_address, int p_value);
 word EEPROMReadInt(int p_address);
@@ -91,13 +91,17 @@ void setup() {
         _nunchuk.update();
       }
       //UPDATE AI
-      for(byte i = 0; i < units->size(); i++)
-        units->get(i)->updateAI(_dTime, &_logic);
+      for(byte i = 0; i < units->size(); i++) {
+        Unit *unit = units->get(i);
+        unit->checkFrameChange(currentMillis);
+        unit->updateAI(_dTime, &_logic);
+      }
       //UPDATE PROPS
       {
         byte i = 0;
         while(i < coins->size()) {
           Coin* coin = coins->get(i);
+          coin->checkFrameChange(currentMillis);
           _logic.executeAttacks(coin);
           if(_logic.coinCollision(coin)){ {
             _score += COIN_SCORE;
@@ -164,9 +168,9 @@ void setup() {
       drawScene(&_scene, cameraX, cameraY);
       //Draw objects
       for(byte i = 0; i < coins->size(); i++)
-        drawProp(coins->get(i), cameraX, cameraY, currentMillis);
+        drawProp(coins->get(i), cameraX, cameraY);
       for(byte i = 0; i < units->size(); i++)
-        drawProp(units->get(i), cameraX, cameraY, currentMillis);
+        drawProp(units->get(i), cameraX, cameraY);
       //Draw score
       GD.ColorRGB(255,255,255); //Text color
       GD.cmd_number(40, 40, 20, OPT_CENTER, _score);
@@ -206,7 +210,7 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
   }
 }
 
-void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
+void drawProp(Prop* prop,  int offsetX, int offsetY) {
   Rect *hitbox = &(prop->_hitbox);
   /* DRAW HITBOX
   GD.Begin(RECTS);
@@ -217,7 +221,6 @@ void drawProp(Prop* prop,  int offsetX, int offsetY, long currentMilis) {
   }
   GD.ColorRGB(255, 255, 255);
   */
-  prop->checkFrameChange(currentMilis);
   byte halfWidth = prop->_imageWidth / 2;
   if(prop->_dir == LEFT)
     flip(halfWidth);
