@@ -29,7 +29,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
           if(entrance)
             tile = START;
           else
-            tile = 4; //For some reason, this doesn't work if its EXIT.
+            tile = END;
           portal->setPoint(x, y);
         } else {
           scene->addMinotaur(x, y);
