@@ -84,7 +84,7 @@ void setup() {
     //GAME LOGIC
     if(NUNCHUCK) {
       _nunchuk.update();
-      _nunchuk.update();
+      //_nunchuk.update();
     }
     //UPDATE AI
     for(byte i = 0; i < units->size(); i++) {
