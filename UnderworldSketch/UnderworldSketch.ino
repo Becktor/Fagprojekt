@@ -24,29 +24,28 @@
 #include "Sprites.h"
 
 //Checks
-#define NUNCHUCK 1 //Whether or not a nunchuck is connected
-#define RESET_HSCORE 1 //Resets highscore
+#define HITBOXES 0 //Draw hitboxes
+#define NUNCHUCK 1 //Nunchuck is connected
+#define RESET_HSCORE 1 //Reset highscore
 
 //Constants
 const static int
     ADDRESS_HSCORE = 100,
     ADDRESS_SEED = 102,
-    INIT_FPS = 40, //Initial assumed framerate.
     SCREEN_WIDTH = 480,
     SCREEN_HEIGHT = 272,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
-    SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE,
-    SECOND = 1000;
+    SCREEN_TILES_HEIGHT = SCREEN_HEIGHT / TILE_SIZE;
 
 //Function declarations
 void setup();
 void loop();
-void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawProp(Prop *prop, int offsetX, int offsetY);
+void drawScene(Scene *scene, int offsetX, int offsetY);
 void drawVertex2f(int x, int y, int offsetX, int offsetY);
 void EEPROMWriteInt(int p_address, int p_value);
 word EEPROMReadInt(int p_address);
-void flip(byte halfWidth);
+void flipImage(byte halfWidth);
 
 void setup() {
   //SETUP
@@ -110,17 +109,13 @@ void setup() {
         }
       }
     }
-    {
-      byte i = 0;
-      while(i < units->size()) {
-        Unit* unit = units->get(i);
-        _logic.executeAttacks(unit);
-        if(unit->_health == 0 && !(unit->_isDead)) {
-          _score += 100;
-//          unit->_health = -1;
-        } 
-          _logic.updatePhysics(_dTime, unit);
-          i++;
+    for(byte i = 0; i < units->size(); i++) {
+      Unit* unit = units->get(i);
+      _logic.executeAttacks(unit);
+      _logic.updatePhysics(_dTime, unit);
+      if(unit->_health == 0 && unit->_isActive) {
+        _score += unit->_score;
+        unit->_isActive = false;
       }
     }
     _logic.clearAttacks();
@@ -179,6 +174,28 @@ void setup() {
 
 void loop() { }
 
+void drawProp(Prop* prop,  int offsetX, int offsetY) {
+  Rect *hitbox = &(prop->_hitbox);
+  if(HITBOXES) {
+    GD.Begin(RECTS);
+    GD.ColorRGB(200, 5, 200);
+    if(hitbox->_x - offsetX > 0 && hitbox->_x - offsetX < SCREEN_WIDTH && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < SCREEN_HEIGHT){
+      GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
+      GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y + hitbox->_height - offsetY);
+    }
+    GD.ColorRGB(255, 255, 255);
+    GD.Begin(BITMAPS);
+  }
+  byte halfWidth = prop->_imageWidth / 2;
+  if(prop->_dir == LEFT)
+    flipImage(halfWidth);
+  GD.BitmapHandle(prop->_handle);
+  GD.Cell(prop->_currentCell);
+  drawVertex2f(hitbox->_x - offsetX - (prop->_imageWidth - hitbox->_width) / 2, hitbox->_y - offsetY);
+  if(prop->_dir == LEFT)
+    flipImage(halfWidth);
+}
+
 void drawScene(Scene *scene, int offsetX, int offsetY) {
   char tileXEnd = worldToGrid(offsetX + SCREEN_WIDTH - 1),
        tileYEnd = worldToGrid(offsetY + SCREEN_HEIGHT - 1);
@@ -201,36 +218,6 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
   }
 }
 
-void drawProp(Prop* prop,  int offsetX, int offsetY) {
-  Rect *hitbox = &(prop->_hitbox);
-  
-  GD.Begin(RECTS);
-  GD.ColorRGB(200, 5, 200);
-  if(hitbox->_x - offsetX > 0 && hitbox->_x - offsetX < SCREEN_WIDTH && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < SCREEN_HEIGHT){
-    GD.Vertex2ii(hitbox->_x - offsetX, hitbox->_y - offsetY);
-    GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y + hitbox->_height - offsetY);
-  }
-  GD.ColorRGB(255, 255, 255);
-    GD.Begin(BITMAPS);
-     
-
-  byte halfWidth = prop->_imageWidth / 2;
-  if(prop->_dir == LEFT)
-    flip(halfWidth);
-  GD.BitmapHandle(prop->_handle);
-  GD.Cell(prop->_currentCell);
-  drawVertex2f(hitbox->_x - offsetX - (prop->_imageWidth - hitbox->_width) / 2, hitbox->_y - offsetY);
-  if(prop->_dir == LEFT)
-    flip(halfWidth);
-}
-
-void flip(byte halfWidth) {
-  GD.cmd_translate(F16(halfWidth), F16(0));
-  GD.cmd_scale(F16(-1), F16(1));
-  GD.cmd_translate(F16(-halfWidth), F16(0));
-  GD.cmd_setmatrix();
-}
-
 void drawVertex2f(int x, int y) {
   GD.Vertex2f(x* 16, y * 16);
 }
@@ -246,4 +233,11 @@ word EEPROMReadInt(int p_address) {
   byte lowByte = EEPROM.read(p_address),
       highByte = EEPROM.read(p_address + 1);
   return ((lowByte << 0) & 0xFF) + ((highByte << 8) & 0xFF00);
+}
+
+void flipImage(byte halfWidth) {
+  GD.cmd_translate(F16(halfWidth), F16(0));
+  GD.cmd_scale(F16(-1), F16(1));
+  GD.cmd_translate(F16(-halfWidth), F16(0));
+  GD.cmd_setmatrix();
 }
