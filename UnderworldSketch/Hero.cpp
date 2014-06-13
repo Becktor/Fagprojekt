@@ -60,7 +60,11 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     } else
       _isJumping = false;
   } else {
-    //updateHandle(HERO_JUMPING_HANDLE, HERO_JUMPING_CELLS, HERO_JUMPING_FR); TODO
+    if(_yVel <= 0)
+      updateHandle(HERO_JUMP_HANDLE, HERO_JUMP_CELLS, HERO_JUMP_FR);
+    else
+      updateHandle(HERO_FALL_HANDLE, HERO_FALL_CELLS, HERO_FALL_FR);
+
     targetSpeed = nunchukDir * HERO_SPEED_AIR;
     if(HERO_SPEED_AIR > nunchukDir * _xVel)
       acc = HERO_ACC_AIR;
