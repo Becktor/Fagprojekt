@@ -19,7 +19,7 @@ const static byte
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 50,
     HERO_HEALTH = 3,
-    HERO_HEIGHT_STAND = 60, //Height stand value
+    HERO_HEIGHT_STAND = 48, //Height stand value
     HERO_HEIGHT_DUCK = 28, //Duck height
     HERO_HITBOX_WIDTH = 24,
     HERO_SPEED_JUMP = 15,
