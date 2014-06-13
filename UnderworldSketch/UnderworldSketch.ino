@@ -99,7 +99,7 @@ void setup() {
         Coin* coin = coins->get(i);
         coin->updateAnimation(_dTime);
         _logic.executeAttacks(coin);
-        if(_logic.coinCollision(coin)){ 
+        if(_logic.coinCollision(coin)){
           _score += COIN_SCORE;
           coins->remove(i);
           GD.sample(COIN, COIN_LENGTH, 32000, ADPCM_SAMPLES);
@@ -165,8 +165,10 @@ void setup() {
       drawProp(units->get(i), cameraX, cameraY);
     //Draw score
     GD.ColorRGB(255,255,255); //Text color
-    GD.cmd_number(40, 40, 20, OPT_CENTER, _score);
-    GD.cmd_number(60, 60, 20, OPT_CENTER, _highScore); 
+    GD.cmd_text(400,250,28, OPT_CENTER, "High score");
+    GD.cmd_number(400, 230, 28,OPT_CENTER, _highScore);
+    GD.cmd_number(60, 230, 29, OPT_CENTER, _score);
+    GD.cmd_text(60,250,29, OPT_CENTER, "Score");
     //Complete drawing
     GD.swap();
   }
