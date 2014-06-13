@@ -75,4 +75,5 @@ static const shape_t MINO_WALKING_SHAPE = {8, 80, 43, 0};
 static const shape_t TILE_SHAPE = {9, 48, 48, 0};
 static const shape_t COIN_SHAPE = {10, 32, 32, 0};
 
+
 #endif
