@@ -25,9 +25,9 @@ static byte
 TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
   {
     {2, 2, 2, 2, 2},
-    {2, 0, 0, 0, 2},
     {0, 0, 0, 0, 0},
-    {0, 0, 7, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 0, 7, 0, 2},
     {2, 2, 2, 2, 2}
   }
 },

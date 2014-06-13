@@ -30,6 +30,7 @@ class Logic {
     boolean isWalkable(int x, int y);
     boolean movePropHoriz(Prop *prop, int dX);
     boolean movePropVerti(Prop *prop, int dY);
+    boolean tileIsSolid(byte x, byte y);
     void updatePhysics(byte dTime, Prop* prop);
 };
 #endif

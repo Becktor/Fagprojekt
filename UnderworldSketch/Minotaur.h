@@ -21,17 +21,19 @@ const static byte
     MINO_CHARGING_HITBOX_HEIGHT = 25,
     MINO_WALKING_FR = 75,
     MINO_CHARGING_FR = 50,
-    MINO_DYING_FR = 1000,
-    MINO_DETECT_DIST = 150,
-    MINO_UNDETECT_DIST = 200;
+    MINO_DYING_FR = 255,
+    MINO_LOS = 200, //Line of sight
+    //MINO_DETECT_RANGE = 40, //Always detect dist. Doesn't ignore tiles.
+    MINO_UNDETECT_RANGE = 250;
 
 class Minotaur : public Unit {
   public:
-    boolean _detected, _charge;
-    int _heroXpos, _heroYpos, _heroHeight, _distDiff, _distToHeroX, _distToHeroY, _distance, _minoMiddle;
+    boolean _heroDetected, _isCharging;
 
     Minotaur();
     void collideX();
+    boolean detect(Rect *heroHitbox, Logic *logic);
+    void hit(byte damage, char force);
     void initialize();
     void updateAI(byte dTime, Logic *logic);
 };

@@ -165,10 +165,10 @@ void setup() {
       drawProp(units->get(i), cameraX, cameraY);
     //Draw score
     GD.ColorRGB(255,255,255); //Text color
-    GD.cmd_text(400,250,28, OPT_CENTER, "High score");
+    GD.cmd_text(400,250,28, OPT_CENTER, "Highscore");
     GD.cmd_number(400, 230, 28,OPT_CENTER, _highScore);
-    GD.cmd_number(60, 230, 29, OPT_CENTER, _score);
     GD.cmd_text(60,250,29, OPT_CENTER, "Score");
+    GD.cmd_number(60, 230, 29, OPT_CENTER, _score);
     //Complete drawing
     GD.swap();
   }

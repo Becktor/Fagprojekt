@@ -130,6 +130,10 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   return true;
 }
 
+boolean Logic::tileIsSolid(byte x, byte y) {
+  return getSolid(_scene->getTile(x, y));
+}
+
 void Logic::updatePhysics(byte dTime, Prop* prop) {
   if(!movePropHoriz(prop, prop->_xVel))
     prop->collideX();
