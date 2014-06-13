@@ -3,8 +3,9 @@
 #include "Prop.h"
 #include "Unit.h"
 
-Unit::Unit(byte width, byte height, char health, byte imageWidth) : Prop(width, height, imageWidth) {
+Unit::Unit(byte width, byte height, byte health, byte score, byte imageWidth) : Prop(width, height, imageWidth) {
   _health = health;
+  _score = score;
 }
 
 void Unit::collideX() {

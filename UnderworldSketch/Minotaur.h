@@ -9,6 +9,7 @@
 
 const static byte
     MINO_HEALTH = 3,
+    MINO_SCORE = 10,
     MINO_ACC_WALK = 1,
     MINO_SPEED_WALK = 3,
     MINO_ACC_CHARGE = 5,

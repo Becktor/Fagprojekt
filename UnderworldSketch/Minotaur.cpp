@@ -5,14 +5,16 @@
 #include "Sprites.h"
 #include "Scene.h"
 
-Minotaur::Minotaur() : Unit(MINO_WALKING_HITBOX_WIDTH, MINO_WALKING_HITBOX_HEIGHT, MINO_HEALTH, MINO_WALKING_WIDTH) {
+Minotaur::Minotaur() : Unit(MINO_WALKING_HITBOX_WIDTH, MINO_WALKING_HITBOX_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALKING_WIDTH) {
   _detected  = false;
 }
 
 void Minotaur::collideX() {
   _xVel = 0;
-  _charge = false;
-  toggleDir();
+  if(_isActive) {
+    _charge = false;
+    toggleDir();
+  }
 }
 
 void Minotaur::initialize() {
@@ -22,18 +24,11 @@ void Minotaur::initialize() {
 }
 
 void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
-  
-  if(_isDead)
-    return;
-    
-  if(_health == 0)
-  {
+  if(!_isActive) {
     newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_DYING_FR);
     _xVel = MINO_SPEED_DYING;
-    _isDead = true;
     return;
   }
-
   if(logic->isGrounded(this)) {
     if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height)){
       toggleDir();

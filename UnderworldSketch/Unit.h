@@ -13,12 +13,10 @@
 
 class Logic;
 class Unit : public Prop {
-  private:
-
   public:
-    byte _health;
+    byte _health, _score;
     
-    Unit(byte width, byte height, char health, byte imageWidth);
+    Unit(byte width, byte height, byte health, byte score, byte imageWidth);
     void collideX();
     void collideY();
     void hit(byte damage, char force);
