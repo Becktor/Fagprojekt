@@ -32,6 +32,8 @@ const static byte
     HERO_ATTACKING_FR = 80,
     HERO_DUCKING_FR = 100,
     HERO_IDLE_FR = 200,
+    HERO_JUMP_FR = 1000,
+    HERO_FALL_FR = 1000,
     NUNCHUK_MIDDLE = 120,
     NUNCHUK_WALK = 10,
     NUNCHUK_RUN = 40,
