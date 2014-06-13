@@ -19,9 +19,9 @@ const static byte
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 50,
     HERO_HEALTH = 3,
-    HERO_HEIGHT_STAND = 45, //Height stand value
-    HERO_HEIGHT_DUCK = 36, //Duck height
-    HERO_HITBOX_WIDTH = 32,
+    HERO_HEIGHT_STAND = 48, //Height stand value
+    HERO_HEIGHT_DUCK = 28, //Duck height
+    HERO_HITBOX_WIDTH = 24,
     HERO_SPEED_JUMP = 15,
     HERO_SPEED_AIR = 2,
     HERO_SPEED_DUCK = 2,
@@ -29,7 +29,7 @@ const static byte
     HERO_SPEED_WALK = 3,
     HERO_WALKING_FR = 200,
     HERO_RUNNING_FR = 100,
-    HERO_ATTACKING_FR = 40,
+    HERO_ATTACKING_FR = 80,
     HERO_DUCKING_FR = 100,
     HERO_IDLE_FR = 200,
     NUNCHUK_MIDDLE = 120,

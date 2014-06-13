@@ -100,9 +100,10 @@ void setup() {
         Coin* coin = coins->get(i);
         coin->updateAnimation(_dTime);
         _logic.executeAttacks(coin);
-        if(_logic.coinCollision(coin)){ {
+        if(_logic.coinCollision(coin)){ 
           _score += COIN_SCORE;
-          coins->remove(i);}
+          coins->remove(i);
+          GD.sample(COIN, COIN_LENGTH, 32000, ADPCM_SAMPLES);
         } else {
           _logic.updatePhysics(_dTime, coin);
           i++;
@@ -193,7 +194,7 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
         else if(tile == START)
           GD.Cell(2);
         else if(tile == END)
-          GD.Cell(2);
+          GD.Cell(3);
         drawVertex2f(gridToWorld(tileX) - offsetX, gridToWorld(tileY) - offsetY);
       }
     }
@@ -202,7 +203,7 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
 
 void drawProp(Prop* prop,  int offsetX, int offsetY) {
   Rect *hitbox = &(prop->_hitbox);
-  /* DRAW HITBOX
+  
   GD.Begin(RECTS);
   GD.ColorRGB(200, 5, 200);
   if(hitbox->_x - offsetX > 0 && hitbox->_x - offsetX < SCREEN_WIDTH && hitbox->_y - offsetY > 0 && hitbox->_y - offsetY < SCREEN_HEIGHT){
@@ -210,7 +211,9 @@ void drawProp(Prop* prop,  int offsetX, int offsetY) {
     GD.Vertex2ii(hitbox->_x + hitbox->_width - offsetX, hitbox->_y + hitbox->_height - offsetY);
   }
   GD.ColorRGB(255, 255, 255);
-  */
+    GD.Begin(BITMAPS);
+     
+
   byte halfWidth = prop->_imageWidth / 2;
   if(prop->_dir == LEFT)
     flip(halfWidth);
