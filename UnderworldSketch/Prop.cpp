@@ -42,17 +42,14 @@ void Prop::newHandle(byte handle, byte cells, byte FR) {
 
 void Prop::updateAnimation(byte dTime) {
   _aniTime += dTime;
-  //while(_aniTime >= _FR) {
-  if(_aniTime >= _FR) {
-    //_aniTime -= _FR;
-    _aniTime = 0;
+  while(_aniTime >= _FR) {
+    _aniTime -= _FR;
     if(_currentCell == _cells - 1) {
       if(_isActive){
         _wait = false;
         _currentCell = 0; 
       }
-    }
-    else
+    } else
       _currentCell++; 
   }
 }
