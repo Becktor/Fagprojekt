@@ -14,12 +14,14 @@
 class Logic;
 class Unit : public Prop {
   public:
+    boolean _isScored;
     byte _health, _score;
     
     Unit(byte width, byte height, byte health, byte score, byte imageWidth);
     void collideX();
     void collideY();
     void hit(byte damage, char force);
+    void initialize();
     void toggleDir();
     virtual void updateAI(byte dTime, Logic *logic);
 };

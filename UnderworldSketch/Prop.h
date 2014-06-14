@@ -5,10 +5,10 @@
 
 class Prop {
   public:
-    boolean _levitate, _wait, _isActive;
+    boolean _levitate, _animLock, _animStop;
     byte _imageWidth, _handle, _cells, _currentCell;
     char _dir, _xVel, _yVel;
-    byte _FR, _aniTime;
+    byte _FR, _animTime;
     Rect _hitbox;
 
     Prop(byte width, byte height, byte imageWidth);

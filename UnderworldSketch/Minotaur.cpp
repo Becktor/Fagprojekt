@@ -8,9 +8,12 @@ Minotaur::Minotaur() : Unit(MINO_WALKING_HITBOX_WIDTH, MINO_WALKING_HITBOX_HEIGH
 
 void Minotaur::collideX() {
   _xVel = 0;
-  if(_isActive) {
-    _isCharging = false;
+  if(_health != 0) {
     toggleDir();
+    if(_isCharging) {
+      _isCharging = false;
+      _yVel -= MINO_ATT_FORCE;
+    }
   }
 }
 
@@ -22,18 +25,22 @@ boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
     minoX += _hitbox._width - 1;
     heroX += heroHitbox->_width - 1;
   }
-  int dist = _dir * (heroX - minoX);
-  if((dist <= MINO_LOS + _hitbox._width - 1 &&
-      dist > -heroHitbox->_width &&
+  int dist = (heroX - minoX),
+      distDir = _dir * dist;
+  if((distDir <= MINO_LOS + _hitbox._width - 1 &&
+      distDir > -heroHitbox->_width &&
       heroHitbox->_y <= lineOfSight &&
       heroHitbox->_y + heroHitbox->_height > lineOfSight) ||
       _hitbox.contains(heroHitbox)) {
-    char tileY = worldToGrid(lineOfSight),
-         tileXStart = worldToGrid(minoX),
-         tileXEnd = worldToGrid(heroX);
-    for(char tileX = tileXStart; _dir * tileX <= _dir * tileXEnd; tileX += _dir)
+    char dir = getDirection(dist),
+         tileY = worldToGrid(lineOfSight),
+         tileXStart = worldToGrid(minoX) + dir,
+         tileXEnd = worldToGrid(heroX) - dir;
+    for(char tileX = tileXStart; dir * tileX <= dir * tileXEnd; tileX += dir)
       if(logic->tileIsSolid(tileX, tileY))
         return false;
+    if(dist != 0)
+      _dir = dir;
     _isCharging = true;
     _heroDetected = true;
     return true;
@@ -47,7 +54,7 @@ void Minotaur::hit(byte damage, char force) {
 }
 
 void Minotaur::initialize() {
-  Prop::initialize();
+  Unit::initialize();
   newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_WALKING_FR);
   _health = MINO_HEALTH;
   _heroDetected = false;
@@ -58,7 +65,7 @@ void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   byte acc;
   char targetSpeed = 0;
   if(logic->isGrounded(this)) {
-    if(_isActive) {
+    if(_health != 0) {
       Rect *heroHitbox = &(logic->_hero->_hitbox);
       if(_isCharging || detect(heroHitbox, logic)) { //Charge
         acc = MINO_ACC_CHARGE;
@@ -82,10 +89,14 @@ void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
         */
       }
     } else { //Dying
-      newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_DYING_FR);
       acc = MINO_ACC_BRAKE;
+      newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_DYING_FR);
+      _animLock = true;
+      _animStop = true;
     }
-  } else //Flying
+  } else { //Flying
     acc = 0;
+    //newHandle(MINO_FLYING_HANDLE, MINO_FLYING_CELLS, MINO_FLYING_FR);
+  }
   _xVel = zoomIn(acc, _xVel, targetSpeed);
 }

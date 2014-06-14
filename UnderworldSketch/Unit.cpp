@@ -24,6 +24,11 @@ void Unit::hit(byte damage, char force) {
     _health -= damage;
 }
 
+void Unit::initialize() {
+  Prop::initialize();
+  _isScored = false;
+}
+
 void Unit::toggleDir() {
   _dir = -1 * _dir;
 }

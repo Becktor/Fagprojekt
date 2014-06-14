@@ -9,6 +9,8 @@
 
 const static byte
     MINO_ACC_BRAKE = 1,
+    MINO_ATT_DAMAGE = 1,
+    MINO_ATT_FORCE = 8,
     MINO_HEALTH = 3,
     MINO_SCORE = 10,
     MINO_ACC_WALK = 1,

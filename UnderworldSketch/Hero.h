@@ -18,25 +18,25 @@ const static byte
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 50,
+    HERO_FR_ATTACKING = 80,
+    HERO_FR_DUCKING = 100,
+    HERO_FR_IDLE = 200,
+    HERO_FR_FALL = 255,
+    HERO_FR_JUMP = 255,
+    HERO_FR_RUNNING = 100,
+    HERO_FR_WALKING = 200,
     HERO_HEALTH = 3,
-    HERO_HEIGHT_STAND = 48, //Height stand value
-    HERO_HEIGHT_DUCK = 28, //Duck height
+    HERO_HITBOX_HEIGHT_STAND = 48, //Height stand value
+    HERO_HITBOX_HEIGHT_DUCK = 28, //Duck height
     HERO_HITBOX_WIDTH = 24,
     HERO_SPEED_JUMP = 15,
     HERO_SPEED_AIR = 2,
     HERO_SPEED_DUCK = 2,
     HERO_SPEED_RUN = 6,
     HERO_SPEED_WALK = 3,
-    HERO_WALKING_FR = 200,
-    HERO_RUNNING_FR = 100,
-    HERO_ATTACKING_FR = 80,
-    HERO_DUCKING_FR = 100,
-    HERO_IDLE_FR = 200,
-    HERO_JUMP_FR = 1000,
-    HERO_FALL_FR = 1000,
-    NUNCHUK_MIDDLE = 120,
+    NUNCHUK_REST_X = 120, //When the thumbstick is at rest.
     NUNCHUK_WALK = 10,
-    NUNCHUK_RUN = 40,
+    NUNCHUK_RUN = 50,
     NUNCHUK_DUCK = 45;
 
 class Hero : public Unit {

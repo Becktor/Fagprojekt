@@ -113,9 +113,9 @@ void setup() {
       Unit* unit = units->get(i);
       _logic.executeAttacks(unit);
       _logic.updatePhysics(_dTime, unit);
-      if(unit->_health == 0 && unit->_isActive) {
+      if(unit->_health == 0 && !unit->_isScored) {
         _score += unit->_score;
-        unit->_isActive = false;
+        unit->_isScored = true;
       }
     }
     _logic.clearAttacks();

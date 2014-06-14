@@ -18,35 +18,35 @@ void Prop::hit(byte damage, char force) {
 }
 
 void Prop::initialize() {
-  _wait = false;
-  _isActive = true;
   _dir = randDir();
   _xVel = 0;
   _yVel = 0;
   _handle = 0;
   _cells = 0;
-  _currentCell = 0;
   _FR = 0;
-  _aniTime = 0;
+  _currentCell = 0;
+  _animTime = 0;
+  _animLock = false;
+  _animStop = false;
 }
 
 void Prop::newHandle(byte handle, byte cells, byte FR) {
-  if(!_wait && (_handle != handle || _FR != FR)) {
+  if(!_animLock && (_handle != handle || _FR != FR)) {
     _handle = handle;
     _cells = cells;
-    _currentCell = 0;
     _FR = FR;
-    _aniTime = 0;
+    _currentCell = 0;
+    _animTime = 0;
   }
 }
 
 void Prop::updateAnimation(byte dTime) {
-  _aniTime += dTime;
-  while(_aniTime >= _FR) {
-    _aniTime -= _FR;
+  _animTime += dTime;
+  while(_animTime >= _FR) {
+    _animTime -= _FR;
     if(_currentCell == _cells - 1) {
-      if(_isActive){
-        _wait = false;
+      if(!_animStop){
+        _animLock = false;
         _currentCell = 0; 
       }
     } else
