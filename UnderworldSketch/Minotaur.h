@@ -8,7 +8,7 @@
 
 
 const static byte
-    MINO_ACC_STOP = 1,
+    MINO_ACC_BRAKE = 1,
     MINO_HEALTH = 3,
     MINO_SCORE = 10,
     MINO_ACC_WALK = 1,

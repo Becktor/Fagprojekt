@@ -28,9 +28,9 @@ boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
       heroHitbox->_y <= lineOfSight &&
       heroHitbox->_y + heroHitbox->_height > lineOfSight) ||
       _hitbox.contains(heroHitbox)) {
-      char tileY = worldToGrid(lineOfSight),
-           tileXStart = worldToGrid(minoX),
-           tileXEnd = worldToGrid(heroX);
+    char tileY = worldToGrid(lineOfSight),
+         tileXStart = worldToGrid(minoX),
+         tileXEnd = worldToGrid(heroX);
     for(char tileX = tileXStart; _dir * tileX <= _dir * tileXEnd; tileX += _dir)
       if(logic->tileIsSolid(tileX, tileY))
         return false;
@@ -83,7 +83,7 @@ void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       }
     } else { //Dying
       newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_DYING_FR);
-      acc = MINO_ACC_STOP;
+      acc = MINO_ACC_BRAKE;
     }
   } else //Flying
     acc = 0;
