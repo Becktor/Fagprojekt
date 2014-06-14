@@ -1,135 +1,57 @@
 %Present implementation details, program structure etc.  Further, interesting
 %algorithms and data structures should be presented here.
 \chapter{Implementation and detailed design} %Carsten
-Like Java's main function, Arduino has two special functions:
-{\tt setup} and {\tt loop}. The former is called once on program start,
-while the latter is repeatably called
+Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called
 until the Arduino is turned off.\footnote{At least, we haven't discovered a way
 to terminate a sketch.}\\ This isn't a very optimized structure. It forces us
 to use global variables if we want to reuse anything from setup in loop. Our
 solution was to leave {\tt loop} empty and put an endless loop in {\tt setup}
 instead. All of our variables could become local with this change, greatly
-reducing code size.\\ \section{Setup} Precalculations \section{Loop} %Carsten
-The loops first manages all props and then checks whether the game is over.
-First it updates all units AI, where they decide what to do in this frame. The
-hero is part of this loop and updated as if he had AI, but instead converts
-player input into actions. After this, all attacks generated from this AI
-update is executed. This involves all props, where units are checked if they
-die and coins are if they are collected. Finally the physics is updated, and
-all props move according to their internal velocities. Minotaurs may update
-their AI in case a collision function is called.\\ dTime...
+reducing code size.\\
 
-\section{Actors} Units are a subclass of prop, reusing all physics related
-functions and fields. Furthermore logic only needs to calculate with props.
+\section{Setup}
+Precalculations
 
-\subsection{Hero} Movement
+\section{Loop} %Carsten
+The loops first manages all props and then checks whether the game is over. First it updates all units AI, where they decide what to do in this frame. The hero is part of this loop and updated as if he had AI, but instead converts player input into actions. After this, all attacks generated from this AI update is executed. This involves all props, where units are checked if they die and coins are if they are collected. Finally the physics is updated, and all props move according to their internal velocities. Minotaurs may update their AI in case a collision function is called.\\ dTime...
 
-\subsection{Enemies} Logic communication\\ AI\\ Types
+\section{Logic} %Carsten
+The units needs to receive map data and send actions. This is the {\tt Logic} class' function. It contains numerous methods to calculate a units' surroundings and also handles collision, physics engine, coin collection and attacks.\\
+Props can only collide with the map geometry, not with each other. It was not a priority to collide props with each other. Enemies should be able to pass each other and the hero would be damaged when colliding with them in any case. Collision is calculated in straight lines, and only at one axis at a time. This makes long diagonal movement inaccurate, since it is calculated as if the prop moved first horizontally and then vertically. A better collision detection was a possibility, but eventually not prioritized. Collisions are calculated according to rectangular hitboxes.\\
+After these simplifications, the collision algorithm is very simple. Given a prop and a distance, it checks each tile in order which the prop will pass through according to its hitbox. If any of the tiles are solid, the prop only travels up to the solid tile and the algorithm terminates. When updating the physics engine, either the {\tt collisionX} or {\tt collisionY} functions are called, used in AI for units or bounce in coins.\\
+A linked list of attacks between frames is kept. Units add their attacks to the list during AI updates and the list is cleared after the attacks have been executed. Executions goes through each prop and checks whether the attack hits or not, calling the {\tt hit} function in case it has. Attacks are a separate object, containing damage, push force, the owner and the area. The attacks are only instantiated once at unit instantiation, which only manipulates the area when reusing the attack, thus optimizing on computing time, though costing memory.\\
+There is a circular reference, since units require logic which requires scene which in turn requires units. This resulted in forward declarations in scene which is a bit inelegant. It was difficult to design a structure which did not have any circles, since the actors act upon the scene, and the scene returns data to the actor.
 
-\section{Logic} Collision\\ AI\\ Attacks\\ Circular references\\ Score
+\section{Actors}
+Units are a subclass of prop, reusing all physics related functions and fields.
+
+\subsection{Enemies}
+AI; hunting\\
+Currently the only type of enemy is the minotaur, though the current framework was built to contain multiple types.
+
+\subsection{Hero}
+Movement
 
 \section{Scenes} %Carsten
-Scenes are the objects Codentaining the map data and
-all props within. The map is a simple two-dimensional array. The element at two
-given indexes corresponds to a tile, which has coordinates equal to the two
-given indexes times the size of a tile. This means world- can easily be
-converted to tile coordinates or vice versa.\\ In addition to the map, the
-scene also contain all props, which is the hero, minotaurs and coins. It stores
-this in two places: in dynamic linked lists, and in arrays. The former is for
-dynamic removal of the props, when the coins are collected or the minotaurs are
-killed. These are used when updating gameplay, to make sure that unused props
-are not updated, increasing framerate. The latter is for storing all available
-props , used at map generation. The arrays have a couple of advantages. First
-they create all used props of each type initially, reusing the same minotaurs
-and coins in each map. This shortens time needed to allocate and deallocate
-memory. Additionally, if the amount of props is initially within Arduino's
-memory bounds, then the maps will never cause the Arduino to run out of memory,
-since it never allocates more. The obvious drawbacks is that we are limited in
-the amount of props we need, and that removing any props during play does not
-increase available memory. The second drawback isn't that much of a problem
-though, since very little is needed during play.\\ Currently, because of an
-implementation bug, the props are dynamically allocated, even though they
-shouldn't need be.
+Scenes are the objects Containing the map data and all props within. The map is a simple two-dimensional array. The element at two given indexes corresponds to a tile, which has coordinates equal to the two given indexes times the size of a tile. This means world- can easily be converted to tile coordinates or vice versa.\\ In addition to the map, the scene also contain all props, which is the hero, minotaurs and coins. It stores this in two places: in dynamic linked lists, and in arrays. The former is for
+dynamic removal of the props, when the coins are collected or the minotaurs are killed. These are used when updating gameplay, to make sure that unused props are not updated, increasing framerate. The latter is for storing all available props , used at map generation. The arrays have a couple of advantages. First they create all used props of each type initially, reusing the same minotaurs and coins in each map. This shortens time needed to allocate and deallocate memory. Additionally, if the amount of props is initially within Arduino's memory bounds, then the maps will never cause the Arduino to run out of memory, since it never allocates more. The obvious drawbacks is that we are limited in the amount of props we need, and that removing any props during play does not increase available memory. The second drawback isn't that much of a problem though, since very little is needed during play.\\ Currently, because of an implementation bug, the props are dynamically allocated, even though they shouldn't need be.
 %Additional possible datastructures?
 \subsection{Generator} %Carsten
-Map generation is executed at setup and whenever the game ends
-(either by player death or win).
-The method {\tt newScene} generates a new map with matching points at the entrance and exits.
-Arduino's programming language does not support returning more than one value,
-so the method manipulates given pointers instead like in C programming.  The
-new map data overwrites the old one to save time and space, so the given {\tt
-scene} argument is a pointer to the old scene.  Reusing it saves us from
-instantiating a new one and deallocating the old one.  We ar not interested in
-reusing the actual map data, since the player cannot revisit prior levels.\\\\
-The actual algorithm is in three parts: clearing, modulation and generation.
-First it clears the old map data, setting all tiles to {\tt NONE}, to make sure
-nothing is left over from the old map. This may be a bit expensive on the
-processing time considering it is superfluous if the generator works correctly.
-The reason is a design choice which will be apparent when we reach the
-generation.\\ %Picture of Modules?
-Modulation in this case means separating the map into
-\emph{modules}\footnote{As opposed to vary the pitch in a voice}.
-This is where the layout of the map is decided. A module is a small map in
-itself, in our case a 5x5 map of tiles.  These have been designed by hand and
-hard-coded into the generator. Every map is construed of a grid of modules, in
-our case 4x4. The modules are differentiated by which sides one can access it
-from.  By this we mean the player can traverse from and to this module from the
-given sides.  The types are left-right (corridor), left-right-up (T-up),
-left-right-down (T-down), all (cross) and none (closed). A module in the
-category left-right is guaranteed to have an exit left and right, and may have
-an exit up or down.\\ The algorithm first instantiates a grid of empty modules,
-and randomly assigns one of the bottom modules to be a corridor and the
-entrance. This is the beginning of the solution path, which guarantees that the
-map can be completed by the player. From then on it picks a direction, left or
-right, randomly. From then on the algorithm randomly either moves according to
-its direction or up. When moving sideways the newly visited grid space is
-assigned to be a corridor. If it hits the edge of the map it moves upwards and
-changes direction instead. Whenever the solution path moves upwards, the
-algorithm has to change the space it is in first. If it is in a corridor tile,
-it changes it to a T-up, and if it is a T-down it changes it to a cross module.
-Both of these are the same as their predecessors, but with a guaranteed
-top-side exit. The newly visited module is assigned a T-down module. The
-algorithm picks a new direction at random (only if it is not at an edge.) and
-can start the over again. When it attempts to move upwards while at the top, it
-instead places the exit in the current tile and terminates. All unvisited grid
-spaces are assigned closed modules, and are not part of the solution path. Thus
-we have reached a map which has a guaranteed solution.\\ Lastly the program
-generates the map. This step reads each module in the newly generated grid,
-randomly picks a module of the specified type, and fills it into the actual
-map. If it is currently in an entrance or exit room, it places the
-corresponding door. It changes the original given entrance and exit pointers to
-point at the now created door.\\ Every module overlap with a single row or
-column with all surrounding modules. Overlapping follows a priority of tiles,
-where the algorithm determines which tile from the modules is used. Platforms
-are placed before empty tiles, and solid tiles are placed before platforms.
-This has several benefits. Firstly the maps are more unique since pairs of
-modules also differ, and makes the seams of modules harder to notice. Secondly,
-it ensures that upward exits are easier guaranteed since platforms can be
-placed closer to the upper floors. This is the reason we need to clear the map
-prior to generation: the old tiles would disrupt this priority, since the
-algorithm would not be able to discern what is old and what is new during
-generation.\\ Old version (nondeterministic time)
+Map generation is executed at setup and whenever the game ends (either by player death or win). The method {\tt newScene} generates a new map with matching points at the entrance and exits. Arduino's programming language does not support returning more than one value, so the method manipulates given pointers instead like in C programming. The new map data overwrites the old one to save time and space, so the given {\tt scene} argument is a pointer to the old scene.  Reusing it saves us from instantiating a new one and deallocating the old one.  We ar not interested in reusing the actual map data, since the player cannot revisit prior levels.\\
+The actual algorithm is in three parts: clearing, modulation and generation. First it clears the old map data, setting all tiles to {\tt NONE}, to make sure nothing is left over from the old map. This may be a bit expensive on the processing time considering it is superfluous if the generator works correctly. The reason is a design choice which will be apparent when we reach the generation.\\ %Picture of Modules?
+Modulation in this case means separating the map into \emph{modules}\footnote{As opposed to vary the pitch in a voice}. This is where the layout of the map is decided. A module is a small map in itself, in our case a 5x5 map of tiles.  These have been designed by hand and hard-coded into the generator. Every map is construed of a grid of modules, in our case 4x4. The modules are differentiated by which sides one can access it from.  By this we mean the player can traverse from and to this module from the given sides.  The types are left-right (corridor), left-right-up (T-up), left-right-down (T-down), all (cross) and none (closed). A module in the category left-right is guaranteed to have an exit left and right, and may have an exit up or down.\\
+The algorithm first instantiates a grid of empty modules, and randomly assigns one of the bottom modules to be a corridor and the entrance. This is the beginning of the solution path, which guarantees that the map can be completed by the player. From then on it picks a direction, left or right, randomly. From then on the algorithm randomly either moves according to its direction or up. When moving sideways the newly visited grid space is assigned to be a corridor. If it hits the edge of the map it moves upwards and changes direction instead. Whenever the solution path moves upwards, the algorithm has to change the space it is in first. If it is in a corridor tile, it changes it to a T-up, and if it is a T-down it changes it to a cross module. Both of these are the same as their predecessors, but with a guaranteed top-side exit. The newly visited module is assigned a T-down module. The algorithm picks a new direction at random (only if it is not at an edge.) and can start the over again. When it attempts to move upwards while at the top, it instead places the exit in the current tile and terminates. All unvisited grid spaces are assigned closed modules, and are not part of the solution path. Thus we have reached a map which has a guaranteed solution.\\
+Lastly the program generates the map. This step reads each module in the newly generated grid, randomly picks a module of the specified type, and fills it into the actual map. If it is currently in an entrance or exit room, it places the corresponding door. It changes the original given entrance and exit pointers to
+point at the now created door.\\
+Every module overlap with a single row or column with all surrounding modules. Overlapping follows a priority of tiles, where the algorithm determines which tile from the modules is used. Platforms are placed before empty tiles, and solid tiles are placed before platforms. This has several benefits. Firstly the maps are more unique since pairs of modules also differ, and makes the seams of modules harder to notice. Secondly, it ensures that upward exits are easier guaranteed since platforms can be placed closer to the upper floors. This is the reason we need to clear the map prior to generation: the old tiles would disrupt this priority, since the algorithm would not be able to discern what is old and what is new during
+generation.\\
+Old version (nondeterministic time)
 
 \section{Optimization}%Cebrail
-The biggest challenge has been the code size due
-to the low capacity of the flash memory.  The flash memory has a capacity of
-32Kb. The first 4.242Kb is reserved for the bootloader and we are limited to go
-no further than 28.672Kb all inclusive. So we are actually
-only allowed to upload 24.430Kb of our own code. It may sound fair
-comparing to what have been achieved with old game consoles, but it became very
-quick  a headache.
-\\
-Every time we compiled our code, we felt
-like the code was growing exponentially and we reached the limit quicker than
-we expected, the intern libraries and our code generally took way too much
-space. Please see Figure~\ref{fig:code_size} for a history of our code size.
+The biggest challenge has been the code size due to the low capacity of the flash memory.  The flash memory has a capacity of 32Kb. The first 4.242Kb is reserved for the bootloader and we are limited to go no further than 28.672Kb all inclusive. So we are actually only allowed to upload 24.430Kb of our own code. It may sound fair comparing to what have been achieved with old game consoles, but it became very quick a headache.\\
+Every time we compiled our code, we felt like the code was growing exponentially and we reached the limit quicker than we expected, the intern libraries and our code generally took way too much space. Please see Figure~\ref{fig:code_size} for a history of our code size.
 
-From the start, we wrote the code with optimization in mind, but also tried
-to keep the code maintainable. When we reached the limit, we had to optimize
-it further, not just to create space for existing code, but also for further
-additions to the game.
-Our first step to solve this problem, we analyzed our code and found the main
-reasons for this occasion, which are described below.
+From the start, we wrote the code with optimization in mind, but also tried to keep the code maintainable. When we reached the limit, we had to optimize it further, not just to create space for existing code, but also for further additions to the game. Our first step to solve this problem, we analyzed our code and found the main reasons for this occasion, which are described below.
 
 %\begin{enumerate} \item Inefficient datatypes.  \item Unused functions \item
 %    Global Variable instead of local.  \item Code verbose.  \item Repeated
