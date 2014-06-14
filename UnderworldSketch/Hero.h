@@ -29,7 +29,7 @@ const static byte
     HERO_HITBOX_HEIGHT_STAND = 48, //Height stand value
     HERO_HITBOX_HEIGHT_DUCK = 28, //Duck height
     HERO_HITBOX_WIDTH = 24,
-    HERO_SPEED_JUMP = 15,
+    HERO_JUMP = 15,
     HERO_SPEED_AIR = 2,
     HERO_SPEED_DUCK = 2,
     HERO_SPEED_RUN = 6,

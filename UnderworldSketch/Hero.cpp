@@ -54,7 +54,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   if(logic->isGrounded(this)) {
     if(_nunchuk->cButton) {
       if(!_isJumping) {
-        _yVel -= HERO_SPEED_JUMP;
+        _yVel = -HERO_JUMP;
         _isJumping = true;
         GD.sample(JUMP, JUMP_LENGTH, 8000, ADPCM_SAMPLES);
       }

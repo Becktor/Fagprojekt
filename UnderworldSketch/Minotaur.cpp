@@ -4,16 +4,17 @@
 #include "Unit.h"
 #include "Minotaur.h"
 
-Minotaur::Minotaur() : Unit(MINO_WALKING_HITBOX_WIDTH, MINO_WALKING_HITBOX_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALKING_WIDTH) { }
+Minotaur::Minotaur() : Unit(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALKING_WIDTH) { }
 
 void Minotaur::collideX() {
   _xVel = 0;
   if(_health != 0) {
-    toggleDir();
     if(_isCharging) {
       _isCharging = false;
       _yVel -= MINO_ATT_FORCE;
     }
+    if(!_heroDetected)
+      toggleDir();
   }
 }
 
@@ -55,48 +56,54 @@ void Minotaur::hit(byte damage, char force) {
 
 void Minotaur::initialize() {
   Unit::initialize();
-  newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_WALKING_FR);
+  newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_FR_WALKING);
   _health = MINO_HEALTH;
   _heroDetected = false;
   _isCharging = false;
 }
 
 void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
-  byte acc;
+  boolean grounded = logic->isGrounded(this);
+  byte acc = 0;
   char targetSpeed = 0;
-  if(logic->isGrounded(this)) {
-    if(_health != 0) {
-      Rect *heroHitbox = &(logic->_hero->_hitbox);
-      if(_isCharging || detect(heroHitbox, logic)) { //Charge
+  if(_health != 0) {
+    Rect *heroHitbox = &(logic->_hero->_hitbox);
+    if(_isCharging || (grounded && detect(heroHitbox, logic))) { //Charge
+      targetSpeed = _dir * MINO_SPEED_CHARGE;
+      newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_FR_CHARGING);
+      if(grounded)
         acc = MINO_ACC_CHARGE;
-        targetSpeed = _dir * MINO_SPEED_CHARGE;
-        newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_CHARGING_FR);
-      } else {
-        acc = MINO_ACC_WALK;
-        newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_WALKING_FR);
+    } else {
+      newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_FR_WALKING);
+      if(_heroDetected) { //Hunt
+        int dist = heroHitbox->_x + heroHitbox->_width / 2 - _hitbox._x - _hitbox._width / 2;
+        _dir = getDirection(dist);
+        byte moveSpeed;
+        if(grounded) {
+          acc = MINO_ACC_WALK;
+          moveSpeed = MINO_SPEED_HUNT;
+          if(heroHitbox->_y + heroHitbox->_height - 1 < _hitbox._y)
+            _yVel = -MINO_JUMP;
+        } else {
+          acc = MINO_ACC_AIR;
+          moveSpeed = max(MINO_SPEED_AIR, _dir * _xVel);
+        }
+        targetSpeed = _dir * min(moveSpeed, _dir * dist);
+      } else { //Wander
+        //_heroDetected = false;
         if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height))
           toggleDir();
         targetSpeed = _dir * MINO_SPEED_WALK;
-        /*
-        if(_heroDetected && _hitbox(heroHitbox) < MINO_DETECT_DIST) < MINO_DETECT_DIST) { //Hunt
-          
-        } else { //Wander
-          _heroDetected = false;
-          if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height))
-            toggleDir();
-          targetSpeed = dir * MINO_SPEED_WALK;
-        }
-        */
+        if(grounded)
+          acc = MINO_ACC_WALK;
       }
-    } else { //Dying
-      acc = MINO_ACC_BRAKE;
-      newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_DYING_FR);
-      _animLock = true;
-      _animStop = true;
     }
-  } else { //Flying
-    acc = 0;
-    //newHandle(MINO_FLYING_HANDLE, MINO_FLYING_CELLS, MINO_FLYING_FR);
+  } else { //Dying
+    newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_FR_DYING);
+    _animLock = true;
+    _animStop = true;
+    if(grounded)
+      acc = MINO_ACC_BRAKE;
   }
   _xVel = zoomIn(acc, _xVel, targetSpeed);
 }
