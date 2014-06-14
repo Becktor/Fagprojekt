@@ -113,20 +113,72 @@ generation.\\ Old version (nondeterministic time)
 \section{Optimization}%Cebrail
 The biggest challenge has been the code size due
 to the low capacity of the flash memory.  The flash memory has a capacity of
-32Kb, where we are only allowed to upload 24.430Kb of our own code. The
-Arduino IDE uses the first 4.242Kb for the bootloader and we are limited to go
-no further than 28.672Kb all inclusive.  \\ \\ Programming our code, we felt
-that the code was growing exponentially and we reached the limit quicker than
-we expected, the intern libraries and our code generally was not optimized
-enough. Please see Figure~\ref{fig:code_size} for a history of our code size.
+32Kb. The first 4.242Kb is reserved for the bootloader and we are limited to go
+no further than 28.672Kb all inclusive. So we are actually
+only allowed to upload 24.430Kb of our own code. It may sound fair
+comparing to what have been achieved with old game consoles, but it became very
+quick  a headache.
+\\
+Every time we compiled our code, we felt
+like the code was growing exponentially and we reached the limit quicker than
+we expected, the intern libraries and our code generally took way too much
+space. Please see Figure~\ref{fig:code_size} for a history of our code size.
 
+From the start, we wrote the code with optimization in mind, but also tried
+to keep the code maintainable. When we reached the limit, we had to optimize
+it further, not just to create space for existing code, but also for further
+additions to the game.
 Our first step to solve this problem, we analyzed our code and found the main
-reasons for this occasion:
+reasons for this occasion, which are described below.
 
-\begin{enumerate} \item Inefficient datatypes.  \item Unused functions \item
-    Global Variable instead of local.  \item Code verbose.  \item Repeated
-    statements.  \item Getters/Setters.  \item Dependencies.  \item Libraries.
-  \end{enumerate}
+%\begin{enumerate} \item Inefficient datatypes.  \item Unused functions \item
+%    Global Variable instead of local.  \item Code verbose.  \item Repeated
+%    statements.  \item Getters/Setters.  \item Dependencies.  \item Libraries.
+%  \end{enumerate}
+
+\subsubsection{Inefficient datatypes}
+A good place to start was the datatypes. Converting the bigger datatypes
+to some smaller ones was a easy optimization. Mostly, it was integers that
+was converted to data types like {\tt char}, {\tt byte} and {\tt word}.
+Which {\tt char} is capably of encoding numbers from -128 to 127. While
+{\tt bytes} is a 8-bit unsigned number, from 0 to 255 and {\tt word} is
+basically an unsigned 16-bit number, from 0 to 65535. Notice that {\tt byte}
+is the unsigned version of {\tt char}. More details in arduinos site\footnote{http://arduino.cc/en/Reference/HomePage}.
+\subsubsection{Unused functions}
+\subsubsection{Global to local}
+A global variable ensures that all the
+functions in the class has access to the variable. But there are downsides
+to this, it uses more space than local variables and it also increases the chances
+of changing the variable value by other functions without intentions. So we changed
+the global variables into local variables by declaring and initializing them in the
+functions they are going to be used. So it is a matter of declaring them in the right
+scopes.
+\subsubsection{Code verbose}
+\subsubsection{Repeated statements }
+Repeated statements - well it speaks for itself. Repeating something that has been calculated
+before is just a waste of code space. Simplifying the code in this manner is sometimes
+not easy, it requires that you think creative. It often requires you to think - is this
+needed? It may not always be obvious. Often it is about finding a shortcut to some
+calculation and taking advantage of already existing results.
+
+\subsubsection{Accessor methods}
+Accessor methods are getters and setters functions, that make
+variables available to other functions. These functions has to
+be declared public in the header file on order to be visible to the
+other files. But we found out that these functions are more inefficient
+compared to public variables. So we deleted these functions
+and made the variables public.
+
+\subsubsection{Dependencies}
+
+\subsubsection{Libraries}
+The libraries are the most space allocating part of code. Both our external and
+our internal libraries fill much of the code. The internal libraries are
+inclusions of our own written code, everything from logic to units. The external
+libraries contains which are necessary to communicate with the EEPROM,
+Gameduino 2 and Wii nunchuk.
+
+
 
 \subsection{Code Size bloat} Bootloader GD2 includes \subsection{Further
 optimization} Custom written or shortened extern libraries
