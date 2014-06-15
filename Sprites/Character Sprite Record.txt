@@ -1,15 +1,15 @@
-1. Hero Idle
-2. Hero Walking, Jumping
-3. Hero Running
-4. Hero Ducking
-5. Hero Attacking
-6. Minotaur Walking
-7. Minotaur Running
-8. Harpie Flying
-9. Tile 1, Tile 2, Tile 3
-10. Entry, Exit
-11. 
+1. Hero Moving
+2. Hero Attacking
+3. Hero Ducking
+4. Hero Idle
+5. Hero Jump
+6. Hero Fall
+7. Minotaur Charging
+8. Minotaur Dying
+9. Minotaur Walking
+10. Tiles
+11. Coin
 12. 
-13
-14
-15
+13. 
+14. 
+15.
