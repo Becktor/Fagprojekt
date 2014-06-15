@@ -33,20 +33,25 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   if(logic->isGrounded(this)) {
     //Hero duck
     if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
-      acc = HERO_ACC_DUCK;
-      targetSpeed = nunchukDir * HERO_SPEED_DUCK;
-      newHandle(HERO_DUCK_HANDLE, HERO_DUCK_CELLS, HERO_FR_DUCKING);
-      if(!_isDucking) {
-        _hitbox._height = HERO_HITBOX_HEIGHT_DUCK;
-        _hitbox._y += HERO_HITBOX_HEIGHT_STAND - HERO_HITBOX_HEIGHT_DUCK;
-        _isDucking = true;
+      //Serial.println(_nunchuk->analogY);
+      if(_nunchuk->analogY <= 30){
+        targetSpeed =0;
+        newHandle(HERO_DUCK_HANDLE, 1, 200);  
+      }else{
+        acc = HERO_ACC_DUCK;
+        targetSpeed = nunchukDir * HERO_SPEED_DUCK;
+        newHandle(HERO_DUCK_HANDLE, HERO_DUCK_CELLS, HERO_FR_DUCKING);
       }
+        if(!_isDucking) {
+          _hitbox._height = HERO_HITBOX_HEIGHT_DUCK;
+          _hitbox._y += HERO_HITBOX_HEIGHT_STAND - HERO_HITBOX_HEIGHT_DUCK;
+          _isDucking = true;
+          }
     } 
     else if(_isDucking) {
       _hitbox._height = HERO_HITBOX_HEIGHT_STAND;
       _hitbox._y += HERO_HITBOX_HEIGHT_DUCK - HERO_HITBOX_HEIGHT_STAND;
       _isDucking = false;
-
     } 
     else if(nunchukXAbs >= NUNCHUK_WALK){
       byte FR;

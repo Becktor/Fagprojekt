@@ -26,7 +26,7 @@
 //Checks
 #define HITBOXES 0 //Draw hitboxes
 #define NUNCHUCK 1 //Nunchuck is connected
-#define RESET_HSCORE 1 //Reset highscore
+#define RESET_HSCORE 0 //Reset highscore
 
 //Constants
 const static int
@@ -49,7 +49,7 @@ void flipImage(byte halfWidth);
 
 void setup() {
   //SETUP
-  //Serial.begin(9600);
+ //Serial.begin(9600);
   word _score = 0, _highScore;
   if(RESET_HSCORE)
     _highScore = 0;
