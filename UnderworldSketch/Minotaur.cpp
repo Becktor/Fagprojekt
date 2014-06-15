@@ -4,7 +4,10 @@
 #include "Unit.h"
 #include "Minotaur.h"
 
-Minotaur::Minotaur() : Unit(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALKING_WIDTH) { }
+Minotaur::Minotaur() :
+    Unit(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALKING_WIDTH, MINO_INV_TIME),
+    _attackArea(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT),
+    _attack(&_attackArea, MINO_ATT_DAMAGE, MINO_ATT_FORCE, this) { }
 
 void Minotaur::collideX() {
   _xVel = 0;
@@ -19,7 +22,8 @@ void Minotaur::collideX() {
 }
 
 boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
-  int lineOfSight = _hitbox._y + _hitbox._height / 2,
+  //int lineOfSight = _hitbox._y + _hitbox._height / 2,
+  int lineOfSight = _hitbox._y,
       minoX = _hitbox._x,
       heroX = heroHitbox->_x;
   if(_dir == LEFT) {
@@ -75,6 +79,8 @@ void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       //_hitbox._width = MINO_HITBOX_CHARGE_WIDTH;
       //_hitbox._height = MINO_HITBOX_CHARGE_HEIGHT;
       newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_FR_CHARGING);
+      _attackArea.setPos(_hitbox._x, _hitbox._y);
+      logic->addAttack(&_attack);
     } else {
       newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_FR_WALKING);
       //_hitbox._width = MINO_HITBOX_WALK_WIDTH;

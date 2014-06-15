@@ -17,7 +17,7 @@ class Unit : public Prop {
     boolean _isScored;
     byte _health, _score;
     
-    Unit(byte width, byte height, byte health, byte score, byte imageWidth);
+    Unit(byte width, byte height, byte health, byte score, byte imageWidth, word invTime);
     void collideX();
     void collideY();
     void hit(byte damage, char force);

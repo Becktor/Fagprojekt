@@ -17,8 +17,8 @@ const static byte
     HERO_ACC_WALK = 1,
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
-    HERO_ATT_RANGE = 50,
-    HERO_HEALTH = 3,
+    HERO_ATT_RANGE = 48,
+    HERO_HEALTH = 5,
     HERO_HITBOX_HEIGHT_STAND = 48, //Height stand value
     HERO_HITBOX_HEIGHT_DUCK = 28, //Duck height
     HERO_HITBOX_WIDTH = 24,
@@ -39,7 +39,8 @@ const static word
     HERO_FR_FALL = 1000,
     HERO_FR_JUMP = 1000,
     HERO_FR_RUNNING = 100,
-    HERO_FR_WALKING = 200;
+    HERO_FR_WALKING = 200,
+    HERO_INV_TIME = 1000;
 
 class Hero : public Unit {
   private:

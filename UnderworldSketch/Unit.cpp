@@ -3,7 +3,7 @@
 #include "Prop.h"
 #include "Unit.h"
 
-Unit::Unit(byte width, byte height, byte health, byte score, byte imageWidth) : Prop(width, height, imageWidth) {
+Unit::Unit(byte width, byte height, byte health, byte score, byte imageWidth, word invTime) : Prop(width, height, imageWidth, invTime) {
   _health = health;
   _score = score;
 }
@@ -30,7 +30,7 @@ void Unit::initialize() {
 }
 
 void Unit::toggleDir() {
-  _dir = -1 * _dir;
+  _dir = -_dir;
 }
 
 void Unit::updateAI(byte dTime, Logic *logic) { }

@@ -87,17 +87,15 @@ void setup() {
       //_nunchuk.update();
     }
     //UPDATE AI
-    for(byte i = 0; i < units->size(); i++) {
-      Unit *unit = units->get(i);
-      unit->updateAnimation(_dTime);
-      unit->updateAI(_dTime, &_logic);
-    }
+    for(byte i = 0; i < units->size(); i++)
+      units->get(i)->updateAI(_dTime, &_logic);
     //UPDATE PROPS
     {
       byte i = 0;
       while(i < coins->size()) {
         Coin* coin = coins->get(i);
         coin->updateAnimation(_dTime);
+        coin->updateInvulnerability(_dTime);
         _logic.executeAttacks(coin);
         if(_logic.coinCollision(coin)){
           _score += COIN_SCORE;
@@ -111,6 +109,8 @@ void setup() {
     }
     for(byte i = 0; i < units->size(); i++) {
       Unit* unit = units->get(i);
+      unit->updateAnimation(_dTime);
+      unit->updateInvulnerability(_dTime);
       _logic.executeAttacks(unit);
       _logic.updatePhysics(_dTime, unit);
       if(unit->_health == 0 && !unit->_isScored) {
@@ -128,21 +128,18 @@ void setup() {
     }
     if(_logic._gameOver) {
       byte health;
-      if(_logic._heroWin) {
-        //GAME CONTINUE
+      if(_logic._heroWin) { //GAME CONTINUE
         health = _hero._health;
         GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
-      } else {
-        //GAME RESTART
+      } else { //GAME RESTART
         health = HERO_HEALTH;
+        //set highscore
+        if (_highScore < _score) {
+          EEPROMWriteInt(ADDRESS_HSCORE, _score);
+          _highScore = _score;
+        }
       }
       newScene(&_scene, &_entrance, &_exit);
-      //MOVE TO GAME RESTART LATER
-      if (_highScore < _score) {
-        EEPROMWriteInt(ADDRESS_HSCORE, _score);
-        _highScore = _score;
-      }
-      //
       _logic._gameOver = false;
       _logic._heroWin = false;
       _scene.addUnit(&_hero, _entrance._x, _entrance._y);

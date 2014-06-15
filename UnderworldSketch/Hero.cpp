@@ -7,9 +7,9 @@
 #include "Sprites.h"
 
 Hero::Hero(ArduinoNunchuk* nunchuk) : 
-Unit(HERO_HITBOX_WIDTH, HERO_HITBOX_HEIGHT_STAND, HERO_HEALTH, 0, HERO_IDLE_WIDTH),
-_attackArea(HERO_ATT_RANGE, HERO_HITBOX_HEIGHT_STAND),
-_attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
+    Unit(HERO_HITBOX_WIDTH, HERO_HITBOX_HEIGHT_STAND, HERO_HEALTH, 0, HERO_IDLE_WIDTH, HERO_INV_TIME),
+    _attackArea(HERO_ATT_RANGE, HERO_HITBOX_HEIGHT_STAND),
+    _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;
 }
 
@@ -19,7 +19,7 @@ void Hero::initialize() {
   _health = HERO_HEALTH;
   _attackSound = false;
   _isAttacking = true;
-  _isDucking = false;
+  _isDucking = true;
   _isJumping = false;
 }
 
@@ -109,10 +109,10 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     else if(!_isAttacking && !_isDucking) {
       //Attack
       _isAttacking = true;
+      _attackArea._width = HERO_ATT_RANGE + _hitbox._width;
+      _attackArea._x = _hitbox._x;
       if(_dir == LEFT)
-        _attackArea._x = _hitbox._x - HERO_ATT_RANGE - 1;
-      else
-        _attackArea._x = _hitbox._x + _hitbox._width;
+        _attackArea._x -= HERO_ATT_RANGE;
       _attackArea._y = _hitbox._y;
       _attack._force = _dir * HERO_ATT_FORCE;
       logic->addAttack(&_attack);

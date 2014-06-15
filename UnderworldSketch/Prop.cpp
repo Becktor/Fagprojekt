@@ -3,9 +3,10 @@
 #include "Prop.h"
 #include "Direction.h"
 
-Prop::Prop(byte width, byte height, byte imageWidth) : _hitbox(width, height) {
+Prop::Prop(byte width, byte height, byte imageWidth, word invTime) : _hitbox(width, height) {
   _levitate = false;
   _imageWidth = imageWidth;
+  _invTime = invTime;
 }
 
 void Prop::collideX() { }
@@ -15,6 +16,8 @@ void Prop::collideY() { }
 void Prop::hit(byte damage, char force) {
   _xVel += force;
   _yVel -= abs(force);
+  _invulnerable = true;
+  _invTimer = 0;
 }
 
 void Prop::initialize() {
@@ -25,6 +28,8 @@ void Prop::initialize() {
   _cells = 0;
   _FR = 0;
   _currentCell = 0;
+  _invTimer = 0;
+  _invulnerable = false;
   _animTime = 0;
   _animLock = false;
   _animStop = false;
@@ -51,6 +56,14 @@ void Prop::updateAnimation(byte dTime) {
       }
     } else
       _currentCell++; 
+  }
+}
+
+void Prop::updateInvulnerability(byte dTime) {
+  if(_invulnerable) {
+    _invTimer += dTime;
+    if(_invTimer >= _invTime)
+      _invulnerable = false;
   }
 }
 

@@ -14,7 +14,7 @@ const static byte
     MINO_ACC_HUNT = 2,
     MINO_ACC_WALK = 1,
     MINO_ATT_DAMAGE = 1,
-    MINO_ATT_FORCE = 8,
+    MINO_ATT_FORCE = 12,
     MINO_HEALTH = 3,
     MINO_HITBOX_WALK_WIDTH = 32,
     MINO_HITBOX_WALK_HEIGHT = 43,
@@ -26,18 +26,21 @@ const static byte
     MINO_SPEED_AIR = 1,
     MINO_SPEED_HUNT = 3,
     MINO_SPEED_WALK = 2,
-    MINO_SPEED_CHARGE = 6,
+    MINO_SPEED_CHARGE = 5,
     //MINO_DETECT_RANGE = 40, //Always detect dist. Doesn't ignore tiles.
     MINO_UNDETECT_RANGE = 250;
 
 const static word
     MINO_FR_WALKING = 75,
     MINO_FR_CHARGING = 50,
-    MINO_FR_DYING = 300;
+    MINO_FR_DYING = 300,
+    MINO_INV_TIME = 500;
 
 class Minotaur : public Unit {
   public:
     boolean _heroDetected, _isCharging;
+    Rect _attackArea;
+    Attack _attack;
 
     Minotaur();
     void collideX();

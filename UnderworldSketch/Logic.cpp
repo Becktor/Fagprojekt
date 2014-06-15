@@ -50,7 +50,7 @@ void Logic::executeAttacks(Prop* prop) {
   for(int i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
     Rect *area = attack->_area;
-    if(prop != attack->_owner && hitbox->contains(area))
+    if(prop != attack->_owner && hitbox->contains(area) && !prop->_invulnerable)
       prop->hit(attack->_damage, attack->_force);
   }
 }
