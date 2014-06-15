@@ -3,9 +3,10 @@
 #include "Prop.h"
 #include "Direction.h"
 
-Prop::Prop(byte width, byte height, byte imageWidth, word invTime) : _hitbox(width, height) {
+Prop::Prop(byte width, byte height, byte imageWidth, byte imageHeight, word invTime) : _hitbox(width, height) {
   _levitate = false;
   _imageWidth = imageWidth;
+  _imageHeight = imageHeight;
   _invTime = invTime;
 }
 

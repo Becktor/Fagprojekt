@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define HITBOXES 0 //Draw hitboxes
+#define HITBOXES 1 //Draw hitboxes
 #define NUNCHUCK 1 //Nunchuck is connected
 #define RESET_HSCORE 0 //Reset highscore
 
@@ -190,7 +190,7 @@ void drawProp(Prop* prop,  int offsetX, int offsetY) {
     flipImage(halfWidth);
   GD.BitmapHandle(prop->_handle);
   GD.Cell(prop->_currentCell);
-  drawVertex2f(hitbox->_x - offsetX - (prop->_imageWidth - hitbox->_width) / 2, hitbox->_y - offsetY);
+  drawVertex2f(hitbox->_x - offsetX - (prop->_imageWidth - hitbox->_width) / 2, hitbox->_y - offsetY - (prop->_imageHeight - hitbox->_height) / 2);
   if(prop->_dir == LEFT)
     flipImage(halfWidth);
 }

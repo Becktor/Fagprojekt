@@ -5,7 +5,7 @@
 #include "Minotaur.h"
 
 Minotaur::Minotaur() :
-    Unit(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALKING_WIDTH, MINO_INV_TIME),
+    Unit(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT, MINO_HEALTH, MINO_SCORE, MINO_WALK_WIDTH, MINO_WALK_HEIGHT, MINO_INV_TIME),
     _attackArea(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT),
     _attack(&_attackArea, MINO_ATT_DAMAGE, MINO_ATT_FORCE, this) { }
 
@@ -60,7 +60,7 @@ void Minotaur::hit(byte damage, char force) {
 
 void Minotaur::initialize() {
   Unit::initialize();
-  newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_FR_WALKING);
+  newHandle(MINO_WALK_HANDLE, MINO_WALK_CELLS, MINO_FR_WALKING);
   _health = MINO_HEALTH;
   _heroDetected = false;
   _isCharging = false;
@@ -78,11 +78,11 @@ void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       targetSpeed = _dir * MINO_SPEED_CHARGE;
       //_hitbox._width = MINO_HITBOX_CHARGE_WIDTH;
       //_hitbox._height = MINO_HITBOX_CHARGE_HEIGHT;
-      newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_FR_CHARGING);
+      newHandle(MINO_CHARGE_HANDLE, MINO_CHARGE_CELLS, MINO_FR_CHARGING);
       _attackArea.setPos(_hitbox._x, _hitbox._y);
       logic->addAttack(&_attack);
     } else {
-      newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_FR_WALKING);
+      newHandle(MINO_WALK_HANDLE, MINO_WALK_CELLS, MINO_FR_WALKING);
       //_hitbox._width = MINO_HITBOX_WALK_WIDTH;
       //_hitbox._height = MINO_HITBOX_WALK_HEIGHT;
       if(_heroDetected) { //Hunt

@@ -7,7 +7,7 @@
 #include "Sprites.h"
 
 Hero::Hero(ArduinoNunchuk* nunchuk) : 
-    Unit(HERO_HITBOX_WIDTH, HERO_HITBOX_HEIGHT_STAND, HERO_HEALTH, 0, HERO_IDLE_WIDTH, HERO_INV_TIME),
+    Unit(HERO_HITBOX_WIDTH, HERO_HITBOX_HEIGHT_STAND, HERO_HEALTH, 0, HERO_IDLE_WIDTH, HERO_IDLE_HEIGHT, HERO_INV_TIME),
     _attackArea(HERO_ATT_RANGE, HERO_HITBOX_HEIGHT_STAND),
     _attack(&_attackArea, HERO_ATT_DAMAGE, HERO_ATT_FORCE, this) {
   _nunchuk = nunchuk;

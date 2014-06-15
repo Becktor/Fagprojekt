@@ -3,7 +3,7 @@
 #include "Prop.h"
 #include "Unit.h"
 
-Unit::Unit(byte width, byte height, byte health, byte score, byte imageWidth, word invTime) : Prop(width, height, imageWidth, invTime) {
+Unit::Unit(byte width, byte height, byte health, byte score, byte imageWidth, byte imageHeight, word invTime) : Prop(width, height, imageWidth, imageHeight, invTime) {
   _health = health;
   _score = score;
 }

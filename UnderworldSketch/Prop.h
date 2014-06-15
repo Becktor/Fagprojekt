@@ -6,12 +6,12 @@
 class Prop {
   public:
     boolean _levitate, _animLock, _animStop, _invulnerable;
-    byte _imageWidth, _handle, _cells, _currentCell;
+    byte _imageWidth, _imageHeight, _handle, _cells, _currentCell;
     char _dir, _xVel, _yVel;
     word _FR, _animTime, _invTime, _invTimer;
     Rect _hitbox;
 
-    Prop(byte width, byte height, byte imageWidth, word invTim);
+    Prop(byte width, byte height, byte imageWidth, byte imageHeight, word invTim);
     virtual void collideX();
     virtual void collideY();
     virtual void hit(byte damage, char force);
