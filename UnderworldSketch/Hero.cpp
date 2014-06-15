@@ -19,7 +19,7 @@ void Hero::initialize() {
   _health = HERO_HEALTH;
   _attackSound = false;
   _isAttacking = true;
-  _isDucking = true;
+  _isDucking = false;
   _isJumping = false;
 }
 
@@ -30,9 +30,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   nunchukXAbs = nunchukX * nunchukDir,
   acc,
   targetSpeed;
-
   if(logic->isGrounded(this)) {
-
     //Hero duck
     if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
       acc = HERO_ACC_DUCK;
