@@ -44,7 +44,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     } 
     else if(_isDucking) {
       _hitbox._height = HERO_HITBOX_HEIGHT_STAND;
-      _hitbox._y += HERO_HITBOX_HEIGHT_STAND - HERO_HITBOX_HEIGHT_DUCK;
+      _hitbox._y += HERO_HITBOX_HEIGHT_DUCK - HERO_HITBOX_HEIGHT_STAND;
       _isDucking = false;
 
     } 
@@ -73,7 +73,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
 
     if(_nunchuk->cButton) {
       if(!_isJumping) {
-        _yVel = HERO_JUMP;
+        _yVel = -HERO_JUMP;
         _isJumping = true;
         GD.sample(JUMP, JUMP_LENGTH, 8000, ADPCM_SAMPLES);
       }
