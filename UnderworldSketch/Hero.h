@@ -18,13 +18,6 @@ const static byte
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 50,
-    HERO_FR_ATTACKING = 80,
-    HERO_FR_DUCKING = 100,
-    HERO_FR_IDLE = 200,
-    HERO_FR_FALL = 255,
-    HERO_FR_JUMP = 255,
-    HERO_FR_RUNNING = 100,
-    HERO_FR_WALKING = 200,
     HERO_HEALTH = 3,
     HERO_HITBOX_HEIGHT_STAND = 48, //Height stand value
     HERO_HITBOX_HEIGHT_DUCK = 28, //Duck height
@@ -38,6 +31,15 @@ const static byte
     NUNCHUK_WALK = 10,
     NUNCHUK_RUN = 50,
     NUNCHUK_DUCK = 45;
+
+const static word
+    HERO_FR_ATTACKING = 80,
+    HERO_FR_DUCKING = 100,
+    HERO_FR_IDLE = 200,
+    HERO_FR_FALL = 1000,
+    HERO_FR_JUMP = 1000,
+    HERO_FR_RUNNING = 100,
+    HERO_FR_WALKING = 200;
 
 class Hero : public Unit {
   private:

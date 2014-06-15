@@ -30,7 +30,7 @@ void Prop::initialize() {
   _animStop = false;
 }
 
-void Prop::newHandle(byte handle, byte cells, byte FR) {
+void Prop::newHandle(byte handle, byte cells, word FR) {
   if(!_animLock && (_handle != handle || _FR != FR)) {
     _handle = handle;
     _cells = cells;

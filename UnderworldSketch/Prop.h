@@ -8,7 +8,7 @@ class Prop {
     boolean _levitate, _animLock, _animStop;
     byte _imageWidth, _handle, _cells, _currentCell;
     char _dir, _xVel, _yVel;
-    byte _FR, _animTime;
+    word _FR, _animTime;
     Rect _hitbox;
 
     Prop(byte width, byte height, byte imageWidth);
@@ -16,7 +16,7 @@ class Prop {
     virtual void collideY();
     virtual void hit(byte damage, char force);
     virtual void initialize();
-    void newHandle(byte handle, byte cell, byte FR);
+    void newHandle(byte handle, byte cell, word FR);
     void updateAnimation(byte dTime);
     char zoomIn(byte change, char current, char target);
 };

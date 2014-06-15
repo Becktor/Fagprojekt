@@ -11,12 +11,10 @@ const static byte
     MINO_ACC_AIR = 1,
     MINO_ACC_BRAKE = 1,
     MINO_ACC_CHARGE = 5,
+    MINO_ACC_HUNT = 2,
     MINO_ACC_WALK = 1,
     MINO_ATT_DAMAGE = 1,
     MINO_ATT_FORCE = 8,
-    MINO_FR_WALKING = 75,
-    MINO_FR_CHARGING = 50,
-    MINO_FR_DYING = 255,
     MINO_HEALTH = 3,
     MINO_HITBOX_WALK_WIDTH = 32,
     MINO_HITBOX_WALK_HEIGHT = 43,
@@ -26,11 +24,16 @@ const static byte
     MINO_LOS = 200, //Line of sight
     MINO_SCORE = 10,
     MINO_SPEED_AIR = 1,
-    MINO_SPEED_HUNT = 2,
-    MINO_SPEED_WALK = 1,
+    MINO_SPEED_HUNT = 3,
+    MINO_SPEED_WALK = 2,
     MINO_SPEED_CHARGE = 6,
     //MINO_DETECT_RANGE = 40, //Always detect dist. Doesn't ignore tiles.
     MINO_UNDETECT_RANGE = 250;
+
+const static word
+    MINO_FR_WALKING = 75,
+    MINO_FR_CHARGING = 50,
+    MINO_FR_DYING = 300;
 
 class Minotaur : public Unit {
   public:

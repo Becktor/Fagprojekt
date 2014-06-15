@@ -5,8 +5,10 @@
 
 const static byte
     COIN_FRICTION = 1,
-    COIN_FR = 100,
     COIN_SCORE = 50;
+
+const static word COIN_FR = 100;
+
 class Coin : public Prop {
   public:
     Coin();

@@ -69,20 +69,24 @@ void Minotaur::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   if(_health != 0) {
     Rect *heroHitbox = &(logic->_hero->_hitbox);
     if(_isCharging || (grounded && detect(heroHitbox, logic))) { //Charge
-      targetSpeed = _dir * MINO_SPEED_CHARGE;
-      newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_FR_CHARGING);
       if(grounded)
         acc = MINO_ACC_CHARGE;
+      targetSpeed = _dir * MINO_SPEED_CHARGE;
+      //_hitbox._width = MINO_HITBOX_CHARGE_WIDTH;
+      //_hitbox._height = MINO_HITBOX_CHARGE_HEIGHT;
+      newHandle(MINO_CHARGING_HANDLE, MINO_CHARGING_CELLS, MINO_FR_CHARGING);
     } else {
       newHandle(MINO_WALKING_HANDLE, MINO_WALKING_CELLS, MINO_FR_WALKING);
+      //_hitbox._width = MINO_HITBOX_WALK_WIDTH;
+      //_hitbox._height = MINO_HITBOX_WALK_HEIGHT;
       if(_heroDetected) { //Hunt
         int dist = heroHitbox->_x + heroHitbox->_width / 2 - _hitbox._x - _hitbox._width / 2;
         _dir = getDirection(dist);
         byte moveSpeed;
         if(grounded) {
-          acc = MINO_ACC_WALK;
+          acc = MINO_ACC_HUNT;
           moveSpeed = MINO_SPEED_HUNT;
-          if(heroHitbox->_y + heroHitbox->_height - 1 < _hitbox._y)
+          if(heroHitbox->_y + heroHitbox->_height - 1 < _hitbox._y && _yVel == 0)
             _yVel = -MINO_JUMP;
         } else {
           acc = MINO_ACC_AIR;
