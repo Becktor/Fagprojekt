@@ -165,8 +165,8 @@ void setup() {
     //GD.ColorRGB(255,255,255); //Text color
     GD.cmd_text(60, 250, 29, OPT_CENTER, "Health");
     GD.cmd_number(60, 230, 29, OPT_CENTER, _hero._health);
-    GD.cmd_text(200, 250, 29, OPT_CENTER, "Score");
-    GD.cmd_number(200, 230, 29, OPT_CENTER, _score);
+    GD.cmd_text(300, 250, 29, OPT_CENTER, "Score");
+    GD.cmd_number(300, 230, 29, OPT_CENTER, _score);
     GD.cmd_text(400, 250, 28, OPT_CENTER, "Highscore");
     GD.cmd_number(400, 230, 28, OPT_CENTER, _highScore);
     //Complete drawing
