@@ -10,10 +10,10 @@ instead. All of our variables could become local with this change, greatly
 reducing code size.\\
 
 \section{Setup}
-Precalculations
+Setup is where we instantiate most local variables, our hero, units, props and lists of our units. We also generate our random seed and load our assets, the GD prerequisites and a millisecond counter.
 
-\section{Loop} %Carsten
-The loops first manages all props and then checks whether the game is over. First it updates all units AI, where they decide what to do in this frame. The hero is part of this loop and updated as if he had AI, but instead converts player input into actions. After this, all attacks generated from this AI update is executed. This involves all props, where units are checked if they die and coins are if they are collected. Finally the physics is updated, and all props move according to their internal velocities. Minotaurs may update their AI in case a collision function is called.\\ dTime...
+\section{Loop} %Carsten/Jonathan
+The loop first sets the millisecond counter then it gets data from the nunchuck update. Afterwards it updates all units AI, where they decide what to do in this frame. The hero is part of this loop and updated as if he had AI, but instead converts player input(that we got from the nunchuck update) into actions. After this, all attacks generated from this AI update is executed. This involves all props, where units are checked if they die and coins are if they are collected. Finally the physics is updated, and all props move according to their internal velocities. Minotaurs may update their AI in case a collision function is called.\\ Attacks are cleared, sound for the attack is played and it checks the hero health is zero. If it is we restart the game and save the score if its a highscore.
 
 \section{Logic} %Carsten
 The units needs to receive map data and send actions. This is the {\tt Logic} class' function. It contains numerous methods to calculate a units' surroundings and also handles collision, physics engine, coin collection and attacks.\\
