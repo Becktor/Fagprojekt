@@ -75,6 +75,7 @@ void Minotaur::updateAI(byte dTime, Logic *logic) {
       targetSpeed = _dir * MINO_SPEED_CHARGE;
       newHandle(MINO_CHARGE_HANDLE, MINO_CHARGE_CELLS, MINO_FR_CHARGING);
       _attackArea.setPos(_hitbox._x, _hitbox._y);
+      _attack._force = _dir * MINO_ATT_FORCE;
       logic->addAttack(&_attack);
     } else {
       newHandle(MINO_WALK_HANDLE, MINO_WALK_CELLS, MINO_FR_WALKING);
@@ -94,7 +95,7 @@ void Minotaur::updateAI(byte dTime, Logic *logic) {
         targetSpeed = _dir * min(moveSpeed, _dir * dist);
       } else { //Wander
         //_heroDetected = false;
-        if(!logic->isWalkable(_hitbox._x + (1 + _dir) * _hitbox._width / 2, _hitbox._y + _hitbox._height))
+        if(!logic->isWalkable(_hitbox.side(_dir), _hitbox._y + _hitbox._height))
           toggleDir();
         targetSpeed = _dir * MINO_SPEED_WALK;
         if(grounded)
@@ -105,6 +106,7 @@ void Minotaur::updateAI(byte dTime, Logic *logic) {
     newHandle(MINO_DYING_HANDLE, MINO_DYING_CELLS, MINO_FR_DYING);
     _animLock = true;
     _animStop = true;
+    _isCharging = false;
     if(grounded)
       acc = MINO_ACC_BRAKE;
   }

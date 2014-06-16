@@ -24,7 +24,7 @@
 #include "Sprites.h"
 
 //Checks
-#define HITBOXES 1 //Draw hitboxes
+#define HITBOXES 0 //Draw hitboxes
 #define NUNCHUCK 1 //Nunchuck is connected
 #define RESET_HSCORE 0 //Reset highscore
 
@@ -49,7 +49,7 @@ void flipImage(byte halfWidth);
 
 void setup() {
   //SETUP
- //Serial.begin(9600);
+  //Serial.begin(9600);
   word _score = 0, _highScore;
   if(RESET_HSCORE)
     _highScore = 0;
@@ -75,6 +75,7 @@ void setup() {
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Coin*>* coins = _scene.getCoins();
   long currentMillis = millis();
+  boolean drawInvulnerable = false; //Whether or not to draw invulnerable units. Is toggled every frame
   //LOOP
   for(;;) {
     //Time calculations
@@ -82,10 +83,12 @@ void setup() {
     byte _dTime = newMillis - currentMillis;
     currentMillis = newMillis;
     //GAME LOGIC
-    if(NUNCHUCK) {
+    if(NUNCHUCK)
       _nunchuk.update();
-      //_nunchuk.update();
-    }
+    if(drawInvulnerable)
+      drawInvulnerable = false;
+    else
+      drawInvulnerable = true;
     //UPDATE AI
     for(byte i = 0; i < units->size(); i++)
       units->get(i)->updateAI(_dTime, &_logic);
@@ -159,8 +162,11 @@ void setup() {
     //Draw objects
     for(byte i = 0; i < coins->size(); i++)
       drawProp(coins->get(i), cameraX, cameraY);
-    for(byte i = 0; i < units->size(); i++)
-      drawProp(units->get(i), cameraX, cameraY);
+    for(byte i = 0; i < units->size(); i++) {
+      Unit *unit = units->get(i);
+      if(!drawInvulnerable || !unit->_invulnerable || unit->_health == 0) //Flash damaged units
+        drawProp(unit, cameraX, cameraY);
+    }
     //Draw hud
     //GD.ColorRGB(255,255,255); //Text color
     GD.cmd_text(60, 250, 29, OPT_CENTER, "Health");
