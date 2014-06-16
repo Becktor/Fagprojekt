@@ -44,6 +44,11 @@ void Prop::newHandle(byte handle, byte cells, word FR) {
   }
 }
 
+void Prop::push(char force) {
+  _xVel += force;
+  _yVel -= abs(force);
+}
+
 void Prop::updateAnimation(byte dTime) {
   _animTime += dTime;
   while(_animTime >= _FR) {

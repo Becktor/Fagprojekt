@@ -15,8 +15,7 @@ void Coin::collideY() {
 
 void Coin::hit(byte damage, char force) {
   Prop::hit(damage, force);
-  _xVel += force;
-  _yVel -= abs(force);
+  push(force);
 }
 
 void Coin::initialize() {

@@ -1,5 +1,6 @@
+#include "Direction.h"
 #include "Geo.h"
-//some change
+
 Point::Point() {
   setPoint(0, 0);
 }
@@ -26,6 +27,20 @@ boolean Rect::contains(Rect *r) {
 void Rect::setPos(int x, int y) {
   _x = x;
   _y = y;
+}
+
+int Rect::side(char dir) {
+  if(dir == LEFT)
+    return _x;
+  else
+    return _x + _width - 1;
+}
+
+int Rect::surface(char dir) {
+  if(dir == UP)
+    return _y;
+  else
+    return _y + _height - 1;
 }
 
 void Rect::translate(int x, int y) {

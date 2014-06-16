@@ -15,8 +15,7 @@ Hero::Hero(ArduinoNunchuk* nunchuk) :
 
 void Hero::hit(byte damage, char force) {
   Unit::hit(damage, force);
-  _xVel += force;
-  _yVel -= abs(force);
+  push(force);
 }
 
 void Hero::initialize() {

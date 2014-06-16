@@ -28,6 +28,8 @@ class Rect {
     Rect(byte width, byte height);
     boolean contains(Rect *r);
     void setPos(int x, int y);
+    int side(char dir);
+    int surface(char dir);
     void translate(int x, int y);
 };
 #endif

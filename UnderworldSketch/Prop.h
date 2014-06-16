@@ -17,6 +17,7 @@ class Prop {
     virtual void hit(byte damage, char force);
     virtual void initialize();
     void newHandle(byte handle, byte cell, word FR);
+    void push(char force);
     void updateAnimation(byte dTime);
     void updateInvulnerability(byte dTime);
     char zoomIn(byte change, char current, char target);

@@ -36,6 +36,7 @@ Scene::Scene() {
 void Scene::addCoin(byte x, byte y) {
   if(_coinIndex != COINS) {
     Coin *coin = _coins[_coinIndex];
+    coin->initialize();
     setProp(coin, x, y);
     _coinList.add(coin);
     _coinIndex++;

@@ -37,17 +37,12 @@ void Logic::clearAttacks() {
 }
 
 boolean Logic::coinCollision(Coin* coin) {
-  Rect *hitboxC = &(coin->_hitbox);
-  Rect *hitboxH = &(_hero->_hitbox);
-  if(hitboxH->contains(hitboxC))
-    return true;
-  else
-    return false;
+  return (_hero->_hitbox).contains(&(coin->_hitbox));
 }
 
 void Logic::executeAttacks(Prop* prop) {
   Rect *hitbox = &(prop->_hitbox);
-  for(int i = 0; i < _attacks.size(); i++) {
+  for(byte i = 0; i < _attacks.size(); i++) {
     Attack *attack = _attacks.get(i);
     Rect *area = attack->_area;
     if(prop != attack->_owner && hitbox->contains(area) && !prop->_invulnerable)
@@ -82,9 +77,7 @@ boolean Logic::movePropHoriz(Prop *prop, int dX) {
   if(dX == 0)
     return true;
   char dir = getDirection(dX);
-  int x = hitbox->_x, y = hitbox->_y;
-  if(dir == RIGHT)
-    x += hitbox->_width - 1;
+  int x = hitbox->side(dir), y = hitbox->_y;
   char tileXEnd = worldToGrid(x + dX),
        tileYEnd = worldToGrid(y + hitbox->_height - 1);
   for(char tileX = worldToGrid(x) + dir; dir * tileX <= dir * tileXEnd; tileX += dir) {
@@ -109,9 +102,7 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   if(dY == 0)
     return true;
   char dir = getDirection(dY);
-  int x = hitbox->_x, y = hitbox->_y;
-  if(dir == DOWN)
-    y += hitbox->_height - 1;
+  int x = hitbox->_x, y = hitbox->surface(dir);
   char tileXEnd = worldToGrid(x + hitbox->_width - 1),
        tileYEnd = worldToGrid(y + dY);
   for(char tileX = worldToGrid(x); tileX <= tileXEnd; tileX++) {
