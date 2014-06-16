@@ -7,18 +7,40 @@
 #include "Minotaur.h"
 #include "SceneGenerator.h"
 
-void newScene(Scene *scene, Point *entrance, Point *exit) {
+void newScene(Scene *scene, Point *entrance, Point *exit, byte difficulty) {
+  //Init
   for(byte i = 0; i < SCENE_WIDTH; i++)
     for(byte j = 0; j < SCENE_HEIGHT; j++)
       scene->setTile(i, j, NONE);
   scene->clearProps();
   byte modules[XMODULES][YMODULES];
+  boolean enemies[XMODULES][YMODULES];
+  for(byte i = 0; i < XMODULES; i++) {
+    for(byte j = 0; j < YMODULES; j++) {
+      modules[i][j] = NONE;
+      enemies[i][j] = false;
+    }
+  }
+  //Avoid spawning enemies in portal rooms.
+  enemies[entrance->_x][entrance->_y] == true;
+  enemies[exit->_x][exit->_y] = true;
+  //New map
   modulate(modules, entrance, exit);
-  generate(scene, modules, entrance, exit);
+  byte enemyAmount = min(difficulty, MINOTAURS);
+  while(enemyAmount != 0) {
+    byte r = random(XMODULES * YMODULES),
+         x = r % XMODULES,
+         y = r / XMODULES;
+    if(!enemies[x][y]) {
+      enemies[x][y] = true;
+      enemyAmount--;
+    }
+  }
+  generate(scene, modules, enemies, entrance, exit);
 }
 
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
-void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom, boolean entrance, Point *portal) {
+void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom, boolean entrance, Point *portal, boolean enemy) {
   byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
   getModuleTiles(module, &tiles);
   for(byte i = 0; i < MODULE_WIDTH; i++) {
@@ -32,9 +54,11 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
             tile = END;
           portal->setPoint(x, y);
         } else {
-          scene->addMinotaur(x, y);
-          scene->addCoin(x,y);
           tile = NONE;
+          if(enemy) {
+            scene->addMinotaur(x, y);
+            scene->addCoin(x,y);
+          }
         }
       }
       if(scene->getTile(x, y) == NULL || scene->getTile(x, y) < tile) //Prioritises tiles depending on their enum value (none is lowest).
@@ -43,7 +67,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
   }
 }
 
-void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
+void generate(Scene *scene, byte modules[XMODULES][YMODULES], boolean enemies[XMODULES][YMODULES], Point *entrance, Point *exit) {
   boolean hasEntrance = false, hasExit = false;
   for(byte i = 0; i < XMODULES; i++) {
     for(byte j = 0; j < YMODULES; j++) {
@@ -60,7 +84,7 @@ void generate(Scene *scene, byte modules[XMODULES][YMODULES], Point *entrance, P
         portal = exit;
         hasExit = true;
       }
-      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i - 1, j * MODULE_HEIGHT - j - 1, isPortalRoom, isEntrance, portal);
+      fillModule(scene, modules[i][j], i * MODULE_WIDTH - i - 1, j * MODULE_HEIGHT - j - 1, isPortalRoom, isEntrance, portal, enemies[i][j]);
     }
   }
 }

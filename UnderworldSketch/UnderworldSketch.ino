@@ -32,6 +32,7 @@
 const static int
     ADDRESS_HSCORE = 100,
     ADDRESS_SEED = 102,
+    INIT_DIFF = 3,
     SCREEN_WIDTH = 480,
     SCREEN_HEIGHT = 272,
     SCREEN_TILES_WIDTH = SCREEN_WIDTH / TILE_SIZE,
@@ -51,6 +52,7 @@ void setup() {
   //SETUP
   //Serial.begin(9600);
   word _score = 0, _highScore;
+  byte difficulty = INIT_DIFF;
   if(RESET_HSCORE)
     _highScore = 0;
   else
@@ -68,7 +70,7 @@ void setup() {
   GD.begin();
   LOAD_ASSETS();
   Point _entrance = Point(), _exit = Point();
-  newScene(&_scene, &_entrance, &_exit);
+  newScene(&_scene, &_entrance, &_exit, difficulty);
   _logic._hero = &_hero;
   _scene.addUnit(&_hero, _entrance._x, _entrance._y);
 
@@ -133,17 +135,18 @@ void setup() {
       byte health;
       if(_logic._heroWin) { //GAME CONTINUE
         health = _hero._health;
+        difficulty++;
         GD.sample(EXIT, EXIT_LENGTH, 8000, ADPCM_SAMPLES);
       } else { //GAME RESTART
         health = HERO_HEALTH;
-        //set highscore
+        difficulty = INIT_DIFF;
         if (_highScore < _score) {
           EEPROMWriteInt(ADDRESS_HSCORE, _score);
           _highScore = _score;
         }
         _score = 0;
       }
-      newScene(&_scene, &_entrance, &_exit);
+      newScene(&_scene, &_entrance, &_exit, difficulty);
       _logic._gameOver = false;
       _logic._heroWin = false;
       _scene.addUnit(&_hero, _entrance._x, _entrance._y);

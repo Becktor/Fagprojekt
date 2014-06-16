@@ -25,7 +25,7 @@ const static byte
     YMODULES = 4,
     SCENE_WIDTH = XMODULES * (MODULE_WIDTH - 1) - 1,
     SCENE_HEIGHT = YMODULES * (MODULE_HEIGHT - 1) - 1,
-    MINOTAURS = 3,
+    MINOTAURS = 10,
     COINS = 5;
 
 char worldToGrid(int x);
