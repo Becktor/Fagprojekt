@@ -14,7 +14,7 @@ class Prop {
     Prop(byte width, byte height, byte imageWidth, byte imageHeight, word invTim);
     virtual void collideX();
     virtual void collideY();
-    virtual void hit(byte damage, char force);
+    void hit(byte damage, char force);
     virtual void initialize();
     void newHandle(byte handle, byte cell, word FR);
     void updateAnimation(byte dTime);

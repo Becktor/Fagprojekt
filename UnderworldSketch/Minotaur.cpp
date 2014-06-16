@@ -22,8 +22,7 @@ void Minotaur::collideX() {
 }
 
 boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
-  //int lineOfSight = _hitbox._y + _hitbox._height / 2,
-  int lineOfSight = _hitbox._y,
+  int lineOfSight = _hitbox._y + _hitbox._height / 2,
       minoX = _hitbox._x,
       heroX = heroHitbox->_x;
   if(_dir == LEFT) {
@@ -55,6 +54,10 @@ boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
 
 void Minotaur::hit(byte damage, char force) {
   Unit::hit(damage, force);
+  if(!_isCharging) {
+    _xVel += force;
+    _yVel -= abs(force);
+  }
   _heroDetected = true;
 }
 

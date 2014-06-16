@@ -13,6 +13,12 @@ Hero::Hero(ArduinoNunchuk* nunchuk) :
   _nunchuk = nunchuk;
 }
 
+void Hero::hit(byte damage, char force) {
+  Unit::hit(damage, force);
+  _xVel += force;
+  _yVel -= abs(force);
+}
+
 void Hero::initialize() {
   Unit::initialize();
   newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_FR_IDLE);

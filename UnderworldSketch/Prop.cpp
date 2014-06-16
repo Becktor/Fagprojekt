@@ -15,8 +15,6 @@ void Prop::collideX() { }
 void Prop::collideY() { }
 
 void Prop::hit(byte damage, char force) {
-  _xVel += force;
-  _yVel -= abs(force);
   _invulnerable = true;
   _invTimer = 0;
 }
