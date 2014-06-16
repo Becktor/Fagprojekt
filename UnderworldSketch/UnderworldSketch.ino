@@ -138,6 +138,7 @@ void setup() {
           EEPROMWriteInt(ADDRESS_HSCORE, _score);
           _highScore = _score;
         }
+        _score = 0;
       }
       newScene(&_scene, &_entrance, &_exit);
       _logic._gameOver = false;
@@ -150,7 +151,7 @@ void setup() {
     GD.ClearColorRGB(38, 36, 57); //Background
     GD.Clear();
     GD.Begin(BITMAPS);
-    GD.ColorRGB(255,255,255);
+    //GD.ColorRGB(255,255,255);
     int cameraX = _camera->_x + (_camera->_width - SCREEN_WIDTH) / 2,
         cameraY = _camera->_y + (_camera->_height - SCREEN_HEIGHT) / 2;
     //Draw scene
@@ -160,12 +161,14 @@ void setup() {
       drawProp(coins->get(i), cameraX, cameraY);
     for(byte i = 0; i < units->size(); i++)
       drawProp(units->get(i), cameraX, cameraY);
-    //Draw score
-    GD.ColorRGB(255,255,255); //Text color
-    GD.cmd_text(400,250,28, OPT_CENTER, "Highscore");
-    GD.cmd_number(400, 230, 28,OPT_CENTER, _highScore);
-    GD.cmd_text(60,250,29, OPT_CENTER, "Score");
-    GD.cmd_number(60, 230, 29, OPT_CENTER, _score);
+    //Draw hud
+    //GD.ColorRGB(255,255,255); //Text color
+    GD.cmd_text(60, 250, 29, OPT_CENTER, "Health");
+    GD.cmd_number(60, 230, 29, OPT_CENTER, _hero._health);
+    GD.cmd_text(200, 250, 29, OPT_CENTER, "Score");
+    GD.cmd_number(200, 230, 29, OPT_CENTER, _score);
+    GD.cmd_text(400, 250, 28, OPT_CENTER, "Highscore");
+    GD.cmd_number(400, 230, 28, OPT_CENTER, _highScore);
     //Complete drawing
     GD.swap();
   }
