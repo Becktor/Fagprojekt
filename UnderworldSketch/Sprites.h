@@ -45,7 +45,7 @@
 #define TILE_HANDLE 9
 #define TILE_WIDTH 48
 #define TILE_HEIGHT 48
-#define TILE_CELLS 4
+#define TILE_CELLS 6
 #define COIN_HANDLE 10
 #define COIN_WIDTH 32
 #define COIN_HEIGHT 32
@@ -54,19 +54,19 @@
 #define HEART_WIDTH 20
 #define HEART_HEIGHT 20
 #define HEART_CELLS 1
-#define ATTACK 120848UL
+#define ATTACK 139280UL
 #define ATTACK_LENGTH 1600
 #define ATTACK_FREQ 8000
-#define JUMP 122448UL
+#define JUMP 140880UL
 #define JUMP_LENGTH 944
 #define JUMP_FREQ 8000
-#define EXIT 123392UL
+#define EXIT 141824UL
 #define EXIT_LENGTH 4000
 #define EXIT_FREQ 8000
-#define COIN 127392UL
+#define COIN 145824UL
 #define COIN_LENGTH 5104
 #define COIN_FREQ 32000
-#define ASSETS_END 132496UL
+#define ASSETS_END 150928UL
 static const shape_t HERO_MOVE_SHAPE = {0, 84, 56, 0};
 static const shape_t HERO_ATTACK_SHAPE = {1, 84, 56, 0};
 static const shape_t HERO_DUCK_SHAPE = {2, 84, 56, 0};
@@ -79,6 +79,7 @@ static const shape_t MINO_WALK_SHAPE = {8, 80, 43, 0};
 static const shape_t TILE_SHAPE = {9, 48, 48, 0};
 static const shape_t COIN_SHAPE = {10, 32, 32, 0};
 static const shape_t HEART_SHAPE = {11, 20, 20, 0};
+
 
 
 

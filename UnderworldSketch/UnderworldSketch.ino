@@ -221,13 +221,13 @@ void drawScene(Scene *scene, int offsetX, int offsetY) {
       if(tile != NONE) {
         GD.BitmapHandle(TILE_HANDLE);        
         if(tile == ROCK)
-          GD.Cell(0);
-        else if(tile == PLATFORM)
           GD.Cell(1);
-        else if(tile == START)
+        else if(tile == PLATFORM)
           GD.Cell(2);
+        else if(tile == START)
+          GD.Cell(4);
         else if(tile == END)
-          GD.Cell(3);
+          GD.Cell(5);
         drawVertex2f(gridToWorld(tileX) - offsetX, gridToWorld(tileY) - offsetY);
       }
     }
