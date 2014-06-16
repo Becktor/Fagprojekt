@@ -20,8 +20,8 @@ class Unit : public Prop {
     Unit(byte width, byte height, byte health, byte score, byte imageWidth, byte imageHeight, word invTime);
     void collideX();
     void collideY();
-    void hit(byte damage, char force);
-    void initialize();
+    virtual void hit(byte damage, char force);
+    virtual void initialize();
     void toggleDir();
     virtual void updateAI(byte dTime, Logic *logic);
 };
