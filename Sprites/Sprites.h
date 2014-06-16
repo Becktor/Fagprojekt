@@ -4,8 +4,8 @@
 #define HERO_MOVE_HEIGHT 56
 #define HERO_MOVE_CELLS 4
 #define HERO_ATTACK_HANDLE 1
-#define HERO_ATTACK_WIDTH 84
-#define HERO_ATTACK_HEIGHT 56
+#define HERO_ATTACK_WIDTH 72
+#define HERO_ATTACK_HEIGHT 48
 #define HERO_ATTACK_CELLS 2
 #define HERO_DUCK_HANDLE 2
 #define HERO_DUCK_WIDTH 84
@@ -42,22 +42,22 @@
 #define COIN_HANDLE 10
 #define COIN_WIDTH 32
 #define COIN_HEIGHT 32
-#define COIN_CELLS 3
-#define ATTACK 238848UL
+#define COIN_CELLS 4
+#define ATTACK 119200UL
 #define ATTACK_LENGTH 1600
 #define ATTACK_FREQ 8000
-#define JUMP 240448UL
+#define JUMP 120800UL
 #define JUMP_LENGTH 944
 #define JUMP_FREQ 8000
-#define EXIT 241392UL
+#define EXIT 121744UL
 #define EXIT_LENGTH 4000
 #define EXIT_FREQ 8000
-#define COIN 245392UL
+#define COIN 125744UL
 #define COIN_LENGTH 5104
 #define COIN_FREQ 32000
-#define ASSETS_END 250496UL
+#define ASSETS_END 130848UL
 static const shape_t HERO_MOVE_SHAPE = {0, 84, 56, 0};
-static const shape_t HERO_ATTACK_SHAPE = {1, 84, 56, 0};
+static const shape_t HERO_ATTACK_SHAPE = {1, 72, 48, 0};
 static const shape_t HERO_DUCK_SHAPE = {2, 84, 56, 0};
 static const shape_t HERO_IDLE_SHAPE = {3, 84, 56, 0};
 static const shape_t HERO_JUMP_SHAPE = {4, 84, 56, 0};
