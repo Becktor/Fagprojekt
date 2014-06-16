@@ -91,7 +91,6 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     } 
     else
       _isJumping = false;
-
   } 
   else {
     if(_yVel <= 0)
@@ -102,6 +101,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       acc = HERO_ACC_AIR;
     else
       acc = 0;
+    _dir = nunchukDir;
   }
   if(nunchukXAbs >= NUNCHUK_WALK)
   targetSpeed = targetSpeed * nunchukDir;

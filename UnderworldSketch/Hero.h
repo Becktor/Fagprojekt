@@ -11,17 +11,22 @@
 #include "Sprites.h"
 
 const static byte
+    //Acceleration variables
     HERO_ACC_AIR = 1,
     HERO_ACC_DUCK = 1,
     HERO_ACC_RUN = 2,
     HERO_ACC_WALK = 1,
+    //Attack variables
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 48,
+    //Number of initial hitpoints
     HERO_HEALTH = 5,
-    HERO_HITBOX_HEIGHT_STAND = 38, //Height stand value
-    HERO_HITBOX_HEIGHT_DUCK = 18, //Duck height
+    //Hitbox dimensions
+    HERO_HITBOX_HEIGHT_STAND = 38, 
+    HERO_HITBOX_HEIGHT_DUCK = 18, 
     HERO_HITBOX_WIDTH = 24,
+    //
     HERO_JUMP = 15,
     HERO_SPEED_AIR = 2,
     HERO_SPEED_DUCK = 2,
@@ -32,7 +37,8 @@ const static byte
     NUNCHUK_RUN = 50,
     NUNCHUK_DUCK = 45;
 
-const static word
+const static word 
+    //time intervals between bitmap cells
     HERO_FR_ATTACKING = 80,
     HERO_FR_DUCKING = 100,
     HERO_FR_IDLE = 200,
@@ -40,6 +46,7 @@ const static word
     HERO_FR_JUMP = 1000,
     HERO_FR_RUNNING = 100,
     HERO_FR_WALKING = 200,
+    //time interval in which the hero is invulnerable
     HERO_INV_TIME = 1000;
 
 class Hero : public Unit {
