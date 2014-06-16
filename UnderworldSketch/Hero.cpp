@@ -53,7 +53,6 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
           _isDucking = true;
           }
        _dir = nunchukDir;
-
     } 
     else if(_isDucking) {
       _hitbox._height = HERO_HITBOX_HEIGHT_STAND;
@@ -73,7 +72,6 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
         FR = HERO_FR_WALKING;
       }
       newHandle(HERO_MOVE_HANDLE, HERO_MOVE_CELLS, FR);
-      _dir = nunchukDir;
     }
     else {
       acc = HERO_ACC_WALK;
@@ -101,12 +99,13 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       acc = HERO_ACC_AIR;
     else
       acc = 0;
-    _dir = nunchukDir;
   }
-  if(nunchukXAbs >= NUNCHUK_WALK)
-  targetSpeed = targetSpeed * nunchukDir;
-  else
-  targetSpeed = 0;
+  if(nunchukXAbs >= NUNCHUK_WALK){
+    _dir = nunchukDir;
+    targetSpeed = targetSpeed * nunchukDir;
+  } else {
+    targetSpeed = 0;
+  }
   _xVel = zoomIn(acc, _xVel, targetSpeed);
 
   //Hero action

@@ -173,12 +173,12 @@ void setup() {
     }
     //Draw hud
     //GD.ColorRGB(255,255,255); //Text color
-//    GD.cmd_text(60, 250, 29, OPT_CENTER, "Health");
-//    GD.cmd_number(60, 230, 29, OPT_CENTER, _hero._health);
-    GD.Begin(BITMAPS);
-    for(int i = 0; i < _hero._health; i++) {
-       GD.Vertex2ii(30 + (30*i), 240, HEART_HANDLE, 0);
-    }
+    GD.cmd_text(60, 250, 29, OPT_CENTER, "Health");
+    GD.cmd_number(60, 230, 29, OPT_CENTER, _hero._health);
+//    GD.Begin(BITMAPS);
+//    for(int i = 0; i < _hero._health; i++) {
+//       GD.Vertex2ii(30 + (30), 240, HEART_HANDLE, 0);
+//    }
     GD.cmd_text(300, 250, 29, OPT_CENTER, "Score");
     GD.cmd_number(300, 230, 29, OPT_CENTER, _score);
     GD.cmd_text(400, 250, 28, OPT_CENTER, "Highscore");
