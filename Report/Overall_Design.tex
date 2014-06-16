@@ -3,10 +3,12 @@
 
 \section{Components}
 Sketch files, c++/c language, includes, standard libraries
+\subsection{Maps}
 
-\subsection{Structure}
-The AI needs to receive world information and deliver actions. This prompts a cyclic model-controller relationship, which aims to place as much freedom in the hands of the AI as possible. The biggest limiting factor is how complex the world is, most of all the physics engine. The AI cannot and should not predict how its actions would affect the world - this is the job of the physics engine. With
-Scenes
+\subsection{AI} %Carsten
+The AI needs to receive world information and deliver actions. This prompts a cyclic model-controller relationship, which aims to place as much freedom in the hands of the AI as possible. The biggest limiting factor is how complex the world is, most of all the physics engine. The AI cannot and should not predict how its actions would affect the world - this is the job of the physics engine. This limits us in how advanced the AI can be, especially when planning forward, since we cannot guarantee an action leads to the desired outcome. For example, if a unit would jump across a gap or on top of a platform, he would need to steer himself for several frames to land safely and surely. Moreover, planning further than the current frame would require the unit to have a concept of his jumping abilities, size and world geometry.\\
+This complexity leads us to create much simpler AI, one which does not plan ahead. A possible solution which was considered, would be preprocessing the map and generate paths through the map. Though this would not be expensive in memory and code-size, and would make different enemy types problematic. Either we would be forced to use similarly moving enemies or generate additional pathing maps for each enemy type. This would be a lot of work for a bit smarter AI, and it was not a very enticing feature with such limited hardware.\\
+The AI we settled with would simply move towards a given goal, jumping if necessary, or wander aimlessly like enemies usually do in platforming games.
 
 \section{Media}
 Gameduino...
@@ -14,7 +16,8 @@ Gameduino...
 \subsection{Assets}
 Assets...
 
-\subsection{Sound}
+\subsection{Sound} %Cebrail
+%This is implementation!
 The game does have sound effects on essential events. Mostly of the sounds
 are coming from movements of hero, which are jumping and attacking.
 Beside that we have sound for exiting map and coin gain. As a simple
