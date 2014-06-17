@@ -108,8 +108,8 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       acc = 0;
   }
   if(nunchukXAbs >= NUNCHUK_WALK){
-    _dir = nunchukDir;
     targetSpeed = targetSpeed * nunchukDir;
+    _dir = nunchukDir;
   } else {
     targetSpeed = 0;
   }
