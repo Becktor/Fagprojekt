@@ -23,9 +23,9 @@ void Prop::initialize() {
   _dir = randDir();
   _xVel = 0;
   _yVel = 0;
-  _handle = 0;
-  _cells = 0;
-  _FR = 1;
+  //_handle = 0;
+  //_cells = 0;
+  //_FR = 1;
   _currentCell = 0;
   _invTimer = 0;
   _invulnerable = false;
