@@ -27,7 +27,7 @@ There is a circular reference, since units require logic which requires scene wh
 Units are a subclass of prop, reusing all physics related functions and fields.
 
 \subsection{Minotaurs}
-AI\\
+The only implemented enemy is the minotaur from Greek myth. His behaviors range from wandering, charging, hunting and dead, which also has alternative settings while he is in air. Initially he wanders in some direction until he comes across a gap or hits a wall, where he turns around. The gap check is simply whether the space immediately below the front of his hitbox is empty or not, while {\tt collisionX} function is only called when he wanders horizontally into a wall, making the wall check easy.
 hunting\\
 Currently the only type of enemy is the minotaur, though the current framework was built to contain multiple types.
 
