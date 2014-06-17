@@ -90,9 +90,13 @@ Highscore was implemented with the use of EEprom the "hardv drive" for arduinos.
 \subsection{Graphics}
 \subsection{Assets}
 \subsection{Sound}
+The convertions process includes: reducing the sampling rate, setting audio channel to mono and setting
+the bit resolution to 16 bit. Reducing the sample rate can ruin the sound, so some files
+will not be reduced as much as we wanted.
 
-\section{Input}
-%Another option will be using an external controller. The Wii nunchuck is popular and is very suitable for this game.  Using the buttons we game can be controlled as seen in the figure below. OLD
+
+\section{Input - ArduinoNunchuk library}
+
 
 \begin{figure}[h] 
   \centering 
@@ -142,10 +146,7 @@ needed? It may not always be obvious. Often it is about finding a shortcut to so
 calculation and taking advantage of already existing results.
 
 \subsubsection{Accessor methods}
-Accessor methods are getters and setters functions, that make
-variables available to other functions. These functions has to
-be declared public in the header file on order to be visible to the
-other files. But we found out that these functions are more inefficient
+We found out that these functions inefficient
 compared to public variables. So we deleted these functions
 and made the variables public.
 
