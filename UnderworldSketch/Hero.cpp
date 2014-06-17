@@ -44,40 +44,36 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       if(_nunchuk->analogY <= 30){
         targetSpeed = 0;
         newHandle(HERO_DUCK_HANDLE, 1, 1000);  
-      }else{
+      } else {
         acc = HERO_ACC_DUCK;
         targetSpeed = HERO_SPEED_DUCK;
         newHandle(HERO_DUCK_HANDLE, HERO_DUCK_CELLS, HERO_FR_DUCKING);
       }
-        if(!_isDucking) {
-          _hitbox._height = HERO_HITBOX_HEIGHT_DUCK;
-          _hitbox._y += HERO_HITBOX_HEIGHT_STAND - HERO_HITBOX_HEIGHT_DUCK;
-          _isDucking = true;
-          }
+      if(!_isDucking) {
+        _hitbox._height = HERO_HITBOX_HEIGHT_DUCK;
+        _hitbox._y += HERO_HITBOX_HEIGHT_STAND - HERO_HITBOX_HEIGHT_DUCK;
+        _isDucking = true;
+      }
        _dir = nunchukDir;
-    } 
-    else if(_isDucking) {
+    } else if(_isDucking) {
       _hitbox._height = HERO_HITBOX_HEIGHT_STAND;
       _hitbox._y += HERO_HITBOX_HEIGHT_DUCK - HERO_HITBOX_HEIGHT_STAND;
       _isDucking = false;
-    } 
-    else if(nunchukXAbs >= NUNCHUK_WALK){
+    } else if(nunchukXAbs >= NUNCHUK_WALK){
       byte FR;
       //Checks if the hero should walk or run
       if(nunchukXAbs >= NUNCHUK_RUN) {
         acc = HERO_ACC_RUN;
         targetSpeed = HERO_SPEED_RUN;
         FR = HERO_FR_RUNNING;
-      } 
-      else {
+      } else {
         acc = HERO_ACC_WALK;
         targetSpeed = HERO_SPEED_WALK;
         FR = HERO_FR_WALKING;
       }
       //Walking and Running use the same handle, but different frame rates
       newHandle(HERO_MOVE_HANDLE, HERO_MOVE_CELLS, FR);
-    }
-    else {
+    } else {
       //Hero is at rest
       acc = HERO_ACC_WALK;
       targetSpeed = 0;
@@ -85,7 +81,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_FR_IDLE);
     }
 
-    //Jumg command
+    //Jump command
     if(_nunchuk->cButton) {
       if(!_isJumping) {
         //Starts a jump
@@ -93,26 +89,22 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
         _isJumping = true;
         GD.sample(JUMP, JUMP_LENGTH, 8000, ADPCM_SAMPLES);
       }
-    } 
+    }
     else //player isn't able to continuously jump by holding the jump button down
       _isJumping = false;
-  } 
-  else {
+  } else {
+    acc = HERO_ACC_AIR;
+    targetSpeed = max(HERO_SPEED_AIR, nunchukDir * _xVel);
     if(_yVel <= 0)
       newHandle(HERO_JUMP_HANDLE, HERO_JUMP_CELLS, HERO_FR_JUMP);
     else
       newHandle(HERO_FALL_HANDLE, HERO_FALL_CELLS, HERO_FR_FALL);
-    if(HERO_SPEED_AIR > nunchukDir * _xVel)
-      acc = HERO_ACC_AIR;
-    else
-      acc = 0;
   }
   if(nunchukXAbs >= NUNCHUK_WALK){
     targetSpeed = targetSpeed * nunchukDir;
     _dir = nunchukDir;
-  } else {
+  } else
     targetSpeed = 0;
-  }
   _xVel = zoomIn(acc, _xVel, targetSpeed);
 
   //Hero action

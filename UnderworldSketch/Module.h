@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 const static byte  
-    TYPE0_MODULES = 1,
+    TYPE0_MODULES = 2,
     TYPE1_MODULES = 2,
     TYPE2_MODULES = 1,
     TYPE3_MODULES = 1,
@@ -29,6 +29,13 @@ TYPE0_TILES[TYPE0_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
     {2, 2, 2, 2, 2},
     {0, 0, 2, 0, 0},
     {0, 0, 2, 0, 0}
+  },
+  {
+    {0, 2, 2, 2, 0},
+    {0, 0, 0, 0, 0},
+    {0, 2, 0, 2, 0},
+    {0, 0, 7, 0, 0},
+    {0, 2, 2, 2, 0}
   }
 },
 TYPE1_TILES[TYPE1_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
@@ -36,8 +43,8 @@ TYPE1_TILES[TYPE1_MODULES][MODULE_WIDTH][MODULE_HEIGHT] = {
     {0, 0, 0, 0, 0},
     {0, 0, 7, 0, 0},
     {0, 2, 2, 2, 0},
-    {0, 0, 0, 0, 0},
-    {2, 2, 1, 2, 2}
+    {0, 2, 2, 2, 0},
+    {2, 2, 2, 2, 2}
   },
   {
     {0, 0, 2, 0, 0},

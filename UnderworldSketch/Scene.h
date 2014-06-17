@@ -46,7 +46,7 @@ class Scene {
     Scene();
     void addCoin(byte x, byte y);
     void addMinotaur(byte x, byte y);
-    void addUnit(Unit *unit, byte x, byte y);
+    void addUnit(Unit* unit, byte x, byte y);
     void clearProps();
     boolean contains(byte x, byte y);
     byte getWidth();

@@ -36,7 +36,6 @@ Scene::Scene() {
 void Scene::addCoin(byte x, byte y) {
   if(_coinIndex != COINS) {
     Coin *coin = _coins[_coinIndex];
-    coin->initialize();
     setProp(coin, x, y);
     _coinList.add(coin);
     _coinIndex++;
@@ -50,8 +49,7 @@ void Scene::addMinotaur(byte x, byte y) {
   }
 }
 
-//Adds the given unit to the units list and sets it at the given tile.
-void Scene::addUnit(Unit *unit, byte x, byte y) {
+void Scene::addUnit(Unit* unit, byte x, byte y) {
   setProp(unit, x, y);
   _unitList.add(unit);
 }
