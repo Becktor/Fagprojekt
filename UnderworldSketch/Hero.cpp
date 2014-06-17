@@ -35,6 +35,8 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   nunchukXAbs = nunchukX * nunchukDir,
   acc,
   targetSpeed;
+  
+  //Checks if the hero is grounded
   if(logic->isGrounded(this)) {
     //Hero duck
     if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
@@ -61,6 +63,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     } 
     else if(nunchukXAbs >= NUNCHUK_WALK){
       byte FR;
+      //Checks if the hero should walk or run
       if(nunchukXAbs >= NUNCHUK_RUN) {
         acc = HERO_ACC_RUN;
         targetSpeed = HERO_SPEED_RUN;
@@ -71,23 +74,27 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
         targetSpeed = HERO_SPEED_WALK;
         FR = HERO_FR_WALKING;
       }
+      //Walking and Running use the same handle, but different frame rates
       newHandle(HERO_MOVE_HANDLE, HERO_MOVE_CELLS, FR);
     }
     else {
+      //Hero is at rest
       acc = HERO_ACC_WALK;
       targetSpeed = 0;
       nunchukDir = 0;
       newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_FR_IDLE);
     }
 
+    //Jumg command
     if(_nunchuk->cButton) {
       if(!_isJumping) {
+        //Starts a jump
         _yVel = -HERO_JUMP;
         _isJumping = true;
         GD.sample(JUMP, JUMP_LENGTH, 8000, ADPCM_SAMPLES);
       }
     } 
-    else
+    else //player isn't able to continuously jump by holding the jump button down
       _isJumping = false;
   } 
   else {

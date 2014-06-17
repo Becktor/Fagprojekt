@@ -11,7 +11,7 @@
 #include "Sprites.h"
 
 const static byte
-    //Acceleration variables
+    //Acceleration values
     HERO_ACC_AIR = 1,
     HERO_ACC_DUCK = 1,
     HERO_ACC_RUN = 2,
@@ -20,25 +20,27 @@ const static byte
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 48,
-    //Number of initial hitpoints
+    //Number of Initial Hitpoints
     HERO_HEALTH = 5,
-    //Hitbox dimensions
+    //Hitbox Dimensions
     HERO_HITBOX_HEIGHT_STAND = 38, 
     HERO_HITBOX_HEIGHT_DUCK = 18, 
     HERO_HITBOX_WIDTH = 24,
-    //
+    //Vertical Jump Velocity
     HERO_JUMP = 15,
+    //Target Speed Values (Maximum speed in each state)
     HERO_SPEED_AIR = 2,
     HERO_SPEED_DUCK = 2,
     HERO_SPEED_RUN = 6,
     HERO_SPEED_WALK = 3,
+    //Thumbstick Thresholds
     NUNCHUK_REST_X = 120, //When the thumbstick is at rest.
     NUNCHUK_WALK = 10,
     NUNCHUK_RUN = 50,
     NUNCHUK_DUCK = 45;
 
 const static word 
-    //time intervals between bitmap cells
+    //Time Intervals between Bitmap Cells
     HERO_FR_ATTACKING = 80,
     HERO_FR_DUCKING = 100,
     HERO_FR_IDLE = 200,
