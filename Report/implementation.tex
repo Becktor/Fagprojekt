@@ -33,7 +33,36 @@ Currently the only type of enemy is the minotaur, though the current framework w
 
 
 \subsection{Hero}
-Movement
+Our hero has its own class where we define the movements, the hitbox and
+the animation handler.
+
+The movements of hero is done by processing data from Wii
+nunchuk - thanks to the nunchuk library. The recieved data defines the two
+buttons as 0 or 1.  The data from the thumbstick is received as x- and
+y-coordinates. When the thumbstick is at rest, the {\tt analogX} is 120 and
+{\tt analogY} is 125.  The numbers decreases when pushing to the left or down.
+It increases in the opposite directions.
+
+Our hero has two speeds, walking and running. By using intervals from our
+x-coordinates we can determine whatever our hero should stay idle, walk or run.
+As an example, if the difference between our {\tt analogX} value and rest value
+is 50 or more our hero will run to the direction specified in the class. When
+this happens the acceleration and speed are set to the specified constants
+in the header file.  A similar method is also used for ducking, if {\tt
+analogY} is lower than 45, our hero will duck. In this case, the hitbox will
+change height and y-value. The y-value has to be changed because hitboxes are
+defined at the top left corner. The hitbox is used to detect collisions - see subsection
+Logic for more detail.
+\\
+
+Attacking and jumping are far simpler as they only check the
+variables {\tt zButton} and {\tt cButton} for a {\tt true} value. They can though only
+be executed again once their local variables {\tt \_isAttacking} and {\tt
+\_isJumping} are false. This will prevent errors as jumping
+continuously. We did also ensure that our hero can't duck and attack at the same
+time. He is though able to jump and attack in the air. When attacking in the air,
+the handler uses the attack animation, it changes back to jump handler as soon as
+the button is released.
 
 \section{Scenes} %Carsten
 Scenes are the objects Containing the map data and all props within. The map is a simple two-dimensional array. The element at two given indexes corresponds to a tile, which has coordinates equal to the two given indexes times the size of a tile. This means world- can easily be converted to tile coordinates or vice versa.\\
