@@ -17,3 +17,8 @@ void Coin::hit(byte damage, char force) {
   Prop::hit(damage, force);
   push(force);
 }
+
+void Coin::initialize() {
+  Prop::initialize();
+  newHandle(COIN_HANDLE, COIN_CELLS, COIN_FR);  
+}
