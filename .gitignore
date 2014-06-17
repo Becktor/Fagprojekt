@@ -15,10 +15,10 @@ local.properties
 .classpath
 .settings/
 .loadpath
-.aux
-.synctex.gz
-.toc
-.out
+*.aux
+*.synctex.gz
+*.toc
+*.out
 # External tool builders
 .externalToolBuilders/
 
