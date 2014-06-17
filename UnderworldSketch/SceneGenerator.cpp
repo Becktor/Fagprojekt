@@ -22,7 +22,7 @@ void newScene(Scene *scene, Point *entrance, Point *exit, byte difficulty) {
     }
   }
   //Avoid spawning enemies in portal rooms.
-  enemies[entrance->_x][entrance->_y] == true;
+  enemies[entrance->_x][entrance->_y] = true;
   enemies[exit->_x][exit->_y] = true;
   //New map
   modulate(modules, entrance, exit);
