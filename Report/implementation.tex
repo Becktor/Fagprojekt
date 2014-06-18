@@ -83,8 +83,8 @@ Every module overlap with a single row or column with all surrounding modules. O
 generation.\\
 Old version (nondeterministic time)
 
-\subsection{Highscore/?Randomseed? EEprom}
-Highscore was implemented with the use of EEprom the "hardv drive" for arduinos. The arduino we had has 256 spots of EEprom memory and each of those can hold 256 bytes. To save the highscore we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ this way we could save unsigned integers in the arduino which would stay even when turned off. The functions work by bitshifting the value with 0 and 8 to store them in two different EEprom memory spots since one could not hold a very large int. When we needed the int back we simply bitshift back with the same numbers and add them together.
+\subsection{Highscore/?Randomseed? EEPROM}
+Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ which could save unsigned integers on the "hard drive" of the arduino. The functions work by bitshifting the integer with 0 and 8 and then save the two bitshifted values in the EEPROM. We 
 
 
 

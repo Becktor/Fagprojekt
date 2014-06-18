@@ -11,15 +11,16 @@ better.
 
 \begin{table}[h]
 \resizebox{16cm}{!} {
-    \begin{tabular}{l|l|l|l|l|l|l}
-    Board name     & Microcontroller & Operating Voltage & Flash Memory & Clock Speed & Input Power & SRAM   \\ \hline
-    OLIMEXINO-32U4 & ATMEGA32U4      & 3.3V / 5V         & 32KB         & 16 MHz      & 7-12VDC     & 2.5 KB \\
-    Duemilanove    & ATmega168       & 5V                & 16 KB        & 16 MHz      & 7-12V       & 1 KB   \\
+    \begin{tabular}{l|l|l|l|l|l|l|l}
+    Board name     & Microcontroller & Operating Voltage & Flash Memory & Clock Speed & Input Power & SRAM & EEPROM  \\ \hline
+    OLIMEXINO-32U4 & ATmega32U4      & 3.3V / 5V         & 32KB         & 16 MHz      & 7-12VDC     & 2.5 KB & 1kb \\
+    Duemilanove    & ATmega168       & 5V                & 16 KB        & 16 MHz      & 7-12V       & 1 KB& 512b   \\
     \end{tabular}
 }
     \caption{Specifications of the boards}
 \end{table}
-
+\subsubsection*{EEPROM}
+Electrically Erasable Programmable Read-Only Memory Is non-volatile memory which is used in computers/electronic devices to store data when power is removed. Bytes in EEPROM can be read erased and rewritten. One byte in the EEPROM can only hold a value inbetween 0 and 255.
 \subsubsection{Gameduino2}
 The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduino2/} shield.
 
