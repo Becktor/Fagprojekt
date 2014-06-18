@@ -16,9 +16,15 @@ Communication between the unit and the scene is done by an object called \emph{L
 As mentioned there is a cycle of dependencies: Logic requires scenes for map information, which includes units, which need logic to communicate. We attempted to avoid cycles which could be a problem during implementation, but it seemed unavoidable when an informed AI is in play.
 
 \subsection{Hero Input}
-What we want it to do
+The hero will be a human like character. Therefore he will be capable
+of doing basic things like walking and running. To interact with enemies
+and navigating through the map he will need to duck,
+jump and attack. All these actions require.that we have a proper input system.
 
-\section{Levels} %Carsten
+
+
+
+\section{Levels} %Carstens
 The levels in the game are called \emph{scenes}. They contain the world geometry and all the props. The world is made out of square blocks called \emph{tiles}. There are multiple types of tiles, used to diversify the world and mark special locations. The former kind is solid blocks and partially solid platforms, while the latter is the entrance and exit. The scene is composed of a \emph{grid} of tiles which contains exactly one entrance and exit. Each level is a climb to the top, with the entrance at the bottom and exit at the top. Minotaurs and coins are randomly placed around the map, though not too close to the entrance.\\
 Initially, ladders were also supposed to be in the game, but their function would have overlapped with platforms. Ladders would be difficult to implement and would require specific animations, both for the player and the enemies. They were cut from the game in favor of the easier to implement platforms.
 

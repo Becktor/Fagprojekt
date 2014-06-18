@@ -21,27 +21,28 @@ better.
 \end{table}
 \subsubsection*{EEPROM}
 Electrically Erasable Programmable Read-Only Memory Is non-volatile memory which is used in computers/electronic devices to store data when power is removed. Bytes in EEPROM can be read erased and rewritten. One byte in the EEPROM can only hold a value inbetween 0 and 255.
+
+\newpage
 \subsubsection{Gameduino2}
 The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduino2/} shield.
 
+\begin{multicols}{2}
 \begin{itemize}
   \footnotesize
-  \item Video output is 480x272 pixels in 24-bit color.
-  \item OpenGL-style command set.
-  \item Up to 2000 sprites, any size.
-  \item 256 Kbytes of video RAM.
-  \item Smooth sprite rotate and zoom with bilinear filtering.
-  \item Smooth circle and line drawing in hardware - 16x antialiased.
-  \item JPEG loading in hardware.
-  \item Built-in rendering of gradients, text, dials and buttons.
-\end{itemize}
+    \item Video output is 480x272 pixels in 24-bit color.
+    \item OpenGL-style command set.
+    \item Up to 2000 sprites, any size.
+    \item 256 Kbytes of video RAM.
+    \item Smooth sprite rotate and zoom with bilinear filtering.
+    \item Smooth circle and line drawing in hardware - 16x antialiased.
+    \item JPEG loading in hardware.
+    \item Built-in rendering of gradients, text, dials and buttons.
+  \end{itemize}
+\end{multicols}
 
-\subsection{input}
-
-\subsubsection{Nunchuck}%Cebrail
-
-We heard about the nunchuk capability before we got the Arduinos in our 
-hands, we thought it would be fun and ordered the adapters just after signing
+\subsection{Input}%Cebrail
+We heard about the nunchuk capability before we got the Arduinos in our
+hands, we thought it would be fun and ordered\footnote{http://www.miniinthebox.com/da/arduino-kompatibel-wii-wiichuck-nunchuck-adapter\_p903451.html} the adapters just after signing
 to this project. The adapters where needed as the nunchuk
 has to be connected to the Arduino physically.
 \\
@@ -51,7 +52,7 @@ the boards, which made it easy to connect the adapter using pin cables.
 
 \begin{figure}[h]
   \centering
-  \includegraphics{Figures/NunchuckConnection}
+  \includegraphics[scale=0.7]{Figures/NunchuckConnection}
   \caption{Hardware connection of an nunchuk}
   \label{fig:nunchuk_connect}
 \end{figure}
