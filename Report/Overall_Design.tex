@@ -19,9 +19,37 @@ As mentioned there is a cycle of dependencies: Logic requires scenes for map inf
 The hero will be a human like character. Therefore he will be capable
 of doing basic things like walking and running. To interact with enemies
 and navigating through the map he will need to duck,
-jump and attack. All these actions require.that we have a proper input system.
+jump and attack. He can even attack in the air.
+All these actions require that we have a proper input system.
 
+To achieve this, we chose to use the Wii nunchuk. It has one thumbstick
+and two buttons. It does also have an accelerometer built inside.
+We assigned the thumbstick to move horizontally and duck.
+The two buttons at the top are used to jump and attack.
+To finish a map, press attack and duck at the same time.\\
+These buttons assignments
+was the combination that felt most comfortable. As the nunchuk doesn't have many buttons, we had to be creative.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{Figures/nunchuk}
+  \caption{Button assignments}
+  \label{fig:Nunchuk}
+\end{figure}
+
+Here is an overview of how to control the hero.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll}
+    Action               & Combination                \\ \hline
+    Horizontal movement  & Thumbstick left and right  \\
+    Jump                 & C Button                   \\
+    Attack               & Z Button                   \\
+    Duck                 & Thumbstick down            \\
+    Exit map             & Thumbstick down + Z Button \\
+    \end{tabular}
+\end{table}
 
 
 \section{Levels} %Carstens

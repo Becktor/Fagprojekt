@@ -38,17 +38,10 @@ Currently the only type of enemy is the minotaur, though the current framework w
 Our hero has its own class where we define the movements, the hitbox and
 the animation handler.
 
-The movements of hero is done by processing data from Wii
-nunchuk - thanks to the nunchuk library. The recieved data defines the two
-buttons as 0 or 1.  The data from the thumbstick is received as x- and
-y-coordinates. When the thumbstick is at rest, the {\tt analogX} is 120 and
-{\tt analogY} is 125.  The numbers decreases when pushing to the left or down.
-It increases in the opposite directions.
-
-Our hero has two speeds, walking and running. By using intervals from our
-x-coordinates we can determine whatever our hero should stay idle, walk or run.
-As an example, if the difference between our {\tt analogX} value and rest value
-is 50 or more our hero will run to the direction specified in the class. When
+Our hero has two speeds, walking and running. By using values from
+the nunchuk library we can determine whatever our hero should stay idle, walk or run.
+As an example, if the difference between {\tt analogX} and rest value {\tt NUNCHUK\_REST\_X}
+is 50 or more, our hero will run to the direction specified in the class. When
 this happens the acceleration and speed are set to the specified constants
 in the header file.  A similar method is also used for ducking, if {\tt
 analogY} is lower than 45, our hero will duck. In this case, the hitbox will
@@ -98,7 +91,7 @@ will not be reduced as much as we wanted.
 
 
 \section{Input}
-
+Before implementing the nunchuk. We checked other alternatives.
 Both Arduino and the Gameduino 2 shield gives us opportunities to control the game.
 Arduino can communicate with a pc and get data when a key is pressed on the keyboard.
 The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used
@@ -107,21 +100,8 @@ gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution
 feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other.
 The touch screen is not as responsive as we wanted, and it would also be annoying
 as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard
-to control, as you always has to 'feel' how to hold the device. The problem with fingers
-getting in the way appears also here. The best option was using a external controller - a Wii nunhcuk.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale=0.6]{Figures/nunchuk}
-  \caption{Button assignments}
-  \label{fig:Nunchuk}
-\end{figure}
-
-
-\newpage
-
-We assigned the thumbstick to move horizontally and duck. The two buttons at the top are used to jump
-and attack. These buttons assignments was the combination that felt most comfortable.
+to control, as you always has to 'guess' how to hold the device. The problem with fingers
+getting in the way appears also here. The best option was using an external controller - a Wii nunhcuk.
 
 
 %Nunchuk library
