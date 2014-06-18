@@ -4,7 +4,10 @@
 Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called until the Arduino is turned off.\footnote{At least, we haven't discovered a way to terminate a sketch.}\\
 This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.\\
 
-\section{Structure}
+\section{Components}
+Sketch files, c++/c language, includes, standard libraries
+
+\section{Structure} %Carsten
 A platforming game would need at least a simple physics engine, supporting momentum and acceleration. This makes movement feel a lot more natural. Only actors would need to be affected by the physics engine, but we extended it to allow all props - this was both an optimization and an additional feature in the game. We discuss these implications in the implementation chapter.\\
 Class diagram
 
@@ -23,14 +26,13 @@ After these simplifications, the collision algorithm is very simple. Given a pro
 A linked list of attacks between frames is kept. Units add their attacks to the list during AI updates and the list is cleared after the attacks have been executed. Executions goes through each prop and checks whether the attack hits or not, calling the {\tt hit} function in case it has. Attacks are a separate object, containing damage, push force, the owner and the area. The attacks are only instantiated once at unit instantiation, which only manipulates the area when reusing the attack, thus optimizing on computing time, though costing memory.\\
 There is a circular reference, since units require logic which requires scene which in turn requires units. This resulted in forward declarations in scene which is a bit inelegant. It was difficult to design a structure which did not have any circles, since the actors act upon the scene, and the scene returns data to the actor.
 
-\section{Actors}
+\section{Units}
 Units are a subclass of prop, reusing all physics related functions and fields.
 
-\subsection{Minotaurs}
+\subsection{Minotaurs} %Carsten
 The only implemented enemy is the minotaur from Greek myth. His behaviors range from wandering, charging, hunting and dead, which also has alternative settings while he is in air. Initially he wanders in some direction until he comes across a gap or hits a wall, where he turns around. The gap check is simply whether the space immediately below the front of his hitbox is empty or not, while {\tt collisionX} function is only called when he wanders horizontally into a wall, making the wall check easy.
 hunting\\
 Currently the only type of enemy is the minotaur, though the current framework was built to contain multiple types.
-
 
 \subsection{Hero}
 Our hero has its own class where we define the movements, the hitbox and
@@ -96,15 +98,42 @@ will not be reduced as much as we wanted.
 
 
 \section{Input}
+The inputs are recieved using the {\tt ArduinoNunchuk}\footnote{http://www.gabrielbianconi.com/arduinonunchuk/} library.
+It uses the {\tt wire.h} library that is included in the Arduino IDE. So we have a library using another library.
+The library {\tt wire.h} makes it possible to communicate with the
+nunchuk using the I2C interface. To use the library, first we instantiate it: \\
+\centerline{{\tt ArduinoNunchuk \_nunchuk = ArduinoNunchuk();}}\\ Then initialize it by saying: \\ \centerline{{\tt nunchuk.init();}}
+
+The library includes following methods, which are updated every time {\tt nunchuk.update();} is called:\\
 
 
 
-\begin{figure}[h] 
-  \centering 
-  \includegraphics[scale=0.6]{Figures/nunchuk}
-  \caption{Button specifications} 
-  \label{fig:Nunchuk} 
-\end{figure}
+\begin{itemize}
+  \begin{minipage}{0.6\linewidth}
+    \item nunchuk.analogY
+    \item nunchuk.analogY
+    \item nunchuk.accelX
+    \item nunchuk.accelY
+  \end{minipage}
+  \begin{minipage}{0.6\linewidth}
+    \item nunchuk.accelZ
+    \item nunchuk.zButton
+    \item nunchuk.cButton
+  \end{minipage}
+\end{itemize}
+
+
+The data from the thumbstick is received from the methods {\tt analogY} and {\tt analogY}.
+The data is presented as x- and
+y-coordinates. When the thumbstick is at rest, the {\tt analogX} is 120 and
+{\tt analogY} is 125.  The numbers decreases when pushing to the left or down.
+It increases in the opposite directions. The {\tt accel*} methods defines the values of
+the accelerometer. We have values for every direction, meaning x,y and z. They change values
+when you tilt the controller. We do not use the accelerometer in our game 
+
+Lastly we have the methods {\tt zButton} and {\tt cButton} which
+returns the values of the buttons - as 0 or 1.
+
 
 \section{Optimization}%Cebrail
 The biggest challenge has been the code size due to the low capacity of the flash memory.  The flash memory has a capacity of 32Kb. The first 4.242Kb is reserved for the bootloader and we are limited to go no further than 28.672Kb all inclusive. So we are actually only allowed to upload 24.430Kb of our own code. It may sound fair comparing to what have been achieved with old game consoles, but it became very quick a headache.\\
