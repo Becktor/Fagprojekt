@@ -2,7 +2,7 @@
 %algorithms and data structures should be presented here.
 \chapter{Implementation and detailed design} %Carsten
 Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called until the Arduino is turned off.\footnote{At least, we haven't discovered a way to terminate a sketch.}\\
-This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.\\
+This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.
 
 \section{Components}
 Sketch files, c++/c language, includes, standard libraries

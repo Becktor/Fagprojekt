@@ -1,10 +1,6 @@
 %Describe the overall structure of the system, the different components of the system and interfaces between these.
 \chapter{Overall design}
-
-\section{Levels} %Carsten
-The levels in the game are called \emph{scenes}.
-\subsection{Generated Maps}
-
+In this section...\\
 
 \section{Objects} %Carsten
 Everything in the game-space is a \emph{prop}. These are the objects which the physics engine works with. Each of them contains a \emph{hitbox}, a rectangular square used to calculate collisions. In addition they also contain graphical information needed to be drawn, since all props should be.\\
@@ -20,15 +16,14 @@ Communication between the unit and the scene is done by an object called \emph{L
 As mentioned there is a cycle of dependencies: Logic requires scenes for map information, which includes units, which need logic to communicate. We attempted to avoid cycles which could be a problem during implementation, but it seemed unavoidable when an informed AI is in play.
 
 \subsection{Hero Input}
-Both Arduino and the Gameduino 2 shield gives us opportunities to control the game.
-Arduino can communicate with a pc and get data when a key is pressed on the keyboard.
-The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used
-one of these to get input, but none of them
-gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution
-feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other. The touch screen is not as responsive as we wanted, and it would also be annoying
-as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard
-to control, as you always has to 'feel' how to hold the device. The problem with fingers
-getting in the way appears also here. The best option was using a external controller - a Wii nunhcuk
+Both Arduino and the Gameduino 2 shield gives us opportunities to control the game. Arduino can communicate with a pc and get data when a key is pressed on the keyboard. The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used one of these to get input, but none of them gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other. The touch screen is not as responsive as we wanted, and it would also be annoying as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard to control, as you always has to 'feel' how to hold the device. The problem with fingers getting in the way appears also here. The best option was using a external controller - a Wii nunhchuk.
+
+\section{Levels} %Carsten
+The levels in the game are called \emph{scenes}. They contain the world geometry and all the props. The world is made out of square blocks called \emph{tiles}. There are multiple types of tiles, used to diversify the world and mark special locations. The former kind is solid blocks and partially solid platforms, while the latter is the entrance and exit. The scene is composed of a \emph{grid} of tiles which contains exactly one entrance and exit. Each level is a climb to the top, with the entrance at the bottom and exit at the top. Minotaurs and coins are randomly placed around the map, though not too close to the entrance.\\
+Initially, ladders were also supposed to be in the game, but their function would have overlapped with platforms. Ladders would be difficult to implement and would require specific animations, both for the player and the enemies. They were cut from the game in favor of the easier to implement platforms.
+
+\subsection{Generated Maps}
+
 
 \section{Graphics}
 Gameduino...
