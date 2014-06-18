@@ -85,10 +85,19 @@ Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ w
 \subsection{Graphics}
 \subsection{Assets}
 \subsection{Sound}
-The convertions process includes: reducing the sampling rate, setting audio channel to mono and setting
-the bit resolution to 16 bit. Reducing the sample rate can ruin the sound, so some files
-will not be reduced as much as we wanted.
+The Gameduino 2 requires the sound files to be converted using the asset converter. Before including the
+sounds in the GD2 file, we first convert them to an acceptable format. The assets converter only accepts
+files with following properties.
 
+\begin{itemize}
+  \item .wav format.
+  \item Audio channel: mono.
+  \item Bit resolution 16.
+\end{itemize}
+
+The conversion process also includes reducing the sample rate of the sound. By doing so,
+the file will not take as much space. Sometimes the sounds would get ruined by reducing too much,
+so we had to find a balance between quality and size.
 
 \section{Input}
 Before implementing the nunchuk. We checked other alternatives.
