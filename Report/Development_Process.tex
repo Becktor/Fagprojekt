@@ -101,54 +101,15 @@ The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduin
 %  \item Built-in rendering of gradients, text, dials and buttons.
 %\end{itemize}
 
-\subsection{Nunchuck}%Cebrail
-        Both Arduino and the Gameduino 2 shield gives us opportunities to control the game.
-Arduino can communicate with a pc and get data when a key is pressed on the keyboard.
-The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used
-one of these to get input, but none of them
-gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution
-feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other. The touch screen is not as responsive as we wanted, and it would also be annoying
-as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard
-to control, as you always has to 'feel' how to hold the device. The problem with fingers
-getting in the way appears also here. The best option was using a external controller - a Wii nunhcuk
-.
-\begin{figure}[b]
-  \centering
-  \includegraphics{Figures/NunchuckConnection}
-  \caption{Hardware connection of an nunchuk}
-  \label{fig:nunchuk_connect}
-\end{figure}
-
-
-We heard about this opportunity before we got the Arduinos in our
-hands, we thought it would be fun and ordered the adapters just after signing
-to this project. Eventually it turned out to be the best option. It does
-not have any annoying factors as mentioned with the other opportunities.
-The adapters where needed as the nunchuk has to be connected to the Arduino physically.
-\\
-None of us had much experience in soldering, but our supervisor was happy to help
-us in that matter. We got head sockets soldered underneath the boards, which made it
-easy to connect the adapter using pin cables.
-
-It is possible to use both the Gameduino 2 and Wii
-nunchuk at the same time, even though they use same slots.
-Gameduino 2 uses an ISP interface, while the Wii nunchuk uses an I2C interface.
-
-
-\subsubsection{I2C}
-The I2C is a hardware wire interface, which is used by the Wii nunchuk adapter. This bus
-interface allows easy communication between components and only requires two
-bus lines. These lines are both bidirectional. These bus lines are called SCL
-(Serial Clock Line) and SDA (Serial Data Line).
 
 \subsection{Arduino problems}
 Throughout our implementation of the game we have had several issues with our arduinos.
 
-\subsubsection{arduino burnout}	
+\subsubsection{Arduino burnout}
 The first problem we ran into was one of our arduino burned out. It was somewhat fixed it would work one day and wouldnt another. Slowly it gave out and now it works 1 out of a 100 tries. We could not find a fix for it. This slowed us down quite a bit since it limited what we could test when working at home.
-\subsubsection{arduino duemilanove.}
+\subsubsection{Arduino duemilanove.}
 We ran out of flash memory on the duemilanove since it only has 16kb, this set us back since we only had 1 arduino to code on. We later got this replaced with another leonardo.
-\subsubsection{arduino blackout}
+\subsubsection{Arduino blackout}
 We have also had some issues when uploading code to the arduino. Sometimes the arduino screen is black after uploading. To fix this we had to upload an example file from the arduino library that prints text to the screen.
 \subsubsection{SD card faliure}
 Whilest working on the project suddenly when uploading the arduino couldnt find the SD card in the gameduino. The card was in and had the right files on it. We tried to format the card on windows, it still didn't work. We had a try on a mac and it did.
