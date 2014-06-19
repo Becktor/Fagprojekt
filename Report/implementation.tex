@@ -120,8 +120,9 @@ Every module overlap with a single row or column with all surrounding modules. O
 generation.
 %Old version (nondeterministic time)
 
-\subsection*{Highscore/?Randomseed? EEPROM}
-Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ which could save unsigned integers on the "hard drive" of the arduino. The functions work by bitshifting the integer with 0 and 8 and then save the two bitshifted values in the EEPROM. We 
+\subsection*{Highscore \& Randomseed}
+Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ that takes use of the EEPROM library. These functions save unsigned integers to the EEPROM. They work by bitshifting the integer with 0 and 8 and then save the two bitshifted values in the EEPROM. To extract form the boards EEPROM you we again use the EEPROM libary in $EEpromReadInt$ we grab the bitshifted values form their addresses in the EEPROM and then bitshift them with the respective number from before. We add them together and then return the integer this gives.\\ We also use this for our random seeds that generate our level when the board is powered on. When the board is powered on we find the random seed on the address and apply it to the leve lgeneration. We then generate a new random unsigned integer and we save it on the same address. 
+
 
 
 \section{Gameduino 2}
