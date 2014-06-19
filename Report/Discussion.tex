@@ -1,19 +1,23 @@
 \chapter{Discussion}
- 
 One of our biggest problems here towards the end has been the amount of flash memory. This set a limit for what we could add and how we could add it. Some places in our code we have had to implement some things rather crudely to save flash memory, an example is that we have not used any getters/setters all is done with public variables. We have also had problems the amount we could store on our GD2 file this limited us to a few selected sprites and audio files.
-
-Furthermore we have had some issues with spawning coins.\\
-
-Additional features could be implemented but that would require a board with more memory. If this was the case we could implement the features we wanted originally, story, more monsters, items, levels and so on.\\
+\newline
+Furthermore we have had some issues with spawning coins.
+\newline
+Additional features could be implemented but that would require a board with more memory. If this was the case we could implement the features we wanted originally, story, more monsters, items, levels and so on.
+\newline
 We have been very limited by the boards capacities. But this has taught us to work with code another way than we usually do. Today when making a platformer for computer we will never reach a point where we have too much code, but how compact is the code, how optimized is it? instead of optimizing you would just build additional features once the last feature worked. Since none of us had experience with c++ we have struggled a bit with the documentation on the arduino site and the "guide book" from the GD2 library. We have had some cases where the documentation has been plain wrong, and mostly confusing and badly written with bad examples.
 
+\section{Bugs} %Carsten
+The level generator has a minor bug, where some of the modules not on the solution path is incorrect. Every module not on the solution path should be of the closed type, but sometimes they are not. The maps are still completely playable, so the bug is very minor, but a bug none the less.
+\newline
+A more annoying bug is that coins are sometimes spawned halway through the ground, and seemingly cannot be picked up.
+\newline
+Worst of all, the game has been known to crash, though it is rare in the final version.
 
-\section{Meeting Requirements}
+\section{Arduino Development} %Carsten
+The mix of languages and sparse documentation about the Arduino makes it difficult for the programmer, even though the Arduino was meant to ease newbies into programming. An example, would be the keyword {\tt new}, which officially is not supported\footnote{The official reference page http://arduino.cc/en/Reference/HomePage does not include the keyword.}. This is confusing, because {\tt new} is completely functional, even syntax highlighted. It apparently instantiates an object in the heap rather than the stack, and returns the pointer to this object. The main problem is that it is a unique language, even though it looks like c and c++, but has very little documentation. Most of it is in examples, only meant for complete programming newbies. Most of our coding issues were resolved through forum boards with people having similar problems.{\footnote{Most notably the site stackoverflow.com}
+\newline
+Other unlisted keywords we found during development were close, delete, home, speed, step and update. Some of these might be from externally included libraries, whose variables and functions the IDE syntax highlighted.
 
-\subsection*{Cut content}
-Items, merchant and levels
-increasing difficulty?
-Multiple enemies?
-\subsection*{Additional content}
-More or less advanced physics engine.
-Coin physics.
+\section{Future Additions}
+The program was written on a Leonardo, which has zero bytes of space left. It could be further developped on one of the larger Arduinos, the Mega for example, which has about eight times more space. In that case, multiple enemy types would be an obvious addition. Different tile sets, a real endgame with a boss enemy or items such as weapons and armor could be added. Most of these should be easy to implement with the current framework, and would add a lot to the game experience.
