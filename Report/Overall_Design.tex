@@ -11,7 +11,7 @@ The only reason to distinct units and props are because of \emph{coins}. These g
 \newline
 Two kinds of unit extensions exist: the \emph{minotaur} and the \emph{hero}. The former is the only implemented enemy type in the game and the latter is the unit controlled by the player. These contain graphical and gameplay data as well as their AI code. In case of the hero, his 'AI' is reading player input.
 
-\subsection{Minotaur AI} %Carsten
+\subsection*{Minotaur AI} %Carsten
 The AI needs to receive world information and deliver actions. This prompts a cyclic model-controller relationship, which aims to place as much freedom in the hands of the AI as possible. The biggest limiting factor is how complex the world is, most of all the physics engine. The AI cannot and should not predict how its actions would affect the world - this is the job of the physics engine. This limits us in how advanced the AI can be, especially when planning forward, since we cannot guarantee an action leads to the desired outcome. For example, if a unit would jump across a gap or on top of a platform, he would need to steer himself for several frames to land safely and surely. Moreover, planning further than the current frame would require the unit to have a concept of his jumping abilities, size and world geometry.
 \newline
 This complexity leads us to create much simpler AI, one which does not plan ahead. A possible solution which was considered, would be preprocessing the map and generate paths through the map. Though this would not be expensive in memory and code-size, and would make different enemy types problematic. Either we would be forced to use similarly moving enemies or generate additional pathing maps for each enemy type. This would be a lot of work for a bit smarter AI, and it was not a very enticing feature with such limited hardware.
@@ -22,7 +22,7 @@ Communication between the unit and the scene is done by an object called \emph{l
 \newline
 As mentioned there is a cycle of dependencies: Logic requires scenes for map information, which includes units, which need logic to communicate. We attempted to avoid cycles which could be a problem during implementation, but it seemed unavoidable when an informed AI is in play.
 
-\subsection{Hero Input} %Cebrail
+\subsection*{Hero Input} %Cebrail
 The hero will be a human like character. Therefore he will be capable of doing basic things like walking and running. To interact with enemies and navigating through the map he will need to duck, jump and attack. He can even attack in the air. All these actions require that we have a proper input system.
 \newline
 To achieve this, we chose to use the Wii Nunchuk. It has one thumbstick and two buttons. It does also have an accelerometer built inside. We assigned the thumbstick to move horizontally and duck. The two buttons at the top are used to jump and attack. To finish a map, press attack and duck at the same time.
@@ -56,7 +56,7 @@ The levels in the game are called \emph{scenes}. They contain the world geometry
 \newline
 Initially, ladders were also supposed to be in the game, but their function would have overlapped with platforms. Ladders would be difficult to implement and would require specific animations, both for the player and the enemies. They were cut from the game in favor of the easier to implement platforms.
 
-\subsection{Level Generation} %Carsten
+\subsection*{Level Generation} %Carsten
 The point of randomly generated maps is two fold: it vastly increases the replay-ability of a game, and it encourages more skilled play by forcing players to be better at the gameplay elements, rather than the specific levels included. We can ensure this if the maps are adequately different from each other, and if the range of possible maps is large enough. %Requirements?
 \newline
 More specifically, the level generation should return a new scene with a matching entrance and exit. The level should always be solvable, that is, there must be a path between the entrance and exit which the player can follow. It should not be possible to get stuck in the map, though it may contain unreachable places. Enemies and coins should be spread evenly around the map, though not too close to the entrance, where the hero would spawn. In addition to this, the level generation should be able to vary the difficulty, at least by varying the amount of enemies, to allow increasing the difficulty as the game progresses. %Requirements?
@@ -66,10 +66,10 @@ New maps are rarely needed compared to other code parts, so speed is not a prior
 \section{Graphics}
 Gameduino...
 
-\subsection{Assets}
+\subsection*{Assets}
 Assets...
 
-\subsection{Sound} %Cebrail/Jonathan
+\subsection*{Sound} %Cebrail/Jonathan
 We implemented sound effects on essential events. We Agreed that it was what the game needed to give a better feel.\\
 We decided that the sounds we wanted was from the hero, and when he interacts with something. We added a sounds for jumping, attacking, when exiting a map and when collecting a coin.\\
 To include bacground music we would have needed about 2kb more space in the flash memory since it takes alot of code to make this work. A solution would have been to use a shorter music file in the GD2 file and looping it, but we agreed that it would be annoying and steered clear of it.

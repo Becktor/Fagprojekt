@@ -82,13 +82,13 @@ There is a circular reference, since units require logic which requires scene wh
 \section{Units}
 Units are a subclass of prop, reusing all physics related functions and fields.
 
-\subsection{Minotaurs} %Carsten
+\subsection*{Minotaurs} %Carsten
 The only implemented enemy is the minotaur from Greek myth. His behaviors range from wandering, charging, hunting and dead, which also has alternative settings while he is in air. Initially he wanders in some direction until he comes across a gap or hits a wall, where he turns around. The gap check is simply whether the space immediately below the front of his hitbox is empty or not, while {\tt collisionX} function is only called when he wanders horizontally into a wall, making the wall check easy.
 hunting
 \newline
 Currently the only type of enemy is the minotaur, though the current framework was built to contain multiple types.
 
-\subsection{Hero}
+\subsection*{Hero}
 Our hero has its own class where we define the movements, the hitbox and
 the animation handler.
 \newline
@@ -104,7 +104,7 @@ In addition to the map, the scene also contain all props, which is the hero, min
 Currently, because of an implementation bug, the props are dynamically allocated, even though they shouldn't need be.
 %Additional possible datastructures?
 
-\subsection{Generator} %Carsten
+\subsection*{Generator} %Carsten
 Map generation is executed at setup and whenever the game ends (either by player death or win). The method {\tt newScene} generates a new map with matching points at the entrance and exits. Arduino's programming language does not support returning more than one value, so the method manipulates given pointers instead like in C programming. The new map data overwrites the old one to save time and space, so the given {\tt scene} argument is a pointer to the old scene.  Reusing it saves us from instantiating a new one and deallocating the old one.  We ar not interested in reusing the actual map data, since the player cannot revisit prior levels.
 \newline
 The actual algorithm is in three parts: clearing, modulation and generation. First it clears the old map data, setting all tiles to {\tt NONE}, to make sure nothing is left over from the old map. This may be a bit expensive on the processing time considering it is superfluous if the generator works correctly. The reason is a design choice which will be apparent when we reach the generation. %Picture of Modules?
@@ -120,19 +120,19 @@ Every module overlap with a single row or column with all surrounding modules. O
 generation.
 %Old version (nondeterministic time)
 
-\subsection{Highscore/?Randomseed? EEPROM}
+\subsection*{Highscore/?Randomseed? EEPROM}
 Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ which could save unsigned integers on the "hard drive" of the arduino. The functions work by bitshifting the integer with 0 and 8 and then save the two bitshifted values in the EEPROM. We 
 
 
 \section{Gameduino 2}
-\subsection{Graphics}
-\subsubsection{Rendering}
+\subsection*{Graphics}
+\subsubsection*{Rendering}
 The Gameduino 2 consists of an essential graphics processing unit (GPU) with 256 kilobytes of RAM. With it is the ability to draw virtually anything on the screen. 
 
-\subsubsection{Bitmaps}
+\subsubsection*{Bitmaps}
 With it there is support for drawing images, called 'bitmaps'. With the exception of the background and text, everything the player witnesses in our game consists of these bitmaps. Since images aren’t uploaded along with the code to the Arduino, we store them on a microSD card which conveniently can be read in real time from the Gameduino 2. The simplest way to read a single image off the card would be to directly load it to the GPU with a command in the code. Each image loaded in would be assigned to a specific address and could thereafter be drawn with the image’s top left corner at a given x-y coordinate. However, this method wouldn’t be able to fulfil the necessary requirements of what we had planned. This is where the Gameduino 2 asset converter comes in.
 
-\subsubsection{Assets}
+\subsubsection*{Assets}
 The asset converter basically takes multiple media files, including images and sounds, and compiles them into a single asset file with the extension '.gd2'. As the abbreviation suggests, this file is specifically designed for the Gameduino 2 to read and gets placed on the SD card. Along with the asset file, a header file is generated to be included alongside the code in the associated project. The header file automatically defines constants associated with each image. There are four constants: handle, width, height, and cells. An image’s handle is its index in the array of images provided, e.g., the first image would have the handle, 0. The width and height simply state the dimensions of the image in pixels. The 'cells' variable states how many images are included in the handle. Essentially we used handles with multiple cells (images) instead of a single image to easily maintain each animation. Here we can see the process of creating simple walking and attacking animations for our hero. Once the header file is included in a project, its constants are ready to be called from the code and used to project animations onto the screen.
 
 
@@ -168,12 +168,12 @@ The asset converter basically takes multiple media files, including images and s
 \end{figure}
 
 \newpage
-\subsubsection{Animation}
+\subsubsection*{Animation}
 There are many ways to make sure an object in the game knows which handle it should use as well as which cell within the animation to display. The example in the Gameduino 2 reference utilizes both a sprite's x-coordinate and bit shifting as the object moves across the screen. This method however, is very primitive and specifically tailored to sprites moving from left to right. The way our program cycles through the cells of an animation is through time. \newline
 Every object in the game that includes animation is a prop. That is to say the hero, minotaurs, and coins are all props. The prop class includes two functions directly related to animating: newHandle and updateAnimation. newHandle includes three parameters that get called from the specific object’s class every update. It starts by checking if it should change anything about the animation by first checking if {\tt \_animLock} boolean is true. {\tt \_animLock} assures that the animation can’t change until the current animation has gone through all its cells. We use this boolean when the hero attacks because he should finish an attack before reverting to reverting back to whichever movement animation he’s in. The function also checks if the new handle or frame rate are the same as the current ones. If the conditions are met, the three values are replaced with those associated with a new animation and current cell to be displayed is manually set to the first one in the sequence.\newline
 The function, updateAnimation, receives the parameter, dTime, from the main class every update. The {\tt \_dtime} variable keeps track of the number of milliseconds that have passed since the last update, or run through of all the code. It’s used to keep the time interval between cells consistent with the time it takes to update the whole program. Every animation has a manually set frame rate which determines how many milliseconds should pass before changing to the next cell. The variable, {\tt \_aniTime}, simply adds the value of {\tt \_dTime} to itself every update until the compiled number of milliseconds passed surpasses that of the animation’s frame rate. When this happens, it’s time to move on to the next cell in the animation. If however, it’s the last cell, then it naturally reverts back to the first. One condition on resetting the cycle however that is that the {\tt \_aniStop} boolean isn’t used. This boolean is only used when an animation shouldn’t cycle back to its first cell. We use it primarily for death animations because when a unit dies it should stay dead. If the previously mentioned lock boolean is being used when a animation sequence resets, it isn’t required thereafter and set back to false. In any case, when a cell changes, the value of {\tt\_aniTime} is set back by the value of the animation’s frame rate so that it can once again accumulate time until it reaches the required frame rate value again for the next cell.
 
-\subsubsection{Drawing Sprites}
+\subsubsection*{Drawing Sprites}
 When the correct image to display is determined, there is still a matter of how to draw it and where exactly to place it. Rather than creating mirror image files we’re able to use the Gameduino functions to flip an image horizontally and still keep it at the same position. We intentionally made every sprite face to the right in the original images so we’d only have to flip them if they’re supposed to face left. As mentioned, everything that gets drawn with the Gameduino gets prepared and manipulated beforehand. In this case, the image gets flipped, drawn, then flipped back again in case a sprite is updated thereafter to face to the right again. \newline
 
 
@@ -197,7 +197,7 @@ When the correct image to display is determined, there is still a matter of how 
 In terms of coordinate placement, the image would under usual circumstances share the same position and dimensions as the hitbox it’s registered to. However, our units have appendages/weapons/armor etc. which shouldn’t be included. Essentially we created sprites wherein the body of the characters is the same size as their respective hitbox and centred precisely in both the x and y axis on the whole image. It’s also vital that all the images tailored to a specific object have the same dimensions. This is due to the way we coded where in respect to an object’s hitbox the image should be drawn. Where each object includes specified hitbox dimensions, they also include image dimensions provided by the sprite header file. For each axis, the difference between half the image length and half the hitbox’s would be the distance between their centres if they were drawn at the same point. We simply subtract this value from the hitbox’s position in each axis respectfully and draw the image. Rather than sharing the same top left corner, the image and hitbox share centres.  When the image is always centred on the hitbox, it doesn’t matter if the hitbox changes size. This system is useful when we want to implement ducking because as long as the ducking images have the body of the figure centred and the same dimensions as all the object’s other images, the image will translate accordingly.
 
 
-\subsection{Sound}
+\subsection*{Sound}
 The Gameduino 2 requires the sound files to be converted using the asset converter. Before including the
 sounds in the GD2 file, we first convert them to an acceptable format. The assets converter only accepts
 files with following properties: 
@@ -220,12 +220,12 @@ Early optimizations is usually the bane of programming, but halfway through deve
 \newline
 Arduino's IDE did not make it easy for us to optimize the game. All warnings concerning dead code or unused variables and functions are suppressed. Allegedly, the warnings was thought to discourage new developers, and was removed. The compiler was already optimized to removed these parts of the code, but it does so silently to the developer.
 
-\subsection{Libraries} %Carsten / Cebrail
+\subsection*{Libraries} %Carsten / Cebrail
 The extern libraries use a lot of space, especially true for the graphics library. It has been difficult to evaluate just how much space they use. For example, the difference in space between two and one function call, is the size of the call, but the difference between one and zero calls is the entire function plus the call. This is because the compiler cuts unused functions, and it makes it difficult to evaluate what parts of the code is expensive.
 \newline
 In any case, we could not do without the used extern libraries, nor would it be certain that we could rewrite them better. It would have taken too much time to optimize and test the libraries, and would probably not have been more profitable than optimizing our own code.
 
-\subsection{Verbosity} %Carsten
+\subsection*{Verbosity} %Carsten
 Maintainability is usually a great priority in programming, but the constraints of the Arduino left us to optimize for efficiency. In many cases the code was also left less readable and robust, in favor of using less space. There was, however, a certain limit where we did not simplify. For example, two version of the same method returns a random direction, either $-1$ or $1$:
 \begin{verbatim}
 char getRandDir() {
@@ -241,7 +241,7 @@ char getRandDir() {
 \end{verbatim}
 The first function is more expensive, but also a lot more readable. The second is absolutely incomprehensible, but cheaper. We went the top method, so the intent of the code was at least understandable. This case is more symbolic of the standard we held, since the top most function only cost 4 bytes more, but it serves as a good example. In the source code, the directions are replaced with the enumeration values {\tt LEFT} and {\tt RIGHT}. In other cases, for example the map generator, we split the code up in functions for readability.
 
-\subsubsection{Encapsulation} %Cebrail / Carsten
+\subsubsection*{Encapsulation} %Cebrail / Carsten
 Usually it is good code practice to encapsulate variables and use getters and setters. This was a luxury we could not afford, which became apparent when we hit the ceiling. Most variables was made public, though in some cases a getter was cheaper than directly accessing the variable.
 
 %Too obvious?
@@ -249,11 +249,11 @@ Usually it is good code practice to encapsulate variables and use getters and se
 %Repeated statements - well it speaks for itself. Repeating something that has been calculated before is just a waste of code space. Simplifying the code in this manner is sometimes not easy, it requires that you think creative. It often requires you to think - is this needed? It may not always be obvious. Often it is about finding a shortcut to some calculation and taking advantage of already existing results.
 
 
-\subsection{Datatypes} %Cebrail
+\subsection*{Datatypes} %Cebrail
 A good place to start was the datatypes. Converting the bigger datatypes to some smaller ones was a easy optimization. Mostly, it was integers that was converted to data types like {\tt char}, {\tt byte} and {\tt word}. Which {\tt char} is capably of encoding numbers from -128 to 127. While {\tt bytes} is a 8-bit unsigned number, from 0 to 255 and {\tt word} is basically an unsigned 16-bit number, from 0 to 65535. Notice that {\tt byte} is the unsigned version of {\tt char}. More details in arduinos site\footnote{http://arduino.cc/en/Reference/HomePage}.
 
-\subsection{Global Variables} %Carsten
+\subsection*{Global Variables} %Carsten
 Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called until the Arduino is turned off.\footnote{At least, we haven't discovered a way to terminate a sketch.} This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.
 
-\subsection{Inconsistencies} %Carsten
+\subsection*{Inconsistencies} %Carsten
 Finally, in some cases the code size arbitrarily increased or decreased where it should not have. For example, there are some unused values in the {\tt sprite.h}, which was generated by the asset converter. If these are removed, the code size increases. This is probably some inconsistency in the compiler, but we did not research this further. In other cases, where more code resulted in less code size, we removed the anomalies (or simply did not add them), but the asset converter values was discovered when space was really limited, so we had to leave it in.
