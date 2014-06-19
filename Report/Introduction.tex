@@ -1,12 +1,12 @@
-%\section{Introduction}
 \chapter{Introduction}
-The main purpose of the project is to make an advanced game using the Arduino hardware.
-Arduino is a programmable piece of hardware. Combining it with the  Gameduino 2 makes
-it possible for us to create a rich game. The Gameduino extends the Arduino with a
-touch screen, extra space and processing power.
+This goal of this project is a to implement a simple platforming game on the Arduino Leonardo with the Gameduino 2. The game will be akin to arcade platforming games like Castlevania and Spelunky, though a lot more simple. It should feature competent enemies, a scoring system and a random level generator, as well as usual platforming mechanics.
+\newline
+The point is to attempt creating an advanced game compared to the examples on Gameduino 2's official example page. The Arduino is a very limited environment to work with, so the project will focus on writing efficient but still maintainable code.
+
 \section{Arduino} %Carsten
-Programming an Arduino is done in its own language, simply named \emph{Arduino programming language}\footnote{http://www.arduino.cc/}. It is based off Wiring, and is reminiscent of both C and C++, but is neither. The IDE is based off the Processing IDE.\\
-This mix of languages and sparse documentation makes it difficult for the programmer, even though the Arduino was meant to ease newbies into programming. An example, would be the keyword {\tt new}, which officially is not supported\footnote{The official reference page http://arduino.cc/en/Reference/HomePage does not include the keyword.}. This is confusing, because {\tt new} is completely functional, even syntax highlighted. It apparently instantiates an object in the heap rather than the stack, and returns the pointer to this object. Other unlisted keywords we found during development were close, delete, home, speed, step and update. Some of these might be from externally included libraries, whose variables and functions the IDE syntax highlighted.\\ %Move to conclusion or discussion?
-Our arduinos and their technicalities
+An Arduino is a tiny programmable microprocessor which can be modified or interfaced with other pieces of hardware. Its main use was by hobbyists, since it can be used to create a very wide array of devices. Programming an Arduino is done in its own language, simply named \emph{Arduino programming language}\footnote{http://www.arduino.cc/}. It is based off Wiring, and is reminiscent of both C and C++, but is neither. The IDE is based off the Processing IDE. There are many kinds of Arduinos. The ones we used in this project is the Duemilanove and the Leonardo.
+
 \section{Gameduino 2}
-The gameduino and technicalities.
+The Gameduino 2, a kickstarted successor to the Gameduino, is a piece of hardware made for the Arduino. Its use is for making games on the Arduino platform, as the name suggests. It features a small touchscreen, an accelerometer, a GPU, sound output and a slot for a SD card.
+\newline
+The Gameduino 2 is very new, and very little documentation or user created content exists. This could be an issue during development, so we will have to solve problems ourselves most of the time.

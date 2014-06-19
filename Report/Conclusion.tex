@@ -1,7 +1,5 @@
-%\section{Conclusion}
+%Summarize the main results. This section should make sense even if the reader has only read the introduction.
 \chapter{Conclusion}
-
-Summarize the main results. This section should make sense even if the reader has only read
-the introduction.
-
-
+The mix of languages and sparse documentation about the Arduino makes it difficult for the programmer, even though the Arduino was meant to ease newbies into programming. An example, would be the keyword {\tt new}, which officially is not supported\footnote{The official reference page http://arduino.cc/en/Reference/HomePage does not include the keyword.}. This is confusing, because {\tt new} is completely functional, even syntax highlighted. It apparently instantiates an object in the heap rather than the stack, and returns the pointer to this object. The main problem is that it is a unique language, even though it looks like c and c++, but has very little documentation. Most of it is in examples, only meant for complete programming newbies. Most of our coding issues were resolved through forum boards with people having similar problems.{\footnote{Most notably the site stackoverflow.com} %Move to conclusion or discussion?
+\newline
+Other unlisted keywords we found during development were close, delete, home, speed, step and update. Some of these might be from externally included libraries, whose variables and functions the IDE syntax highlighted. %Move to conclusion or discussion?
