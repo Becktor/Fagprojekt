@@ -3,9 +3,9 @@
 During the project we have worked with two Arduino types. Duemilanove and Leonardo clone.
 The clone was more powerful and therefore was our main used board. The clone is called
 OLIMEXINO-32U4.
-\subsection{Specications}
+\section{Specications}
 
-\subsubsection{Arduino}
+\subsection*{Arduino}
 The specs of the Arduino boards vary very much of each other. The OLIMEXINO is definitely
 better.
 
@@ -19,11 +19,11 @@ better.
 }
     \caption{Specifications of the boards}
 \end{table}
-\subsubsection*{EEPROM}
+\subsection*{EEPROM}
 Electrically Erasable Programmable Read-Only Memory Is non-volatile memory which is used in computers/electronic devices to store data when power is removed. Bytes in EEPROM can be read erased and rewritten. One byte in the EEPROM can only hold a value inbetween 0 and 255.
 
 \newpage
-\subsubsection{Gameduino2}
+\subsection*{Gameduino2}
 The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduino2/} shield.
 
 \begin{multicols}{2}
@@ -40,7 +40,7 @@ The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduin
   \end{itemize}
 \end{multicols}
 
-\subsection{Input}%Cebrail
+\section{Input}%Cebrail
 We heard about the nunchuk capability before we got the Arduinos in our
 hands, we thought it would be fun and ordered\footnote{http://www.miniinthebox.com/da/arduino-kompatibel-wii-wiichuck-nunchuck-adapter\_p903451.html} the adapters just after signing
 to this project. The adapters where needed as the nunchuk
@@ -50,12 +50,15 @@ None of us had much experience in soldering, but our supervisor was happy
 to help us in that matter. We got head sockets soldered underneath
 the boards, which made it easy to connect the adapter using pin cables.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale=0.7]{Figures/NunchuckConnection}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+     \includegraphics[scale=0.7]{Figures/NunchuckConnection}
+  \end{center}
   \caption{Hardware connection of an nunchuk}
   \label{fig:nunchuk_connect}
-\end{figure}
+\end{wrapfigure}
+
+
 
 
 It is possible to use both the Gameduino 2 and Wii
@@ -63,7 +66,7 @@ nunchuk at the same time, even though they use same slots.
 Gameduino 2 uses an ISP interface, while the Wii nunchuk uses an I2C interface.
 
 
-\subsubsection{I2C}
+\subsection*{I2C}
 The I2C is a hardware wire interface, which is used by the Wii nunchuk adapter. This bus
 interface allows easy communication between components and only requires two
 bus lines. These lines are both bidirectional. These bus lines are called SCL

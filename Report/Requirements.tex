@@ -2,7 +2,7 @@
 %Be sure to use the vocabulary introduced in the problem analysis.
 \chapter{Requirements specification}
 
-\subsection{Gameplay}%Jonathan
+\section{Gameplay}%Jonathan
 We originally wanted to implement a rpg style platformer with:
 \begin{enumerate}
 \item Items
@@ -12,9 +12,9 @@ We originally wanted to implement a rpg style platformer with:
 \end{enumerate}
 We quickly found out that the limited flash memory on the arduino would greatly limit what we could implement. We agreed on going back to the classics of arcade games. We decided to create a "rogue like" game and focus on increasing difficulty per level and having a high score as the intensive to play the game.
 
-\subsubsection{High Score}
+\subsubsection*{High Score}
 High scores is something you almost always see in arcade games or just smaller games. Its a great way to compare and compete and to show who's the best.
 To do this we were requierd to save data on the EEPROM which is the ´hard drive` of the arduino. This way the high score will never reset unless we want it to.
 
-\subsubsection{Coins}
+\subsubsection*{Coins}
 Coin were added as an additional game play element to broaden the game. The player now has an incentive to go explore the entirety of the map, since collecting coins is an easy way to get additional score.
