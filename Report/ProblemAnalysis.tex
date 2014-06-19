@@ -1,8 +1,25 @@
-%\section{Problem Analysis}
-\chapter{Problem Analysis}
+\chapter{Problem Analysis and Requirements specification}
 
-Define domain specific concepts to be used in the rest of the report.
+We've considered the hardware of Arduino as a problem, especially because of the limited power and space capacity. Another thing was its IDE. The Arduino IDE has its own language (based on c/c++), which was not the most
+sophisticated language according to what we heard. We did neither have any kind of emulator, which we definitely would have used, before getting the units in our hands.
 
-Explain the problems considered, features to be implemented, etc. 
+We were also sceptical about what Gameduino 2 was capable of. The examples
+which were shared through their sites did not look impressing. Only one of them
+looked like an advanced game.
 
-Possibly merge with the next section.
+\section{Gameplay}%Jonathan
+We originally wanted to implement a rpg style platformer with:
+\begin{enumerate}
+\item Items
+\item Hero leveling
+\item Abilities
+\item A decent story
+\end{enumerate}
+We quickly found out that the limited flash memory on the arduino would greatly limit what we could implement. We agreed on going back to the classics of arcade games. We decided to create a "rogue like" game and focus on increasing difficulty per level and having a high score as the intensive to play the game.
+
+\subsubsection*{High Score}
+High scores is something you almost always see in arcade games or just smaller games. Its a great way to compare and compete and to show who's the best.
+To do this we were requierd to save data on the EEPROM which is the ´hard drive` of the arduino. This way the high score will never reset unless we want it to.
+
+\subsubsection*{Coins}
+Coin were added as an additional game play element to broaden the game. The player now has an incentive to go explore the entirety of the map, since collecting coins is an easy way to get additional score.
