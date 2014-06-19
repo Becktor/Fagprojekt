@@ -6,6 +6,18 @@ This isn't a very optimized structure. It forces us to use global variables if w
 
 \section{Components}
 Sketch files, c++/c language, includes, standard libraries
+Arduino sketch is the Arduino IDE, we have worked with it several months its built upon IDE form the Processing programming language. We have had a few quams with it. Firstly the syntax highlighting is not completely correct, second the structure of the ino file and all its cpp/h files where all tabs need to be open is just plain confusing.
+
+Arduino programs are written in C or C++. The Arduino IDE comes with a software library called "Wiring" from the original Wiring project, which makes many common input/output operations much easier. Users only need define two functions to make a runnable cyclic executive program: 
+\begin{enumerate}
+\item setup():a function that runs when board is powered on.
+\item loop():a function called repeatedly until the board powers off
+\end{enumerate}
+
+Nunchuck library is one we found on the internet........ cebo? This includes all functions to the????? dunno at all cebo sry\\
+Linked list library is also one we found it is simply an implementation of linked lists which we use to store our units, hero and our coins.
+
+We use the GD2 library to use the built in functions from the Gameduino2.
 
 \section{Structure} %Carsten
 A platforming game would need at least a simple physics engine, supporting momentum and acceleration. This makes movement feel a lot more natural. Only actors would need to be affected by the physics engine, but we extended it to allow all props - this was both an optimization and an additional feature in the game. We discuss these implications in the implementation chapter.\\
