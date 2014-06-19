@@ -1,6 +1,7 @@
 %Present implementation details, program structure etc.  Further, interesting
 %algorithms and data structures should be presented here.
 \chapter{Implementation and detailed design} %Carsten
+%Something goes here.
 
 \section{Components}
 Sketch files, c++/c language, includes, standard libraries
@@ -18,22 +19,27 @@ Linked list library is also one we found it is simply an implementation of linke
 We use the GD2 library to use the built in functions from the Gameduino2.
 
 \section{Structure} %Carsten
-A platforming game would need at least a simple physics engine, supporting momentum and acceleration. This makes movement feel a lot more natural. Only actors would need to be affected by the physics engine, but we extended it to allow all props - this was both an optimization and an additional feature in the game. We discuss these implications in the implementation chapter.\\
+A platforming game would need at least a simple physics engine, supporting momentum and acceleration. Player movement feels more natural, and allows us to make attacks push units. Only actors would need to be affected by the physics engine, but we extended it to allow all props - this was both an optimization and an additional feature in the game. We discuss these implications in the implementation chapter.
+\newline
 Class diagram
 
 \section{Setup}
 Setup is where we instantiate most local variables, our hero, units, props and lists of our units. We also generate our random seed and load our assets, the GD prerequisites and a millisecond counter.
 
 \section{Loop} %Carsten/Jonathan
-The loop first sets the millisecond counter then it gets data from the nunchuk update. Afterwards it updates all units AI, where they decide what to do in this frame. The hero is part of this loop and updated as if he had AI, but instead converts player input(that we got from the nunchuk update) into actions. After this, all attacks generated from this AI update is executed. This involves all props, where units are checked if they die and coins are checked if they are collected. Finally the physics is updated, and all props move according to their internal velocities. Minotaurs may update their AI in case a collision function is called.\\
-Attacks are cleared, sound for the attack is played and it checks the hero health is zero. If it is we restart the game and save the score if its a highscore.
+The loop first sets the millisecond counter then it gets data from the nunchuk update. Afterwards it updates all units AI, where they decide what to do in this frame. The hero is part of this loop and updated as if he had AI, but instead converts player input(that we got from the nunchuk update) into actions. After this, all attacks generated from this AI update is executed. This involves all props, where units are checked if they die and coins are checked if they are collected. Finally the physics is updated, and all props move according to their internal velocities. Minotaurs may update their AI in case a collision function is called.
+\newline
+Attacks are cleared, sound for the attack is played and it checks whether the hero's health is zero. If it is we restart the game and save the score if its a highscore.
 %Essentially the game is one long loop, which ends whenever the game does. Each iteration executes the gamelogic per frame, such as moving the player and monsters around. Gameloops vary from simple while(true) loops to dynamic separate gameloops handling separate calculations (such as separating rendering from gameplay).For this we only needed a simple game loop, updating the world in each iteration. To ensure a consistent gameplay experience, we needed to know how much time passes betweenframe updates. Without this, the game would run faster or slower on different processors or inconsistently in different ingame events, throwing off the players’ sense of timing. For example, the game would be equally playable with either 30 or 60 frames per second. If the difference isn’t incorporated in the gamelogic though,the game would run twice as fast with 60 frames per second! Our implementation of a frames per second counter, is simply calculating how many frames was calculated the last frame, and then assuming the next frame has the same amount. This is a pretty simple solution, which could easily be expanded upon if needed. The obvious criticism of this method, is that the frame calculations between each second are not accounted for, and that the framerate is essentially a second behind any framerate changes. OLD
 
 \section{Logic} %Carsten
 The units needs to receive map data and send actions. This is the {\tt Logic} class' function. It contains numerous methods to calculate a units' surroundings and also handles collision, physics engine, coin collection and attacks.\\
-Props can only collide with the map geometry, not with each other. It was not a priority to collide props with each other. Enemies should be able to pass each other and the hero would be damaged when colliding with them in any case. Collision is calculated in straight lines, and only at one axis at a time. This makes long diagonal movement inaccurate, since it is calculated as if the prop moved first horizontally and then vertically. A better collision detection was a possibility, but eventually not prioritized. Collisions are calculated according to rectangular hitboxes.\\
-After these simplifications, the collision algorithm is very simple. Given a prop and a distance, it checks each tile in order which the prop will pass through according to its hitbox. If any of the tiles are solid, the prop only travels up to the solid tile and the algorithm terminates. When updating the physics engine, either the {\tt collisionX} or {\tt collisionY} functions are called, used in AI for units or bounce in coins.\\
-A linked list of attacks between frames is kept. Units add their attacks to the list during AI updates and the list is cleared after the attacks have been executed. Executions goes through each prop and checks whether the attack hits or not, calling the {\tt hit} function in case it has. Attacks are a separate object, containing damage, push force, the owner and the area. The attacks are only instantiated once at unit instantiation, which only manipulates the area when reusing the attack, thus optimizing on computing time, though costing memory.\\
+Props can only collide with the map geometry, not with each other. It was not a priority to collide props with each other. Enemies should be able to pass each other and the hero would be damaged when colliding with them in any case. Collision is calculated in straight lines, and only at one axis at a time. This makes long diagonal movement inaccurate, since it is calculated as if the prop moved first horizontally and then vertically. A better collision detection was a possibility, but eventually not prioritized. Collisions are calculated according to rectangular hitboxes.
+\newline
+After these simplifications, the collision algorithm is very simple. Given a prop and a distance, it checks each tile in order which the prop will pass through according to its hitbox. If any of the tiles are solid, the prop only travels up to the solid tile and the algorithm terminates. When updating the physics engine, either the {\tt collisionX} or {\tt collisionY} functions are called, used in AI for units or bounce in coins.
+\newline
+A linked list of attacks between frames is kept. Units add their attacks to the list during AI updates and the list is cleared after the attacks have been executed. Executions goes through each prop and checks whether the attack hits or not, calling the {\tt hit} function in case it has. Attacks are a separate object, containing damage, push force, the owner and the area. The attacks are only instantiated once at unit instantiation, which only manipulates the area when reusing the attack, thus optimizing on computing time, though costing memory.
+\newline
 There is a circular reference, since units require logic which requires scene which in turn requires units. This resulted in forward declarations in scene which is a bit inelegant. It was difficult to design a structure which did not have any circles, since the actors act upon the scene, and the scene returns data to the actor.
 
 \section{Units}
@@ -41,55 +47,44 @@ Units are a subclass of prop, reusing all physics related functions and fields.
 
 \subsection{Minotaurs} %Carsten
 The only implemented enemy is the minotaur from Greek myth. His behaviors range from wandering, charging, hunting and dead, which also has alternative settings while he is in air. Initially he wanders in some direction until he comes across a gap or hits a wall, where he turns around. The gap check is simply whether the space immediately below the front of his hitbox is empty or not, while {\tt collisionX} function is only called when he wanders horizontally into a wall, making the wall check easy.
-hunting\\
+hunting
+\newline
 Currently the only type of enemy is the minotaur, though the current framework was built to contain multiple types.
 
 \subsection{Hero}
 Our hero has its own class where we define the movements, the hitbox and
 the animation handler.
-
-Our hero has two speeds, walking and running. By using values from
-the nunchuk library we can determine whatever our hero should stay idle, walk or run.
-As an example, if the difference between {\tt analogX} and rest value {\tt NUNCHUK\_REST\_X}
-is 50 or more, our hero will run to the direction specified in the class. When
-this happens the acceleration and speed are set to the specified constants
-in the header file.  A similar method is also used for ducking, if {\tt
-analogY} is lower than 45, our hero will duck. In this case, the hitbox will
-change height and y-value. The y-value has to be changed because hitboxes are
-defined at the top left corner. The hitbox is used to detect collisions - see subsection
-Logic for more detail.
-\\
-
-Attacking and jumping are far simpler as they only check the
-variables {\tt zButton} and {\tt cButton} for a {\tt true} value. They can though only
-be executed again once their local variables {\tt \_isAttacking} and {\tt
-\_isJumping} are false. This will prevent errors as jumping
-continuously. We did also ensure that our hero can't duck and attack at the same
-time. He is though able to jump and attack in the air. When attacking in the air,
-the handler uses the attack animation, it changes back to jump handler as soon as
-the button is released.
+\newline
+Our hero has two speeds, walking and running. By using values from the nunchuk library we can determine whatever our hero should stay idle, walk or run. As an example, if the difference between {\tt analogX} and rest value {\tt NUNCHUK\_REST\_X} is 50 or more, our hero will run to the direction specified in the class. When this happens the acceleration and speed are set to the specified constants in the header file.  A similar method is also used for ducking, if {\tt analogY} is lower than 45, our hero will duck. In this case, the hitbox will change height and y-value. The y-value has to be changed because hitboxes are defined at the top left corner. The hitbox is used to detect collisions - see subsection Logic for more detail.
+\newline
+Attacking and jumping are far simpler as they only check the variables {\tt zButton} and {\tt cButton} for a {\tt true} value. They can though only be executed again once their local variables {\tt \_isAttacking} and {\tt \_isJumping} are false. This will prevent errors as jumping continuously. We did also ensure that our hero can't duck and attack at the same time. He is though able to jump and attack in the air. When attacking in the air, the handler uses the attack animation, it changes back to jump handler as soon as the button is released.
 
 \section{Scenes} %Carsten
-Scenes are the objects Containing the map data and all props within. The map is a simple two-dimensional array. The element at two given indexes corresponds to a tile, which has coordinates equal to the two given indexes times the size of a tile. This means world- can easily be converted to tile coordinates or vice versa.\\
-In addition to the map, the scene also contain all props, which is the hero, minotaurs and coins. It stores this in two places: in dynamic linked lists, and in arrays. The former is for dynamic removal of the props, when the coins are collected or the minotaurs are killed. These are used when updating gameplay, to make sure that unused props are not updated, increasing framerate. The latter is for storing all available props , used at map generation. The arrays have a couple of advantages. First they create all used props of each type initially, reusing the same minotaurs and coins in each map. This shortens time needed to allocate and deallocate memory. Additionally, if the amount of props is initially within Arduino's memory bounds, then the maps will never cause the Arduino to run out of memory, since it never allocates more. The obvious drawbacks is that we are limited in the amount of props we need, and that removing any props during play does not increase available memory. The second drawback isn't that much of a problem though, since very little is needed during play.\\
+Scenes are the objects Containing the map data and all props within. The map is a simple two-dimensional array. The element at two given indexes corresponds to a tile, which has coordinates equal to the two given indexes times the size of a tile. This means world- can easily be converted to tile coordinates or vice versa.
+\newline
+In addition to the map, the scene also contain all props, which is the hero, minotaurs and coins. It stores this in two places: in dynamic linked lists, and in arrays. The former is for dynamic removal of the props, when the coins are collected or the minotaurs are killed. These are used when updating gameplay, to make sure that unused props are not updated, increasing framerate. The latter is for storing all available props , used at map generation. The arrays have a couple of advantages. First they create all used props of each type initially, reusing the same minotaurs and coins in each map. This shortens time needed to allocate and deallocate memory. Additionally, if the amount of props is initially within Arduino's memory bounds, then the maps will never cause the Arduino to run out of memory, since it never allocates more. The obvious drawbacks is that we are limited in the amount of props we need, and that removing any props during play does not increase available memory. The second drawback isn't that much of a problem though, since very little is needed during play.
+\newline
 Currently, because of an implementation bug, the props are dynamically allocated, even though they shouldn't need be.
 %Additional possible datastructures?
 
 \subsection{Generator} %Carsten
-Map generation is executed at setup and whenever the game ends (either by player death or win). The method {\tt newScene} generates a new map with matching points at the entrance and exits. Arduino's programming language does not support returning more than one value, so the method manipulates given pointers instead like in C programming. The new map data overwrites the old one to save time and space, so the given {\tt scene} argument is a pointer to the old scene.  Reusing it saves us from instantiating a new one and deallocating the old one.  We ar not interested in reusing the actual map data, since the player cannot revisit prior levels.\\
-The actual algorithm is in three parts: clearing, modulation and generation. First it clears the old map data, setting all tiles to {\tt NONE}, to make sure nothing is left over from the old map. This may be a bit expensive on the processing time considering it is superfluous if the generator works correctly. The reason is a design choice which will be apparent when we reach the generation.\\ %Picture of Modules?
-Modulation in this case means separating the map into \emph{modules}\footnote{As opposed to vary the pitch in a voice}. This is where the layout of the map is decided. A module is a small map in itself, in our case a 5x5 map of tiles.  These have been designed by hand and hard-coded into the generator. Every map is construed of a grid of modules, in our case 4x4. The modules are differentiated by which sides one can access it from.  By this we mean the player can traverse from and to this module from the given sides.  The types are left-right (corridor), left-right-up (T-up), left-right-down (T-down), all (cross) and none (closed). A module in the category left-right is guaranteed to have an exit left and right, and may have an exit up or down.\\
-The algorithm first instantiates a grid of empty modules, and randomly assigns one of the bottom modules to be a corridor and the entrance. This is the beginning of the solution path, which guarantees that the map can be completed by the player. From then on it picks a direction, left or right, randomly. From then on the algorithm randomly either moves according to its direction or up. When moving sideways the newly visited grid space is assigned to be a corridor. If it hits the edge of the map it moves upwards and changes direction instead. Whenever the solution path moves upwards, the algorithm has to change the space it is in first. If it is in a corridor tile, it changes it to a T-up, and if it is a T-down it changes it to a cross module. Both of these are the same as their predecessors, but with a guaranteed top-side exit. The newly visited module is assigned a T-down module. The algorithm picks a new direction at random (only if it is not at an edge.) and can start the over again. When it attempts to move upwards while at the top, it instead places the exit in the current tile and terminates. All unvisited grid spaces are assigned closed modules, and are not part of the solution path. Thus we have reached a map which has a guaranteed solution.\\
+Map generation is executed at setup and whenever the game ends (either by player death or win). The method {\tt newScene} generates a new map with matching points at the entrance and exits. Arduino's programming language does not support returning more than one value, so the method manipulates given pointers instead like in C programming. The new map data overwrites the old one to save time and space, so the given {\tt scene} argument is a pointer to the old scene.  Reusing it saves us from instantiating a new one and deallocating the old one.  We ar not interested in reusing the actual map data, since the player cannot revisit prior levels.
+\newline
+The actual algorithm is in three parts: clearing, modulation and generation. First it clears the old map data, setting all tiles to {\tt NONE}, to make sure nothing is left over from the old map. This may be a bit expensive on the processing time considering it is superfluous if the generator works correctly. The reason is a design choice which will be apparent when we reach the generation. %Picture of Modules?
+\newline
+Modulation in this case means separating the map into \emph{modules}\footnote{As opposed to vary the pitch in a voice}. This is where the layout of the map is decided. A module is a small map in itself, in our case a 5x5 map of tiles.  These have been designed by hand and hard-coded into the generator. Every map is construed of a grid of modules, in our case 4x4. The modules are differentiated by which sides one can access it from.  By this we mean the player can traverse from and to this module from the given sides.  The types are left-right (corridor), left-right-up (T-up), left-right-down (T-down), all (cross) and none (closed). A module in the category left-right is guaranteed to have an exit left and right, and may have an exit up or down.
+\newline
+The algorithm first instantiates a grid of empty modules, and randomly assigns one of the bottom modules to be a corridor and the entrance. This is the beginning of the solution path, which guarantees that the map can be completed by the player. From then on it picks a direction, left or right, randomly. From then on the algorithm randomly either moves according to its direction or up. When moving sideways the newly visited grid space is assigned to be a corridor. If it hits the edge of the map it moves upwards and changes direction instead. Whenever the solution path moves upwards, the algorithm has to change the space it is in first. If it is in a corridor tile, it changes it to a T-up, and if it is a T-down it changes it to a cross module. Both of these are the same as their predecessors, but with a guaranteed top-side exit. The newly visited module is assigned a T-down module. The algorithm picks a new direction at random (only if it is not at an edge.) and can start the over again. When it attempts to move upwards while at the top, it instead places the exit in the current tile and terminates. All unvisited grid spaces are assigned closed modules, and are not part of the solution path. Thus we have reached a map which has a guaranteed solution.
+\newline
 Lastly the program generates the map. This step reads each module in the newly generated grid, randomly picks a module of the specified type, and fills it into the actual map. If it is currently in an entrance or exit room, it places the corresponding door. It changes the original given entrance and exit pointers to
-point at the now created door.\\
+point at the now created door.
+\newline
 Every module overlap with a single row or column with all surrounding modules. Overlapping follows a priority of tiles, where the algorithm determines which tile from the modules is used. Platforms are placed before empty tiles, and solid tiles are placed before platforms. This has several benefits. Firstly the maps are more unique since pairs of modules also differ, and makes the seams of modules harder to notice. Secondly, it ensures that upward exits are easier guaranteed since platforms can be placed closer to the upper floors. This is the reason we need to clear the map prior to generation: the old tiles would disrupt this priority, since the algorithm would not be able to discern what is old and what is new during
-generation.\\
-Old version (nondeterministic time)
+generation.
+%Old version (nondeterministic time)
 
 \subsection{Highscore/?Randomseed? EEPROM}
 Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ which could save unsigned integers on the "hard drive" of the arduino. The functions work by bitshifting the integer with 0 and 8 and then save the two bitshifted values in the EEPROM. We 
-
-
 
 \section{Gameduino 2}
 \subsection{Graphics}
@@ -110,18 +105,7 @@ the file will not take as much space. Sometimes the sounds would get ruined by r
 so we had to find a balance between quality and size.
 
 \section{Input}
-Before implementing the nunchuk. We checked other alternatives.
-Both Arduino and the Gameduino 2 shield gives us opportunities to control the game.
-Arduino can communicate with a pc and get data when a key is pressed on the keyboard.
-The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used
-one of these to get input, but none of them
-gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution
-feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other.
-The touch screen is not as responsive as we wanted, and it would also be annoying
-as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard
-to control, as you always has to 'guess' how to hold the device. The problem with fingers
-getting in the way appears also here. The best option was using an external controller - a Wii nunhcuk.
-
+Before implementing the nunchuk. We checked other alternatives. Both Arduino and the Gameduino 2 shield gives us opportunities to control the game. Arduino can communicate with a pc and get data when a key is pressed on the keyboard. The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used one of these to get input, but none of them gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other. The touch screen is not as responsive as we wanted, and it would also be annoying as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard to control, as you always has to 'guess' how to hold the device. The problem with fingers getting in the way appears also here. The best option was using an external controller - a Wii nunhcuk.
 
 %Nunchuk library
 %The inputs are recieved using the {\tt ArduinoNunchuk}\footnote{http://www.gabrielbianconi.com/arduinonunchuk/} library.
