@@ -12,11 +12,48 @@ Arduino programs are written in C or C++. The Arduino IDE comes with a software 
 \item setup():a function that runs when board is powered on.
 \item loop():a function called repeatedly until the board powers off
 \end{enumerate}
+Nunchuk library
+The inputs are recieved using the {\tt ArduinoNunchuk}\footnote{http://www.gabrielbianconi.com/arduinonunchuk/} library.
+It uses the {\tt wire.h} library that is included in the Arduino IDE.
+Using the {\tt wire.h}library makes it possible to communicate with the
+nunchuk using the I2C interface.\\
+The library includes following methods, which are updated every time {\tt nunchuk.update();} is called:\\
+\begin{multicols}{2}
+\begin{itemize}
+    \item nunchuk.analogY
+    \item nunchuk.analogY
+    \item nunchuk.accelX
+    \item nunchuk.accelY
+    \item nunchuk.accelZ
+    \item nunchuk.zButton
+    \item nunchuk.cButton
+\end{itemize}
+\end{multicols}
 
-Nunchuck library is one we found on the internet........ cebo? This includes all functions to the????? dunno at all cebo sry\\
 Linked list library is also one we found it is simply an implementation of linked lists which we use to store our units, hero and our coins.
 
-We use the GD2 library to use the built in functions from the Gameduino2.
+GD2 libary is needed for the
+Here are the functions that we use from the GD2 library:
+\begin{multicols}{3}
+\begin{itemize}
+    \item GD.cmd\_text$()$
+    \item GD.cmd\_number$()$
+    \item GD.Begin$()$
+    \item GD.cmd\_translate$()$
+    \item GD.cmd\_scale$()$
+    \item GD.cmd\_setmatrix$()$
+    \item GD.safeload$()$
+    \item GD.cell$()$
+    \item GD.BitmapHandle$()$
+    \item GD.sample$()$
+    \item GD.Clear$()$
+    \item GD.ClearColorRBG$()$
+    \item GD.swap$()$
+    \item GD.ColorRBG$()$
+    \item GD.Vertexii$()$
+    \item GD.Vertexii$()$
+\end{itemize}
+\end{multicols}
 
 \section{Structure} %Carsten
 A platforming game would need at least a simple physics engine, supporting momentum and acceleration. Player movement feels more natural, and allows us to make attacks push units. Only actors would need to be affected by the physics engine, but we extended it to allow all props - this was both an optimization and an additional feature in the game. We discuss these implications in the implementation chapter.
@@ -86,55 +123,95 @@ generation.
 \subsection{Highscore/?Randomseed? EEPROM}
 Using EEPROM we implemented two functions $EEpromReadInt$ and $EEpromWriteInt$ which could save unsigned integers on the "hard drive" of the arduino. The functions work by bitshifting the integer with 0 and 8 and then save the two bitshifted values in the EEPROM. We 
 
+
 \section{Gameduino 2}
 \subsection{Graphics}
-\subsection{Assets}
+\subsubsection{Rendering}
+The Gameduino 2 consists of an essential graphics processing unit (GPU) with 256 kilobytes of RAM. With it is the ability to draw virtually anything on the screen. 
+
+\subsubsection{Bitmaps}
+With it there is support for drawing images, called 'bitmaps'. With the exception of the background and text, everything the player witnesses in our game consists of these bitmaps. Since images aren’t uploaded along with the code to the Arduino, we store them on a microSD card which conveniently can be read in real time from the Gameduino 2. The simplest way to read a single image off the card would be to directly load it to the GPU with a command in the code. Each image loaded in would be assigned to a specific address and could thereafter be drawn with the image’s top left corner at a given x-y coordinate. However, this method wouldn’t be able to fulfil the necessary requirements of what we had planned. This is where the Gameduino 2 asset converter comes in.
+
+\subsubsection{Assets}
+The asset converter basically takes multiple media files, including images and sounds, and compiles them into a single asset file with the extension '.gd2'. As the abbreviation suggests, this file is specifically designed for the Gameduino 2 to read and gets placed on the SD card. Along with the asset file, a header file is generated to be included alongside the code in the associated project. The header file automatically defines constants associated with each image. There are four constants: handle, width, height, and cells. An image’s handle is its index in the array of images provided, e.g., the first image would have the handle, 0. The width and height simply state the dimensions of the image in pixels. The 'cells' variable states how many images are included in the handle. Essentially we used handles with multiple cells (images) instead of a single image to easily maintain each animation. Here we can see the process of creating simple walking and attacking animations for our hero. Once the header file is included in a project, its constants are ready to be called from the code and used to project animations onto the screen.
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=1]{Figures/HeroAttack}
+  \caption{Hero attack sprites}
+  \label{fig:Hero_Attak}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.95]{Figures/Asset_cmd}
+  \caption{Asset conversion in command line}
+  \label{fig:asset_cmd}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{minipage}[b]{0.45\linewidth}
+  \centering
+  \includegraphics[scale=0.7]{Figures/Asset_output}
+  \caption{The sprites and the output files}
+  \label{fig:Asset_output}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
+  \centering
+  \includegraphics[scale=0.7]{Figures/SpritesHeader}
+  \caption{The output from asset conversion}
+  \label{fig:SpritesHeader}
+\end{minipage}
+\end{figure}
+
+\newpage
+\subsubsection{Animation}
+There are many ways to make sure an object in the game knows which handle it should use as well as which cell within the animation to display. The example in the Gameduino 2 reference utilizes both a sprite's x-coordinate and bit shifting as the object moves across the screen. This method however, is very primitive and specifically tailored to sprites moving from left to right. The way our program cycles through the cells of an animation is through time. \newline
+Every object in the game that includes animation is a prop. That is to say the hero, minotaurs, and coins are all props. The prop class includes two functions directly related to animating: newHandle and updateAnimation. newHandle includes three parameters that get called from the specific object’s class every update. It starts by checking if it should change anything about the animation by first checking if {\tt \_animLock} boolean is true. {\tt \_animLock} assures that the animation can’t change until the current animation has gone through all its cells. We use this boolean when the hero attacks because he should finish an attack before reverting to reverting back to whichever movement animation he’s in. The function also checks if the new handle or frame rate are the same as the current ones. If the conditions are met, the three values are replaced with those associated with a new animation and current cell to be displayed is manually set to the first one in the sequence.\newline
+The function, updateAnimation, receives the parameter, dTime, from the main class every update. The {\tt \_dtime} variable keeps track of the number of milliseconds that have passed since the last update, or run through of all the code. It’s used to keep the time interval between cells consistent with the time it takes to update the whole program. Every animation has a manually set frame rate which determines how many milliseconds should pass before changing to the next cell. The variable, {\tt \_aniTime}, simply adds the value of {\tt \_dTime} to itself every update until the compiled number of milliseconds passed surpasses that of the animation’s frame rate. When this happens, it’s time to move on to the next cell in the animation. If however, it’s the last cell, then it naturally reverts back to the first. One condition on resetting the cycle however that is that the {\tt \_aniStop} boolean isn’t used. This boolean is only used when an animation shouldn’t cycle back to its first cell. We use it primarily for death animations because when a unit dies it should stay dead. If the previously mentioned lock boolean is being used when a animation sequence resets, it isn’t required thereafter and set back to false. In any case, when a cell changes, the value of {\tt\_aniTime} is set back by the value of the animation’s frame rate so that it can once again accumulate time until it reaches the required frame rate value again for the next cell.
+
+\subsubsection{Drawing Sprites}
+When the correct image to display is determined, there is still a matter of how to draw it and where exactly to place it. Rather than creating mirror image files we’re able to use the Gameduino functions to flip an image horizontally and still keep it at the same position. We intentionally made every sprite face to the right in the original images so we’d only have to flip them if they’re supposed to face left. As mentioned, everything that gets drawn with the Gameduino gets prepared and manipulated beforehand. In this case, the image gets flipped, drawn, then flipped back again in case a sprite is updated thereafter to face to the right again. \newline
+
+
+\begin{figure}[ht]
+\begin{minipage}[b]{0.55\linewidth}
+  \centering
+  \includegraphics[scale=1]{Figures/herohitbox}
+  \label{fig:herohitbox}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.4\linewidth}
+  \includegraphics[scale=1]{Figures/minocoinhitbox}
+  \label{fig:minocoinhitbox}
+\end{minipage}
+  \caption{The purple hitbox represents the body of the probs}
+\end{figure}
+
+
+
+
+In terms of coordinate placement, the image would under usual circumstances share the same position and dimensions as the hitbox it’s registered to. However, our units have appendages/weapons/armor etc. which shouldn’t be included. Essentially we created sprites wherein the body of the characters is the same size as their respective hitbox and centred precisely in both the x and y axis on the whole image. It’s also vital that all the images tailored to a specific object have the same dimensions. This is due to the way we coded where in respect to an object’s hitbox the image should be drawn. Where each object includes specified hitbox dimensions, they also include image dimensions provided by the sprite header file. For each axis, the difference between half the image length and half the hitbox’s would be the distance between their centres if they were drawn at the same point. We simply subtract this value from the hitbox’s position in each axis respectfully and draw the image. Rather than sharing the same top left corner, the image and hitbox share centres.  When the image is always centred on the hitbox, it doesn’t matter if the hitbox changes size. This system is useful when we want to implement ducking because as long as the ducking images have the body of the figure centred and the same dimensions as all the object’s other images, the image will translate accordingly.
+
+
 \subsection{Sound}
 The Gameduino 2 requires the sound files to be converted using the asset converter. Before including the
 sounds in the GD2 file, we first convert them to an acceptable format. The assets converter only accepts
-files with following properties.
-
-\begin{itemize}
-  \item .wav format.
-  \item Audio channel: mono.
-  \item Bit resolution 16.
-\end{itemize}
+files with following properties: 
+''They need to be in .wav format, audio channel set to mono, and bit resolution set to 16.''
 
 The conversion process also includes reducing the sample rate of the sound. By doing so,
 the file will not take as much space. Sometimes the sounds would get ruined by reducing too much,
 so we had to find a balance between quality and size.
 
+
 \section{Input}
 Before implementing the nunchuk. We checked other alternatives. Both Arduino and the Gameduino 2 shield gives us opportunities to control the game. Arduino can communicate with a pc and get data when a key is pressed on the keyboard. The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used one of these to get input, but none of them gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other. The touch screen is not as responsive as we wanted, and it would also be annoying as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard to control, as you always has to 'guess' how to hold the device. The problem with fingers getting in the way appears also here. The best option was using an external controller - a Wii nunhcuk.
 
-%Nunchuk library
-%The inputs are recieved using the {\tt ArduinoNunchuk}\footnote{http://www.gabrielbianconi.com/arduinonunchuk/} library.
-%It uses the {\tt wire.h} library that is included in the Arduino IDE. So we have a library using another library.
-%The library {\tt wire.h} makes it possible to communicate with the
-%nunchuk using the I2C interface. To use the library, first we instantiate it: \\
-%\centerline{{\tt ArduinoNunchuk \_nunchuk = ArduinoNunchuk();}}\\ Then initialize it by saying: \\ \centerline{{\tt nunchuk.init();}}
-%The library includes following methods, which are updated every time {\tt nunchuk.update();} is called:\\
-%\begin{multicols}{2}
-%\begin{itemize}
-%    \item nunchuk.analogY
-%    \item nunchuk.analogY
-%    \item nunchuk.accelX
-%    \item nunchuk.accelY
-%    \item nunchuk.accelZ
-%    \item nunchuk.zButton
-%    \item nunchuk.cButton
-%\end{itemize}
-%\end{multicols}
-%The data from the thumbstick is received from the methods {\tt analogY} and {\tt analogY}.
-%The data is presented as x- and
-%y-coordinates. When the thumbstick is at rest, the {\tt analogX} is 120 and
-%{\tt analogY} is 125.  The numbers decreases when pushing to the left or down.
-%It increases in the opposite directions. The {\tt accel*} methods defines the values of
-%the accelerometer. We have values for every direction, meaning x,y and z. They change values
-%when you tilt the controller. We do not use the accelerometer in our game 
 
-%Lastly we have the methods {\tt zButton} and {\tt cButton} which
-%returns the values of the buttons - as 0 or 1.
 
 \section{Optimization} %Cebrail / Carsten
 Officially the \emph{flash memory} has a capacity of 32 Kb, but the IDE does not allow uploading sketches larger than 28.672 bytes. Furthermore, the first 4242 bytes are reserved for the \emph{bootloader}, so in reality we only have 24.430 bytes of code available. %Explain flash memory & bootloader?
