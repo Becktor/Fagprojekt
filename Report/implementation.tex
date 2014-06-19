@@ -1,8 +1,6 @@
 %Present implementation details, program structure etc.  Further, interesting
 %algorithms and data structures should be presented here.
 \chapter{Implementation and detailed design} %Carsten
-Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called until the Arduino is turned off.\footnote{At least, we haven't discovered a way to terminate a sketch.}\\
-This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.
 
 \section{Components}
 Sketch files, c++/c language, includes, standard libraries
@@ -154,64 +152,47 @@ getting in the way appears also here. The best option was using an external cont
 %Lastly we have the methods {\tt zButton} and {\tt cButton} which
 %returns the values of the buttons - as 0 or 1.
 
+\section{Optimization} %Cebrail / Carsten
+Officially the \emph{flash memory} has a capacity of 32 Kb, but the IDE does not allow uploading sketches larger than 28.672 bytes. Furthermore, the first 4242 bytes are reserved for the \emph{bootloader}, so in reality we only have 24.430 bytes of code available. %Explain flash memory & bootloader?
+\newline
+Early optimizations is usually the bane of programming, but halfway through development we hit the code size ceiling. The code size seemed to arbitrarily grow independent of the code additions. From then on, every single addition required an optimization at least of same size, and in the end we had to sacrifice some maintainability and readability to reach our goals. Development stopped when optimization work yielded less than a 100 bytes per hour, but at that point the game was feature complete, so it just saved us from gold plating. Figure~\ref{fig:code_size} is a graph of the code size during development.
+\newline
+Arduino's IDE did not make it easy for us to optimize the game. All warnings concerning dead code or unused variables and functions are suppressed. Allegedly, the warnings was thought to discourage new developers, and was removed. The compiler was already optimized to removed these parts of the code, but it does so silently to the developer.
+
+\subsection{Libraries} %Carsten / Cebrail
+The extern libraries use a lot of space, especially true for the graphics library. It has been difficult to evaluate just how much space they use. For example, the difference in space between two and one function call, is the size of the call, but the difference between one and zero calls is the entire function plus the call. This is because the compiler cuts unused functions, and it makes it difficult to evaluate what parts of the code is expensive.
+\newline
+In any case, we could not do without the used extern libraries, nor would it be certain that we could rewrite them better. It would have taken too much time to optimize and test the libraries, and would probably not have been more profitable than optimizing our own code.
+
+\subsection{Verbosity} %Carsten
+Maintainability is usually a great priority in programming, but the constraints of the Arduino left us to optimize for efficiency. In many cases the code was also left less readable and robust, in favor of using less space. There was, however, a certain limit where we did not simplify. For example, two version of the same method returns a random direction, either $-1$ or $1$:
+\begin{verbatim}
+char getRandDir() {
+  if(random(2) == 0)
+    return -1;
+  else
+    return 1;
+}
+
+char getRandDir() {
+  return random(2) * 2 - 1;
+}
+\end{verbatim}
+The first function is more expensive, but also a lot more readable. The second is absolutely incomprehensible, but cheaper. We went the top method, so the intent of the code was at least understandable. This case is more symbolic of the standard we held, since the top most function only cost 4 bytes more, but it serves as a good example. In the source code, the directions are replaced with the enumeration values {\tt LEFT} and {\tt RIGHT}. In other cases, for example the map generator, we split the code up in functions for readability.
+
+\subsubsection{Encapsulation} %Cebrail / Carsten
+Usually it is good code practice to encapsulate variables and use getters and setters. This was a luxury we could not afford, which became apparent when we hit the ceiling. Most variables was made public, though in some cases a getter was cheaper than directly accessing the variable.
+
+%Too obvious?
+%\subsubsection{Repeated statements} %Cebrail
+%Repeated statements - well it speaks for itself. Repeating something that has been calculated before is just a waste of code space. Simplifying the code in this manner is sometimes not easy, it requires that you think creative. It often requires you to think - is this needed? It may not always be obvious. Often it is about finding a shortcut to some calculation and taking advantage of already existing results.
 
 
-\section{Optimization}%Cebrail
-The biggest challenge has been the code size due to the low capacity of the flash memory.  The flash memory has a capacity of 32Kb. The first 4.242Kb is reserved for the bootloader and we are limited to go no further than 28.672Kb all inclusive. So we are actually only allowed to upload 24.430Kb of our own code. It may sound fair comparing to what have been achieved with old game consoles, but it became very quick a headache.\\
-Every time we compiled our code, we felt like the code was growing exponentially and we reached the limit quicker than we expected, the intern libraries and our code generally took way too much space. Please see Figure~\ref{fig:code_size} for a history of our code size.
+\subsection{Datatypes} %Cebrail
+A good place to start was the datatypes. Converting the bigger datatypes to some smaller ones was a easy optimization. Mostly, it was integers that was converted to data types like {\tt char}, {\tt byte} and {\tt word}. Which {\tt char} is capably of encoding numbers from -128 to 127. While {\tt bytes} is a 8-bit unsigned number, from 0 to 255 and {\tt word} is basically an unsigned 16-bit number, from 0 to 65535. Notice that {\tt byte} is the unsigned version of {\tt char}. More details in arduinos site\footnote{http://arduino.cc/en/Reference/HomePage}.
 
-From the start, we wrote the code with optimization in mind, but also tried to keep the code maintainable. When we reached the limit, we had to optimize it further, not just to create space for existing code, but also for further additions to the game. Our first step to solve this problem, we analyzed our code and found the main reasons for this occasion, which are described below.
-
-%\begin{enumerate} \item Inefficient datatypes.  \item Unused functions \item
-%    Global Variable instead of local.  \item Code verbose.  \item Repeated
-%    statements.  \item Getters/Setters.  \item Dependencies.  \item Libraries.
-%  \end{enumerate}
-
-\subsubsection{Inefficient datatypes}
-A good place to start was the datatypes. Converting the bigger datatypes
-to some smaller ones was a easy optimization. Mostly, it was integers that
-was converted to data types like {\tt char}, {\tt byte} and {\tt word}.
-Which {\tt char} is capably of encoding numbers from -128 to 127. While
-{\tt bytes} is a 8-bit unsigned number, from 0 to 255 and {\tt word} is
-basically an unsigned 16-bit number, from 0 to 65535. Notice that {\tt byte}
-is the unsigned version of {\tt char}. More details in arduinos site\footnote{http://arduino.cc/en/Reference/HomePage}.
-
-\subsubsection{Unused functions}
-
-\subsubsection{Global to local}
-A global variable ensures that all the
-functions in the class has access to the variable. But there are downsides
-to this, it uses more space than local variables and it also increases the chances
-of changing the variable value by other functions without intentions. So we changed
-the global variables into local variables by declaring and initializing them in the
-functions they are going to be used. So it is a matter of declaring them in the right
-scopes.
-
-\subsubsection{Code Verbosity}
-
-\subsubsection{Repeated statements }
-Repeated statements - well it speaks for itself. Repeating something that has been calculated
-before is just a waste of code space. Simplifying the code in this manner is sometimes
-not easy, it requires that you think creative. It often requires you to think - is this
-needed? It may not always be obvious. Often it is about finding a shortcut to some
-calculation and taking advantage of already existing results.
-
-\subsubsection{Accessor methods}
-We found out that these functions inefficient
-compared to public variables. So we deleted these functions
-and made the variables public.
-
-\subsubsection{Dependencies}
-
-\subsubsection{Libraries}
-The libraries are the most space allocating part of code. Both our external and
-our internal libraries fill much of the code. The internal libraries are
-inclusions of our own written code, everything from logic to units. The external
-libraries contains which are necessary to communicate with the EEPROM,
-Gameduino 2 and Wii nunchuk.
-
-\subsection{Code Size bloat} Bootloader GD2 includes \subsection{Further
-optimization} Custom written or shortened extern libraries
+\subsection{Global Variables} %Carsten
+Like Java's main function, Arduino has two special functions: {\tt setup} and {\tt loop}. The former is called once on program start, while the latter is repeatably called until the Arduino is turned off.\footnote{At least, we haven't discovered a way to terminate a sketch.} This isn't a very optimized structure. It forces us to use global variables if we want to reuse anything from setup in loop. Our solution was to leave {\tt loop} empty and put an endless loop in {\tt setup} instead. All of our variables could become local with this change, greatly reducing code size.
 
 \subsection{Inconsistencies} %Carsten
-additional code suddenly uses less space.
+Finally, in some cases the code size arbitrarily increased or decreased where it should not have. For example, there are some unused values in the {\tt sprite.h}, which was generated by the asset converter. If these are removed, the code size increases. This is probably some inconsistency in the compiler, but we did not research this further. In other cases, where more code resulted in less code size, we removed the anomalies (or simply did not add them), but the asset converter values was discovered when space was really limited, so we had to leave it in.
