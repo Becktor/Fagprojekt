@@ -9,6 +9,8 @@ Minotaur::Minotaur() :
     _attackArea(MINO_HITBOX_WALK_WIDTH, MINO_HITBOX_WALK_HEIGHT),
     _attack(&_attackArea, MINO_ATT_DAMAGE, MINO_ATT_FORCE, this) { }
 
+//Horizontal collision function.
+//Called when colliding in the x-axis
 void Minotaur::collideX() {
   _xVel = 0;
   if(_health != 0) {
@@ -21,17 +23,19 @@ void Minotaur::collideX() {
   }
 }
 
+//The Minotaur attempts to detect the player.
+//In case he does, returns true and changes direction to the hero and changes relevant detection values.
 boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
   int lineOfSight = _hitbox._y + _hitbox._height / 2,
       minoX = _hitbox.side(-_dir),
       heroX = heroHitbox->side(-_dir),
       dist = (heroX - minoX),
       distDir = _dir * dist;
-  if((distDir <= MINO_LOS + _hitbox._width - 1 &&
+  if((distDir <= MINO_LOS + _hitbox._width - 1 && 
       distDir > -heroHitbox->_width &&
       heroHitbox->_y <= lineOfSight &&
       heroHitbox->_y + heroHitbox->_height > lineOfSight) ||
-      _hitbox.contains(heroHitbox)) {
+      _hitbox.contains(heroHitbox)) { //Returns true if the hero collides with either minotaur or line of sight.
     char dir = getDirection(dist),
          tileY = worldToGrid(lineOfSight),
          tileX = worldToGrid(minoX) + dir,
@@ -48,6 +52,8 @@ boolean Minotaur::detect(Rect *heroHitbox, Logic *logic) {
     return false;
 }
 
+//Hit function.
+//Called when attacked, if not invulnerable.
 void Minotaur::hit(byte damage, char force) {
   Unit::hit(damage, force);
   if(!_isCharging)
@@ -55,6 +61,8 @@ void Minotaur::hit(byte damage, char force) {
   _heroDetected = true;
 }
 
+//Initialize function.
+//Called when used in a new map.
 void Minotaur::initialize() {
   Unit::initialize();
   newHandle(MINO_WALK_HANDLE, MINO_WALK_CELLS, MINO_FR_WALKING);
@@ -63,6 +71,7 @@ void Minotaur::initialize() {
   _isCharging = false;
 }
 
+//AI update function. Evaluates current position and decides an action.
 void Minotaur::updateAI(byte dTime, Logic *logic) {
   boolean grounded = logic->isGrounded(this);
   byte acc = 0;
@@ -94,7 +103,6 @@ void Minotaur::updateAI(byte dTime, Logic *logic) {
         }
         targetSpeed = _dir * min(moveSpeed, _dir * dist);
       } else { //Wander
-        //_heroDetected = false;
         if(!logic->isWalkable(_hitbox.side(_dir), _hitbox._y + _hitbox._height))
           toggleDir();
         targetSpeed = _dir * MINO_SPEED_WALK;
@@ -110,5 +118,5 @@ void Minotaur::updateAI(byte dTime, Logic *logic) {
     if(grounded)
       acc = MINO_ACC_BRAKE;
   }
-  _xVel = zoomIn(acc, _xVel, targetSpeed);
+  _xVel = zoomIn(acc, _xVel, targetSpeed); //Move
 }

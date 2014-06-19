@@ -2,7 +2,7 @@
  *  Scenes holds map information and functions
  *  handling basic collision data.
  *  The scenes are limited to a specific height
- *  and width. This is because the _map variable
+ *  and width. This is because the _tiles variable
  *  would have to be a pointer if it were not,
  *  making any array functions difficult. This
  *  could be changed if figured out and
@@ -31,6 +31,7 @@ const static byte
 char worldToGrid(int x);
 int gridToWorld(byte x);
 
+//Forward declarations needed.
 class Unit;
 class Minotaur;
 class Scene {
@@ -38,7 +39,6 @@ class Scene {
     byte _tiles[SCENE_WIDTH][SCENE_HEIGHT], _minoIndex, _coinIndex;
     Minotaur* _minotaurs[MINOTAURS];
     Coin* _coins[COINS];
-    //Prop** _test[2];
   public:
     LinkedList<Coin*> _coinList;
     LinkedList<Unit*> _unitList;

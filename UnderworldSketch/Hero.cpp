@@ -13,11 +13,15 @@ Hero::Hero(ArduinoNunchuk* nunchuk) :
   _nunchuk = nunchuk;
 }
 
+//Hit function.
+//Called when attacked, if not invulnerable.
 void Hero::hit(byte damage, char force) {
   Unit::hit(damage, force);
   push(force);
 }
 
+//Initialize function.
+//Called when used in a new map.
 void Hero::initialize() {
   Unit::initialize();
   newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_FR_IDLE);
@@ -28,6 +32,7 @@ void Hero::initialize() {
   _isJumping = false;
 }
 
+//AI update function. Evaluates player input.
 void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   //Hero x-movement
   char nunchukX = _nunchuk->analogX - NUNCHUK_REST_X,
@@ -38,9 +43,8 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
   
   //Checks if the hero is grounded
   if(logic->isGrounded(this)) {
-    //Hero duck
     if(NUNCHUK_DUCK > _nunchuk->analogY && !_isJumping) {
-      //Serial.println(_nunchuk->analogY);
+      //DUCK
       if(_nunchuk->analogY <= 30){
         targetSpeed = 0;
         newHandle(HERO_DUCK_HANDLE, 1, 1000);  
@@ -63,10 +67,12 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       byte FR;
       //Checks if the hero should walk or run
       if(nunchukXAbs >= NUNCHUK_RUN) {
+        //RUN
         acc = HERO_ACC_RUN;
         targetSpeed = HERO_SPEED_RUN;
         FR = HERO_FR_RUNNING;
       } else {
+        //WALK
         acc = HERO_ACC_WALK;
         targetSpeed = HERO_SPEED_WALK;
         FR = HERO_FR_WALKING;
@@ -74,14 +80,13 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
       //Walking and Running use the same handle, but different frame rates
       newHandle(HERO_MOVE_HANDLE, HERO_MOVE_CELLS, FR);
     } else {
-      //Hero is at rest
+      //IDLE
       acc = HERO_ACC_WALK;
       targetSpeed = 0;
       nunchukDir = 0;
       newHandle(HERO_IDLE_HANDLE, HERO_IDLE_CELLS, HERO_FR_IDLE);
     }
-
-    //Jump command
+    //JUMP
     if(_nunchuk->cButton) {
       if(!_isJumping) {
         //Starts a jump
@@ -93,6 +98,7 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     else //player isn't able to continuously jump by holding the jump button down
       _isJumping = false;
   } else {
+    //AIR
     acc = HERO_ACC_AIR;
     targetSpeed = max(HERO_SPEED_AIR, nunchukDir * _xVel);
     if(_yVel <= 0)
@@ -105,17 +111,18 @@ void Hero::updateAI(byte dTime, Logic *logic) { //dtime is still unused
     _dir = nunchukDir;
   } else
     targetSpeed = 0;
-  _xVel = zoomIn(acc, _xVel, targetSpeed);
+  _xVel = zoomIn(acc, _xVel, targetSpeed); //Move
 
   //Hero action
   _attackSound = false;
   if(_nunchuk->zButton) {
     if(_isDucking && logic->atExit(this)) {
+      //EXIT
       logic->_gameOver = true;
       logic->_heroWin = true;
     } 
     else if(!_isAttacking && !_isDucking) {
-      //Attack
+      //ATTACK
       _isAttacking = true;
       _attackArea._width = HERO_ATT_RANGE + _hitbox._width;
       _attackArea._x = _hitbox._x;
