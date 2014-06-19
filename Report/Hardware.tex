@@ -1,13 +1,12 @@
 \chapter{Hardware} %Cebrail
 
-During the project we have worked with two Arduino types. Duemilanove and Leonardo clone.
-The clone was more powerful and therefore was our main used board. The clone is called
+During the project we have worked with two Arduino types: Duemilanove and Leonardo clone.
+The clone was more powerful and therefore was our main board. The clone is called
 OLIMEXINO-32U4.
 \section{Specications}
 
 \subsection*{Arduino}
-The specs of the Arduino boards vary very much of each other. The OLIMEXINO is definitely
-better.
+The specs of the Arduino boards vary a lot. 
 
 \begin{table}[h]
 \resizebox{16cm}{!} {
@@ -20,11 +19,11 @@ better.
     \caption{Specifications of the boards}
 \end{table}
 \subsection*{EEPROM}
-Electrically Erasable Programmable Read-Only Memory Is non-volatile memory which is used in computers/electronic devices to store data when power is removed. Bytes in EEPROM can be read erased and rewritten. One byte in the EEPROM can only hold a value inbetween 0 and 255.
+Electrically Erasable Programmable Read-Only Memory is a type of non-volatile memory which is used in computers/electronic devices to store data when power is removed. Bytes in EEPROM can be read, erased, and rewritten. One byte in the EEPROM can only hold a value between 0 and 255.
 
 \newpage
 \subsection*{Gameduino2}
-The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduino2/} shield.
+The specifications of the Gameduino2\footnote{http://excamera.com/sphinx/gameduino2/} shield.
 
 \begin{multicols}{2}
 \begin{itemize}
@@ -42,9 +41,7 @@ The specificatins of the Gameduino2\footnote{http://excamera.com/sphinx/gameduin
 
 \section{Input}%Cebrail
 We heard about the nunchuk capability before we got the Arduinos in our
-hands, we thought it would be fun and ordered\footnote{http://www.miniinthebox.com/da/arduino-kompatibel-wii-wiichuck-nunchuck-adapter\_p903451.html} the adapters just after signing
-to this project. The adapters where needed as the nunchuk
-has to be connected to the Arduino physically.
+hands. We thought it would be fun to work with and ordered\footnote{http://www.miniinthebox.com/da/arduino-kompatibel-wii-wiichuck-nunchuck-adapter\_p903451.html} the adapters just after starting this project. The adapters where needed as the nunchuk has to be connected to the Arduino physically.
 \\
 None of us had much experience in soldering, but our supervisor was happy
 to help us in that matter. We got head sockets soldered underneath
@@ -67,7 +64,4 @@ Gameduino 2 uses an ISP interface, while the Wii nunchuk uses an I2C interface.
 
 
 \subsection*{I2C}
-The I2C is a hardware wire interface, which is used by the Wii nunchuk adapter. This bus
-interface allows easy communication between components and only requires two
-bus lines. These lines are both bidirectional. These bus lines are called SCL
-(Serial Clock Line) and SDA (Serial Data Line).
+The I2C is a hardware wire interface. This bus interface allows easy communication between components and only requires two bus lines. These lines are both bidirectional. These bus lines are called SCL (Serial Clock Line) and SDA (Serial Data Line).
