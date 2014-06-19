@@ -1,11 +1,11 @@
 %Present implementation details, program structure etc.  Further, interesting
 %algorithms and data structures should be presented here.
 \chapter{Implementation and detailed design} %Carsten
-%Something goes here.
+In this chapter we describe important parts of the implementation, which is difficulty to understand purely through code. We go through the level generation algorithm, the AI and the graphics.
 
 \section{Components}
 Arduino sketch is the Arduino IDE. It's built upon IDE form the Processing programming language. We have had a few qualms with it. The syntax highlighting is not completely correct. On top of that, the structure of the ino file and all its cpp/h files where all tabs need to be open is just plain confusing.
-
+\newline
 Arduino programs are written in the Arduino language, which is very similar to C or C++. Users only need to define two functions to make a runnable cyclic executive program: 
 \begin{enumerate}
 \item setup():a function that runs when board is powered on.
@@ -28,9 +28,8 @@ The library includes the following methods, which are updated every time {\tt nu
     \item nunchuk.cButton
 \end{itemize}
 \end{multicols}
-
 Linked list library is also one we found. It is simply an implementation of linked lists which we use to store our units and props.
-
+\newline
 GD2 libary is needed to use the built-in functions of the Gameduino 2.
 Here are the functions that we use from the GD2 library:
 \begin{multicols}{3}
