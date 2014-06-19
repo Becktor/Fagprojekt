@@ -50,14 +50,6 @@ void flipImage(byte halfWidth);
 
 void setup() {
   //SETUP
-  //Seed
-  randomSeed(EEPROMReadInt(ADDRESS_SEED));
-  EEPROMWriteInt(ADDRESS_SEED, random(65535)); //New random seed in unsigned int range.
-  //Nunchuk
-  ArduinoNunchuk _nunchuk = ArduinoNunchuk();
-  if(NUNCHUCK)
-    _nunchuk.init();
-  //Initial values
   word _score = 0, _highScore;
   byte difficulty = INIT_DIFF;
   if(RESET_HSCORE)
@@ -66,15 +58,20 @@ void setup() {
     _highScore = EEPROMReadInt(ADDRESS_HSCORE);
   Scene _scene = Scene();
   Logic _logic = Logic(&_scene);
+  ArduinoNunchuk _nunchuk = ArduinoNunchuk();
   Hero _hero(&_nunchuk);
   Rect *_camera = &(_hero._hitbox);
+  word seed = EEPROMReadInt(ADDRESS_SEED);
+  randomSeed(seed);
+  EEPROMWriteInt(ADDRESS_SEED, random(65535)); //New random seed in unsigned int range.
+  if(NUNCHUCK)
+    _nunchuk.init();
+  GD.begin();
+  LOAD_ASSETS();
   Point _entrance = Point(), _exit = Point();
   newScene(&_scene, &_entrance, &_exit, difficulty);
   _logic._hero = &_hero;
   _scene.addUnit(&_hero, _entrance._x, _entrance._y);
-  //Graphics
-  GD.begin();
-  LOAD_ASSETS();
   LinkedList<Unit*>* units = _scene.getUnits();
   LinkedList<Coin*>* coins = _scene.getCoins();
 
