@@ -1,9 +1,4 @@
 %\section{Testing and performance analysis}
 \chapter{Testing and performance analysis}
 
-Present test methodology as well as results in this section.
-In addition, if performance analysis of the system is interesting, present it here as well.
-
-A few screenshots of the program can be included here as well.
-
-
+To test our performance our only marker has been frames per second. The Gameduino2 and the board supports 60 fps, throughout the project we have gone up and down in our fps, We found out that to remove the delay from our nunchuck buttons we had to update it twice this had a heavy toll on our fps count though. We used the double update until the start of the three week project, we removed one of the updates and observed that we no longer had any delay and we still have 60 fps. The game has been running decently, we have some issues with coins spawning outside the map and inside blocks which make them flicker across the screen but this happens infrequently. Our code size has gone to the exact limit of what the boards flash memory could hold.
