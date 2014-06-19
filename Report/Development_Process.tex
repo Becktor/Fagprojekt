@@ -1,7 +1,6 @@
 %Discuss how development processed, problems encountered and how some features were cut or added.
 \chapter{Development Process}
-Work schedule during 13 week period.\\
-during 3 week period.
+Development started at DATE. The three week period was from DATE to DATE.
 
 \section{Timeplan}%Cebrail/Jonathan
 There are several time planning models in the software world. There is agile, iterative and incremental.
@@ -39,30 +38,18 @@ We were convinced that using "Time Boxing" would be the way to go. Timeboxing di
   Level generation		& Level generation		& Optimization			& 						\\
   						& Optimization			& Sound					& 						\\
   						& 						& Sprites 				& 						\\
+  \rowcolor[HTML]{BBDAFF}
   \textbf{week 23}		& \textbf{week 24}		& \textbf{week 25}		& 						\\
   Attacks				& AI					& Bug Fixes				& 						\\
   Coins					& High score			& Code Polish			& 						\\
   Optimization			& Optimization			& Optimization			& 						\\
-  						& 						& 						& 						\\
-  						& 						& 						& 						\\
 \end{tabular}
-\caption{The timeboxes are seperated per week}
+\caption{The timeplan in timebox format.}
 \end{table}
-\newpage
 
-\section{Hardware}
-
-\subsection*{Arduino problems}
-Throughout our implementation of the game we have had several issues with our Arduinos.
-
-\subsubsection*{Arduino burnout}
-The first problem we ran into was one of our Arduino burned out. It was somewhat fixed it would work one day and would not another. Slowly it gave out and now it works 1 out of a 100 tries. We could not find a fix for it. This slowed us down quite a bit since it limited what we could test when working at home.
-
-\subsubsection*{Arduino Duemilanove.}
-We ran out of flash memory on the Duemilanove since it only has 16kb, this set us back since we only had 1 Arduino to code on. We later got this replaced with another Leonardo.
-
-\subsubsection*{Arduino blackout}
-We have also had some issues when uploading code to the Arduino. Sometimes the Arduino screen is black after uploading. To fix this we had to upload an example file from the Arduino library that prints text to the screen.
-
-\subsubsection*{SD card faliure}
-Whilest working on the project suddenly when uploading the Arduino could not find the SD card in the Gameduino 2. The card was in and had the right files on it. We tried to format the card on windows, it still didn't work. We had a try on a mac and it did. On one of our Arduinos we had the blackout problem as mentioned above but we could not seem to get it fixed. This appeared to be the same problem that the SD card had gone corrupt and needed a format.
+\section{Development Issues} %Cebrail / Jonathan / Carsten
+We received the Arduino three weeks after project start, which was a major setback in implementation. We could only design the program structure and time-plans in this time. This skewed our planned agile development. Instead of dynamically designing and implementing additional features, we had to make the most of our time and design for three weeks straight, which was followed by weeks of implementation the designed structure and features. Usually in agile processes, you make sure to have a working product at the end of sprints. This was not compatible with our designed framework, since we had taken a lot more features into consideration than possible in a single sprint. It was one very large sprint, more akin to the waterfall process. We could have incrementally implemented the framework after receiving the Arduino, but it would in the end have been slower and more tedious. We had the designs, all we had to do was implement it. In the end we made up for the loss in implementation time by cutting corners in the process and designing a lot ahead.
+\newline
+Later on one of the Arduinos burned out. It is not clear what went wrong, but it rarely worked. At this time we only had another Leonardo and the Duemilanove, which slowed us down quite a bit. Only half of us could program each week. A few weeks later we hit the maximum code size on the Duemilanove, and were left with only a single working Arduino. Development became too slow, until one of us purchased a second Leonardo.
+\newline
+General problems with the Arduinos were common. We have also had some issues when uploading code to the Arduino. The screen would be completely black even though the IDE stated the upload was complete. Usually the fix was uploading an example file from the Arduino library that prints text to the screen, usually {\tt HelloWorld.ino}. In other cases a different USB port would solve it, probably a sign of incorrect driver installation. Resetting the Arduino during uploading would also sometimes snap it out of it. Other problems were related to the SD card in the Gameduino 2, where we could not upload programs while the SD card was inserted. Usually formatting the SD card would work, but often only on a Mac for unknown reasons.
