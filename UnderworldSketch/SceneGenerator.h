@@ -1,3 +1,7 @@
+/*
+ *  Functions used to generate a new map. It could be one giant function, but this is more readable.
+ */
+
 #ifndef sceneGen_h
 #define sceneGen_h
 

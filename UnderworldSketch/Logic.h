@@ -1,3 +1,7 @@
+/*
+ *  Contains all physics functions, and functions which the AI would need.
+ */
+
 #ifndef logic_h
 #define logic_h
 
@@ -14,10 +18,10 @@ const static byte GRAVITY = 1;
 
 class Logic {
   private:
-    LinkedList<Attack*> _attacks;
+    LinkedList<Attack*> _attacks; //Current active attacks
   public:
-    boolean _gameOver, _heroWin, _hasAttack;
-    Prop *_hero;
+    boolean _gameOver, _heroWin; //Whether the round is over, and whether the hero won.
+    Prop *_hero; //Is a prop to avoid circular references.
     Scene *_scene;
 
     Logic(Scene *scene);

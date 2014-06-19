@@ -7,6 +7,7 @@
 #include "Coin.h"
 #include "Scene.h"
 
+//Converts a given world coordinate to grid (tile) coordinate
 char worldToGrid(int x) {
   if(x < 0)
     return (x + 1) / TILE_SIZE - 1;
@@ -14,6 +15,7 @@ char worldToGrid(int x) {
     return x / TILE_SIZE;
 }
 
+//Converts a given tile coordinate to world coordinate.
 int gridToWorld(byte x) {
   return x * TILE_SIZE;
 }
@@ -23,16 +25,14 @@ Scene::Scene() {
   _unitList = LinkedList<Unit*>();
   _minoIndex = 0;
   _coinIndex = 0;
-  for(byte i = 0; i < MINOTAURS; i++) {
+  //Instantiate all used props.
+  for(byte i = 0; i < MINOTAURS; i++)
     _minotaurs[i] = new Minotaur();
-    //_test[0][i] = _minotaurs[i];
-  }
-  for(byte i = 0; i < COINS; i++) {
+  for(byte i = 0; i < COINS; i++)
     _coins[i] = new Coin();
-    //_test[1][i] = _minotaurs[i];
-  }
 }
 
+//Add a coin to the given tile.
 void Scene::addCoin(byte x, byte y) {
   if(_coinIndex != COINS) {
     Coin *coin = _coins[_coinIndex];
@@ -42,6 +42,7 @@ void Scene::addCoin(byte x, byte y) {
   }
 }
 
+//Add a minotaur to the given tile.
 void Scene::addMinotaur(byte x, byte y) {
   if(_minoIndex != MINOTAURS) {
     addUnit(_minotaurs[_minoIndex], x, y);
@@ -49,11 +50,13 @@ void Scene::addMinotaur(byte x, byte y) {
   }
 }
 
+//Add a unit to the given tile.
 void Scene::addUnit(Unit* unit, byte x, byte y) {
   setProp(unit, x, y);
   _unitList.add(unit);
 }
 
+//Clears all props.
 void Scene::clearProps() {
   _unitList.clear();
   _coinList.clear();
@@ -61,6 +64,7 @@ void Scene::clearProps() {
   _coinIndex = 0;
 }
 
+//Returns whether the given tile is within the scene.
 boolean Scene::contains(byte x, byte y) {
   return x < SCENE_WIDTH && y < SCENE_HEIGHT;
 }
@@ -82,6 +86,7 @@ LinkedList<Unit*>* Scene::getUnits() {
 }
 
 //Returns the tile at the grid coordinates
+//Returns rock outside the map.
 byte Scene::getTile(byte x, byte y) {
   if(contains(x, y))
     return _tiles[x][y];
@@ -89,6 +94,8 @@ byte Scene::getTile(byte x, byte y) {
     return ROCK;
 }
 
+//Sets the given prop to the given tile.
+//and initializes.
 void Scene::setProp(Prop* prop, byte x, byte y) {
   Rect *hitbox = &(prop->_hitbox);
   hitbox->_x = x * TILE_SIZE + (TILE_SIZE - hitbox->_width) / 2;

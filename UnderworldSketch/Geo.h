@@ -1,9 +1,7 @@
 /*
  *  Utility class describing points and rectangles on a plane.
- *  Possibly is redundant, since there is an official point
- *  class (apparently).
  */
-//Some change
+
 #ifndef geo_h
 #define geo_h
 

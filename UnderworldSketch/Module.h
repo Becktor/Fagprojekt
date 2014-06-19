@@ -11,7 +11,7 @@ const static byte
     TYPE4_MODULES = 1,
     MODULE_WIDTH = 5,
     MODULE_HEIGHT = 5,
-    TILE_OBJECT = 7;
+    TILE_OBJECT = 7; //Tile value for a portal (entrance or exit) or monster/coin spawn.
 
 enum Modules{
   TYPE0 = 0, //Closed room

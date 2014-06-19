@@ -1,7 +1,5 @@
 /*
- *  Currently non-abstract class of any one unit. Cannot be superclass
- *  to 'Entities' since entities uses points for positions while units use
- *  hitboxes. Could be superclass to future prop though.
+ *  The unit class. Contains virtual AI function to be overwritten by superclasses.
  */
 
 #ifndef unit_h
@@ -14,7 +12,7 @@
 class Logic;
 class Unit : public Prop {
   public:
-    boolean _isScored;
+    boolean _isScored; //Whether the hero has recieved points for this unit.
     byte _health, _score;
     
     Unit(byte width, byte height, byte health, byte score, byte imageWidth, byte imageHeight, word invTime);

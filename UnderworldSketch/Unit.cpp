@@ -8,14 +8,20 @@ Unit::Unit(byte width, byte height, byte health, byte score, byte imageWidth, by
   _score = score;
 }
 
+//Horizontal collision function.
+//Called when colliding in the x-axis
 void Unit::collideX() {
   _xVel = 0;
 }
 
+//Vertical collision function.
+//Called when colliding in the y-axis
 void Unit::collideY() {
   _yVel = 0;
 }
 
+//Hit function.
+//Called when attacked, if not invulnerable.
 void Unit::hit(byte damage, char force) {
   Prop::hit(damage, force);
   if(damage >= _health)
