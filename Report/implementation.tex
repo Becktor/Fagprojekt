@@ -115,7 +115,12 @@ Before proceeding to the next step, we generate a map of enemy placements. The g
 Lastly the program generates the map. This step reads each module in the newly generated grid, randomly picks a module of the specified type, and fills it into the actual map. If it is currently in an entrance or exit room, it places the corresponding door. It changes the original given entrance and exit pointers to point at the now created door.
 \newline
 Every module overlaps with a single row or column with all surrounding modules. Overlapping follows a priority of tiles, where the algorithm determines which tile from the modules is used. Platforms are placed before empty tiles, and solid tiles are placed before platforms. This has several benefits. Firstly the maps are more unique since pairs of modules also differ, and makes the seams of modules harder to notice. Secondly, it ensures that upward exits are easily guaranteed since platforms can be placed closer to the upper floors. This is the reason we need to clear the map prior to generation: the old tiles would disrupt this priority, since the algorithm would not be able to discern what is old and what is new during generation.
-
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{Figures/Modules}
+  \caption{Modules design. The lines represent where modules overlap.}
+  \label{fig:Modules}
+\end{figure}
 \subsection*{Highscore \& Randomseed}
 Using EEPROM we implemented two functions, $EEpromReadInt$ and $EEpromWriteInt$, which take use of the EEPROM library. These functions save unsigned integers to the EEPROM. They work by bitshifting the integer with 0 and 8 and then saving the two bitshifted values in the EEPROM. To extract from the board's EEPROM we grab the bitshifted values form their addresses in the EEPROM and then bitshift them with the respective number from before by using $EEpromWriteInt$. We add them together and then return the resulting integer.
 \newline
@@ -150,7 +155,7 @@ The asset converter basically takes multiple media files, including images and s
 \end{figure}
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{minipage}[b]{0.45\linewidth}
   \centering
   \includegraphics[scale=0.7]{Figures/Asset_output}
