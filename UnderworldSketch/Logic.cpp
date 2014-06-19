@@ -15,10 +15,12 @@ Logic::Logic(Scene *scene) {
   _heroWin = false;
 }
 
+//Adds the attack to the attack list.
 void Logic::addAttack(Attack* attack) {
   _attacks.add(attack);
 }
 
+//Returns true if the given prop is at an exit tile.
 boolean Logic::atExit(Prop *prop) {
   Rect* hitbox = &(prop->_hitbox);
   byte tileXEnd = worldToGrid(hitbox->_x + hitbox->_width - 1),
@@ -32,14 +34,17 @@ boolean Logic::atExit(Prop *prop) {
   return false;
 }
 
+//Clears the attack list.
 void Logic::clearAttacks() {
   _attacks.clear();
 }
 
+//Checks whether the hero collides with the coin.
 boolean Logic::coinCollision(Coin* coin) {
   return (_hero->_hitbox).contains(&(coin->_hitbox));
 }
 
+//Checks whether any attacks hits the prop.
 void Logic::executeAttacks(Prop* prop) {
   Rect *hitbox = &(prop->_hitbox);
   for(byte i = 0; i < _attacks.size(); i++) {
@@ -66,6 +71,7 @@ boolean Logic::isGrounded(Prop *prop) {
   return false;
 }
 
+//Returns whether a given set of world coordinates is walkable.
 boolean Logic::isWalkable(int x, int y) {
   byte tile = _scene->getTile(worldToGrid(x), worldToGrid(y));
   return getSolid(tile) || getPlatform(tile);
@@ -121,10 +127,14 @@ boolean Logic::movePropVerti(Prop *prop, int dY) {
   return true;
 }
 
+//Returns whether the given tile is solid.
 boolean Logic::tileIsSolid(byte x, byte y) {
   return getSolid(_scene->getTile(x, y));
 }
 
+//Updates the physics for the given prop.
+//Moves it according its speed and calls collision functions.
+//Also adds the gravity to the velocity.
 void Logic::updatePhysics(byte dTime, Prop* prop) {
   if(!movePropHoriz(prop, prop->_xVel))
     prop->collideX();

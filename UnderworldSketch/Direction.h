@@ -1,6 +1,10 @@
+/*
+ *  Direction enumeration. Their values are used in numerous calculations.
+ */
+
 #ifndef direction_h
 #define direction_h
-//Some change
+
 enum Direction{
   LEFT = -1,
   RIGHT = 1,

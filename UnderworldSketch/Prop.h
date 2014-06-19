@@ -5,9 +5,18 @@
 
 class Prop {
   public:
-    boolean _levitate, _animLock, _animStop, _invulnerable;
-    byte _imageWidth, _imageHeight, _handle, _cells, _currentCell;
-    char _dir, _xVel, _yVel;
+    boolean _levitate, //Unused, if true the prop is not affected by gravity.
+            _animLock, //If true, then the prop cannot change animation until it ends the current anmation.
+            _animStop, //If true, then the animation stops at the last frame of current animation.
+            _invulnerable; //If true, cannot be hit.
+    byte _imageWidth, //Sprite dimensions.
+         _imageHeight,
+         _handle, //Sprite handle.
+         _cells, //Sprite cells.
+         _currentCell; //Current animation frame.
+    char _dir, //Direction, used in movement and drawing.
+         _xVel, //Velocities.
+         _yVel;
     word _FR, _animTime, _invTime, _invTimer;
     Rect _hitbox;
 

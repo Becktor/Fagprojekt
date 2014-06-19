@@ -10,15 +10,23 @@ Prop::Prop(byte width, byte height, byte imageWidth, byte imageHeight, word invT
   _invTime = invTime;
 }
 
+//Horizontal collision function.
+//Called when colliding in the x-axis
 void Prop::collideX() { }
 
+//Vertical collision function.
+//Called when colliding in the y-axis
 void Prop::collideY() { }
 
+//Hit function.
+//Called when attacked, if not invulnerable.
 void Prop::hit(byte damage, char force) {
   _invulnerable = true;
   _invTimer = 0;
 }
 
+//Initialize function.
+//Called when used in a new map.
 void Prop::initialize() {
   _dir = randDir();
   _xVel = 0;
@@ -34,6 +42,9 @@ void Prop::initialize() {
   _animStop = false;
 }
 
+//Changes the current handle, cells and FR, if either the
+//handle or FR is not equal to the current.
+//Never changes if animLock is true.
 void Prop::newHandle(byte handle, byte cells, word FR) {
   if(!_animLock && (_handle != handle || _FR != FR)) {
     _handle = handle;
@@ -44,11 +55,13 @@ void Prop::newHandle(byte handle, byte cells, word FR) {
   }
 }
 
+//Short reusable function, that pushes the prop according to the given force.
 void Prop::push(char force) {
   _xVel += force;
   _yVel -= abs(force);
 }
 
+//Updates the animation frame.
 void Prop::updateAnimation(byte dTime) {
   _animTime += dTime;
   while(_animTime >= _FR) {
@@ -63,6 +76,7 @@ void Prop::updateAnimation(byte dTime) {
   }
 }
 
+//Updates the time invlunerable, and checks if it should be set to false.
 void Prop::updateInvulnerability(byte dTime) {
   if(_invulnerable) {
     _invTimer += dTime;
@@ -73,6 +87,7 @@ void Prop::updateInvulnerability(byte dTime) {
 
 //Returns either target or a value numerically closer to target
 //compared to current equal to change.
+//Used when accelerating the prop in an axis.
 char Prop::zoomIn(byte zoom, char current, char target) {
   if(target > current)
     return min(current + zoom, target);

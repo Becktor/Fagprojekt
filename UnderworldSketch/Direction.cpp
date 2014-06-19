@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Direction.h"
 
+//Returns a random direction, either left or right.
 char randDir() {
   if(random(2) == 0)
     return 1;

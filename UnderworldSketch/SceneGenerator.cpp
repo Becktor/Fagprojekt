@@ -7,6 +7,9 @@
 #include "Minotaur.h"
 #include "SceneGenerator.h"
 
+//Given a scene, two points and a difficulty, it changes the scene to a newly
+//generated scene with the points pointing to the entrance and exit. There are an amount of
+//coins and minotaurs equal to difficulty or the maximum allowed minotaurs and coins.
 void newScene(Scene *scene, Point *entrance, Point *exit, byte difficulty) {
   //Init
   for(byte i = 0; i < SCENE_WIDTH; i++)
@@ -39,6 +42,9 @@ void newScene(Scene *scene, Point *entrance, Point *exit, byte difficulty) {
   generate(scene, modules, enemies, entrance, exit);
 }
 
+//Given a module and the scene, it fills out a space according to the coordinates according to the module.
+//If portalRoom is true, it places an entrance or exit according to entrance and changes the portal point.
+//If enemy is true and portal room is not, it adds an enemy and coin.
 //Note that the dimensions are switched in the TYPETILE arrays, because of how the arrays are structured visually in the code.
 void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom, boolean entrance, Point *portal, boolean enemy) {
   byte (*tiles)[MODULE_WIDTH][MODULE_HEIGHT];
@@ -67,6 +73,7 @@ void fillModule(Scene *scene, byte module, byte dX, byte dY, boolean portalRoom,
   }
 }
 
+//Given a scene and a set of modules, it maps the modules over to the scene.
 void generate(Scene *scene, byte modules[XMODULES][YMODULES], boolean enemies[XMODULES][YMODULES], Point *entrance, Point *exit) {
   boolean hasEntrance = false, hasExit = false;
   for(byte i = 0; i < XMODULES; i++) {
@@ -89,6 +96,7 @@ void generate(Scene *scene, byte modules[XMODULES][YMODULES], boolean enemies[XM
   }
 }
 
+//Changes a given module two-dimensional array into a newly generated module set, with matching entrance and exit points.
 void modulate(byte modules[XMODULES][YMODULES], Point *entrance, Point *exit) {
   byte x = random(XMODULES), y = YMODULES - 1;
   char dir = randDir();

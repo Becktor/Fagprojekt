@@ -20,7 +20,7 @@ const static byte
     HERO_ATT_DAMAGE = 1,
     HERO_ATT_FORCE = 5,
     HERO_ATT_RANGE = 48,
-    //Number of Initial Hitpoints
+    //Initial Hitpoints
     HERO_HEALTH = 5,
     //Hitbox Dimensions
     HERO_HITBOX_HEIGHT_STAND = 38, 

@@ -17,6 +17,7 @@ Rect::Rect(byte width, byte height) {
   _height = height;
 }
 
+//Returns true if the given rectangle shares any points with this.
 boolean Rect::contains(Rect *r) {
   return r->_x < _x + _width
       && r->_x + r->_width > _x
@@ -29,6 +30,7 @@ void Rect::setPos(int x, int y) {
   _y = y;
 }
 
+//Returns either the left (LEFT) or right (RIGHT) side.
 int Rect::side(char dir) {
   if(dir == LEFT)
     return _x;
@@ -36,6 +38,7 @@ int Rect::side(char dir) {
     return _x + _width - 1;
 }
 
+//Returns either the top (UP) or bottom (DOWN) surface.
 int Rect::surface(char dir) {
   if(dir == UP)
     return _y;
