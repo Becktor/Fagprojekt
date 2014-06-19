@@ -12,11 +12,48 @@ Arduino programs are written in C or C++. The Arduino IDE comes with a software 
 \item setup():a function that runs when board is powered on.
 \item loop():a function called repeatedly until the board powers off
 \end{enumerate}
+Nunchuk library
+The inputs are recieved using the {\tt ArduinoNunchuk}\footnote{http://www.gabrielbianconi.com/arduinonunchuk/} library.
+It uses the {\tt wire.h} library that is included in the Arduino IDE.
+Using the {\tt wire.h}library makes it possible to communicate with the
+nunchuk using the I2C interface.\\
+The library includes following methods, which are updated every time {\tt nunchuk.update();} is called:\\
+\begin{multicols}{2}
+\begin{itemize}
+    \item nunchuk.analogY
+    \item nunchuk.analogY
+    \item nunchuk.accelX
+    \item nunchuk.accelY
+    \item nunchuk.accelZ
+    \item nunchuk.zButton
+    \item nunchuk.cButton
+\end{itemize}
+\end{multicols}
 
-Nunchuck library is one we found on the internet........ cebo? This includes all functions to the????? dunno at all cebo sry\\
 Linked list library is also one we found it is simply an implementation of linked lists which we use to store our units, hero and our coins.
 
-We use the GD2 library to use the built in functions from the Gameduino2.
+GD2 libary is needed for the
+Here are the functions that we use from the GD2 library:
+\begin{multicols}{3}
+\begin{itemize}
+    \item GD.cmd\_text$()$
+    \item GD.cmd\_number$()$
+    \item GD.Begin$()$
+    \item GD.cmd\_translate$()$
+    \item GD.cmd\_scale$()$
+    \item GD.cmd\_setmatrix$()$
+    \item GD.safeload$()$
+    \item GD.cell$()$
+    \item GD.BitmapHandle$()$
+    \item GD.sample$()$
+    \item GD.Clear$()$
+    \item GD.ClearColorRBG$()$
+    \item GD.swap$()$
+    \item GD.ColorRBG$()$
+    \item GD.Vertexii$()$
+    \item GD.Vertexii$()$
+\end{itemize}
+\end{multicols}
 
 \section{Structure} %Carsten
 A platforming game would need at least a simple physics engine, supporting momentum and acceleration. Player movement feels more natural, and allows us to make attacks push units. Only actors would need to be affected by the physics engine, but we extended it to allow all props - this was both an optimization and an additional feature in the game. We discuss these implications in the implementation chapter.
@@ -174,34 +211,7 @@ so we had to find a balance between quality and size.
 \section{Input}
 Before implementing the nunchuk. We checked other alternatives. Both Arduino and the Gameduino 2 shield gives us opportunities to control the game. Arduino can communicate with a pc and get data when a key is pressed on the keyboard. The Gameduino 2 is equipped with a touch screen and a accelerometer. We could have used one of these to get input, but none of them gives a natural way to play a 'platformer` on a Gameduino 2. The pc solution feels not natural as the keyboard and the Gameduino 2 screen usually are not in front of each other. The touch screen is not as responsive as we wanted, and it would also be annoying as the fingers will get in the way. The accelerometer is just wrong in all way, it is hard to control, as you always has to 'guess' how to hold the device. The problem with fingers getting in the way appears also here. The best option was using an external controller - a Wii nunhcuk.
 
-%Nunchuk library
-%The inputs are recieved using the {\tt ArduinoNunchuk}\footnote{http://www.gabrielbianconi.com/arduinonunchuk/} library.
-%It uses the {\tt wire.h} library that is included in the Arduino IDE. So we have a library using another library.
-%The library {\tt wire.h} makes it possible to communicate with the
-%nunchuk using the I2C interface. To use the library, first we instantiate it: \\
-%\centerline{{\tt ArduinoNunchuk \_nunchuk = ArduinoNunchuk();}}\\ Then initialize it by saying: \\ \centerline{{\tt nunchuk.init();}}
-%The library includes following methods, which are updated every time {\tt nunchuk.update();} is called:\\
-%\begin{multicols}{2}
-%\begin{itemize}
-%    \item nunchuk.analogY
-%    \item nunchuk.analogY
-%    \item nunchuk.accelX
-%    \item nunchuk.accelY
-%    \item nunchuk.accelZ
-%    \item nunchuk.zButton
-%    \item nunchuk.cButton
-%\end{itemize}
-%\end{multicols}
-%The data from the thumbstick is received from the methods {\tt analogY} and {\tt analogY}.
-%The data is presented as x- and
-%y-coordinates. When the thumbstick is at rest, the {\tt analogX} is 120 and
-%{\tt analogY} is 125.  The numbers decreases when pushing to the left or down.
-%It increases in the opposite directions. The {\tt accel*} methods defines the values of
-%the accelerometer. We have values for every direction, meaning x,y and z. They change values
-%when you tilt the controller. We do not use the accelerometer in our game 
 
-%Lastly we have the methods {\tt zButton} and {\tt cButton} which
-%returns the values of the buttons - as 0 or 1.
 
 \section{Optimization} %Cebrail / Carsten
 Officially the \emph{flash memory} has a capacity of 32 Kb, but the IDE does not allow uploading sketches larger than 28.672 bytes. Furthermore, the first 4242 bytes are reserved for the \emph{bootloader}, so in reality we only have 24.430 bytes of code available. %Explain flash memory & bootloader?
